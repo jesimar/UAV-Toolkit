@@ -13,3 +13,4 @@ Para testar os códigos acima, primeiramente, deve-se executar os seguintes scri
 1. ./exec-sitl.sh
 2. ./exec-mavproxy-local.sh ou ./exec-mavproxy-edison.sh
 3. ./exec-services-dronekit.sh
+4. ./pos_analyser ou ./monitoring ou ./mini_mosa
