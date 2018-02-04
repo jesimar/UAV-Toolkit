@@ -1,0 +1,152 @@
+#!/usr/bin/gnuplot -persist
+#
+# G N U P L O T
+#
+
+reset
+
+# Tipo de output do plot
+#set terminal png size 1438,953 enhanced font 'Times New Roman,12'
+
+#set terminal wxt #saida na tela do gnuplot
+#set terminal png #saida em png
+set terminal svg size 1438,953 #saida em svg
+#set output 'routes.png'  # Nome do arquivo do output
+
+set multiplot
+
+#set title "Plot 2D"
+#set key box
+
+set xrange [0 : 1438] 
+set yrange [0 : 953] 
+
+unset tics
+unset border
+
+set lmargin at screen 0.175
+set rmargin at screen 0.9
+set bmargin at screen 0.15
+set tmargin at screen 0.9
+
+plot 'google_map02.png' binary filetype=png with rgbimage
+
+# Rotulos dos eixos
+set xlabel 'posição x (m)'
+set ylabel 'posição y (m)'
+
+set xrange [-12790.8:16381.2]
+set yrange [-6787.182:12546]
+
+#set xrange [-11400:14600]
+#set yrange [-5231:12000]
+
+set border
+
+set tics out nomirror scale 2
+set mxtics 5
+
+unset key
+
+plot 'sim0.csv' using 1:2 t 'Route 01' w l lc 1, \
+	 'sim1.csv' using 1:2 t 'Route 02' w l lc 2, \
+	 'sim2.csv' using 1:2 t 'Route 03' w l lc 3, \
+	 'sim3.csv' using 1:2 t 'Route 04' w l lc 4, \
+	 'sim4.csv' using 1:2 t 'Route 05' w l lc 5, \
+	 'sim5.csv' using 1:2 t 'Route 06' w l lc 6, \
+	 'sim6.csv' using 1:2 t 'Route 07' w l lc 7, \
+	 'sim7.csv' using 1:2 t 'Route 08' w l lc 8, \
+	 'sim8.csv' using 1:2 t 'Route 09' w l lc 9, \
+	 'sim9.csv' using 1:2 t 'Route 10' w l lc 10, \
+	 'sim10.csv' using 1:2 t 'Route 11' w l lc 11, \
+	 'sim11.csv' using 1:2 t 'Route 12' w l lc 12, \
+	 'sim12.csv' using 1:2 t 'Route 13' w l lc 13, \
+	 'sim13.csv' using 1:2 t 'Route 14' w l lc 14, \
+	 'sim14.csv' using 1:2 t 'Route 15' w l lc 15, \
+	 'sim15.csv' using 1:2 t 'Route 16' w l lc 16, \
+	 'sim16.csv' using 1:2 t 'Route 17' w l lc 17, \
+	 'sim17.csv' using 1:2 t 'Route 18' w l lc 18, \
+	 'sim18.csv' using 1:2 t 'Route 19' w l lc 19, \
+	 'sim19.csv' using 1:2 t 'Route 19' w l lc 20, \
+	 'sim20.csv' using 1:2 t 'Route 20' w l lc 21, \
+	 'sim21.csv' using 1:2 t 'Route 21' w l lc 22, \
+	 'sim22.csv' using 1:2 t 'Route 22' w l lc 23, \
+	 'sim23.csv' using 1:2 t 'Route 23' w l lc 24, \
+	 'sim24.csv' using 1:2 t 'Route 24' w l lc 25, \
+	 'sim25.csv' using 1:2 t 'Route 25' w l lc 26, \
+	 'sim26.csv' using 1:2 t 'Route 26' w l lc 27, \
+	 'sim27.csv' using 1:2 t 'Route 27' w l lc 28, \
+	 'sim28.csv' using 1:2 t 'Route 28' w l lc 29, \
+	 'sim29.csv' using 1:2 t 'Route 29' w l lc 30, \
+	 'sim30.csv' using 1:2 t 'Route 30' w l lc 31, \
+	 'sim31.csv' using 1:2 t 'Route 31' w l lc 32, \
+	 'sim32.csv' using 1:2 t 'Route 32' w l lc 33, \
+	 'sim33.csv' using 1:2 t 'Route 33' w l lc 34, \
+	 'sim34.csv' using 1:2 t 'Route 34' w l lc 35, \
+	 'sim35.csv' using 1:2 t 'Route 35' w l lc 36, \
+	 'sim36.csv' using 1:2 t 'Route 36' w l lc 37, \
+	 'sim37.csv' using 1:2 t 'Route 37' w l lc 38, \
+	 'sim38.csv' using 1:2 t 'Route 38' w l lc 39, \
+	 'sim39.csv' using 1:2 t 'Route 39' w l lc 40, \
+	 'sim40.csv' using 1:2 t 'Route 40' w l lc 41, \
+	 'sim41.csv' using 1:2 t 'Route 41' w l lc 42, \
+	 'sim42.csv' using 1:2 t 'Route 42' w l lc 43, \
+	 'sim43.csv' using 1:2 t 'Route 43' w l lc 44, \
+	 'sim44.csv' using 1:2 t 'Route 44' w l lc 45, \
+	 'sim45.csv' using 1:2 t 'Route 45' w l lc 46, \
+	 'sim46.csv' using 1:2 t 'Route 46' w l lc 47, \
+	 'sim47.csv' using 1:2 t 'Route 47' w l lc 48, \
+	 'sim48.csv' using 1:2 t 'Route 48' w l lc 49, \
+	 'sim49.csv' using 1:2 t 'Route 49' w l lc 50, \
+	 'sim50.csv' using 1:2 t 'Route 50' w l lc 51, \
+	 'sim51.csv' using 1:2 t 'Route 51' w l lc 52, \
+	 'sim52.csv' using 1:2 t 'Route 52' w l lc 53, \
+	 'sim53.csv' using 1:2 t 'Route 53' w l lc 54, \
+	 'sim54.csv' using 1:2 t 'Route 54' w l lc 55, \
+	 'sim55.csv' using 1:2 t 'Route 55' w l lc 56, \
+	 'sim56.csv' using 1:2 t 'Route 56' w l lc 57, \
+	 'sim57.csv' using 1:2 t 'Route 57' w l lc 58, \
+	 'sim58.csv' using 1:2 t 'Route 58' w l lc 59, \
+	 'sim59.csv' using 1:2 t 'Route 59' w l lc 60, \
+	 'sim60.csv' using 1:2 t 'Route 60' w l lc 61, \
+	 'sim61.csv' using 1:2 t 'Route 61' w l lc 62, \
+	 'sim62.csv' using 1:2 t 'Route 62' w l lc 63, \
+	 'sim63.csv' using 1:2 t 'Route 63' w l lc 64, \
+	 'sim64.csv' using 1:2 t 'Route 64' w l lc 65, \
+	 'sim65.csv' using 1:2 t 'Route 65' w l lc 66, \
+	 'sim66.csv' using 1:2 t 'Route 66' w l lc 67, \
+	 'sim67.csv' using 1:2 t 'Route 67' w l lc 68, \
+	 'sim68.csv' using 1:2 t 'Route 68' w l lc 69, \
+	 'sim69.csv' using 1:2 t 'Route 69' w l lc 70, \
+	 'sim70.csv' using 1:2 t 'Route 70' w l lc 71, \
+	 'sim71.csv' using 1:2 t 'Route 71' w l lc 72, \
+	 'sim72.csv' using 1:2 t 'Route 72' w l lc 73, \
+	 'sim73.csv' using 1:2 t 'Route 73' w l lc 74, \
+	 'sim74.csv' using 1:2 t 'Route 74' w l lc 75, \
+	 'sim75.csv' using 1:2 t 'Route 75' w l lc 76, \
+	 'sim76.csv' using 1:2 t 'Route 76' w l lc 77, \
+	 'sim77.csv' using 1:2 t 'Route 77' w l lc 78, \
+	 'sim78.csv' using 1:2 t 'Route 78' w l lc 79, \
+	 'sim79.csv' using 1:2 t 'Route 79' w l lc 80, \
+	 'sim80.csv' using 1:2 t 'Route 80' w l lc 81, \
+	 'sim81.csv' using 1:2 t 'Route 81' w l lc 82, \
+	 'sim82.csv' using 1:2 t 'Route 82' w l lc 83, \
+	 'sim83.csv' using 1:2 t 'Route 83' w l lc 84, \
+	 'sim84.csv' using 1:2 t 'Route 84' w l lc 85, \
+	 'sim85.csv' using 1:2 t 'Route 85' w l lc 86, \
+	 'sim86.csv' using 1:2 t 'Route 86' w l lc 87, \
+	 'sim87.csv' using 1:2 t 'Route 87' w l lc 88, \
+	 'sim88.csv' using 1:2 t 'Route 88' w l lc 89, \
+	 'sim89.csv' using 1:2 t 'Route 89' w l lc 90, \
+	 'sim90.csv' using 1:2 t 'Route 90' w l lc 91, \
+	 'sim91.csv' using 1:2 t 'Route 91' w l lc 92, \
+	 'sim92.csv' using 1:2 t 'Route 92' w l lc 93, \
+	 'sim93.csv' using 1:2 t 'Route 93' w l lc 94, \
+	 'sim94.csv' using 1:2 t 'Route 94' w l lc 95, \
+	 'sim95.csv' using 1:2 t 'Route 95' w l lc 96, \
+	 'sim96.csv' using 1:2 t 'Route 96' w l lc 97, \
+	 'sim97.csv' using 1:2 t 'Route 97' w l lc 98, \
+	 'sim98.csv' using 1:2 t 'Route 98' w l lc 99, \
+	 'sim99.csv' using 1:2 t 'Route 99' w l lc 100
+	 
+unset multiplot

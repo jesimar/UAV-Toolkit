@@ -1,0 +1,12 @@
+----------- start state (px py pz vx vy vz) -----------
+-190.29,257.25,100.00,-22.13,9.28,0.00
+----------- Delta Violar Pouso em Penalizadora ------------
+0.001
+------ Tipo de Problema [0 - Sem Problema, 1 - Motor, 2 - Bateria, 3 - Girar Direita Somente, 4 - Girar Esquerda Somente]-----
+2
+
+<TrueName>
+Config3D.sgl
+
+<TrueName>
+PPCCSconfig3D.sgl

@@ -1,0 +1,12 @@
+#Autor: Jesimar da Silva Arantes
+#Data: 30/01/2018
+#Arquivo de configuracoes dos parameteros do AutoPilot.
+#Formato: NOME_DO_ATRIBUTO=VALOR
+
+RTL_ALT=1200.0
+WPNAV_RADIUS=50.0
+WPNAV_SPEED=300.0
+WPNAV_SPEED_UP=100.0
+WPNAV_SPEED_DN=100.0
+WPNAV_LOIT_SPEED=300.0
+LAND_SPEED=50.0

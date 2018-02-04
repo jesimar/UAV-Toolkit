@@ -1,0 +1,6 @@
+--------------- Decaimento Linear [0 false      1 true] --------------
+1
+-------------- Altura Voo ---------------
+200
+--------------- Amplitude da Altura (indica a variação sofrida na descida do VANT) ---------------
+50
