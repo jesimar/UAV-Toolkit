@@ -10,6 +10,6 @@ Os seguintes códigos foram criados para validar o serviço UAV-Services-Droneki
 
 Para testar os códigos acima, primeiramente, deve-se executar os seguintes scripts:
 
-+ ./exec-sitl.sh
-+ ./exec-mavproxy-local.sh ou ./exec-mavproxy-edison.sh
-+ ./exec-services-dronekit.sh
+1. ./exec-sitl.sh
+2. ./exec-mavproxy-local.sh ou ./exec-mavproxy-edison.sh
+3. ./exec-services-dronekit.sh
