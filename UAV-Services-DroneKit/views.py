@@ -142,6 +142,7 @@ def getAllInfoSensors(request):
     }
 
 #Limpa a missao atual e adiciona um waypoint objetivo na aeronave
+#Comando nao funciona quando a aeronave esta em voo. A aeronave simplismente volta um pouco.
 def setWaypoint(request):
     point = request['body']['waypoint']
     vehicle = request['vehicle']
@@ -173,7 +174,16 @@ def setWaypoint(request):
 #aqui existe um problema com o cmds.next. este problema ocorre quando a aeronave 
 #ja havia cumprido todos os waypoints, por exemplo, next waypoint=16
 #e count waypoint=16 e entao a rota eh atualizada. dessa forma o count waypoint=31 
-#e entao o next waypoint passa a valer 0.
+#e entao o next waypoint passa a valer 0. Mesmo atualizando o next para o waypoint 
+#correto a aeronave nao segue a rota. Acredito que tenha que dar mais algum comando
+#para que ela siga de fato o waypoint do next.
+
+'''
+Conclusoes: Esta funcao apresenta dois problemas: 
+Problema 1: As vezes da erro no metodo cmds.download() e cmds.wait_ready()
+Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
+todo o plano de voo (mesmo que ela estaja no ar) nao se pode chamar essa funcao.
+'''
 def appendWaypoint(request):
     point = request['body']['waypoint']
     vehicle = request['vehicle']
@@ -192,6 +202,12 @@ def appendWaypoint(request):
         commands.rtl(cmds)
     cmds.upload()
     commands.startmission(vehicle) #comando necessario caso o veiculo esteja no solo
+    #if cmds.next == 0: #estes comandos estao sendo testados para tratar o problema 2.
+    #    print 'next = 0'
+    #    cmds.next = cmds.count
+    #if cmds.next == cmds.count - 1:
+    #    print 'next = count -1'
+    #    cmds.next = cmds.count
     return {
         'status-append-waypoint': 'ok'
     }
@@ -224,6 +240,14 @@ def setMission(request):
     }
 
 #Adiciona uma missao ao final da missao corrente (append) na aeronave
+
+'''
+Conclusoes: Esta funcao apresenta dois problemas: 
+Problema 1: As vezes da erro no metodo cmds.download() e cmds.wait_ready()
+Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
+todo o plano de voo (mesmo que ela estaja no ar) nao se pode chamar essa funcao.
+Este problema  eh o mesmo do appendWaypoint().
+'''
 def appendMission(request):
     mission = request['body']['mission']
     vehicle = request['vehicle']
