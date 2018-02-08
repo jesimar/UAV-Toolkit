@@ -10,3 +10,6 @@ Os scripts mais importantes e utilizados são:
 * **exec-services-dronekit.sh** -> Executa um serviço para prover informações sobre o drone.
 * **exec-ifa.sh** -> Executa o sistema IFA para gerenciamento da segurança em voo.
 * **exec-mosa.sh** -> Executa o sistema MOSA para gerenciamento da missão em voo.
+* **exec-tests.sh** -> Executa o sistema UAV-Tests para testar as funcionalidades do UAV-Services-Dronekit.
+* **exec-monitoring.sh** -> Executa o sistema UAV-Monitoring para monitoramento dos sensores do drone.
+* **exec-pos-analyser.sh** -> Executa o sistema UAV-PosAnalyser para análise da posição do drone.
