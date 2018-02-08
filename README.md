@@ -1,9 +1,12 @@
 # UAV-Toolkit
 
-Conjunto de ferramentas desenvolvidas para Veículos Aéreos Não-Tripulados (VANTs) (UAVs).
+Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
 
-Nesse diretório podemos encontrar o seguinte:
+## Visão Geral
 
+Nesse projeto podemos encontrar os seguintes diretórios:
+
+* **Docs** -> Documentação escrita sobre esse projeto. Dissertação, Qualificação e Tutorial.
 * **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA.
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA.
@@ -16,3 +19,12 @@ Nesse diretório podemos encontrar o seguinte:
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave.
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave.
 * **UAV-Services-DroneKit** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.
+* **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-Services-Dronekit.
+
+## Licença
+
+UAV-Toolkit está disponível sobre código aberto com permissões [GNU General Public License v3.0](https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE). 
+
+***
+
+Copyright 2018 Jesimar da Silva Arantes.
