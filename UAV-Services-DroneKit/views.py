@@ -10,10 +10,11 @@ def getGPS(request):
         'gps': [gps.lat, gps.lon, gps.alt, alt_abs]
     }
 
-"""
-Este metodo necessita-se de power module em drone real
+'''
+Obtem informacoes da bateria do drone.
+Este metodo necessita-se de power module em drone real.
 Em simulacoes SITL funciona normalmente
-"""
+'''
 def getBattery(request):
     vehicle = request['vehicle']
     bat = vehicle.battery
@@ -53,10 +54,11 @@ def getAirSpeed(request):
     }
 
 """
-#GPSInfo.fix_type           -> no fix, 2: 2D fix, 3: 3D fix
-#GPSInfo.satellites_visible -> numero de satelites visiveis.
-#GPSInfo.eph                -> GPS horizontal dilution of position (HDOP).
-#GPSInfo.epv                -> GPS vertical   dilution of position (VDOP).
+Obtem informacoes do GPS.
+  GPSInfo.fix_type           -> no fix, 2: 2D fix, 3: 3D fix
+  GPSInfo.satellites_visible -> numero de satelites visiveis.
+  GPSInfo.eph                -> GPS horizontal dilution of position (HDOP).
+  GPSInfo.epv                -> GPS vertical   dilution of position (VDOP).
 """
 def getGPSInfo(request):
     vehicle = request['vehicle']
@@ -95,8 +97,12 @@ def getEkfOk(request):
     }
 
 """
-aqui as vezes da alguns problemas (acredito que seja por causa do download() e wait_ready()
+Obtem o home-location
+O download do home-location eh necessario porque o ArduPilot implementa/armazena
+o home-location como um waypoint em vez de envia-lo como mensagens.
 """
+#Nota: as vezes da alguns problemas devido ao uso do download() e wait_ready()
+#Em geral esses problemas nao levam a queda do drone (problema nao critico)
 def getHomeLocation(request):
     vehicle = request['vehicle']
     cmds = vehicle.commands
@@ -141,16 +147,14 @@ def getAllInfoSensors(request):
         vehicle.armed, vehicle.is_armable, vehicle.ekf_ok]
     }
 
-#Limpa a missao atual e adiciona um waypoint objetivo na aeronave
-#Comando nao funciona quando a aeronave esta em voo. A aeronave simplismente volta um pouco.
+'''
+Este comando limpa a missao atual e adiciona um waypoint objetivo na aeronave
+'''
 def setWaypoint(request):
     point = request['body']['waypoint']
     vehicle = request['vehicle']
     cmds = vehicle.commands
-    #cmds.download()  #comando comentado (aparentemente agora esta funcionando 03/02/2018)
-    #cmds.wait_ready() #comando comentado (aparentemente agora esta funcionando 03/02/2018)
-    cmds.clear() #vehicle.commands.clear()   (se voltar a dar problema testar dessa forma)
-    #vehicle.flush() #comando comentado (aparentemente agora esta funcionando 03/02/2018)  (descontinuado)
+    cmds.clear()
     cmds.next = 0
     if point['action'] == 'takeoff':
         commands.takeoff(vehicle, point['alt'], cmds)
@@ -212,15 +216,14 @@ def appendWaypoint(request):
         'status-append-waypoint': 'ok'
     }
 
-#Limpa a missao atual e adiciona uma missao na aeronave
+'''
+Este comando limpa a missao atual e adiciona uma missao nova na aeronave
+'''
 def setMission(request):
     mission = request['body']['mission']
     vehicle = request['vehicle']
     cmds = vehicle.commands
-    #cmds.download() #comando comentado (aparentemente agora esta funcionando 03/02/2018)
-    #cmds.wait_ready() #comando comentado (aparentemente agora esta funcionando 03/02/2018)
-    cmds.clear() #vehicle.commands.clear()   (se voltar a dar problema testar dessa forma)
-    #vehicle.flush() #comando comentado (aparentemente agora esta funcionando 03/02/2018) (descontinuado)
+    cmds.clear()
     cmds.next = 0
     for item in mission:
         if item['action'] == 'takeoff':
@@ -239,9 +242,8 @@ def setMission(request):
         'status-set-mission': 'ok'
     }
 
-#Adiciona uma missao ao final da missao corrente (append) na aeronave
-
 '''
+#Adiciona uma missao ao final da missao corrente (append) na aeronave
 Conclusoes: Esta funcao apresenta dois problemas: 
 Problema 1: As vezes da erro no metodo cmds.download() e cmds.wait_ready()
 Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
@@ -271,9 +273,11 @@ def appendMission(request):
         'status-append-mission': 'ok'
     }
 
-#Define a velocidade limite da missao 
-#0 m/s < velocidade < 20 m/s
-#Valores fora desse intervalo sao ignorados
+'''
+Este comando define a velocidade limite de voo.
+Os valores permitidos devem estar dentro do intervalo dado a seguir. Valores fora sao ignorados.
+0 m/s < velocidade < 20 m/s
+'''
 def setVelocity(request):
     velocity = request['body']
     vehicle = request['vehicle']
@@ -288,7 +292,6 @@ def setParameter(request):
     vehicle = request['vehicle']
     param = parameter['name'].encode()
     value = parameter['value']
-    print "    %s Changed from %s to %s" % (param, vehicle.parameters[param], value)
     vehicle.parameters[param]=value
     return {
         'status-set-parameter': 'ok'
@@ -314,8 +317,9 @@ def setHeading(request):
     return {
         'status-set-heading': 'ok'
     }
-
-#troca o modo de voo do piloto automatico
+'''
+Este comando troca o modo de voo do piloto automatico.
+'''
 def setMode(request):
     vehicle = request['vehicle']
     mode = request['body']
@@ -326,7 +330,7 @@ def setMode(request):
 
 
 """
-limpa a missao corrente
+Este comando limpa a missao corrente.
 """
 def clear_mission(vehicle):
     cmds = vehicle.commands

@@ -2,29 +2,48 @@ from dronekit import Command, mavutil, VehicleMode, LocationGlobalRelative
 import time
 import math
 
-def takeoff(vehicle, aTargetAltitude, cmds):
-    arm_and_takeoff(vehicle, aTargetAltitude)
+'''
+Comando para decolar ate o waypoint de altitude z.
+'''
+def takeoff(vehicle, z, cmds):
+    arm_and_takeoff(vehicle, z)
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
-        mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 0, aTargetAltitude))
+        mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, 0, 0, 0, 0, 0, 0, 0, 0, z))
 
+'''
+Comando para ir para um waypoint nas coordenadas x, y e z.
+'''
 def goto(x,y,z, cmds):
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
         mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, x, y, z))
 
+'''
+Comando para pousar no waypoint de coordenadas x e y. Pouso na horizontal.
+'''
 def land(x,y, cmds):
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
         mavutil.mavlink.MAV_CMD_NAV_LAND, 0, 0, 0, 0, 0, 0, x, y, 0))
 
+'''
+Comando para pousar no waypoint imediatamente abaixo da aeronave. Pouso na vertical.
+'''
 def landVertical(cmds):
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
         mavutil.mavlink.MAV_CMD_NAV_LAND, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
+'''
+Comando para fazer um Return To Launch (RTL).
+'''
 def rtl(cmds):
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
         mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
+'''
+Comando para comecar a missao autonoma. 
+Necessario caso o drone esteja no solo.
+'''
 def startmission(vehicle):
-    #vehicle.mode = VehicleMode("GUIDED")   #comentei essa linha, em meus voos essa linha estava descomentada.
+    vehicle.mode = VehicleMode("GUIDED") # SE COMENTAR ESSA LINHA NAO FUNCIONA
     vehicle.mode = VehicleMode("AUTO")
     msg = vehicle.message_factory.command_long_encode(
         0, 0,     # target_system, target_component
@@ -37,6 +56,9 @@ def startmission(vehicle):
         0, 0, 0)  # param 5 ~ 7 not used
     vehicle.send_mavlink(msg)
 
+'''
+Comando para definir uma orientacao.
+'''
 def defineHeading(vehicle, angle, direction, is_relative):
     msg = vehicle.message_factory.command_long_encode(
         0, 0,        # target system, target component
@@ -129,7 +151,7 @@ def arm_and_takeoff(vehicle, aTargetAltitude, wait=True):
     # (otherwise the command after Vehicle.simple_takeoff will execute immediately).
     while wait:
         print " Altitude: ", vehicle.location.global_relative_frame.alt
-        if vehicle.location.global_relative_frame.alt >= aTargetAltitude * 0.95:  # Trigger just below target alt.
+        if vehicle.location.global_relative_frame.alt >= aTargetAltitude * 0.95:
             print "Reached target altitude"
             break
         time.sleep(1)

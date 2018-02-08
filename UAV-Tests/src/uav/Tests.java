@@ -160,7 +160,7 @@ public class Tests {
                             new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
                     dataAcquisition.appendWaypoint(wpt);
                     break;
-                case 15: //SET MISSION -> SET_WAYPOINT     => NAO OK
+                case 15: //SET MISSION -> SET_WAYPOINT     => OK
                     mission = new Mission();
                     mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
                     mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
@@ -169,10 +169,10 @@ public class Tests {
                     dataAcquisition.setMission(mission);
                     Thread.sleep(10000);
                     wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_WAYPOINT,  -22.01614778, -47.89623005, 4.0));
+                            new Waypoint(Command.CMD_WAYPOINT,  -22.00554778, -47.89853005, 4.0));
                     dataAcquisition.setWaypoint(wpt);
                     break;
-                case 16: //SET MISSION -> SET_WAYPOINT     => NAO OK
+                case 16: //SET MISSION -> SET_WAYPOINT     => OK
                     mission = new Mission();
                     mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
                     mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
