@@ -7,13 +7,12 @@ Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos 
 Nesse projeto podemos encontrar os seguintes diretórios:
 
 * **Docs** -> Documentação escrita sobre esse projeto. Dissertação, Qualificação e Tutorial.
-* **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
 * **Mission-Creator-4UAV** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
+* **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA.
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA.
 * **Scripts** -> Agrupa um conjunto de scripts utilizados para facilitar a execução de experimentos.
 * **UAV-Generic** -> Projeto em Java que contém estruturas genéricas ao sistema MOSA e IFA.
-* **UAV-Hardware** -> Projeto em Java que contém estruturas genéricas sobre o hardware da aeronave.
 * **UAV-IFA** -> Projeto em Java para gerenciamento da segurança em voo.
 * **UAV-MOSA-C** -> Conjunto de códigos em C para monitoramento do drone.
 * **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo.
