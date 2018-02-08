@@ -8,6 +8,7 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 * **Docs** -> Documentação escrita sobre esse projeto. Dissertação, Qualificação e Tutorial.
 * **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
+* **Mission-Creator-4UAV** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA.
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA.
 * **Scripts** -> Agrupa um conjunto de scripts utilizados para facilitar a execução de experimentos.

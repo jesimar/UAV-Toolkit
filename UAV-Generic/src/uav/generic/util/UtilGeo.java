@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Scanner;
-import lib.color.StandardPrints;
 import uav.generic.struct.PointGeo;
 import uav.generic.struct.Line3D;
 import uav.generic.struct.Point3D;
