@@ -44,7 +44,7 @@ public class CommunicationControl {
 
     public void startServerIFA() {
         try {
-            StandardPrints.printMsgEmph("Waiting a connection from MOSA ...");
+            StandardPrints.printMsgEmph("waiting a connection from MOSA ...");
             server = new ServerSocket(PORT);
             socket = server.accept();//aguarda ate MOSA se conectar
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -59,7 +59,7 @@ public class CommunicationControl {
 
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
-        
+        StandardPrints.printMsgEmph("listening to the connection with MOSA...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +67,7 @@ public class CommunicationControl {
                     while (true) {
                         String answer = input.readLine();
                         if (answer != null) {
-                            System.out.println("Data MOSA: " + answer);
+                            StandardPrints.printMsgYellow("Data MOSA: " + answer);
                             if (answer.equals("StateMOSA.INITIALIZED")){
                                 sendData("HomeLocation: " + drone.getHomeLocation().string());
                                 sendData("MOSA.START");
@@ -91,7 +91,6 @@ public class CommunicationControl {
                     ex.printStackTrace();
                     stateCommunication = StateCommunication.DISABLED;
                 }
-
             }
         });
     }

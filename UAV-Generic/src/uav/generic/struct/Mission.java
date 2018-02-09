@@ -32,6 +32,10 @@ public class Mission {
         mission.remove(mission.size()-1);
     }
     
+    public void removeWaypoint(int i){
+        mission.remove(i);
+    }
+    
     public int size(){
         return mission.size();
     }

@@ -30,7 +30,7 @@ public final class UAVMonitoring {
         
     public UAVMonitoring() {
         this.drone = new Ararinha();    
-        this.dataAcquisition = new DataAcquisition(drone, "IFA");
+        this.dataAcquisition = new DataAcquisition(drone, "IFA");                
     }
     
     public void createFileLogAircraft(){

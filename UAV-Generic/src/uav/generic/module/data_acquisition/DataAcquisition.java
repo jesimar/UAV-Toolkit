@@ -2,13 +2,18 @@ package uav.generic.module.data_acquisition;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lib.color.StandardPrints;
 import uav.generic.struct.HeadingJSON;
 import uav.generic.struct.Mission;
@@ -28,23 +33,35 @@ public class DataAcquisition {
     private final String PROTOCOL;
     private final int PORT;
     private final int TIME_OUT = 5;//in secunds
-    private boolean debug = false;    
+    private final PrintStream printLogOverhead;
+    private boolean debug = false; 
 
     public DataAcquisition(Drone drone, String uav_source) {
         this.drone = drone;
-        this.UAV_SOURCE = uav_source;               
+        this.UAV_SOURCE = uav_source;
         this.HOST = "localhost";
         this.PROTOCOL = "http://";
         this.PORT = 50000;
+        this.printLogOverhead = null;
+    }
+    
+    public DataAcquisition(Drone drone, String uav_source, PrintStream overhead) {
+        this.drone = drone;
+        this.UAV_SOURCE = uav_source;               
+        this.printLogOverhead = overhead;
+        this.HOST = "localhost";
+        this.PROTOCOL = "http://";
+        this.PORT = 50000;        
     }  
     
     public DataAcquisition(Drone drone, String uav_source, String host, 
-            String protocol, int port) {
+            String protocol, int port, PrintStream overhead) {
         this.drone = drone;
         this.UAV_SOURCE = uav_source;           
         this.HOST = host;
         this.PROTOCOL = protocol;
         this.PORT = port;
+        this.printLogOverhead = overhead;
     } 
     
     public void setDebug(boolean debug){
@@ -88,7 +105,10 @@ public class DataAcquisition {
             in.close();
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
-            System.out.println("Time in POST [" + typePost + "] method (ms): " + time);
+            if (printLogOverhead != null){
+                printLogOverhead.println("Time-in-POST(ms);" + typePost + ";" + time);
+                printLogOverhead.flush();
+            }
             return true;
         } catch (MalformedURLException ex) {
             StandardPrints.printMsgWarning("Warning [MalformedURLException]: POST()");
@@ -190,7 +210,10 @@ public class DataAcquisition {
             in.close();
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
-            System.out.println("Time in GET [" + typeGet + "] method (ms): " + time);
+            if (printLogOverhead != null){
+                printLogOverhead.println("Time-in-GET(ms);" + typeGet + ";" + time);
+                printLogOverhead.flush();
+            }
             return inputLine;
         } catch (MalformedURLException ex) {
             StandardPrints.printMsgWarning("Warning [MalformedURLException]: GET()");

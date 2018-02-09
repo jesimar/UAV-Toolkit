@@ -38,6 +38,10 @@ public class ReaderFileConfig {
     private String maxControl;    
     private String typeAltitudeDecay;
     
+    //alarm
+    private String dirAlarm;
+    private String cmdExecAlarm;
+    
     private double freqUpdateData;
     private int timeToFailure;
     private int levelMinBatteryToFail;
@@ -74,6 +78,9 @@ public class ReaderFileConfig {
             maxControl               = prop.getProperty("prop.replanner.max_control");
             typeAltitudeDecay        = prop.getProperty("prop.replanner.type_altitude_decay");
             
+            dirAlarm                 = prop.getProperty("prop.alarm.dir");
+            cmdExecAlarm             = prop.getProperty("prop.alarm.cmd_exec");
+            
             return true;
         } catch (FileNotFoundException ex){     
             StandardPrints.printMsgError2("Error [FileNotFoundException] ReaderLoadConfig()");
@@ -103,7 +110,10 @@ public class ReaderFileConfig {
         System.out.println(delta);
         System.out.println(maxVelocity);
         System.out.println(maxControl);        
-        System.out.println(typeAltitudeDecay);                             
+        System.out.println(typeAltitudeDecay);    
+        
+        System.out.println(dirAlarm);
+        System.out.println(cmdExecAlarm);
     }
     
     public boolean checkReadFields(){
@@ -211,5 +221,13 @@ public class ReaderFileConfig {
     
     public String getTypeAltitudeDecay() {
         return typeAltitudeDecay;
+    }
+    
+    public String getDirAlarm() {
+        return dirAlarm;
+    }
+
+    public String getCmdExecAlarm() {
+        return cmdExecAlarm;
     }
 }

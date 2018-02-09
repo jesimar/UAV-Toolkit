@@ -46,7 +46,7 @@ public class CommunicationControl {
     
     public void connectClient(){        
         try{
-            StandardPrints.printMsgEmph("Connecting in the IFA ...");
+            StandardPrints.printMsgEmph("connecting in the IFA ...");
             socket = new Socket(HOST, PORT);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
@@ -60,7 +60,7 @@ public class CommunicationControl {
     
     public void receiveData(){
         stateCommunication = StateCommunication.LISTENING;
-        
+        StandardPrints.printMsgEmph("listening to the connection with IFA...");
         Executors.newSingleThreadExecutor().execute(new Runnable(){            
             @Override
             public void run(){
@@ -68,7 +68,7 @@ public class CommunicationControl {
                     while (true){
                         String answer = input.readLine();
                         if (answer != null){
-                            System.out.println("Data IFA: " + answer);
+                            StandardPrints.printMsgYellow("Data IFA: " + answer);
                             if (answer.contains("HomeLocation: ")){
                                 String home = answer.substring(14);                               
                                 String h[] = home.split(", ");

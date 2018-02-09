@@ -48,6 +48,10 @@ public class ReaderFileConfig {
     private String dirController;
     private String cmdExecController;   
     
+    //buzzer
+    private String dirBuzzer;
+    private String cmdExecBuzzer;
+    
     private double freqUpdateData;
     private double altitudeRelative;
     private boolean isDynBetweenWpts;
@@ -90,8 +94,11 @@ public class ReaderFileConfig {
             fileFixedRouteDyn        = prop.getProperty("prop.fixed_route.file_waypoints_dyn");
             
             typeController           = prop.getProperty("prop.controller.type_controller");
-            dirController            = prop.getProperty("prop.controller.dir_controller");
+            dirController            = prop.getProperty("prop.controller.dir");
             cmdExecController        = prop.getProperty("prop.controller.cmd_exec");
+            
+            dirBuzzer                = prop.getProperty("prop.buzzer.dir");
+            cmdExecBuzzer            = prop.getProperty("prop.buzzer.cmd_exec");
                         
             return true;
         } catch (FileNotFoundException ex){     
@@ -129,6 +136,9 @@ public class ReaderFileConfig {
         System.out.println(typeController);
         System.out.println(dirController);
         System.out.println(cmdExecController);
+        
+        System.out.println(dirBuzzer);
+        System.out.println(cmdExecBuzzer);
     }
     
     public boolean checkReadFields(){
@@ -266,6 +276,14 @@ public class ReaderFileConfig {
 
     public String getCmdExecController() {
         return cmdExecController;
+    }
+    
+    public String getDirBuzzer() {
+        return dirBuzzer;
+    }
+
+    public String getCmdExecBuzzer() {
+        return cmdExecBuzzer;
     }
         
 }

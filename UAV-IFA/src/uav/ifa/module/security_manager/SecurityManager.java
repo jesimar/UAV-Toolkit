@@ -2,19 +2,17 @@ package uav.ifa.module.security_manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_acquisition.DataAcquisition;
-import uav.generic.struct.Command;
 import uav.generic.struct.Constants;
-import uav.generic.struct.Mission;
 import uav.generic.struct.Parameter;
 import uav.generic.struct.ParameterJSON;
-import uav.generic.struct.Waypoint;
-import uav.generic.struct.WaypointJSON;
 import uav.hardware.aircraft.Ararinha;
 import uav.hardware.aircraft.Drone;
 import uav.hardware.aircraft.iDroneAlpha;
@@ -42,6 +40,7 @@ public class SecurityManager {
     private final ReaderFileConfig config;
     
     private PrintStream printLogAircraft; 
+    private PrintStream printLogOverhead; 
     private StateIFA stateIFA;
     private StateMonitoring stateMonitoring;
         
@@ -69,7 +68,8 @@ public class SecurityManager {
         } else {
             drone = new iDroneAlpha();
         }
-        this.dataAcquisition = new DataAcquisition(drone, "IFA");
+        createFileLogOverhead();
+        this.dataAcquisition = new DataAcquisition(drone, "IFA", printLogOverhead);
         this.communicationControl = new CommunicationControl(drone);
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
         stateIFA = StateIFA.INITIALIZING;
@@ -95,6 +95,26 @@ public class SecurityManager {
                 
         stateIFA = StateIFA.INITIALIZED;
         StandardPrints.printMsgEmph("initialized ...");
+    }
+    
+    private void createFileLogOverhead(){
+        try {
+            int i = 0;
+            File file;
+            do{
+                i++;
+                file = new File("log-overhead" + i + ".csv");  
+            }while(file.exists());
+            printLogOverhead = new PrintStream(file);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogOverhead()");
+            ex.printStackTrace();
+            System.exit(0);
+        } catch(Exception ex){
+            StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
+            ex.printStackTrace();
+            System.exit(0);
+        }
     }
     
     private void createFileLogAircraft(){
@@ -255,6 +275,7 @@ public class SecurityManager {
                     try {
                         if (hasFailure()){//Verificar se a aeronave esta voando.
                             communicationControl.sendData("MOSA.STOP");
+                            actionTurnOnTheAlarm();
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));
                             break;
                         }
@@ -311,5 +332,27 @@ public class SecurityManager {
     
     private boolean hasFailure(){        
         return listOfFailure.size() > 0;
+    }
+    
+    private void actionTurnOnTheAlarm(){        
+        try {
+            boolean print = true;
+            File f = new File(config.getDirAlarm());
+            final Process comp = Runtime.getRuntime().exec(config.getCmdExecAlarm(), null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] actionTurnOnTheBuzzer()");
+        } 
     }
 }

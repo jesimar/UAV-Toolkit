@@ -135,10 +135,9 @@ def getAllInfoSensors(request):
     bat = vehicle.battery
     att = vehicle.attitude
     nextwpt = vehicle.commands.next
-    print 'next waypoint: ', nextwpt
-    print 'count waypoint: ', vehicle.commands.count
-    print 'distance to home: ', commands.getDistanceMeters(gps, vehicle.home_location)
-    print 'distance to current waypoint (%s): %s' % (nextwpt, commands.getDistanceToCurrentWaypoint(vehicle))
+    print 'next-waypoint = %s    count-waypoint = %s' % (nextwpt, vehicle.commands.count)
+    print 'dist-to-home: ', commands.getDistanceMeters(gps, vehicle.home_location)
+    print 'dist-to-current-wpt (%s): %s' % (nextwpt, commands.getDistanceToCurrentWaypoint(vehicle))
     return {
         'all-sensors': [gps.lat, gps.lon, gps.alt, alt_abs, bat.voltage, bat.current, bat.level, 
         att.pitch, att.yaw, att.roll, vehicle.heading, vehicle.groundspeed, 
@@ -151,20 +150,20 @@ def getAllInfoSensors(request):
 Este comando limpa a missao atual e adiciona um waypoint objetivo na aeronave
 '''
 def setWaypoint(request):
-    point = request['body']['waypoint']
+    waypoint = request['body']['waypoint']
     vehicle = request['vehicle']
     cmds = vehicle.commands
     cmds.clear()
     cmds.next = 0
-    if point['action'] == 'takeoff':
-        commands.takeoff(vehicle, point['alt'], cmds)
-    elif point['action'] == 'waypoint':
-        commands.goto(point['lat'], point['lng'], point['alt'], cmds)
-    elif point['action'] == 'land':
-        commands.land(point['lat'], point['lng'], cmds)
-    elif point['action'] == 'landv':
+    if waypoint['action'] == 'takeoff':
+        commands.takeoff(vehicle, waypoint['alt'], cmds)
+    elif waypoint['action'] == 'waypoint':
+        commands.goto(waypoint['lat'], waypoint['lng'], waypoint['alt'], cmds)
+    elif waypoint['action'] == 'land':
+        commands.land(waypoint['lat'], waypoint['lng'], cmds)
+    elif waypoint['action'] == 'landv':
         commands.landVertical(cmds)
-    elif point['action'] == 'rtl':
+    elif waypoint['action'] == 'rtl':
         commands.rtl(cmds)
     cmds.upload()
     commands.startmission(vehicle) #comando necessario caso o veiculo esteja no solo
@@ -189,20 +188,20 @@ Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
 todo o plano de voo (mesmo que ela estaja no ar) nao se pode chamar essa funcao.
 '''
 def appendWaypoint(request):
-    point = request['body']['waypoint']
+    waypoint = request['body']['waypoint']
     vehicle = request['vehicle']
     cmds = vehicle.commands
     cmds.download()
     cmds.wait_ready()
-    if point['action'] == 'takeoff':
-        commands.takeoff(vehicle, point['alt'], cmds)
-    elif point['action'] == 'waypoint':
-        commands.goto(point['lat'], point['lng'], point['alt'], cmds)
-    elif point['action'] == 'land':
-        commands.land(point['lat'], point['lng'], cmds)
-    elif point['action'] == 'landv':
+    if waypoint['action'] == 'takeoff':
+        commands.takeoff(vehicle, waypoint['alt'], cmds)
+    elif waypoint['action'] == 'waypoint':
+        commands.goto(waypoint['lat'], waypoint['lng'], waypoint['alt'], cmds)
+    elif waypoint['action'] == 'land':
+        commands.land(waypoint['lat'], waypoint['lng'], cmds)
+    elif waypoint['action'] == 'landv':
         commands.landVertical(cmds)
-    elif point['action'] == 'rtl':
+    elif waypoint['action'] == 'rtl':
         commands.rtl(cmds)
     cmds.upload()
     commands.startmission(vehicle) #comando necessario caso o veiculo esteja no solo
