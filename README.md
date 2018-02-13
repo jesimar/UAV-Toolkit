@@ -8,7 +8,7 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 * **Docs** -> Documentação escrita sobre esse projeto. Dissertação, Qualificação e Tutorial.
 * **Libs** -> Bibliotecas utilizadas nos projetos aqui descritos.
-* **Mission-Creator-4UAV** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
+* **Missions-Ardupilot-SITL** -> Agrupa um conjunto de missões para serem simuladas no ardupilot SITL.
 * **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA.
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA.
@@ -17,6 +17,7 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-IFA** -> Projeto em Java para gerenciamento da segurança em voo.
 * **UAV-Keyboard-Commands** -> Projeto em Java para controlar o drone utilizando comandos de teclado.
 * **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo.
+* **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave.
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave.
 * **UAV-Services-DroneKit** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.

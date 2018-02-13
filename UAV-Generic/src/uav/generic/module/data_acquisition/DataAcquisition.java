@@ -2,8 +2,6 @@ package uav.generic.module.data_acquisition;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -12,8 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lib.color.StandardPrints;
 import uav.generic.struct.HeadingJSON;
 import uav.generic.struct.Mission;
