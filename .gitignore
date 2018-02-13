@@ -3,7 +3,6 @@
 build/
 test/
 
-Missions-Ardupilot-SITL/
 Simulations-AutoFG-Waypoints/
 UAV-Text-Commands/
 
@@ -28,12 +27,7 @@ ManagerSITL/
 #ignorar todos os arquivos por nome e extensao
 
 cplex.jar
-
 mav.parm
 mav.tlog
 mav.tlog.raw
-
 exec-fgfs.sh 
-
-/UAV-Mission-Creator/nbproject/private/
-/UAV-Mission-Creator/dist/
