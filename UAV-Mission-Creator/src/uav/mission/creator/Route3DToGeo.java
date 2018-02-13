@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator;
+package uav.mission.creator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Scanner;
-import mission.creator.data.PointGeo;
-import mission.creator.data.Util;
-import mission.creator.data.UtilGeo;
-import mission.creator.file.LoadConfig;
+import uav.mission.creator.data.PointGeo;
+import uav.mission.creator.data.Util;
+import uav.mission.creator.data.UtilGeo;
+import uav.mission.creator.file.LoadConfig;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator.file;
+package uav.mission.creator.file;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +13,10 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
-import mission.creator.data.LineGeo;
-import mission.creator.data.Mission;
-import mission.creator.data.PointGeo;
-import mission.creator.data.PolyGeo;
+import uav.mission.creator.data.LineGeo;
+import uav.mission.creator.data.Mission;
+import uav.mission.creator.data.PointGeo;
+import uav.mission.creator.data.PolyGeo;
 
 /**
  *

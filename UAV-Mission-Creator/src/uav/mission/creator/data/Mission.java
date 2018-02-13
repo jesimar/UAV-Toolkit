@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator.data;
+package uav.mission.creator.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -225,6 +225,19 @@ public class Mission {
         for (PointGeo point : listPointGeo){
             if (point.getName().contains(KeyWords.WAYPOINT)){                
                 str += point.toString2();
+            }
+        }
+        return str;
+    }
+    
+    public String getWaypointsBuzzer(){
+        String str = "";
+        int i = 1;
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.WAYPOINT)){
+                str += "turn-on-the-buzzer_" + i + "\n";
+                str += point.toString2();
+                i++;
             }
         }
         return str;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator.data;
+package uav.mission.creator.data;
 
 import java.util.List;
 

@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import lib.color.StandardPrints;
 import uav.generic.module.data_acquisition.DataAcquisition;
 import uav.generic.struct.Constants;
@@ -74,13 +72,7 @@ public class MissionManager {
     public void init() {
         StandardPrints.printMsgEmph("initializing ...");    
         
-        try {
-            readerBuzzer.reader(new File("../Modules-MOSA/Turn-On-The-Buzzer/"
-                    + "waypointsTurnOnTheBuzzer.txt"));
-        } catch (FileNotFoundException ex) {
-            System.exit(0);
-        }
-        
+        readerFileBuzzer();        
         dataAcquisition.getParameters();
         
         communicationControl.connectClient();   //blocked        
@@ -113,6 +105,16 @@ public class MissionManager {
             System.exit(0);
         } catch(Exception ex){
             StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
+            ex.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    private void readerFileBuzzer(){
+        try {
+            readerBuzzer.reader(new File(config.getDirBuzzer() + config.getFileWaypointsBuzzer()));
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileBuzzer()");
             ex.printStackTrace();
             System.exit(0);
         }
@@ -226,7 +228,9 @@ public class MissionManager {
                 index = i;
             }
         }
-        wptsBuzzer.removeWaypoint(index);
+        if ( wptsBuzzer.size() > 0){
+            wptsBuzzer.removeWaypoint(index);
+        }
         if (distH < 2*Constants.ONE_METER && distV < FACTOR){            
             try {
                 boolean print = true;

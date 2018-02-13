@@ -51,6 +51,7 @@ public class ReaderFileConfig {
     //buzzer
     private String dirBuzzer;
     private String cmdExecBuzzer;
+    private String fileWaypointsBuzzer;
     
     private double freqUpdateData;
     private double altitudeRelative;
@@ -99,6 +100,7 @@ public class ReaderFileConfig {
             
             dirBuzzer                = prop.getProperty("prop.buzzer.dir");
             cmdExecBuzzer            = prop.getProperty("prop.buzzer.cmd_exec");
+            fileWaypointsBuzzer      = prop.getProperty("prop.buzzer.file_waypoints_buzzer");
                         
             return true;
         } catch (FileNotFoundException ex){     
@@ -138,7 +140,8 @@ public class ReaderFileConfig {
         System.out.println(cmdExecController);
         
         System.out.println(dirBuzzer);
-        System.out.println(cmdExecBuzzer);
+        System.out.println(cmdExecBuzzer);        
+        System.out.println(fileWaypointsBuzzer);
     }
     
     public boolean checkReadFields(){
@@ -285,5 +288,9 @@ public class ReaderFileConfig {
     public String getCmdExecBuzzer() {
         return cmdExecBuzzer;
     }
+    
+    public String getFileWaypointsBuzzer() {
+        return fileWaypointsBuzzer;
+    }    
         
 }

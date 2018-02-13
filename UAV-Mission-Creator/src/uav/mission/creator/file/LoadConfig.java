@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator.file;
+package uav.mission.creator.file;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,29 +35,31 @@ public class LoadConfig {
     private final String fileWaypointsMission;
     private final String fileWaypointsMissionGeo;
     private final String fileWaypointsMissionGeoSimple;
+    private final String fileWaypointsBuzzer;
     
     private final Properties prop = new Properties();
     private final InputStream input = new FileInputStream("./config.properties");
 
     public LoadConfig() throws FileNotFoundException, IOException {
         prop.load(input);
-        dirRoute3D = prop.getProperty("prop.dir_route3d");
-        fileRoute3D = prop.getProperty("prop.name_file_in_route3d");
-        fileGeoBaseIn = prop.getProperty("prop.name_file_in_geobase");
-        fileRouteGeo = prop.getProperty("prop.name_file_out_routegeo");
-        separatorRoute3D = prop.getProperty("prop.separator_in_route3d");
-        separatorGeoBaseIn = prop.getProperty("prop.separator_in_geobase");
-        separatorRouteGeo = prop.getProperty("prop.separator_out_routegeo"); 
-        isUsedKmlGoogleEarth = prop.getProperty("prop.is_used_kml_google_earth"); 
-        dirRouteKML = prop.getProperty("prop.dir_routekml"); 
-        fileRouteKML = prop.getProperty("prop.name_file_in_routekml"); 
-        fileGeoBaseOut = prop.getProperty("prop.name_file_out_geobase"); 
-        separatorGeoBaseOut = prop.getProperty("prop.separator_out_geobase");   
-        fileMapNFZ = prop.getProperty("prop.name_file_out_map_nfz"); 
-        fileMapFull = prop.getProperty("prop.name_file_out_map_full");
-        fileWaypointsMission = prop.getProperty("prop.name_file_out_waypoints_mission");
-        fileWaypointsMissionGeo = prop.getProperty("prop.name_file_out_waypoints_mission_geo");
-        fileWaypointsMissionGeoSimple = prop.getProperty("prop.name_file_out_waypoints_mission_geo_simple");
+        dirRoute3D = prop.getProperty("prop.route3dtogeo.dir");
+        fileRoute3D = prop.getProperty("prop.route3dtogeo.file_route");
+        fileGeoBaseIn = prop.getProperty("prop.route3dtogeo.file_geobase");
+        fileRouteGeo = prop.getProperty("prop.route3dtogeo.file_out_routegeo");
+        separatorRoute3D = prop.getProperty("prop.route3dtogeo.separator_in_route3d");
+        separatorGeoBaseIn = prop.getProperty("prop.route3dtogeo.separator_in_geobase");
+        separatorRouteGeo = prop.getProperty("prop.route3dtogeo.separator_out_routegeo"); 
+        isUsedKmlGoogleEarth = prop.getProperty("prop.route3dtogeo.is_used_kml_google_earth"); 
+        dirRouteKML = prop.getProperty("prop.processorkml.dir"); 
+        fileRouteKML = prop.getProperty("prop.processorkml.file_kml"); 
+        fileGeoBaseOut = prop.getProperty("prop.processorkml.file_out_geobase"); 
+        separatorGeoBaseOut = prop.getProperty("prop.processorkml.separator_out_geobase");   
+        fileMapNFZ = prop.getProperty("prop.processorkml.file_out_map_nfz"); 
+        fileMapFull = prop.getProperty("prop.processorkml.file_out_map_full");
+        fileWaypointsMission = prop.getProperty("prop.processorkml.file_out_waypoints_mission");
+        fileWaypointsMissionGeo = prop.getProperty("prop.processorkml.file_out_waypoints_mission_geo");
+        fileWaypointsMissionGeoSimple = prop.getProperty("prop.processorkml.file_out_waypoints_mission_geo_simple");
+        fileWaypointsBuzzer = prop.getProperty("prop.processorkml.file_out_waypoints_buzzer");
         //printProperties();        
     }
     
@@ -79,6 +81,7 @@ public class LoadConfig {
         System.out.println(fileWaypointsMission);
         System.out.println(fileWaypointsMissionGeo);
         System.out.println(fileWaypointsMissionGeoSimple);
+        System.out.println(fileWaypointsBuzzer);
     }
 
     public String getDirRoute3D() {
@@ -153,4 +156,8 @@ public class LoadConfig {
         return fileWaypointsMissionGeoSimple;
     } 
     
+    public String getFileWaypointsBuzzer() {
+        return fileWaypointsBuzzer;
+    } 
+
 }

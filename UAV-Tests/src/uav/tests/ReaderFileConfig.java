@@ -1,4 +1,4 @@
-package uav;
+package uav.tests;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

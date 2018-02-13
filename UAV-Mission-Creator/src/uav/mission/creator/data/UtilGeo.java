@@ -1,4 +1,4 @@
-package mission.creator.data;
+package uav.mission.creator.data;
 
 import java.io.PrintStream;
 import java.util.Locale;

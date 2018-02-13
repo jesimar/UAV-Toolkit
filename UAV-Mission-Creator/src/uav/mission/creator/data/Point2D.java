@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package mission.creator.data;
+package uav.mission.creator.data;
 
 /**
  *

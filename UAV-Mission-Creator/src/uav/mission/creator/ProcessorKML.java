@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mission.creator;
+package uav.mission.creator;
 
-import mission.creator.file.PreProcessorKML;
+import uav.mission.creator.file.PreProcessorKML;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
-import mission.creator.data.Mission;
-import mission.creator.data.Util;
-import mission.creator.file.LoadConfig;
-import mission.creator.file.PrinterMapSGL_NFZ;
-import mission.creator.file.PrinterMapSGL_IFA;
-import mission.creator.file.ReaderKML;
+import uav.mission.creator.data.Mission;
+import uav.mission.creator.data.Util;
+import uav.mission.creator.file.LoadConfig;
+import uav.mission.creator.file.PrinterMapSGL_NFZ;
+import uav.mission.creator.file.PrinterMapSGL_IFA;
+import uav.mission.creator.file.ReaderKML;
 
 /**
  *
@@ -91,14 +91,14 @@ public class ProcessorKML {
         printPointsMission.close();
         System.out.println("--------End WaypointsMission3D--------");
         
-        System.out.println("--------Begin WaypointsMission--------");
+        System.out.println("--------Begin WaypointsMissionGeo--------");
         String nameFilePointsMissionGeo = config.getFileWaypointsMissionGeo();
         File filePointsMissionGeo = new File(dir + nameFilePointsMissionGeo);
         PrintStream printPointsMissionGeo = new PrintStream(filePointsMissionGeo);
         String strPointsMissionGeo = mission.getWaypoints();
         printPointsMissionGeo.print(strPointsMissionGeo);
         printPointsMissionGeo.close();
-        System.out.println("--------End WaypointsMission--------");
+        System.out.println("--------End WaypointsMissionGeo--------");
         
         System.out.println("--------Begin WaypointsMissionSimple--------");
         String nameFilePointsMissionGeoSimple = config.getFileWaypointsMissionGeoSimple();
@@ -108,6 +108,15 @@ public class ProcessorKML {
         printPointsMissionGeoSimple.print(strPointsMissionGeoSimple);
         printPointsMissionGeoSimple.close();
         System.out.println("--------End WaypointsMissionSimple--------");
+        
+        System.out.println("--------Begin WaypointsBuzzer--------");
+        String nameFileWaypointsBuzzer = config.getFileWaypointsBuzzer();
+        File fileWaypointsBuzzer = new File(dir + nameFileWaypointsBuzzer);
+        PrintStream printWaypointsBuzzer = new PrintStream(fileWaypointsBuzzer);
+        String strWaypointsBuzzer = mission.getWaypointsBuzzer();
+        printWaypointsBuzzer.print(strWaypointsBuzzer);
+        printWaypointsBuzzer.close();
+        System.out.println("--------End WaypointsBuzzer--------");
         
 //        System.out.println("--------Begin PrinterFrontier--------");
 //        String nameFileFrontier = "map-frontier.sgl";
