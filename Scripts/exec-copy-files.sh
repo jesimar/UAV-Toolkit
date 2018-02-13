@@ -3,9 +3,9 @@
 #Date: 13/02/2018
 #Last Update: 13/02/2018
 
-DIR_FILES=Mission-Creator-4UAV/mission/kml/iros1/
-#DIR_FILES=Mission-Creator-4UAV/mission/kml/iros2/
-#DIR_FILES=Mission-Creator-4UAV/mission/kml/iros3/
+DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
+#DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
+#DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
 
 echo "copy file geoBase.txt to IFA and MOSA"
 cp ../$DIR_FILES/geoBase.txt ../Modules-IFA/DE4s/.
