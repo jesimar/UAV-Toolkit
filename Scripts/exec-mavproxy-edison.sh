@@ -1,6 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 16/11/2017
+#Last Update: 16/11/2017
 
 rm mav.parm
 rm mav.tlog

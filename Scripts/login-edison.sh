@@ -1,6 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 12/01/2018
+#Last Update: 13/02/2018
 
 #IP_EDISON=192.168.205.220  #IP para Rede LCR
 #IP_EDISON=172.28.107.227   #IP para Rede eduroam

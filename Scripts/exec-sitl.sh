@@ -1,6 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 19/10/2017
+#Last Update: 19/10/2017
 
 #-22.00593264981567;-47.89870966454083
 LAT=-22.00593264981567 #-22.005925 #-22.00587424417797	#latitude  inicial do drone: -22.005640
