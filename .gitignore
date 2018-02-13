@@ -2,7 +2,6 @@
 
 build/
 test/
-nbproject/private/
 
 Missions-Ardupilot-SITL/
 Simulations-AutoFG-Waypoints/
