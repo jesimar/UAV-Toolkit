@@ -8,7 +8,6 @@ Simulations-AutoFG-Waypoints/
 UAV-Text-Commands/
 
 Text-Commands/
-
 ProcessDataFG/
 ReaderKML/
 UAV-Routes/
@@ -36,3 +35,5 @@ mav.tlog.raw
 
 exec-fgfs.sh 
 
+/UAV-Mission-Creator/nbproject/private/
+/UAV-Mission-Creator/dist/
