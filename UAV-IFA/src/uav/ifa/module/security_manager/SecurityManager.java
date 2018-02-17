@@ -44,7 +44,7 @@ public class SecurityManager {
     private StateIFA stateIFA;
     private StateMonitoring stateMonitoring;
         
-    private long timeInit;
+    private long timeInitApp;
     private long timeActual;
     private final int SLEEP_TIME_WAITING_SERVER = 1000;//in milliseconds
     private final int SLEEP_TIME_WAITING_ACTION = 100;//in milliseconds
@@ -76,10 +76,8 @@ public class SecurityManager {
         stateMonitoring = StateMonitoring.WAITING;
     }
     
-    public void init() {
-        StandardPrints.printMsgEmph("initializing ...");                
-        timeInit = System.currentTimeMillis();
-        
+    public void init() {        
+        StandardPrints.printMsgEmph("initializing ...");        
         createFileLogAircraft();                //blocked
         waitingForTheServer();                  //blocked
         configParametersToFlight();             //blocked
@@ -89,12 +87,15 @@ public class SecurityManager {
         
         communicationControl.startServerIFA();  //blocked
         communicationControl.receiveData();     //Thread
+        
+        timeInitApp = System.currentTimeMillis();
         monitoringAircraft();                   //Thread
         waitingForAnAction();                   //Thread                
         monitoringStateMachine();               //Thread
                 
         stateIFA = StateIFA.INITIALIZED;
         StandardPrints.printMsgEmph("initialized ...");
+        timeInitApp = System.currentTimeMillis();
     }
     
     private void createFileLogOverhead(){
@@ -103,7 +104,7 @@ public class SecurityManager {
             File file;
             do{
                 i++;
-                file = new File("log-overhead" + i + ".csv");  
+                file = new File("log-overhead-ifa" + i + ".csv");  
             }while(file.exists());
             printLogOverhead = new PrintStream(file);
         } catch (FileNotFoundException ex) {
@@ -147,7 +148,7 @@ public class SecurityManager {
                 Thread.sleep(SLEEP_TIME_WAITING_SERVER);
                 serverIsRunning = dataAcquisition.serverIsRunning();
             }
-            Thread.sleep(3 * SLEEP_TIME_WAITING_SERVER);
+            Thread.sleep(SLEEP_TIME_WAITING_SERVER);
         } catch(InterruptedException ex){
             StandardPrints.printMsgError2("Error [InterruptedException]: waitingForTheServer()");
             ex.printStackTrace();
@@ -194,6 +195,7 @@ public class SecurityManager {
                 try {
                     while(stateIFA != StateIFA.DISABLED){            
                         timeActual = System.currentTimeMillis();
+                        System.out.print((timeActual - timeInitApp)/1000 + "  ");
                         dataAcquisition.getAllInfoSensors();
                         dataAcquisition.getDistanceToHome();
                         checkStatusSystem();
@@ -220,7 +222,12 @@ public class SecurityManager {
     
     //Adicionar ao sistema as seguintes falhas somente se o drone estiver voando 
     //caso contrario isso nao faz sentido.
-    private void checkStatusSystem(){        
+    private void checkStatusSystem(){ 
+        if (timeActual - timeInitApp > config.getTimeToFailure() * 1000 && 
+                !hasFailure(TypesOfFailures.FAIL_BASED_TIME)){
+            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_TIME));
+            StandardPrints.printMsgError("FAIL BASED TIME -> Time: "+drone.getTime());
+        }
         if (drone.getBattery().level < config.getLevelMinBatteryToFail() && 
                 !hasFailure(TypesOfFailures.FAIL_BATTERY)){
             listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BATTERY));
@@ -236,7 +243,8 @@ public class SecurityManager {
             listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_SYSTEM_IFA));
             StandardPrints.printMsgError("FAIL IFA -> Time: "+drone.getTime());
         }
-        if (communicationControl.isMosaDisabled() && 
+        if ((communicationControl.getStateCommunication() == StateCommunication.DISABLED || 
+                communicationControl.isMosaDisabled()) && 
                 !hasFailure(TypesOfFailures.FAIL_SYSTEM_MOSA)){
             listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_SYSTEM_MOSA));
             StandardPrints.printMsgError("FAIL MOSA -> Time: "+drone.getTime());
@@ -257,11 +265,6 @@ public class SecurityManager {
 //            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_AP_CRITICAL));
 //            StandardPrints.printMsgError("FAIL AP CRITICAL -> Time: "+drone.getTime());
 //        }
-//        if (timeActual - timeInit > config.getTimeToFailure() * 1000 && 
-//                !hasFailure(TypesOfFailures.FAIL_BASED_TIME)){
-//            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_TIME));
-//            StandardPrints.printMsgError("FAIL BASED TIME -> Time: "+drone.getTime());
-//        }
     }   
     
     //melhorar: por enquanto esta tratando apenas a primeira falha.
@@ -273,7 +276,8 @@ public class SecurityManager {
             public void run(){
                 while(stateIFA != StateIFA.DISABLED){
                     try {
-                        if (hasFailure()){//Verificar se a aeronave esta voando.
+                        //Melhorar verificacao para ver se a aeronave esta voando.
+                        if (drone.getStatusUAV().armed && hasFailure()){
                             communicationControl.sendData("MOSA.STOP");
                             actionTurnOnTheAlarm();
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));
@@ -295,18 +299,15 @@ public class SecurityManager {
             public void run(){
                 try {
                     while(stateIFA != StateIFA.DISABLED){                    
-                        if (communicationControl.getStateCommunication() == StateCommunication.DISABLED){
-                            stateIFA = StateIFA.DISABLED;
-                            decisonMaking.openParachute();//aqui pode-se rodar um emergencyLanding()
-                        }
                         if (decisonMaking.getStateReplanning()== StateReplanning.DISABLED){
                             stateIFA = StateIFA.DISABLED;
-                            decisonMaking.openParachute();
                         }
                         if (stateMonitoring == StateMonitoring.DISABLED){
                             stateIFA = StateIFA.DISABLED;
-                            decisonMaking.openParachute();
                         }
+//                        if (communicationControl.getStateCommunication() == StateCommunication.DISABLED){
+//                            stateIFA = StateIFA.DISABLED;                            
+//                        }
                         Thread.sleep(SLEEP_TIME_WAITING_CHANGE_STATES);                     
                     }
                 } catch (InterruptedException ex) {
@@ -323,7 +324,7 @@ public class SecurityManager {
     
     private boolean hasFailure(TypesOfFailures failure){        
         for (Failure fail : listOfFailure){
-            if (fail.failure == failure){
+            if (fail.typeOfFailure == failure){
                 return true;
             }
         }
@@ -334,7 +335,8 @@ public class SecurityManager {
         return listOfFailure.size() > 0;
     }
     
-    private void actionTurnOnTheAlarm(){        
+    private void actionTurnOnTheAlarm(){
+        StandardPrints.printMsgEmph("turn on the alarm");
         try {
             boolean print = true;
             File f = new File(config.getDirAlarm());

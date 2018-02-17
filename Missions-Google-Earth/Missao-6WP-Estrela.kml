@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-	<name>Missao-campo-teste.kml</name>
-	<Style id="s_ylw-pushpin_hl">
+	<name>Missao-6WP-Estrela.kml</name>
+	<visibility>0</visibility>
+	<Style id="s_ylw-pushpin00">
 		<IconStyle>
-			<scale>1.3</scale>
+			<scale>1.1</scale>
 			<Icon>
 				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
 			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 		</IconStyle>
 	</Style>
-	<StyleMap id="m_ylw-pushpin">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#s_ylw-pushpin</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="sn_blu-blank">
+	<Style id="sn_blu-blank00">
 		<IconStyle>
 			<scale>1.1</scale>
 			<Icon>
@@ -35,7 +26,36 @@
 			</ItemIcon>
 		</ListStyle>
 	</Style>
-	<Style id="sh_blu-blank">
+	<StyleMap id="msn_blu-blank00">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank00</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank000</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="s_ylw-pushpin_hl00">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<StyleMap id="m_ylw-pushpin00">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin00</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl00</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_blu-blank000">
 		<IconStyle>
 			<scale>1.3</scale>
 			<Icon>
@@ -48,31 +68,14 @@
 				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
 			</ItemIcon>
 		</ListStyle>
-	</Style>
-	<StyleMap id="msn_blu-blank">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_blu-blank</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_blu-blank</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="s_ylw-pushpin">
-		<IconStyle>
-			<scale>1.1</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
-			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
 	</Style>
 	<Folder>
 		<name>Missao-campo-teste</name>
+		<visibility>0</visibility>
 		<open>1</open>
 		<Placemark>
 			<name>geo_base</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89828252935613</longitude>
 				<latitude>-22.00608496669274</latitude>
@@ -82,7 +85,7 @@
 				<range>97.80843446652659</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<styleUrl>#m_ylw-pushpin00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89843017386297,-22.00626665467654,0</coordinates>
@@ -90,6 +93,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_1</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -99,7 +103,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89854892829972,-22.0060945872195,0</coordinates>
@@ -107,6 +111,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_2</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -116,7 +121,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89844148808512,-22.00590023459929,0</coordinates>
@@ -124,6 +129,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_3</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -133,7 +139,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89831925767778,-22.00609415995618,0</coordinates>
@@ -141,6 +147,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_4</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -150,7 +157,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89857809980452,-22.00597633607123,0</coordinates>
@@ -158,6 +165,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_5</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -167,7 +175,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89829608404748,-22.00598626960974,0</coordinates>
@@ -175,6 +183,7 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_6</name>
+			<visibility>0</visibility>
 			<LookAt>
 				<longitude>-47.89835335414829</longitude>
 				<latitude>-22.00598579872112</latitude>
@@ -184,7 +193,7 @@
 				<range>97.80843446438838</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank</styleUrl>
+			<styleUrl>#msn_blu-blank00</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.89853946935774,-22.00609958978181,0</coordinates>

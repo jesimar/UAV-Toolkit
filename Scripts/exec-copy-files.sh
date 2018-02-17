@@ -27,4 +27,4 @@ echo "copy file waypointsMission.txt to MOSA"
 cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/.
 
 echo "copy file waypointsBuzzer.txt to MOSA"
-cp ../$DIR_FILES/waypointsBuzzer.txt ../Modules-MOSA/Turn-On-The-Buzzer/.
+cp ../$DIR_FILES/waypointsBuzzer.txt ../Modules-MOSA/Buzzer4m/.

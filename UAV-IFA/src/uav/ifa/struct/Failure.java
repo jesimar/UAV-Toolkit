@@ -14,16 +14,16 @@ public class Failure {
     public double alt_rel;
     public double level_bat;
     public double satellitesvisible;
-    public TypesOfFailures failure;
+    public TypesOfFailures typeOfFailure;
     
-    public Failure(Drone drone, TypesOfFailures failure) {
+    public Failure(Drone drone, TypesOfFailures typeOfFailure) {
         this.time = drone.getTime();
         this.lat = drone.getGPS().lat;
         this.lng = drone.getGPS().lng;
         this.alt_rel = drone.getGPS().alt_rel;
         this.level_bat = drone.getBattery().level;
         this.satellitesvisible = drone.getGPSInfo().satellitesVisible;
-        this.failure = failure;
+        this.typeOfFailure = typeOfFailure;
     }
     
     public String title(){
@@ -33,7 +33,7 @@ public class Failure {
     @Override
     public String toString() {
         return time + ";"  + lat + ";" + lng + ";" + alt_rel + ";" + level_bat + 
-                ";" + satellitesvisible + ";" + TypesOfFailures.getTypeOfFailure(failure);
+                ";" + satellitesvisible + ";" + TypesOfFailures.getTypeOfFailure(typeOfFailure);
     }
     
 }

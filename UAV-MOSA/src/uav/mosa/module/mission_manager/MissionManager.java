@@ -96,7 +96,7 @@ public class MissionManager {
             File file;
             do{
                 i++;
-                file = new File("log-overhead" + i + ".csv");  
+                file = new File("log-overhead-mosa" + i + ".csv");  
             }while(file.exists());
             printLogOverhead = new PrintStream(file);
         } catch (FileNotFoundException ex) {
@@ -214,10 +214,13 @@ public class MissionManager {
         double distV = Integer.MAX_VALUE;
         double FACTOR = 0.5;
         int index = 0;
+        //Devido a forma como foi feito se tiver dois waypoints no mesmo lugar, 
+        //mas deve-se fazer o buzzer em diferentes momentos esse codigo nao funciona 
+        //muito bem. Por exemplo Case 3 artigo IROS.
         for (int i = 0; i < wptsBuzzer.size(); i++){
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
-            double altDestiny = wptsBuzzer.getWaypoint(i).getAlt();            
+            double altDestiny = config.getAltitudeRelative();            
             double distHActual = Math.sqrt(
                     (latDrone - latDestiny) * (latDrone - latDestiny) + 
                     (lngDrone - lngDestiny) * (lngDrone - lngDestiny));
@@ -227,11 +230,12 @@ public class MissionManager {
                 distV = distVActual;
                 index = i;
             }
-        }
-        if ( wptsBuzzer.size() > 0){
-            wptsBuzzer.removeWaypoint(index);
-        }
-        if (distH < 2*Constants.ONE_METER && distV < FACTOR){            
+        }        
+        if (distH < 2*Constants.ONE_METER && distV < FACTOR){   
+            if (wptsBuzzer.size() > 0){
+                wptsBuzzer.removeWaypoint(index);
+            }
+            StandardPrints.printMsgEmph("turn on the buzzer");
             try {
                 boolean print = true;
                 File f = new File(config.getDirBuzzer());
@@ -248,12 +252,9 @@ public class MissionManager {
                         sc.close();
                     }
                 });
-                comp.waitFor();
             } catch (IOException ex) {
                 StandardPrints.printMsgWarning("Warning [IOException] actionTurnOnTheBuzzer()");
-            } catch (InterruptedException ex) {
-                StandardPrints.printMsgWarning("Warning [InterruptedException] actionTurnOnTheBuzzer()");
-            }
+            } 
         }
     }
     

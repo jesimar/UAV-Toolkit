@@ -1,9 +1,12 @@
 package uav.ifa.module.decision_making;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
+import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_acquisition.DataAcquisition;
 import uav.generic.struct.Command;
@@ -43,20 +46,50 @@ public class DecisionMaking {
     
     public void actionToDoSomething(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (config.getSystemExec().equals(Constants.SYS_EXEC_REPLANNER)){            
-            boolean itIsOkEmergencyLanding = emergenyLanding(failure);
-            if (!itIsOkEmergencyLanding){
-                openParachute();
+        if (config.getSystemExec().equals(Constants.SYS_EXEC_REPLANNER)){
+            if (failure.typeOfFailure != null){
+                switch (failure.typeOfFailure) {
+                    case FAIL_AP_POWEROFF:
+                        openParachute();
+                        break;
+                    case FAIL_AP_EMERGENCY:
+                        openParachute();
+                        break;
+                    case FAIL_GPS:
+                        openParachute();
+                        break;
+                    case FAIL_SYSTEM_IFA:
+                        openParachute();
+                        break;
+                    case FAIL_BASED_TIME:
+                        //land(-22.00593264981567,-47.89870966454083);
+                        //landVertical();
+                        //RTL();
+                        //openParachute();
+                        execEmergencyLanding();
+                        break;
+                    case FAIL_BATTERY:
+                        execEmergencyLanding();
+                        break;
+                    case FAIL_SYSTEM_MOSA:
+                        execEmergencyLanding();
+                        break;
+                    default:
+                        break;
+                }
             }
-//            RTL();
-//            land(lat, lng);
-//            landVertical();
-//            openParachute();
         }
         stateReplanning = StateReplanning.READY;
     }
+    
+    private void execEmergencyLanding(){
+        boolean itIsOkEmergencyLanding = emergenyLanding();
+        if (!itIsOkEmergencyLanding){
+            openParachute();
+        }
+    }
 
-    private boolean emergenyLanding(Failure failure) {
+    private boolean emergenyLanding() {
         StandardPrints.printMsgEmph("decison making -> emergeny landing");
         switch (config.getMethodRePlanner()) {
             case "GH4s":
@@ -87,13 +120,17 @@ public class DecisionMaking {
             double lat = 0.0;
             double lng = 0.0;
             double alt = 0.0;
+            int i = 0;
             while ((sCurrentLine = br.readLine()) != null) {
                 sCurrentLine = UtilString.changeValueSeparator(sCurrentLine);
                 String s[] = sCurrentLine.split(";");
                 lat = Double.parseDouble(s[0]);
                 lng = Double.parseDouble(s[1]);
-                alt = Double.parseDouble(s[2]);            
-                mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));            
+                alt = Double.parseDouble(s[2]);
+                if (i > 3){
+                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));  
+                }
+                i++;
             }
             mission.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0)); 
             mission.printMission();
@@ -108,33 +145,52 @@ public class DecisionMaking {
         }
     }
     
-    //Nao funciona ainda
-    //melhorar no futuro
-    public void openParachute(){
-        StandardPrints.printMsgEmph("decison making -> open parachute");
-        Waypoint wpt = new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0);
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
-    }
-    
-    //Nao funciona ainda
-    private void RTL(){
-        StandardPrints.printMsgEmph("decison making -> rtl");
-        Waypoint wpt = new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0);        
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
-    }
-    
-    //Nao funciona ainda
+    //Este comando vai ate a posicao especificada e entao pousa verticalmente
+    //quando o veiculo eh um multi-rotor.
     private void land(double lat, double lng){ 
         StandardPrints.printMsgEmph("decison making -> land");
         Waypoint wpt = new Waypoint(Command.CMD_LAND, lat, lng, 0.0);
         dataAcquisition.setWaypoint(new WaypointJSON(wpt));
     }
     
-    //Nao funciona ainda
     private void landVertical(){ 
         StandardPrints.printMsgEmph("decison making -> land vertical");
         Waypoint wpt = new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0);
         dataAcquisition.setWaypoint(new WaypointJSON(wpt));
+    }
+    
+    private void RTL(){
+        StandardPrints.printMsgEmph("decison making -> rtl");
+        Waypoint wpt = new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0);        
+        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
+    }
+    
+    //melhorar no futuro
+    //Desarmar o motor e entao abrir o paraquedas.
+    private void openParachute(){
+        StandardPrints.printMsgEmph("decison making -> open parachute");
+        Waypoint wpt = new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0);//retirar essa linha
+        dataAcquisition.setWaypoint(new WaypointJSON(wpt));//retirar essa linha
+        
+        try {
+            boolean print = true;
+            File f = new File(config.getDirOpenParachute());
+            final Process comp = Runtime.getRuntime().exec(config.getCmdExecOpenParachute(), null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] openParachute()");
+        }
     }
     
     public StateReplanning getStateReplanning() {

@@ -33,14 +33,16 @@ public class ReaderFileConfig {
     private String fileGeoBase;    
     private String timeExec;
     private String qtdWaypoints;
-    private String delta;
-    private String maxVelocity;
-    private String maxControl;    
+    private String delta; 
     private String typeAltitudeDecay;
     
     //alarm
     private String dirAlarm;
     private String cmdExecAlarm;
+    
+    //alarm
+    private String dirOpenParachute;
+    private String cmdExecOpenParachute;
     
     private double freqUpdateData;
     private int timeToFailure;
@@ -74,12 +76,13 @@ public class ReaderFileConfig {
             timeExec                 = prop.getProperty("prop.replanner.time_exec");
             qtdWaypoints             = prop.getProperty("prop.replanner.qtd_waypoints");
             delta                    = prop.getProperty("prop.replanner.delta");
-            maxVelocity              = prop.getProperty("prop.replanner.max_velocity");
-            maxControl               = prop.getProperty("prop.replanner.max_control");
             typeAltitudeDecay        = prop.getProperty("prop.replanner.type_altitude_decay");
             
             dirAlarm                 = prop.getProperty("prop.alarm.dir");
             cmdExecAlarm             = prop.getProperty("prop.alarm.cmd_exec");
+            
+            dirOpenParachute         = prop.getProperty("prop.openparachute.dir");
+            cmdExecOpenParachute     = prop.getProperty("prop.openparachute.cmd_exec");
             
             return true;
         } catch (FileNotFoundException ex){     
@@ -108,12 +111,13 @@ public class ReaderFileConfig {
         System.out.println(timeExec);
         System.out.println(qtdWaypoints);
         System.out.println(delta);
-        System.out.println(maxVelocity);
-        System.out.println(maxControl);        
         System.out.println(typeAltitudeDecay);    
         
         System.out.println(dirAlarm);
         System.out.println(cmdExecAlarm);
+        
+        System.out.println(dirOpenParachute);
+        System.out.println(cmdExecOpenParachute);
     }
     
     public boolean checkReadFields(){
@@ -210,14 +214,6 @@ public class ReaderFileConfig {
     public String getDelta() {
         return delta;
     }
-
-    public String getMaxVelocity() {
-        return maxVelocity;
-    }
-
-    public String getMaxControl() {
-        return maxControl;
-    }
     
     public String getTypeAltitudeDecay() {
         return typeAltitudeDecay;
@@ -229,5 +225,13 @@ public class ReaderFileConfig {
 
     public String getCmdExecAlarm() {
         return cmdExecAlarm;
+    }
+    
+    public String getDirOpenParachute() {
+        return dirOpenParachute;
+    }
+
+    public String getCmdExecOpenParachute() {
+        return cmdExecOpenParachute;
     }
 }

@@ -123,7 +123,7 @@ public class DecisionMaking {
             }
             long timeFinal2 = System.currentTimeMillis();
             long time1 = timeFinal2 - timeInit2;
-            System.out.println("Time in Route (ms): " + time1);
+            StandardPrints.printMsgEmph("Time in Route (ms): " + time1);
         }
         
         Mission mission = new Mission();
@@ -141,7 +141,7 @@ public class DecisionMaking {
         
         long timeFinal1 = System.currentTimeMillis();
         long time1 = timeFinal1 - timeInit1;
-        System.out.println("Time in Missions (ms): " + time1);
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time1);
         return true;
     }
     
@@ -194,11 +194,11 @@ public class DecisionMaking {
             }
             long timeFinal2 = System.currentTimeMillis();
             long time1 = timeFinal2 - timeInit2;
-            System.out.println("Time in Route (ms): " + time1);
+            StandardPrints.printMsgEmph("Time in Route (ms): " + time1);
         }
         long timeFinal1 = System.currentTimeMillis();
         long time1 = timeFinal1 - timeInit1;
-        System.out.println("Time in Missions (ms): " + time1);
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time1);
         return true;
     }
     
@@ -301,7 +301,7 @@ public class DecisionMaking {
                 public void run() {
                     Scanner sc = new Scanner(comp.getErrorStream());
                     while (sc.hasNextLine()) {
-                        System.err.println("err:" + sc.nextLine());
+                        StandardPrints.printMsgError("err:" + sc.nextLine());
                     }
                     sc.close();
                 }

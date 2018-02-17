@@ -1,7 +1,8 @@
-#Autor: Jesimar da Silva Arantes
-#Data: 30/01/2018
-#Arquivo de configuracoes dos parameteros do AutoPilot.
-#Formato: NOME_DO_ATRIBUTO=VALOR
+#Author: Jesimar da Silva Arantes
+#Date: 30/01/2018
+#Last Update: 14/02/2018
+#Description: Configuration file of AutoPilot parameters.
+#Format: ATTRIBUTE_NAME=KEY
 
 RTL_ALT=1200.0
 WPNAV_RADIUS=50.0

@@ -46,7 +46,7 @@ public class CommunicationControl {
         try {
             StandardPrints.printMsgEmph("waiting a connection from MOSA ...");
             server = new ServerSocket(PORT);
-            socket = server.accept();//aguarda ate MOSA se conectar
+            socket = server.accept();//aguarda conexao
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             StandardPrints.printMsgEmph("MOSA connected in IFA ...");

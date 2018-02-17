@@ -301,7 +301,7 @@ Linear Delta
 ProOF.apl.UAV.abst.uncertainty.Delta
 <parameters number>
 1
-0.05
+0.10
 <node id>
 99
 <node type>
@@ -347,7 +347,7 @@ State Open Unc.
 ProOF.apl.UAV.gen.linear.uncertainty.LinearOpenStateUncertainty
 <parameters number>
 3
-0.25
+0.50
 0.0
 0.0
 <node id>
@@ -422,8 +422,8 @@ Dynamic dt
 ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$DynamicDt
 <parameters number>
 4
-14
-14
+8
+17
 2.0
 1.0
 <node id>

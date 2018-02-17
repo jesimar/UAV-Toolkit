@@ -1,6 +1,23 @@
 # Changelog
 
-## Version v1.0 (08/02/2018)
+## Version v1.1.0 (17/02/2018)
+
+### Features:
+
+* Inclusion of pre-planned files in Ardupilot-SITL (directory Missions-Ardupilot-SITL/)
+* Inclusion of directory Print-Screen (directory Print-Screen/)
+* Renamed Mission-Creator-4UAV to UAV-Mission-Creator
+* Renamed UAV-MOSA-C to UAV-Toolkit-C
+* Calibration of the Modules-IFA
+* Calibration of the Modules-MOSA
+* Added module OpenParachute in IFA
+* Added module Alarm in IFA
+* Added module Buzzer in MOSA
+* Added script exec-copy-files.sh
+* Added script list-ports-in-use.sh
+* Added script my-ip.sh
+
+## Version v1.0.0 (08/02/2018)
 
 ### Features:
 

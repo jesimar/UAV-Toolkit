@@ -32,7 +32,7 @@ def landVertical(cmds):
         mavutil.mavlink.MAV_CMD_NAV_LAND, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 
 '''
-Comando para fazer um Return To Launch (RTL).
+Comando para fazer retorno para posicao de lancamento ou Return To Launch (RTL).
 '''
 def rtl(cmds):
     cmds.add(Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, 
@@ -70,10 +70,12 @@ def defineHeading(vehicle, angle, direction, is_relative):
         is_relative, # param 4, relative offset 1, absolute angle 0
         0, 0, 0)     # param 5 ~ 7 not used
     vehicle.send_mavlink(msg)
-    
-#Retorna a distancia em solo em metros entre os objetos LocationGlobal
-#Esta distancia nao considera a dimensao altitude em seu calculo (distancia horizontal apenas)
-#Este metodo eh uma aproximacao. Nao tem boa precisao para grandes distancias e para distancias proximas aos polos da Terra
+
+'''    
+Comando para retornar a distancia em solo em metros entre os objetos LocationGlobal.
+Esta distancia nao considera a dimensao altitude em seu calculo (distancia horizontal apenas)
+Este metodo eh uma aproximacao. Nao tem boa precisao para grandes distancias e para distancias proximas aos polos da Terra
+'''
 def getDistanceMeters(location1, location2):
     if location1 is None:
         return -1
@@ -84,12 +86,17 @@ def getDistanceMeters(location1, location2):
         dlng = location2.lon - location1.lon
         return math.sqrt((dlat*dlat) + (dlng*dlng)) * 1.113195e5
 
-#Retorna a distancia em solo em metros para o waypoint atual (corrente).
-#Caso o waypoint corrente seja do tipo RTL ou LAND_VERTICAL entao a distancia retornada sera None.
-#Retorna None para o primeiro waypoint (Home location).
+'''
+Comando para retornar a distancia em solo em metros para o waypoint atual (corrente).
+Caso o waypoint corrente seja do tipo RTL ou LAND_VERTICAL entao a distancia retornada sera None.
+Retorna None para o primeiro waypoint (Home location).
+'''
 def getDistanceToCurrentWaypoint(vehicle):
     nextwaypoint = vehicle.commands.next
     if nextwaypoint==0:
+        return None
+    if nextwaypoint > vehicle.commands.count:
+        vehicle.commands.next = 0
         return None
     missionitem=vehicle.commands[nextwaypoint-1] #commands are zero indexed
     lat = missionitem.x
@@ -101,6 +108,9 @@ def getDistanceToCurrentWaypoint(vehicle):
     distancetopoint = getDistanceMeters(vehicle.location.global_frame, targetLocation)
     return distancetopoint
 
+'''
+Comando para armar e decolar a aeronave ate a altitude aTargetAltitude.
+'''
 def arm_and_takeoff(vehicle, aTargetAltitude, wait=True):
     print "Mode: ", vehicle.mode.name
     print "GPS: ", vehicle.gps_0.fix_type

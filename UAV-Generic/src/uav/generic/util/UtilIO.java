@@ -66,14 +66,12 @@ public class UtilIO {
     
     public static void copyFileMofifIfa(File src, File dst,
             String delta, int lineDelta, String wp, int lineWp, 
-            String timeH, int lineTimeH, String maxVel, int lineMaxVel, 
-            String maxCtrl, int lineMaxCtrl) throws FileNotFoundException {
+            String timeH, int lineTimeH) throws FileNotFoundException {
         Scanner sc = new Scanner(src);
         PrintStream print = new PrintStream(dst);
         int i = 1;
         while (sc.hasNextLine()) {
-            if (i != lineDelta && i != lineWp && i != lineTimeH &&
-                    i != lineMaxVel && i != lineMaxCtrl){
+            if (i != lineDelta && i != lineWp && i != lineTimeH){
                 print.println(sc.nextLine());
             } else if (i == lineDelta){
                 print.println(delta);
@@ -84,13 +82,7 @@ public class UtilIO {
             } else if (i == lineTimeH){
                 print.println(timeH);
                 sc.nextLine();
-            } else if (i == lineMaxVel){
-                print.println(maxVel);
-                sc.nextLine();
-            } else if (i == lineMaxCtrl){
-                print.println(maxCtrl);
-                sc.nextLine();
-            }
+            } 
             i++;
         }
         sc.close();

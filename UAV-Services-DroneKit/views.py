@@ -2,6 +2,12 @@ from dronekit import mavutil, VehicleMode, LocationGlobal
 import commands
 import time
 
+'''
+Comando que captura as informacoes do GPS.
+'''
+#Dica: trocar esse comando por dois comandos.
+#      getGPS -> retorna apenas a lat e lon.
+#      getBarometer -> retorna a altitude relativa e absoluta.
 def getGPS(request):
     vehicle = request['vehicle']
     gps = vehicle.location.global_relative_frame
@@ -11,9 +17,9 @@ def getGPS(request):
     }
 
 '''
-Obtem informacoes da bateria do drone.
-Este metodo necessita-se de power module em drone real.
-Em simulacoes SITL funciona normalmente
+Comando que obtem informacoes da bateria do drone.
+OBS: Necessita-se de power module para funcionar em drone real.
+     Em simulacoes SITL funciona normalmente
 '''
 def getBattery(request):
     vehicle = request['vehicle']
@@ -22,6 +28,9 @@ def getBattery(request):
         'bat': [bat.voltage, bat.current, bat.level]
     }
 
+'''
+Comando que obtem informacoes de pitch, yaw e roll.
+'''
 def getAttitude(request):
     vehicle = request['vehicle']
     att = vehicle.attitude
@@ -29,78 +38,105 @@ def getAttitude(request):
         'att': [att.pitch, att.yaw, att.roll]
     }
 
+'''
+Comando que obtem as informacoes de velocidade do drone.
+'''
 def getVelocity(request):
     vehicle = request['vehicle']
     return {
         'vel': vehicle.velocity
     }
 
+'''
+Comando que obtem a informacao de orientacao do drone.
+'''
 def getHeading(request):
     vehicle = request['vehicle']
     return {
         'heading': vehicle.heading
     }
 
+'''
+Comando que obtem a informacao de velocidade em relacao ao solo.
+'''
 def getGroundSpeed(request):
     vehicle = request['vehicle']
     return {
         'groundspeed': vehicle.groundspeed
     }
 
+'''
+Comando que obtem a informacao de velocidade em relacao ao ar.
+'''
 def getAirSpeed(request):
     vehicle = request['vehicle']
     return {
         'airspeed': vehicle.airspeed
     }
 
-"""
-Obtem informacoes do GPS.
+'''
+Comando que obtem informacoes do GPS.
   GPSInfo.fix_type           -> no fix, 2: 2D fix, 3: 3D fix
   GPSInfo.satellites_visible -> numero de satelites visiveis.
   GPSInfo.eph                -> GPS horizontal dilution of position (HDOP).
   GPSInfo.epv                -> GPS vertical   dilution of position (VDOP).
-"""
+'''
 def getGPSInfo(request):
     vehicle = request['vehicle']
     return {
         'gpsinfo': [vehicle.gps_0.fix_type, vehicle.gps_0.satellites_visible, vehicle.gps_0.eph, vehicle.gps_0.epv]
     }
 
+'''
+Comando que obtem informacoes do modo de voo.
+'''
 def getMode(request):
     vehicle = request['vehicle']
     return {
         'mode': vehicle.mode.name
     }
-    
+
+'''
+Comando que obtem informacoes do status de voo.
+'''
 def getSystemStatus(request):
     vehicle = request['vehicle']
     return {
         'system-status': vehicle.system_status.state
     }
 
+'''
+Comando que obtem informacoes se o drone esta armado.
+'''
 def getArmed(request):
     vehicle = request['vehicle']
     return {
         'armed': vehicle.armed
     }
 
+'''
+Comando que obtem informacoes se o drone eh armavel.
+'''
 def isArmable(request):
     vehicle = request['vehicle']
     return {
         'is-armable': vehicle.is_armable
     }
 
+'''
+Comando que obtem informacoes se o piloto automatico possui (Filtro de Kalman Estendido) EKF.
+'''
 def getEkfOk(request):
     vehicle = request['vehicle']
     return {
         'ekf-ok': vehicle.ekf_ok
     }
 
-"""
-Obtem o home-location
-O download do home-location eh necessario porque o ArduPilot implementa/armazena
-o home-location como um waypoint em vez de envia-lo como mensagens.
-"""
+'''
+Comando que obtem a localizacao do home (home-location).
+Nota: O download do home-location eh necessario porque o ArduPilot 
+implementa/armazena o home-location como um waypoint em vez de envia-lo como mensagens.
+'''
 #Nota: as vezes da alguns problemas devido ao uso do download() e wait_ready()
 #Em geral esses problemas nao levam a queda do drone (problema nao critico)
 def getHomeLocation(request):
@@ -112,6 +148,9 @@ def getHomeLocation(request):
         'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
     }
 
+'''
+Comando que obtem informacoes dos parametros do piloto automatico.
+'''
 def getParameters(request):
     vehicle = request['vehicle']
     param = ""
@@ -121,6 +160,9 @@ def getParameters(request):
         'parameters': param
     }
 
+'''
+Comando que obtem a distancia do drone ate o home-location.
+'''
 def getDistanceToHome(request):
     vehicle = request['vehicle']
     posAtual = vehicle.location.global_relative_frame
@@ -128,6 +170,9 @@ def getDistanceToHome(request):
         'distance-to-home': commands.getDistanceMeters(posAtual, vehicle.home_location)
     }
 
+'''
+Comando que obtem todas as informacoes dos sensores do drone em um unico comando.
+'''
 def getAllInfoSensors(request):
     vehicle = request['vehicle']
     gps = vehicle.location.global_relative_frame
@@ -147,7 +192,45 @@ def getAllInfoSensors(request):
     }
 
 '''
-Este comando limpa a missao atual e adiciona um waypoint objetivo na aeronave
+Comando que define novas valores para os parametros do piloto automatico.
+'''
+def setParameter(request):
+    parameter = request['body']['parameter']
+    vehicle = request['vehicle']
+    param = parameter['name'].encode()
+    value = parameter['value']
+    vehicle.parameters[param]=value
+    return {
+        'status-set-parameter': 'ok'
+    }
+
+'''
+Comando que troca o modo de voo do piloto automatico.
+'''
+def setMode(request):
+    vehicle = request['vehicle']
+    mode = request['body']
+    while vehicle.mode != VehicleMode(mode):
+        vehicle.mode = VehicleMode(mode)
+        time.sleep(0.5)
+    return True
+
+'''
+Comando que define a velocidade limite de voo.
+Os valores permitidos devem estar dentro do intervalo dado a seguir. Valores fora sao ignorados.
+0 m/s < velocidade < 20 m/s
+'''
+def setVelocity(request):
+    velocity = request['body']
+    vehicle = request['vehicle']
+    vehicle.groundspeed = velocity
+    vehicle.airspeed = velocity
+    return {
+        'status-set-velocity': 'ok'
+    }
+
+'''
+Comando que limpa a missao atual e adiciona um waypoint objetivo na aeronave
 '''
 def setWaypoint(request):
     waypoint = request['body']['waypoint']
@@ -273,30 +356,6 @@ def appendMission(request):
     }
 
 '''
-Este comando define a velocidade limite de voo.
-Os valores permitidos devem estar dentro do intervalo dado a seguir. Valores fora sao ignorados.
-0 m/s < velocidade < 20 m/s
-'''
-def setVelocity(request):
-    velocity = request['body']
-    vehicle = request['vehicle']
-    vehicle.groundspeed = velocity
-    vehicle.airspeed = velocity
-    return {
-        'status-set-velocity': 'ok'
-    }
-
-def setParameter(request):
-    parameter = request['body']['parameter']
-    vehicle = request['vehicle']
-    param = parameter['name'].encode()
-    value = parameter['value']
-    vehicle.parameters[param]=value
-    return {
-        'status-set-parameter': 'ok'
-    }
-
-'''
 Aeronave deve estar deslocando (em movimento) caso contrario nao funciona
 Angulo: apenas valores positivos (0 a 360)
 '''
@@ -316,17 +375,6 @@ def setHeading(request):
     return {
         'status-set-heading': 'ok'
     }
-'''
-Este comando troca o modo de voo do piloto automatico.
-'''
-def setMode(request):
-    vehicle = request['vehicle']
-    mode = request['body']
-    while vehicle.mode != VehicleMode(mode):
-        vehicle.mode = VehicleMode(mode)
-        time.sleep(0.5)
-    return True
-
 
 """
 Este comando limpa a missao corrente.
@@ -352,19 +400,14 @@ def download_mission(vehicle):
     cmds.wait_ready() # wait until download is complete.
 
 """
-Downloads the mission and returns the wp list and number of WP 
-	Input: 
-		vehicle
-	Return:
-		n_wp, wpList
+Downloads the mission and returns the wp list and number of WP.
 """
 def get_current_mission(vehicle):
     print "Downloading mission"
     download_mission(vehicle)
     missionList = []
-    n_WP        = 0
+    n_WP = 0
     for wp in vehicle.commands:
         missionList.append(wp)
-        n_WP += 1 
-    
+        n_WP += 1
     return n_WP, missionList

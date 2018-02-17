@@ -80,7 +80,7 @@ public class CommunicationControl {
                                 startMission = true;
                                 sendData("MOSA.STARTED");
                             } else if (answer.equals("MOSA.STOP")){
-                                stopMission = true;                      
+                                stopMission = true;
                                 sendData("MOSA.STOPPED");
                                 Thread.sleep(100);
                                 System.exit(0);
