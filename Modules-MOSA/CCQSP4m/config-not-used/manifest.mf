@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: lib/cplex.jar lib/jsc.jar lib/jdom.jar lib/gif4j_pro_trial_2.3.jar lib/Jama-1.0.3.jar lib/jgrapht-core-0.9.1.jar lib/Snake.jar
+Main-Class: ProOF.ProOF
