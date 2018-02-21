@@ -61,8 +61,8 @@ public class MissionManager {
         }
         createFileLogOverhead();
         this.dataAcquisition = new DataAcquisition(drone, "MOSA", printLogOverhead);
-        this.communicationControl = new CommunicationControl(drone);
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition); 
+        this.communicationControl = new CommunicationControl(drone, decisonMaking);
         this.wptsBuzzer = new Mission();
         this.readerBuzzer = new ReaderBuzzer(wptsBuzzer);        
         stateMOSA = StateMOSA.INITIALIZING;

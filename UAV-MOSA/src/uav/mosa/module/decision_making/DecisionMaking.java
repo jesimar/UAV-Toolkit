@@ -37,9 +37,9 @@ public class DecisionMaking {
     private final Drone drone;
     private final DataAcquisition dataAcquisition;
     private final ReaderFileConfig config;
-    private final Mission3D mission3D;
+    private final Mission3D waypointsMission3D;
     private Planner planner;
-    private StatePlanning statePlanning;
+    private StatePlanning statePlanning;    
     
     private final int SLEEP_TIME_CALC_NEW_ROUTE = 1000;//in milliseconds
     private final int SLEEP_TIME_NEXT_ROUTE = 20000;//in milliseconds
@@ -52,7 +52,7 @@ public class DecisionMaking {
         this.config = ReaderFileConfig.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;       
-        this.mission3D = new Mission3D();
+        this.waypointsMission3D = new Mission3D();
         this.statePlanning = StatePlanning.WAITING;       
     }
     
@@ -61,6 +61,7 @@ public class DecisionMaking {
         
         if (config.getSystemExec().equals(Constants.SYS_EXEC_PLANNER)){            
             boolean respM = sendMissionsToDrone();
+//            boolean respM = sendMissionsToDroneOriginal();
             if (respM){
                 statePlanning = StatePlanning.READY;
                 StandardPrints.printMsgEmph("send mission to drone with success");
@@ -97,13 +98,13 @@ public class DecisionMaking {
             return false;
         }
         if (config.getMethodPlanner().equals("HGA4m")){
-            planner = new HGA4m(drone, mission3D);
+            planner = new HGA4m(drone, waypointsMission3D);
         }
         planner.clearLogs();  
         
         statePlanning = StatePlanning.WAITING;//Para entar a primeira vez
         int nRoute = 0;
-        while (nRoute < mission3D.size() - 1 && statePlanning == StatePlanning.WAITING){
+        while (nRoute < waypointsMission3D.size() - 1 && statePlanning == StatePlanning.WAITING){
             long timeInit2 = System.currentTimeMillis();
             StandardPrints.printMsgEmph("route: " + nRoute);
             statePlanning = StatePlanning.PLANNING;
@@ -113,7 +114,7 @@ public class DecisionMaking {
             }
             statePlanning = StatePlanning.READY;
             nRoute++;
-            if (nRoute < mission3D.size() - 1){
+            if (nRoute < waypointsMission3D.size() - 1){
                 statePlanning = StatePlanning.WAITING;
                 try {
                     Thread.sleep(SLEEP_TIME_CALC_NEW_ROUTE);
@@ -128,7 +129,7 @@ public class DecisionMaking {
         
         Mission mission = new Mission();
         nRoute = 0;
-        while (nRoute < mission3D.size() - 1){
+        while (nRoute < waypointsMission3D.size() - 1){
             String path = config.getDirPlanner() + "routeGeo" + nRoute + ".txt";                
             boolean respFile = readFileRoute(mission, path, nRoute);
             if (!respFile){
@@ -138,6 +139,9 @@ public class DecisionMaking {
         }
         mission.printMission();
         dataAcquisition.setMission(mission);
+        
+//        planner.getMission3D().printMission();
+//        planner.getMissionGeo().printMission();
         
         long timeFinal1 = System.currentTimeMillis();
         long time1 = timeFinal1 - timeInit1;
@@ -154,13 +158,13 @@ public class DecisionMaking {
             return false;
         }
         if (config.getMethodPlanner().equals("HGA4m")){
-            planner = new HGA4m(drone, mission3D);
+            planner = new HGA4m(drone, waypointsMission3D);
         }
         planner.clearLogs();  
         
         statePlanning = StatePlanning.WAITING;//Para entar a primeira vez
         int nRoute = 0;
-        while (nRoute < mission3D.size() - 1 && statePlanning == StatePlanning.WAITING){
+        while (nRoute < waypointsMission3D.size() - 1 && statePlanning == StatePlanning.WAITING){
             long timeInit2 = System.currentTimeMillis();
             StandardPrints.printMsgEmph("route: " + nRoute);
             statePlanning = StatePlanning.PLANNING;
@@ -184,7 +188,7 @@ public class DecisionMaking {
             
             statePlanning = StatePlanning.READY;
             nRoute++;
-            if (nRoute < mission3D.size() - 1){
+            if (nRoute < waypointsMission3D.size() - 1){
                 statePlanning = StatePlanning.WAITING;
                 try {
                     Thread.sleep(SLEEP_TIME_CALC_NEW_ROUTE);
@@ -250,7 +254,7 @@ public class DecisionMaking {
                 }
                 wps.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));
             }   
-            if (nRoute == mission3D.size() - 2){
+            if (nRoute == waypointsMission3D.size() - 2){
                 if (config.getActionAfterFinishMission().equals(Constants.CMD_LAND)){
                     wps.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0));
                 }else if (config.getActionAfterFinishMission().equals(Constants.CMD_RTL)){
@@ -269,7 +273,7 @@ public class DecisionMaking {
     
     private boolean readMission(){
         try {
-            ReaderMission read = new ReaderMission(mission3D);
+            ReaderMission read = new ReaderMission(waypointsMission3D);
             String path = config.getDirPlanner() + config.getFileWaypointsMission();
             read.reader(new File(path));
             return true;
@@ -408,5 +412,9 @@ public class DecisionMaking {
     
     public StatePlanning getStatePlanning() {
         return statePlanning;
+    }
+    
+    public Planner getPlanner(){
+        return planner;
     }
 }

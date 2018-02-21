@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import uav.generic.struct.Mission;
-import uav.generic.struct.Position3D;
-import uav.generic.struct.Route3D;
 import uav.generic.struct.Waypoint;
 
 /**

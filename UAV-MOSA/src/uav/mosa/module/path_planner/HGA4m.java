@@ -8,6 +8,8 @@ import java.util.Scanner;
 import lib.color.StandardPrints;
 import uav.generic.struct.Mission3D;
 import uav.generic.struct.PointGeo;
+import uav.generic.struct.Position3D;
+import uav.generic.struct.Waypoint;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 import uav.hardware.aircraft.Drone;
@@ -18,8 +20,8 @@ import uav.hardware.aircraft.Drone;
  */
 public class HGA4m extends Planner{
     
-    public HGA4m(Drone drone, Mission3D pointsMission) {
-        super(drone, pointsMission);
+    public HGA4m(Drone drone, Mission3D waypointsMission) {
+        super(drone, waypointsMission);
     }   
     
     @Override
@@ -35,10 +37,10 @@ public class HGA4m extends Planner{
     @Override
     public boolean updateFileConfig(int i) {
         try {
-            double px1 = pointsMission.getPosition3D(i).getX();
-            double py1 = pointsMission.getPosition3D(i).getY();
-            double px2 = pointsMission.getPosition3D(i+1).getX();
-            double py2 = pointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition3D(i).getX();
+            double py1 = waypointsMission.getPosition3D(i).getY();
+            double px2 = waypointsMission.getPosition3D(i+1).getX();
+            double py2 = waypointsMission.getPosition3D(i+1).getY();
             double dx = px2 - px1;
             double dy = py2 - py1;
             //distancia mais uma margem de seguranca
@@ -65,15 +67,15 @@ public class HGA4m extends Planner{
     private double vy1 = 0.0;
     private boolean definePathAB(int i) {
         try {
-            double px1 = pointsMission.getPosition3D(i).getX();
-            double py1 = pointsMission.getPosition3D(i).getY();
-            double px2 = pointsMission.getPosition3D(i+1).getX();
-            double py2 = pointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition3D(i).getX();
+            double py1 = waypointsMission.getPosition3D(i).getY();
+            double px2 = waypointsMission.getPosition3D(i+1).getX();
+            double py2 = waypointsMission.getPosition3D(i+1).getY();
             double vx2 = 0;
             double vy2 = 0;
-            if (i < pointsMission.size() - 2){
-                double px3 = pointsMission.getPosition3D(i+2).getX();
-                double py3 = pointsMission.getPosition3D(i+2).getY();
+            if (i < waypointsMission.size() - 2){
+                double px3 = waypointsMission.getPosition3D(i+2).getX();
+                double py3 = waypointsMission.getPosition3D(i+2).getY();
                 double dx = px3 - px1;
                 double dy = py3 - py1;
                 double norm = Math.sqrt(dx*dx+dy*dy);
@@ -143,21 +145,28 @@ public class HGA4m extends Planner{
     }
     
     @Override
-    public boolean parseRoute3DtoGeo(int i){      
+    public boolean parseRoute3DtoGeo(int i){
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
             String nameFileRouteGeo = "routeGeo" + i + ".txt";
-            PointGeo pGeo = UtilGeo.getPointGeo(dir + config.getFileGeoBase());
+            PointGeo pGeoBase = UtilGeo.getPointGeo(dir + config.getFileGeoBase());
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
+            int countLines = 0;
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 double h = config.getAltitudeRelative();            
-                printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));
+                printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
+                mission3D.addPosition3D(new Position3D(x, y, h));
+                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
+                countLines++;
+            }
+            if (countLines == 0){
+                StandardPrints.printMsgWarning("Route-Empty");
             }
             readRoute3D.close();
             printGeo.close();

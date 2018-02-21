@@ -7,7 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.Position3D;
 import uav.hardware.aircraft.Drone;
+import uav.mosa.module.decision_making.DecisionMaking;
 import uav.mosa.struct.states.StateCommunication;
 
 /**
@@ -20,6 +22,7 @@ public class CommunicationControl {
     private BufferedReader input;
     private PrintWriter output;         
     private final Drone drone;
+    private final DecisionMaking decisionMaking;
     private StateCommunication stateCommunication;
     
     private final String HOST;
@@ -28,8 +31,9 @@ public class CommunicationControl {
     private boolean startMission;
     private boolean stopMission;
     
-    public CommunicationControl(Drone drone){      
+    public CommunicationControl(Drone drone, DecisionMaking decisionMaking){      
         this.drone = drone;
+        this.decisionMaking = decisionMaking;
         this.HOST = "localhost";
         this.PORT = 5555;
         stateCommunication = StateCommunication.WAITING;
@@ -37,8 +41,9 @@ public class CommunicationControl {
         stopMission = false;
     }
     
-    public CommunicationControl(Drone drone, String host, int port){      
+    public CommunicationControl(Drone drone, DecisionMaking decisionMaking, String host, int port){      
         this.drone = drone;
+        this.decisionMaking = decisionMaking;
         this.HOST = host;
         this.PORT = port;
         stateCommunication = StateCommunication.WAITING;
@@ -79,6 +84,9 @@ public class CommunicationControl {
                             } else if (answer.equals("MOSA.START")){
                                 startMission = true;
                                 sendData("MOSA.STARTED");
+                            } else if (answer.equals("MOSA.GET_LOCATION_FUTURE")){
+                                Position3D p = decisionMaking.getPlanner().getMission3D().getPosition3D(5);
+                                sendData("LOCATION_FUTURE: " + p.string());
                             } else if (answer.equals("MOSA.STOP")){
                                 stopMission = true;
                                 sendData("MOSA.STOPPED");
