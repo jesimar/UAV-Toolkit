@@ -25,6 +25,7 @@ public class ReaderFileConfig {
     private String fileLogAircraft;
     private String levelBatteryToFail;
     private String timeToFail;
+    private String uavInsertFailure;
     
     //replanner
     private String methodRePlanner;
@@ -47,6 +48,7 @@ public class ReaderFileConfig {
     private double freqUpdateData;
     private int timeToFailure;
     private int levelMinBatteryToFail;
+    private boolean isUavInsertFailure;
 
     private ReaderFileConfig() {
         
@@ -68,6 +70,7 @@ public class ReaderFileConfig {
             fileLogAircraft          = prop.getProperty("prop.global.file_log_aircraft");
             levelBatteryToFail       = prop.getProperty("prop.global.level_min_battery_to_fail");
             timeToFail               = prop.getProperty("prop.global.time_to_fail");
+            uavInsertFailure         = prop.getProperty("prop.global.uav_insert_failure");
             
             methodRePlanner          = prop.getProperty("prop.replanner.method");
             dirRePlanner             = prop.getProperty("prop.replanner.dir");
@@ -103,6 +106,7 @@ public class ReaderFileConfig {
         System.out.println(fileLogAircraft);        
         System.out.println(levelBatteryToFail);
         System.out.println(timeToFail);
+        System.out.println(uavInsertFailure);
         
         System.out.println(methodRePlanner);
         System.out.println(dirRePlanner);
@@ -155,6 +159,7 @@ public class ReaderFileConfig {
             freqUpdateData = Double.parseDouble(freqUpdateDataAP);
             levelMinBatteryToFail = Integer.parseInt(levelBatteryToFail);
             timeToFailure = Integer.parseInt(timeToFail);
+            isUavInsertFailure = Boolean.parseBoolean(uavInsertFailure);
             return true;
         }catch (NumberFormatException ex){
             StandardPrints.printMsgError2("Error [NumberFormatException] parseToVariables()");
@@ -185,6 +190,10 @@ public class ReaderFileConfig {
     
     public int getTimeToFailure() {
         return timeToFailure;
+    }
+    
+    public boolean isUavInsertFailure() {
+        return isUavInsertFailure;
     }
     
     public String getMethodRePlanner() {

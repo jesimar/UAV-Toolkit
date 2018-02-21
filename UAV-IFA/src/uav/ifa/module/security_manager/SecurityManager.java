@@ -19,6 +19,7 @@ import uav.hardware.aircraft.iDroneAlpha;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.struct.ReaderFileConfig;
 import uav.ifa.module.communication_control.CommunicationControl;
+import uav.ifa.module.communication_control.CommunicationFailure;
 import uav.ifa.struct.Failure;
 import uav.ifa.struct.ReaderFileParam;
 import uav.ifa.struct.TypesOfFailures;
@@ -36,6 +37,7 @@ public class SecurityManager {
     private final Drone drone;
     private final DataAcquisition dataAcquisition;
     private final CommunicationControl communicationControl;
+    private CommunicationFailure communicationFailure;
     private final DecisionMaking decisonMaking;
     private final ReaderFileConfig config;
     
@@ -71,6 +73,9 @@ public class SecurityManager {
         createFileLogOverhead();
         this.dataAcquisition = new DataAcquisition(drone, "IFA", printLogOverhead);
         this.communicationControl = new CommunicationControl(drone);
+        if (config.isUavInsertFailure()){
+            this.communicationFailure = new CommunicationFailure();
+        }
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
         stateIFA = StateIFA.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
@@ -84,6 +89,11 @@ public class SecurityManager {
         
         dataAcquisition.getParameters();
         dataAcquisition.getHomeLocation();
+        
+        if (config.isUavInsertFailure()){
+            communicationFailure.startServerFailure();//blocked
+            communicationFailure.receiveData();     //Thread
+        }
         
         communicationControl.startServerIFA();  //blocked
         communicationControl.receiveData();     //Thread
@@ -222,7 +232,14 @@ public class SecurityManager {
     
     //Adicionar ao sistema as seguintes falhas somente se o drone estiver voando 
     //caso contrario isso nao faz sentido.
-    private void checkStatusSystem(){ 
+    private void checkStatusSystem(){
+        if (config.isUavInsertFailure() && 
+                communicationFailure.getFailure() && 
+                !hasFailure(TypesOfFailures.FAIL_BASED_INSERT_FAILURE)){
+            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_INSERT_FAILURE));
+            decisonMaking.setTypeAction(communicationFailure.getTypeAction());
+            StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: "+drone.getTime());
+        }
         if (timeActual - timeInitApp > config.getTimeToFailure() * 1000 && 
                 !hasFailure(TypesOfFailures.FAIL_BASED_TIME)){
             listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_TIME));
@@ -278,6 +295,7 @@ public class SecurityManager {
                     try {
                         //Melhorar verificacao para ver se a aeronave esta voando.
                         if (drone.getStatusUAV().armed && hasFailure()){
+//                            communicationControl.sendData("MOSA.GET_LOCATION_FUTURE");
                             communicationControl.sendData("MOSA.STOP");
                             actionTurnOnTheAlarm();
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));

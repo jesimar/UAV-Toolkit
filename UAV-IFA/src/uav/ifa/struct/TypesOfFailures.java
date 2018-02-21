@@ -8,7 +8,7 @@ public enum TypesOfFailures {
     
     FAIL_GENERIC, FAIL_ENGINE, FAIL_BATTERY, FAIL_GPS, FAIL_SYSTEM_MOSA, 
     FAIL_SYSTEM_IFA, FAIL_BASED_TIME, FAIL_AP_CRITICAL, FAIL_AP_EMERGENCY, 
-    FAIL_AP_POWEROFF;
+    FAIL_AP_POWEROFF, FAIL_BASED_INSERT_FAILURE;
     
     public static int getStatus(TypesOfFailures failure){
         switch (failure) {
@@ -32,6 +32,8 @@ public enum TypesOfFailures {
                 return 8;
             case FAIL_AP_POWEROFF:
                 return 9;
+            case FAIL_BASED_INSERT_FAILURE:
+                return 10;
             default:
                 return -1;
         }
@@ -59,6 +61,8 @@ public enum TypesOfFailures {
                 return TypesOfFailures.FAIL_AP_EMERGENCY;
             case 9: 
                 return TypesOfFailures.FAIL_AP_POWEROFF;
+            case 10: 
+                return TypesOfFailures.FAIL_BASED_INSERT_FAILURE;
             default:
                 return TypesOfFailures.FAIL_GENERIC;
         }        
@@ -86,6 +90,8 @@ public enum TypesOfFailures {
                 return "FAIL_AP_EMERGENCY";  
             case FAIL_AP_POWEROFF:
                 return "FAIL_AP_POWEROFF";  
+            case FAIL_BASED_INSERT_FAILURE:
+                return "FAIL_BASED_INSERT_FAILURE";  
             default:
                 return "null";
         }

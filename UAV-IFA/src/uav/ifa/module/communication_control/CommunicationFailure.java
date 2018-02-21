@@ -3,63 +3,48 @@ package uav.ifa.module.communication_control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.hardware.aircraft.Drone;
-import uav.ifa.struct.states.StateCommunication;
 
 /**
  *
  * @author jesimar
  */
-public class CommunicationControl {
+public class CommunicationFailure {
     
     private ServerSocket server;
     private Socket socket;
     private BufferedReader input;
-    private PrintWriter output;
-    private final Drone drone;
-    private StateCommunication stateCommunication;
-    private boolean mosaDisabled;
 
     private final int PORT;
-    private final int SLEEP_TIME_RECEIVE_MSG = 100;    
+    private final int SLEEP_TIME_RECEIVE_MSG = 200;
+    private boolean failure = false;
+    private String typeAction = "";
 
-    public CommunicationControl(Drone drone) {
-        this.drone = drone;
-        this.PORT = 5555;
-        stateCommunication = StateCommunication.WAITING;
-        mosaDisabled = false;
+    public CommunicationFailure() {
+        this.PORT = 5556;
     }
 
-    public CommunicationControl(Drone drone, int port) {
-        this.drone = drone;
+    public CommunicationFailure(int port) {
         this.PORT = port;
-        stateCommunication = StateCommunication.WAITING;
-        mosaDisabled = false;
     }
 
-    public void startServerIFA() {
+    public void startServerFailure() {
         try {
-            StandardPrints.printMsgEmph("waiting a connection from MOSA ...");
+            StandardPrints.printMsgEmph("waiting a connection to UAV-Insert-Failure ...");
             server = new ServerSocket(PORT);
             socket = server.accept();//aguarda conexao
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new PrintWriter(socket.getOutputStream(), true);
-            StandardPrints.printMsgEmph("MOSA connected in IFA ...");
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] startServerIFA()");
+            StandardPrints.printMsgWarning("Warning [IOException] startServerFailure()");
             ex.printStackTrace();
-            stateCommunication = StateCommunication.DISABLED;
         }
     }
 
     public void receiveData() {
-        stateCommunication = StateCommunication.LISTENING;
-        StandardPrints.printMsgEmph("listening to the connection with MOSA...");
+        StandardPrints.printMsgEmph("listening to the connection of UAV-Insert-Failure ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -67,16 +52,16 @@ public class CommunicationControl {
                     while (true) {
                         String answer = input.readLine();
                         if (answer != null) {
-                            StandardPrints.printMsgYellow("Data MOSA: " + answer);
-                            if (answer.equals("StateMOSA.INITIALIZED")){
-                                sendData("HomeLocation: " + drone.getHomeLocation().string());
-                                sendData("MOSA.START");
-                            } else if (answer.equals("MOSA.STARTED")){
-                                //Nao precisa fazer nada
-                            } else if (answer.equals("MOSA.STOPPED")){
-                                //Nao precisa fazer nada
-                            } else if (answer.equals("StateMOSA.DISABLED")){
-                                mosaDisabled = true;
+                            StandardPrints.printMsgYellow("Data FAILURE: " + answer);
+                            if (answer.equals("MPGA")){
+                                failure = true;
+                                typeAction = "MPGA";
+                            } else if (answer.equals("LAND")){
+                                failure = true;
+                                typeAction = "LAND";
+                            } else if (answer.equals("RTL")){
+                                failure = true;
+                                typeAction = "RTL";
                             }
                         } else {
                             Thread.sleep(SLEEP_TIME_RECEIVE_MSG);
@@ -85,40 +70,30 @@ public class CommunicationControl {
                 } catch (InterruptedException ex) {
                     StandardPrints.printMsgWarning("Warning [InterruptedException] receiveData()");
                     ex.printStackTrace();
-                    stateCommunication = StateCommunication.DISABLED;
                 } catch (IOException ex) {
                     StandardPrints.printMsgWarning("Warning [IOException] receiveData()");
                     ex.printStackTrace();
-                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
 
-    public void sendData(String msg) {
-        output.println(msg);
-    }
-
     public void close() {
         try {
-            output.close();
             input.close();
             socket.close();
             server.close();
-            stateCommunication = StateCommunication.DISABLED;
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] close()");
             ex.printStackTrace();
-            stateCommunication = StateCommunication.DISABLED;
         }
     }
     
-    public StateCommunication getStateCommunication() {
-        return stateCommunication;
-    } 
-
-    public boolean isMosaDisabled() {
-        return mosaDisabled;
+    public boolean getFailure(){
+        return failure;
     }
-
+    
+    public String getTypeAction(){
+        return typeAction;
+    }
 }

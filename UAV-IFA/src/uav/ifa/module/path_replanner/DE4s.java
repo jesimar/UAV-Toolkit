@@ -75,6 +75,7 @@ public class DE4s extends Replanner{
             double h = drone.getGPS().alt_rel;
             int qtdWpt = UtilIO.getLineNumber(new File(dir + nameFileRoute3D));
             double frac = h/qtdWpt;
+            int countLines = 0;
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
@@ -84,6 +85,10 @@ public class DE4s extends Replanner{
                     h = h - h/qtdWpt;//Falta Terminar
                 }
                 printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));
+                countLines++;
+            }
+            if (countLines == 0){
+                StandardPrints.printMsgWarning("Route-Empty");
             }
             readRoute3D.close();            
             printGeo.close();

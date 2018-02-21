@@ -36,6 +36,7 @@ public class DecisionMaking {
     private final ReaderFileConfig config;
     private Replanner replanner;
     private StateReplanning stateReplanning;
+    private String typeAction = "";
     
     public DecisionMaking(Drone drone, DataAcquisition dataAcquisition) {
         this.config = ReaderFileConfig.getInstance();
@@ -61,6 +62,12 @@ public class DecisionMaking {
                     case FAIL_SYSTEM_IFA:
                         openParachute();
                         break;
+                    case FAIL_BATTERY:
+                        execEmergencyLanding();
+                        break;
+                    case FAIL_SYSTEM_MOSA:
+                        execEmergencyLanding();
+                        break;
                     case FAIL_BASED_TIME:
                         //land(-22.00593264981567,-47.89870966454083);
                         //landVertical();
@@ -68,11 +75,14 @@ public class DecisionMaking {
                         //openParachute();
                         execEmergencyLanding();
                         break;
-                    case FAIL_BATTERY:
-                        execEmergencyLanding();
-                        break;
-                    case FAIL_SYSTEM_MOSA:
-                        execEmergencyLanding();
+                    case FAIL_BASED_INSERT_FAILURE:
+                        if (typeAction.equals("MPGA")){
+                            execEmergencyLanding();
+                        } else if (typeAction.equals("LAND")){
+                            landVertical();
+                        } else if (typeAction.equals("RTL")){
+                            RTL();
+                        }                        
                         break;
                     default:
                         break;
@@ -127,7 +137,7 @@ public class DecisionMaking {
                 lat = Double.parseDouble(s[0]);
                 lng = Double.parseDouble(s[1]);
                 alt = Double.parseDouble(s[2]);
-                if (i > 3){
+                if (i > 1){
                     mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));  
                 }
                 i++;
@@ -195,6 +205,10 @@ public class DecisionMaking {
     
     public StateReplanning getStateReplanning() {
         return stateReplanning;
+    }
+    
+    public void setTypeAction(String action){
+        this.typeAction = action;
     }
     
 }
