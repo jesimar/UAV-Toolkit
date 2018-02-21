@@ -204,7 +204,7 @@ Time
 ProOF.gen.stopping.Time
 <parameters number>
 1
-6.0
+5.0
 <node id>
 131
 <node type>
@@ -312,8 +312,8 @@ Blackmore Plot
 ProOF.apl.UAV.mission.Blackmore.BlackmorePlot
 <parameters number>
 4
-1
-1
+0
+0
 0
 2.5
 <node id>

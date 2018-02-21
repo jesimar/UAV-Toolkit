@@ -5,6 +5,7 @@ Este diretório é responsável por agrupar um conjunto de algoritmos usados pel
 Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento de rotas pelo MOSA.
 
 * **HGA4m** ->  *Hybrid Genetic Algorithm for mission* - Utiliza um algoritmo genético híbrido (com resolução de modelo matemático) para encontrar a rota.
+* **CCQSP4m** -> *Chance Constraint Qualitative State Plan* - Utiliza um algoritmo baseado em Programação Linear Inteira-Mista para encontrar a rota.
 
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.
 
