@@ -10,6 +10,7 @@ Os scripts mais importantes e utilizados são:
 * **exec-mavproxy-edison.sh** -> Executa o MAVProxy na máquina local. Usado em experimentos com o drone real.
 * **exec-services-dronekit.sh** -> Executa um serviço para prover informações sobre o drone.
 * **exec-ifa.sh** -> Executa o sistema IFA para gerenciamento da segurança em voo.
+* **exec-insert-failure.sh** -> Executa o sistema UAV-Insert-Failure para inserção de falha na aeronave no momento desejado.
 * **exec-mosa.sh** -> Executa o sistema MOSA para gerenciamento da missão em voo.
 * **exec-tests.sh** -> Executa o sistema UAV-Tests para testar as funcionalidades do UAV-Services-Dronekit.
 * **exec-monitoring.sh** -> Executa o sistema UAV-Monitoring para monitoramento dos sensores do drone.
