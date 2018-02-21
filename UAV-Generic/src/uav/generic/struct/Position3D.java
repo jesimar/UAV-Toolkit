@@ -47,7 +47,11 @@ public class Position3D extends Position{
 
     public void setZ(double z) {
         this.z = z;
-    }   
+    }
+    
+    public String string() {
+        return x + ", " + y + ", " + z;
+    }
     
     @Override
     public String toString() {
