@@ -60,8 +60,8 @@ public class DecisionMaking {
         statePlanning = StatePlanning.PLANNING;
         
         if (config.getSystemExec().equals(Constants.SYS_EXEC_PLANNER)){            
-            boolean respM = sendMissionsToDrone();
-//            boolean respM = sendMissionsToDroneOriginal();
+//            boolean respM = sendMissionsToDrone();
+            boolean respM = sendMissionsToDroneOriginal();
             if (respM){
                 statePlanning = StatePlanning.READY;
                 StandardPrints.printMsgEmph("send mission to drone with success");
