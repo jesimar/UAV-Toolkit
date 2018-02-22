@@ -48,7 +48,7 @@ public class HGA4m extends Planner{
             
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = config.getTimeExec();
+            String time = config.getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
             String qtdWpt = String.format("%d", (int)(dist/2));//usando metade dos waypoints DeltaT=2
             String delta = config.getDelta();

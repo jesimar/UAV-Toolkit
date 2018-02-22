@@ -237,8 +237,15 @@ public class ReaderFileConfig {
         return fileGeoBase;
     }
 
-    public String getTimeExec() {
-        return timeExec;
+    public String getTimeExec(int i) {
+        if (!timeExec.contains("[")){
+            return timeExec;
+        }else{
+            String str = timeExec.replace("[", "");
+            str = timeExec.replace("]", "");
+            String v[] = str.split(",");
+            return v[i];
+        }
     }
 
     public String getDelta() {
