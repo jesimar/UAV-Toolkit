@@ -60,8 +60,9 @@ public class DecisionMaking {
         statePlanning = StatePlanning.PLANNING;
         
         if (config.getSystemExec().equals(Constants.SYS_EXEC_PLANNER)){            
-//            boolean respM = sendMissionsToDrone();
-            boolean respM = sendMissionsToDroneOriginal();
+//            boolean respM = sendMissionsToDroneCalcGround();
+//            boolean respM = sendMissionsToDroneCalcAir();
+            boolean respM = sendMissionsToDroneCalcGroundAndAir();
             if (respM){
                 statePlanning = StatePlanning.READY;
                 StandardPrints.printMsgEmph("send mission to drone with success");
@@ -90,9 +91,9 @@ public class DecisionMaking {
         }
     }   
     
-    private boolean sendMissionsToDrone() {
+    private boolean sendMissionsToDroneCalcGround() {
         long timeInit1 = System.currentTimeMillis();
-        StandardPrints.printMsgEmph("send missions to drone");
+        StandardPrints.printMsgEmph("send missions to drone calc ground");
         boolean respM = readMission(); 
         if (!respM){
             return false;
@@ -152,9 +153,9 @@ public class DecisionMaking {
     }
     
         
-    private boolean sendMissionsToDroneOriginal() {
+    private boolean sendMissionsToDroneCalcAir() {
         long timeInit1 = System.currentTimeMillis();
-        StandardPrints.printMsgEmph("send missions to drone");
+        StandardPrints.printMsgEmph("send missions to drone calc air");
         boolean respM = readMission(); 
         if (!respM){
             return false;
@@ -186,6 +187,78 @@ public class DecisionMaking {
                 if (nRoute == 0){
                     dataAcquisition.setMission(mission);
                 }else{
+                    dataAcquisition.appendMission(mission);
+                }
+            }
+            
+            statePlanning = StatePlanning.READY;
+            nRoute++;
+            if (nRoute < waypointsMission3D.size() - 1){
+                statePlanning = StatePlanning.WAITING;
+                try {
+                    Thread.sleep(SLEEP_TIME_CALC_NEW_ROUTE);
+                } catch (InterruptedException ex) {
+                    
+                }
+            }
+            long timeFinal2 = System.currentTimeMillis();
+            long time1 = timeFinal2 - timeInit2;
+            StandardPrints.printMsgEmph("Time in Route (ms): " + time1);
+        }
+        long timeFinal1 = System.currentTimeMillis();
+        long time1 = timeFinal1 - timeInit1;
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time1);
+        return true;
+    }
+    
+    private boolean sendMissionsToDroneCalcGroundAndAir() {
+        long timeInit1 = System.currentTimeMillis();
+        StandardPrints.printMsgEmph("send missions to drone calc ground and air");
+        boolean respM = readMission(); 
+        if (!respM){
+            return false;
+        }
+        if (config.getMethodPlanner().equals("HGA4m")){
+            planner = new HGA4m(drone, waypointsMission3D);
+        }
+        planner.clearLogs();  
+        
+        statePlanning = StatePlanning.WAITING;//Para entar a primeira vez
+        int nRoute = 0;
+        while (nRoute < waypointsMission3D.size() - 1 && statePlanning == StatePlanning.WAITING){
+            long timeInit2 = System.currentTimeMillis();
+            StandardPrints.printMsgEmph("route: " + nRoute);
+            statePlanning = StatePlanning.PLANNING;
+            boolean respMission = planner.execMission(nRoute);
+            if (!respMission){
+                return false;
+            }
+            
+            if (nRoute == 1){
+                Mission mission = new Mission();
+                String path1 = config.getDirPlanner() + "routeGeo0.txt";
+                boolean respFile1 = readFileRoute(mission, path1, 0);
+                if (!respFile1){
+                    return false;
+                }
+                String path2 = config.getDirPlanner() + "routeGeo1.txt";
+                boolean respFile2 = readFileRoute(mission, path2, 1);
+                if (!respFile2){
+                    return false;
+                }
+                mission.printMission();
+                if (mission.getMission().size() > 0){
+                    dataAcquisition.setMission(mission);                    
+                }
+            }else if (nRoute > 1){
+                String path = config.getDirPlanner() + "routeGeo" + nRoute + ".txt";
+                Mission mission = new Mission();
+                boolean respFile = readFileRoute(mission, path, nRoute);
+                if (!respFile){
+                    return false;
+                }
+                mission.printMission();
+                if (mission.getMission().size() > 0){
                     dataAcquisition.appendMission(mission);
                 }
             }
