@@ -144,7 +144,9 @@ public class DecisionMaking {
             }
             mission.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0)); 
             mission.printMission();
-            dataAcquisition.setMission(mission);
+            if (mission.getMission().size() > 0){
+                dataAcquisition.setMission(mission);
+            }
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException] emergenyLanding()");
