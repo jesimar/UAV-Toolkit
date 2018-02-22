@@ -138,7 +138,9 @@ public class DecisionMaking {
             nRoute++;
         }
         mission.printMission();
-        dataAcquisition.setMission(mission);
+        if (mission.getMission().size() > 0){
+            dataAcquisition.setMission(mission);
+        }
         
 //        planner.getMission3D().printMission();
 //        planner.getMissionGeo().printMission();
@@ -180,10 +182,12 @@ public class DecisionMaking {
                 return false;
             }
             mission.printMission();
-            if (nRoute == 0){
-                dataAcquisition.setMission(mission);
-            }else{
-                dataAcquisition.appendMission(mission);
+            if (mission.getMission().size() > 0){
+                if (nRoute == 0){
+                    dataAcquisition.setMission(mission);
+                }else{
+                    dataAcquisition.appendMission(mission);
+                }
             }
             
             statePlanning = StatePlanning.READY;
@@ -215,7 +219,9 @@ public class DecisionMaking {
             return false;
         }
         mission1.printMission();
-        dataAcquisition.setMission(mission1);
+        if (mission1.getMission().size() > 0){
+            dataAcquisition.setMission(mission1);
+        }
         if (config.isDynamicFixedRoute()){
             try {
                 Thread.sleep(SLEEP_TIME_NEXT_ROUTE);
@@ -229,7 +235,9 @@ public class DecisionMaking {
                 return false;
             }
             mission2.printMission();
-            dataAcquisition.appendMission(mission2);
+            if (mission2.getMission().size() > 0){
+                dataAcquisition.appendMission(mission2);
+            }
         }
         return true;
     }         
