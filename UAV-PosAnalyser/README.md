@@ -2,12 +2,27 @@
 
 Projeto escrito em Java usando a IDE Netbeans para monitoramento da posição do drone.
 
-Para testar este código, primeiramente, deve-se executar os seguintes scripts:
+Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta Scripts):
 
-1. ./exec-sitl.sh
-2. ./exec-mavproxy-local.sh ou ./exec-mavproxy-edison.sh
-3. ./exec-services-dronekit.sh
-4. ./exec-pos-analyser.sh
+Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
+
+1. ./exec-sitl.sh                  (PC)
+2. ./exec-mavproxy-local.sh        (PC)
+3. ./exec-services-dronekit.sh     (PC)
+4. ./exec-pos-analyser.sh          (PC)
+
+Forma 2 -> Execução em SITL-EDISON:
+
+1. ./exec-sitl.sh                  (PC)
+2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
+3. ./exec-services-dronekit.sh     (EDISON)
+4. ./exec-pos-analyser.sh          (EDISON)
+
+Forma 3 -> Execução no Drone na EDISON:
+
+1. ./exec-mavproxy-edison.sh       (EDISON)
+2. ./exec-services-dronekit.sh     (EDISON)
+3. ./exec-pos-analyser.sh          (EDISON)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 

@@ -25,6 +25,10 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Toolkit-C** -> Conjunto de códigos em C para gerenciamento do drone.
 * **UAV-Voice-Commands** -> Projeto em Java para controlar o drone utilizando comandos de voz.
 
+## Configurando o Ambiente de Trabalho
+
+TODO
+
 ## Licença
 
 UAV-Toolkit está disponível sobre código aberto com permissões [GNU General Public License v3.0](https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE). 

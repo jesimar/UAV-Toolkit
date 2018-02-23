@@ -1,7 +1,9 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
-#Last Update: 22/02/2018
+#Last Update: 23/02/2018
+#Description: Script that displays information from IPs logged on the same network.
+#Descrição: Script que exibe informações de IPs logados na mesma rede.
 
 echo "=======================List IPs in Use======================="
 

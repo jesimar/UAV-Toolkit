@@ -167,6 +167,9 @@ public class HGA4m extends Planner{
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
+                if (!drone.getStatusUAV().armed){
+                    System.exit(0);
+                }
             }
             readRoute3D.close();
             printGeo.close();

@@ -10,12 +10,18 @@
 * Renamed UAV-MOSA-C to UAV-Toolkit-C
 * Calibration of the Modules-IFA
 * Calibration of the Modules-MOSA
-* Added module OpenParachute in IFA
-* Added module Alarm in IFA
-* Added module Buzzer in MOSA
+* Added module OpenParachute4s in IFA
+* Added module Alarm4s in IFA
+* Added module Buzzer4m in MOSA
 * Added script exec-copy-files.sh
 * Added script list-ports-in-use.sh
 * Added script my-ip.sh
+* Added script list-ips-in-use.sh
+* Added script exec-mavproxy-edison-sitl.sh
+* Added script exec-insert-failure.sh
+* Added script dir.sh
+* Added script clear-simulations.sh
+* Added script clear-telemetry-qgc.sh
 
 ## Version v1.0.0 (08/02/2018)
 

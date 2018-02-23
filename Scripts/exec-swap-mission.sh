@@ -3,8 +3,8 @@
 #Date: 13/02/2018
 #Last Update: 13/02/2018
 
-DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
-#DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
+#DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
+DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
 
 echo "copy file geoBase.txt to IFA and MOSA"

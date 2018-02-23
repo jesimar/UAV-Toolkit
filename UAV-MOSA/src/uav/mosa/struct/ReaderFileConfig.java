@@ -243,6 +243,7 @@ public class ReaderFileConfig {
         }else{
             String str = timeExec.replace("[", "");
             str = str.replace("]", "");
+            str = str.replace(" ", "");
             String v[] = str.split(",");
             return v[i];
         }
