@@ -1,7 +1,10 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 13/02/2018
-#Last Update: 13/02/2018
+#Last Update: 23/02/2018
+#Description: Script that does the swap mission files to be executed automatically.
+#Descrição: Script que troca os arquivos da missão a ser executada de forma automática.
+
 
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
 DIR_FILES=UAV-Mission-Creator/mission/kml/iros2

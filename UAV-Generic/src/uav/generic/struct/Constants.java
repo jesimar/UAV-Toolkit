@@ -13,6 +13,10 @@ public class Constants {
     public static final String SYS_EXEC_FIXED_ROUTE      = "FIXED_ROUTE";
     public static final String SYS_EXEC_PLANNER          = "PLANNER";
     
+    public static final String LOCAL_CALC_MISSION_GROUND     = "GROUND";
+    public static final String LOCAL_CALC_MISSION_GROUND_AIR = "GROUND_AIR";
+    public static final String LOCAL_CALC_MISSION_AIR        = "AIR";
+    
     public static final String SYS_EXEC_REPLANNER      = "REPLANNER";
     
     public static final String METHOD_PLANNER_HGA4m    = "HGA4m";

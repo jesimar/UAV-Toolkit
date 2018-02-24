@@ -11,3 +11,4 @@ Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 
 * **jdom.jar** -> usada para leitura de arquivo em formato xml.
 * **gson-2.8.0.jar** -> usada para conversão para formato JSON.
+* **cplex.jar** -> usado pelos algoritmos que usam programação matemática.

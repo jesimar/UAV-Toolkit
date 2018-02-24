@@ -205,7 +205,7 @@ public class SecurityManager {
                 try {
                     while(stateIFA != StateIFA.DISABLED){            
                         timeActual = System.currentTimeMillis();
-                        System.out.print((timeActual - timeInitApp)/1000 + "  ");
+//                        System.out.print((timeActual - timeInitApp)/1000 + "  ");
                         dataAcquisition.getAllInfoSensors();
                         dataAcquisition.getDistanceToHome();
                         checkStatusSystem();

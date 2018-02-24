@@ -5,6 +5,6 @@
 #Description: Script that filters information and displays the IP of the computer.
 #Descrição: Script que filtra informações e exibe apenas o IP do computador.
 
-echo 'my ip:'
+echo "my ip:"
 
 ip addr | grep 'BROADCAST,MULTICAST,UP,LOWER_UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'

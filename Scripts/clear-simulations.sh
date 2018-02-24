@@ -2,6 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
 #Last Update: 22/02/2018
+#Description: Script that removes (deletes) a set of files from old missions.
+#Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
 echo "===========================Clear Files============================"
 echo "Clear files mav.*"

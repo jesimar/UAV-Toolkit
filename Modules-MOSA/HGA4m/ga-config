@@ -204,7 +204,7 @@ Time
 ProOF.gen.stopping.Time
 <parameters number>
 1
-5.0
+70.0
 <node id>
 131
 <node type>
@@ -423,7 +423,7 @@ ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$DynamicDt
 <parameters number>
 4
 10
-20
+21
 2.0
 1.0
 <node id>

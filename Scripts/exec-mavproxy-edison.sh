@@ -2,6 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 16/11/2017
 #Last Update: 16/11/2017
+#Description: Script that runs MAVProxy software on Intel Edison for real in-flight drone testing.
+#Descrição: Script que executa o software MAVProxy na Intel Edison para testes reais em voo no drone.
 
 rm mav.parm
 rm mav.tlog

@@ -2,6 +2,10 @@
 #Author: Jesimar da Silva Arantes
 #Date: 13/02/2018
 #Last Update: 13/02/2018
+#Description: Script that copies (saves) the results files automatically.
+#Descrição: Script que cópia (salva) os arquivos de resultados de forma automática.
+
+#NÃO TERMINADO - TO DO
 
 DIR_FILES=Results/Case1/Sim1
 

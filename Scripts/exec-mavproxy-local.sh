@@ -2,6 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 19/10/2017
 #Last Update: 19/10/2017
+#Description: Script that runs the MAVProxy software on the local computer for SITL tests on the PC.
+#Descrição: Script que executa o software MAVProxy no computador local para testes SITL no PC.
 
 rm mav.parm
 rm mav.tlog

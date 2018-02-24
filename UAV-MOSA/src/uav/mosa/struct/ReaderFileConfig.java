@@ -28,6 +28,7 @@ public class ReaderFileConfig {
     private String methodPlanner;
     private String dirPlanner;
     private String cmdExecPlanner;
+    private String localCalcMission;
     private String fileWaypointsMission; 
     private String fileGeoBase;    
     private String dynBetweenWpts;
@@ -80,6 +81,7 @@ public class ReaderFileConfig {
             methodPlanner            = prop.getProperty("prop.planner.method");            
             dirPlanner               = prop.getProperty("prop.planner.dir");
             cmdExecPlanner           = prop.getProperty("prop.planner.cmd_exec");
+            localCalcMission         = prop.getProperty("prop.planner.local_calc_mission");
             fileWaypointsMission     = prop.getProperty("prop.planner.file_waypoints_mission");         
             fileGeoBase              = prop.getProperty("prop.planner.file_geo_base");
             dynBetweenWpts           = prop.getProperty("prop.planner.dyn_between_wpts");
@@ -121,6 +123,7 @@ public class ReaderFileConfig {
         System.out.println(methodPlanner);
         System.out.println(dirPlanner);
         System.out.println(cmdExecPlanner);
+        System.out.println(localCalcMission);
         System.out.println(fileWaypointsMission);        
         System.out.println(fileGeoBase);               
         System.out.println(dynBetweenWpts);
@@ -227,7 +230,11 @@ public class ReaderFileConfig {
 
     public String getCmdExecPlanner() {
         return cmdExecPlanner;
-    }       
+    } 
+    
+    public String getLocalCalcMission() {
+        return localCalcMission;
+    }
 
     public String getFileWaypointsMission() {
         return fileWaypointsMission;

@@ -37,13 +37,18 @@ public class UAVInsertFailure {
             while (true){
                 String str = sc.next();
                 uavIF.sendData(str);
+                if (str.equals("MPGA") || str.equals("LAND") || str.equals("RTL")){
+                    break;
+                }
             }
         } catch (FileNotFoundException ex){     
             System.out.println("Error [FileNotFoundException] ReaderLoadConfig()");
             ex.printStackTrace();
+            System.exit(0);
         } catch (IOException ex) {
             System.out.println("Error [IOException] ReaderLoadConfig()");
             ex.printStackTrace();
+            System.exit(0);
         }
     }
     
@@ -67,6 +72,7 @@ public class UAVInsertFailure {
         }catch(IOException ex){
             System.out.println("Warning [IOException] connectClient()");
             ex.printStackTrace();
+            System.exit(0);
         }
     }
 

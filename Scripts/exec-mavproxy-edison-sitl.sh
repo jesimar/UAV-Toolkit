@@ -2,6 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 21/02/2018
 #Last Update: 21/02/2018
+#Description: Script that runs MAVProxy software on Intel Edison for SITL testing at Edison.
+#Descrição: Script que executa o software MAVProxy na Intel Edison para testes SITL na Edison.
 
 rm mav.parm
 rm mav.tlog

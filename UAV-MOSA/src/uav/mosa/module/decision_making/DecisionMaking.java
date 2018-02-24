@@ -59,10 +59,15 @@ public class DecisionMaking {
     public void actionToDoSomething() {
         statePlanning = StatePlanning.PLANNING;
         
-        if (config.getSystemExec().equals(Constants.SYS_EXEC_PLANNER)){            
-//            boolean respM = sendMissionsToDroneCalcGround();
-//            boolean respM = sendMissionsToDroneCalcAir();
-            boolean respM = sendMissionsToDroneCalcGroundAndAir();
+        if (config.getSystemExec().equals(Constants.SYS_EXEC_PLANNER)){
+            boolean respM = false;
+            if (config.getLocalCalcMission().equals(Constants.LOCAL_CALC_MISSION_GROUND)){
+                respM = sendMissionsToDroneCalcGround();
+            }else if (config.getLocalCalcMission().equals(Constants.LOCAL_CALC_MISSION_GROUND_AIR)) {
+                respM = sendMissionsToDroneCalcGroundAndAir();
+            }else if (config.getLocalCalcMission().equals(Constants.LOCAL_CALC_MISSION_AIR)) {
+                respM = sendMissionsToDroneCalcAir();
+            }
             if (respM){
                 statePlanning = StatePlanning.READY;
                 StandardPrints.printMsgEmph("send mission to drone with success");
@@ -142,9 +147,6 @@ public class DecisionMaking {
         if (mission.getMission().size() > 0){
             dataAcquisition.setMission(mission);
         }
-        
-//        planner.getMission3D().printMission();
-//        planner.getMissionGeo().printMission();
         
         long timeFinal1 = System.currentTimeMillis();
         long time1 = timeFinal1 - timeInit1;
