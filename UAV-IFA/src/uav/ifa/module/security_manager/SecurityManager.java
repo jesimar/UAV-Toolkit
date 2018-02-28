@@ -292,14 +292,7 @@ public class SecurityManager {
 //                            communicationControl.sendData("MOSA.GET_LOCATION_FUTURE");
                             communicationControl.sendData("MOSA.STOP");
                             actionTurnOnTheAlarm();
-                            
-                            Parameter param = new Parameter("WPNAV_SPEED", 20);
-                            ParameterJSON ps = new ParameterJSON(param);        
-                            dataAcquisition.setParameter(ps);
-                            
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));
-                            
-                            
                             break;
                         }
                         Thread.sleep(SLEEP_TIME_WAITING_ACTION);

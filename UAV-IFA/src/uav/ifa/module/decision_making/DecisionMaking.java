@@ -102,6 +102,8 @@ public class DecisionMaking {
     }
 
     private boolean emergenyLanding() {
+        changeVelocityNavigation(20);
+        
         StandardPrints.printMsgEmph("decison making -> emergeny landing");
         switch (config.getMethodRePlanner()) {
             case "GH4s":
@@ -125,9 +127,7 @@ public class DecisionMaking {
             return false;
         }
         
-        Parameter param2 = new Parameter("WPNAV_SPEED", 200);
-        ParameterJSON ps2 = new ParameterJSON(param2);        
-        dataAcquisition.setParameter(ps2);
+        changeVelocityNavigation(200);
         
         try{
             Mission mission = new Mission();
@@ -220,4 +220,10 @@ public class DecisionMaking {
         this.typeAction = action;
     }
     
+    
+    public void changeVelocityNavigation(double value){
+        Parameter param = new Parameter("WPNAV_SPEED", value);
+        ParameterJSON ps = new ParameterJSON(param);        
+        dataAcquisition.setParameter(ps);
+    }
 }
