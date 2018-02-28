@@ -39,11 +39,11 @@ public class GH4s extends Replanner{
             double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
             double angle = Math.toRadians(drone.getSensorUAV().heading);//Math.atan2(vy, vx);            
-//            double vx = drone.getVelocity().vx;
-//            double vy = drone.getVelocity().vy;            
-//            double dt = 2;
-//            px = px + vx * dt;
-//            py = py + vy * dt;
+            //double vx = drone.getVelocity().vx;
+            //double vy = drone.getVelocity().vy;            
+            //double dt = 2;
+            //px = px + vx * dt;//esse tipo de projeção não fica bom
+            //py = py + vy * dt;//esse tipo de projeção não fica bom
             
             File src = new File(dir + "config-base.sgl");
             File dst = new File(dir + "config.sgl");

@@ -5,10 +5,10 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Drone - iDroneAlpha:
 
 * Incorporar hardware de leds no drone.
-* Incorporar hardware de buzzer no drone.
+* Incorporar hardware da câmera no drone.
 * Incorporar hardware de sonar no drone.
 * Desenvolver aplicação básica na Edison para acender os leds.
-* Desenvolver aplicação básica na Edison para tocar o buzzer.
+* Desenvolver aplicação básica na Edison para bater fotos e fazer filmagem com a câmera.
 * Desenvolver aplicação básica na Edison para ler informações do sonar.
 * Melhorar a calibração do sensor de alarme de bateria, pois ele está apintando apenas quando a bateria esta terminando.
 * Melhorar a calibração do power module.

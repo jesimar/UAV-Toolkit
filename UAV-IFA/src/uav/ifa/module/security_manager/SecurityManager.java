@@ -276,12 +276,6 @@ public class SecurityManager {
             listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_AP_POWEROFF));
             StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: "+drone.getTime());
         }
-        //CRITICAL: Comportamento esquisito em SITL
-//        if (drone.getStatusUAV().systemStatus.equals("CRITICAL") && 
-//                !hasFailure(TypesOfFailures.FAIL_AP_CRITICAL)){
-//            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_AP_CRITICAL));
-//            StandardPrints.printMsgError("FAIL AP CRITICAL -> Time: "+drone.getTime());
-//        }
     }   
     
     //melhorar: por enquanto esta tratando apenas a primeira falha.
@@ -298,7 +292,14 @@ public class SecurityManager {
 //                            communicationControl.sendData("MOSA.GET_LOCATION_FUTURE");
                             communicationControl.sendData("MOSA.STOP");
                             actionTurnOnTheAlarm();
+                            
+                            Parameter param = new Parameter("WPNAV_SPEED", 20);
+                            ParameterJSON ps = new ParameterJSON(param);        
+                            dataAcquisition.setParameter(ps);
+                            
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));
+                            
+                            
                             break;
                         }
                         Thread.sleep(SLEEP_TIME_WAITING_ACTION);

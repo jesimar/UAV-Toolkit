@@ -2,7 +2,8 @@
 #Date: 30/01/2018
 #Last Update: 14/02/2018
 #Description: Configuration file of AutoPilot parameters.
-#Format: ATTRIBUTE_NAME=KEY
+#Descrição: Arquivo de configuração dos parâmetros do piloto automático. 
+#Format: ATTRIBUTE_NAME=VALUE
 
 RTL_ALT=800.0
 WPNAV_RADIUS=50.0

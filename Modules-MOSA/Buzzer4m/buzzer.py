@@ -1,7 +1,8 @@
 import mraa
 import time
 
-buzzer = mraa.Gpio(8)
+pin = 8
+buzzer = mraa.Gpio(pin)
 buzzer.dir(mraa.DIR_OUT)
 
 print("buzzer")

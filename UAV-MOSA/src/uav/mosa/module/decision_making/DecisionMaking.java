@@ -336,14 +336,16 @@ public class DecisionMaking {
                     firstTime = false;
                 }
                 wps.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));
-            }   
-            if (nRoute == waypointsMission3D.size() - 2){
-                if (config.getActionAfterFinishMission().equals(Constants.CMD_LAND)){
-                    wps.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0));
-                }else if (config.getActionAfterFinishMission().equals(Constants.CMD_RTL)){
-                    wps.addWaypoint(new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+            }
+            if (wps.getMission().size() > 0){
+                if (nRoute == waypointsMission3D.size() - 2){
+                    if (config.getActionAfterFinishMission().equals(Constants.CMD_LAND)){
+                        wps.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0));
+                    }else if (config.getActionAfterFinishMission().equals(Constants.CMD_RTL)){
+                        wps.addWaypoint(new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    }
                 }
-            }   
+            }
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: readFileRoute()");

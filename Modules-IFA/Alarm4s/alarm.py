@@ -1,7 +1,8 @@
 import mraa
 import time
 
-alarm = mraa.Gpio(8)
+pin = 8
+alarm = mraa.Gpio(pin)
 alarm.dir(mraa.DIR_OUT)
 
 print("alarm")

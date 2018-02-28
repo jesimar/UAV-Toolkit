@@ -212,7 +212,8 @@ public class MissionManager {
         double altDrone =  drone.getGPS().alt_rel;        
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
-        double FACTOR = 0.5;
+        double FACTOR_X = 0.5;//in meters
+        double FACTOR_Y = 0.5;//in meters
         int index = 0;
         //Devido a forma como foi feito se tiver dois waypoints no mesmo lugar, 
         //mas deve-se fazer o buzzer em diferentes momentos esse codigo nao funciona 
@@ -225,13 +226,13 @@ public class MissionManager {
                     (latDrone - latDestiny) * (latDrone - latDestiny) + 
                     (lngDrone - lngDestiny) * (lngDrone - lngDestiny));
             double distVActual = Math.abs(altDrone - altDestiny); 
-            if (distHActual < distH && distVActual < FACTOR){
+            if (distHActual < distH && distVActual < FACTOR_Y){
                 distH = distHActual;
                 distV = distVActual;
                 index = i;
             }
         }        
-        if (distH < 2*Constants.ONE_METER && distV < FACTOR){   
+        if (distH < FACTOR_X*Constants.ONE_METER && distV < FACTOR_Y){   
             if (wptsBuzzer.size() > 0){
                 wptsBuzzer.removeWaypoint(index);
             }

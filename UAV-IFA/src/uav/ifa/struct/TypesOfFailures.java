@@ -7,7 +7,7 @@ package uav.ifa.struct;
 public enum TypesOfFailures {
     
     FAIL_GENERIC, FAIL_ENGINE, FAIL_BATTERY, FAIL_GPS, FAIL_SYSTEM_MOSA, 
-    FAIL_SYSTEM_IFA, FAIL_BASED_TIME, FAIL_AP_CRITICAL, FAIL_AP_EMERGENCY, 
+    FAIL_SYSTEM_IFA, FAIL_BASED_TIME, FAIL_AP_EMERGENCY, 
     FAIL_AP_POWEROFF, FAIL_BASED_INSERT_FAILURE;
     
     public static int getStatus(TypesOfFailures failure){
@@ -26,14 +26,12 @@ public enum TypesOfFailures {
                 return 5;   
             case FAIL_BASED_TIME:
                 return 6; 
-            case FAIL_AP_CRITICAL:
-                return 7;
             case FAIL_AP_EMERGENCY:
-                return 8;
+                return 7;
             case FAIL_AP_POWEROFF:
-                return 9;
+                return 8;
             case FAIL_BASED_INSERT_FAILURE:
-                return 10;
+                return 9;
             default:
                 return -1;
         }
@@ -56,12 +54,10 @@ public enum TypesOfFailures {
             case 6: 
                 return TypesOfFailures.FAIL_BASED_TIME;
             case 7: 
-                return TypesOfFailures.FAIL_AP_CRITICAL;
-            case 8: 
                 return TypesOfFailures.FAIL_AP_EMERGENCY;
-            case 9: 
+            case 8: 
                 return TypesOfFailures.FAIL_AP_POWEROFF;
-            case 10: 
+            case 9: 
                 return TypesOfFailures.FAIL_BASED_INSERT_FAILURE;
             default:
                 return TypesOfFailures.FAIL_GENERIC;
@@ -84,8 +80,6 @@ public enum TypesOfFailures {
                 return "FAIL_SYSTEM_IFA";  
             case FAIL_BASED_TIME:
                 return "FAIL_BASED_TIME";  
-            case FAIL_AP_CRITICAL:
-                return "FAIL_AP_CRITICAL";  
             case FAIL_AP_EMERGENCY:
                 return "FAIL_AP_EMERGENCY";  
             case FAIL_AP_POWEROFF:

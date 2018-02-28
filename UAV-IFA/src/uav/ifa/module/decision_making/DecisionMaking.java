@@ -12,6 +12,8 @@ import uav.generic.module.data_acquisition.DataAcquisition;
 import uav.generic.struct.Command;
 import uav.generic.struct.Constants;
 import uav.generic.struct.Mission;
+import uav.generic.struct.Parameter;
+import uav.generic.struct.ParameterJSON;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.WaypointJSON;
 import uav.generic.util.UtilString;
@@ -122,6 +124,11 @@ public class DecisionMaking {
         if (!itIsOkExec){
             return false;
         }
+        
+        Parameter param2 = new Parameter("WPNAV_SPEED", 200);
+        ParameterJSON ps2 = new ParameterJSON(param2);        
+        dataAcquisition.setParameter(ps2);
+        
         try{
             Mission mission = new Mission();
             String path = config.getDirRePlanner() + "routeGeo.txt";
@@ -137,14 +144,14 @@ public class DecisionMaking {
                 lat = Double.parseDouble(s[0]);
                 lng = Double.parseDouble(s[1]);
                 alt = Double.parseDouble(s[2]);
-                if (i > 1){
+                if (i > 1){//trabalhar nessa linha
                     mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));  
                 }
                 i++;
             }
-            mission.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0)); 
-            mission.printMission();
             if (mission.getMission().size() > 0){
+                mission.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0)); 
+                mission.printMission();
                 dataAcquisition.setMission(mission);
             }
             return true;
