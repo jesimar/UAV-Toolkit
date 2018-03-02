@@ -29,7 +29,7 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 TODO
 
-![Droidplanner 3.0 beta screenshot](http://api.ning.com/files/qe5*yho6iFTs6PSl5XqUIDQ9TwN1-tU7Ni93QgCXyWp*zymrcfqPDH4*5ZagwrNcep7*6kr2vgdlccbwytoYqxHwbSDG5yJR/v3.2.1.flight.tablet.land.png)
+![screenshot](./Figures/environment-edison-sitl.png)
 
 ## Licença
 
