@@ -2,6 +2,8 @@
 
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
 
+------
+
 ## Visão Geral
 
 Nesse projeto podemos encontrar os seguintes diretórios:
@@ -24,6 +26,8 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-Services-Dronekit.
 * **UAV-Toolkit-C** -> Conjunto de códigos em C para gerenciamento do drone.
 * **UAV-Voice-Commands** -> Projeto em Java para controlar o drone utilizando comandos de voz.
+
+******
 
 ## Configurando o Ambiente de Trabalho
 
