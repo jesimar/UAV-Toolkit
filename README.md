@@ -70,11 +70,11 @@ Pronto, o projeto já está pronto para o uso.
 
 ![](./Figures/config-inteledison-usb.png | width=100)
 
-![](./Figures/config-inteledison-wifi.png =400x)
+![](./Figures/config-inteledison-wifi.png =250x250)
 
-![](./Figures/connections-autopilot-motors.png =400x)
+![](./Figures/connections-autopilot-motors.png){:height="50%" width="50%"}
 
-![](./Figures/connections-apm-radioreceiver.png =400x)
+![](./Figures/connections-apm-radioreceiver.png){:height="700px" width="400px"}
 
 ![](./Figures/connections-inteledison-autopilot.png =400x)
 
