@@ -68,27 +68,27 @@ Pronto, o projeto já está pronto para o uso.
 
 ## Arquitetura de Hardware
 
-![](./Figures/config-inteledison-usb.png | width=100)
+![](./Figures/config-inteledison-usb.png)
 
-![](./Figures/config-inteledison-wifi.png =250x250)
+![](./Figures/config-inteledison-wifi.png)
 
-![](./Figures/connections-autopilot-motors.png){:height="50%" width="50%"}
+![](./Figures/connections-autopilot-motors.png)
 
-![](./Figures/connections-apm-radioreceiver.png){:height="700px" width="400px"}
+![](./Figures/connections-apm-radioreceiver.png)
 
-![](./Figures/connections-inteledison-autopilot.png =400x)
+![](./Figures/connections-inteledison-autopilot.png)
 
-![](./Figures/integration-systems.png =400x)
+![](./Figures/integration-systems.png)
 
-![](./Figures/iDroneAlpha.png =400x)
+![](./Figures/iDroneAlpha.png)
 
-![](./Figures/communication-system.png =400x)
+![](./Figures/communication-system.png)
 
-![](./Figures/communication-inteledison-ap-gcs.png =400x)
+![](./Figures/communication-inteledison-ap-gcs.png)
 
-![](./Figures/uav-soa-interface.png =400x)
+![](./Figures/uav-soa-interface.png)
 
-![](./Figures/architecture-mosa-ifa-system.png =400x)
+![](./Figures/architecture-mosa-ifa-system.png)
 
 ## Citação
 
