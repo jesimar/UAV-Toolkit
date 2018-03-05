@@ -68,7 +68,7 @@ Pronto, o projeto já está pronto para o uso.
 
 ## Arquitetura de Hardware
 
-![](./Figures/config-inteledison-usb.png =400x)
+![](./Figures/config-inteledison-usb.png | width=100)
 
 ![](./Figures/config-inteledison-wifi.png =400x)
 
