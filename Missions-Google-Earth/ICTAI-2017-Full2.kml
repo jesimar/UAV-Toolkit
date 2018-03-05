@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-	<name>Mission-Aerial-Photography.kml</name>
+	<name>ICTAI-2017-Full2.kml</name>
 	<open>1</open>
 	<StyleMap id="msn_ylw-pushpin10">
 		<Pair>
@@ -458,7 +458,7 @@
 		</LineStyle>
 	</Style>
 	<Folder>
-		<name>MissionPLIM</name>
+		<name>Mission</name>
 		<open>1</open>
 		<Placemark>
 			<name>fly_altitute</name>

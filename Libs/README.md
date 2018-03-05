@@ -9,6 +9,6 @@ Lista de bibliotecas desenvolvidas nesse projeto e utilizadas nesse projeto:
 
 Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 
-* **jdom.jar** -> usada para leitura de arquivo em formato xml.
-* **gson-2.8.0.jar** -> usada para conversão para formato JSON.
-* **cplex.jar** -> usado pelos algoritmos que usam programação matemática.
+* **jdom-2.0.6.jar** -> usada para leitura de arquivo em formato xml [[Link](http://www.jdom.org/)].
+* **gson-2.8.2.jar** -> usada para conversão (Serialização/desserialização) de objetos Java para formato JSON [[Link](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.2)].
+* **cplex.jar** -> usado pelos algoritmos que usam programação matemática (HGA4m e CCQSP4m) (deve ser o arquivo .jar da instalação no próprio computador) [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)].

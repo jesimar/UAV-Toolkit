@@ -2,16 +2,35 @@
 
 Projeto escrito em Java usando a IDE Netbeans para monitoramento das informações dos sensores do drone.
 
-Para testar este código, primeiramente, deve-se executar os seguintes scripts:
+## Como Executar
 
-1. ./exec-sitl.sh
-2. ./exec-mavproxy-local.sh ou ./exec-mavproxy-edison.sh
-3. ./exec-services-dronekit.sh
-4. ./exec-monitoring.sh
+Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta Scripts):
+
+Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
+
+1. ./exec-sitl.sh                  (PC)
+2. ./exec-mavproxy-local.sh        (PC)
+3. ./exec-soa-interface.sh         (PC)
+4. ./exec-monitoring.sh            (PC)
+
+Forma 2 -> Execução em SITL-EDISON:
+
+1. ./exec-sitl.sh                  (PC)
+2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
+3. ./exec-soa-interface.sh         (EDISON)
+4. ./exec-monitoring.sh            (EDISON)
+
+Forma 3 -> Execução no Drone na EDISON:
+
+1. ./exec-mavproxy-edison.sh       (EDISON)
+2. ./exec-soa-interface.sh         (EDISON)
+3. ./exec-monitoring.sh            (EDISON)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 
-A saída desse programa deverá ser algo como a seguir:
+## Saída do Programa
+
+A saída na tela desse programa deverá ser algo como a seguir:
 
 ```
 UAV-MONITORING
@@ -21,3 +40,5 @@ UAV-MONITORING
 ...
 3.0;-22.0059325;-47.8987095;0.0;869.99;12.587;0.0;100.0;0.0015879754209890962;0.3475704491138458;9.789993055164814E-4;-0.03;0.0;0.0;3;10;121;65535;19.0;0.0;0.0;STABILIZE;STANDBY;false;true;true
 ```
+
+Um arquivo .csv com o mesmo conteúdo do impresso em tela é gerado (nome do arquivo uav-data*.csv).

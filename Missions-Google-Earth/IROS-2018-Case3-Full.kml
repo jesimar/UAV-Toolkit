@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>IROS-2018-Case3-Full.kml</name>
+	<visibility>0</visibility>
+	<StyleMap id="msn_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin00">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_blu-blank900">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank91</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank901</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="failed5">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#failed4</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#failed</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_blu-blank90">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="failed">
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="failed2">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff000000</color>
+		</LineStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin00">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin00</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin2</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_blu-blank90">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin610">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<Style id="failed0">
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<StyleMap id="msn_blu-blank9000">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank9</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank90</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_blu-blank90">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank90</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank9</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="failed6">
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin20</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin11</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_blu-blank9">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<StyleMap id="failed1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#failed2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#failed0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="failed4">
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin6">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff000000</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>ffff5500</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin6">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin8</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin6</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin10</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin10</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_blu-blank900">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin11">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>9900aa00</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_blu-blank9">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin10">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_blu-blank91">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin131">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin131</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin610</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>ff737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff0000ff</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin10">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="failed7">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#failed3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#failed6</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>9900aa00</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_blu-blank901">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin20">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>9900aa00</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin131">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin20">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin00</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_blu-blank9">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank900</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank900</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin8">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff000000</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>ffff5500</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_blu-blank900">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00aa00</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>99737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin00">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff999999</color>
+			<width>2.6</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>ff737373</color>
+			<outline>0</outline>
+		</PolyStyle>
+	</Style>
+	<Style id="failed3">
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>2</width>
+		</LineStyle>
+	</Style>
+	<Folder>
+		<name>Case3</name>
+		<visibility>0</visibility>
+		<open>1</open>
+		<Placemark>
+			<name>geo_base</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<LookAt>
+				<longitude>-47.89858201642082</longitude>
+				<latitude>-22.00595239552849</latitude>
+				<altitude>0</altitude>
+				<heading>-0.001938156468861741</heading>
+				<tilt>0</tilt>
+				<range>49.29077632535324</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_ylw-pushpin131</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89875013208566,-22.00587282101953,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_frontier</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin2</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89872599451081,-22.00589597717237,0 -47.89872637829636,-22.0059653464484,0 -47.89842978289142,-22.00596605794486,0 -47.89842939927678,-22.00589668868408,0 -47.89872599451081,-22.00589597717237,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_1</name>
+			<visibility>0</visibility>
+			<LookAt>
+				<longitude>-47.89847749152864</longitude>
+				<latitude>-22.00597391943764</latitude>
+				<altitude>0</altitude>
+				<heading>0.3412366805580979</heading>
+				<tilt>8.110741769626991</tilt>
+				<range>68.25603987880716</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank9</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89870833333333,-22.00593333333333,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_2</name>
+			<visibility>0</visibility>
+			<LookAt>
+				<longitude>-47.89857193954796</longitude>
+				<latitude>-22.00593011216306</latitude>
+				<altitude>0</altitude>
+				<heading>2.982943841310002e-05</heading>
+				<tilt>12.79161654245394</tilt>
+				<range>43.98459889270247</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank9000</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89858518990184,-22.00593333333333,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_3</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<LookAt>
+				<longitude>-47.89858218335564</longitude>
+				<latitude>-22.00592997817435</latitude>
+				<altitude>0</altitude>
+				<heading>1.726812006353257e-05</heading>
+				<tilt>11.08311066338544</tilt>
+				<range>47.26351111216011</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank900</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89845161743151,-22.00593333333333,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_4</name>
+			<visibility>0</visibility>
+			<LookAt>
+				<longitude>-47.89856691876787</longitude>
+				<latitude>-22.00589640936876</latitude>
+				<altitude>0</altitude>
+				<heading>-1.788507629213808e-05</heading>
+				<tilt>18.35221549688412</tilt>
+				<range>30.1596335853613</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank90</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89854289282146,-22.00595501345324,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_5</name>
+			<visibility>0</visibility>
+			<LookAt>
+				<longitude>-47.89856691876787</longitude>
+				<latitude>-22.00589640936876</latitude>
+				<altitude>0</altitude>
+				<heading>-1.788507629213808e-05</heading>
+				<tilt>18.35221549688412</tilt>
+				<range>30.1596335853613</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank90</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.8986241523895,-22.00590846206618,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>waypoint_6</name>
+			<visibility>0</visibility>
+			<LookAt>
+				<longitude>-47.89866986501841</longitude>
+				<latitude>-22.00596457785389</latitude>
+				<altitude>0</altitude>
+				<heading>-0.001924652481604863</heading>
+				<tilt>27.87600304667347</tilt>
+				<range>54.35492741247827</range>
+				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
+			</LookAt>
+			<styleUrl>#msn_blu-blank9000</styleUrl>
+			<Point>
+				<gx:drawOrder>1</gx:drawOrder>
+				<coordinates>-47.89870833333333,-22.00593333333333,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone1</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<styleUrl>#msn_ylw-pushpin20</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89875125829266,-22.00589637589978,0 -47.89840487985977,-22.00590004374196,0 -47.89840439316166,-22.00587463091661,0 -47.89875165765554,-22.00587111491075,0 -47.89875125829266,-22.00589637589978,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone2</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<styleUrl>#msn_ylw-pushpin1</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89875037925101,-22.00596321280648,0 -47.898724005204,-22.00596280527583,0 -47.89872312599703,-22.0058951532984,0 -47.89875037915835,-22.0058939306482,0 -47.89875037925101,-22.00596321280648,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone3</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<styleUrl>#msn_ylw-pushpin1</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89840312147428,-22.00596728818179,0 -47.89840487986142,-22.00589882111597,0 -47.89843345171045,-22.00589841360449,0 -47.89843257247378,-22.00596606557531,0 -47.89840312147428,-22.00596728818179,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone4</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<styleUrl>#msn_ylw-pushpin00</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89875139547462,-22.00598504696014,0 -47.89840384538691,-22.00598850254877,0 -47.89840356106011,-22.00596443538593,0 -47.89875081881381,-22.00596117509448,0 -47.89875139547462,-22.00598504696014,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone5</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin3</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89861782333865,-22.00592110628852,0 -47.89862830019428,-22.00592110628549,0 -47.8986276735757,-22.00593152897188,0 -47.8986176184284,-22.00593119448451,0 -47.89861782333865,-22.00592110628852,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_obstacle_zone6</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin3</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89854848822138,-22.00594148758377,0 -47.8985379062519,-22.00594122299402,0 -47.89853787164602,-22.005932123765,0 -47.89854914366112,-22.00593212376892,0 -47.89854848822138,-22.00594148758377,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>map_bonus1</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<styleUrl>#msn_ylw-pushpin6</styleUrl>
+			<Polygon>
+				<tessellate>1</tessellate>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-47.89871906684473,-22.00591992968367,0 -47.89871815597544,-22.00593830513427,0 -47.89869911777345,-22.00593779033414,0 -47.89869958233108,-22.0059199297218,0 -47.89871906684473,-22.00591992968367,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>route_planned_sitl</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin0</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.89870837230747,-22.00593328913754,2 -47.89870595004656,-22.00593391901377,2 -47.89869926460643,-22.00593544871319,2 -47.89868928489147,-22.00593715837724,2 -47.89867659224426,-22.00593895802361,2 -47.89866205867877,-22.00594066768766,2 -47.89864674998979,-22.0059418374578,2 -47.89863153819123,-22.00594174747548,2 -47.89861690773531,-22.00594048772302,2 -47.89860431197854,-22.00593823816506,2 -47.89859423537313,-22.00593580864246,2 -47.898587549933,-22.00593391901377,2 -47.89858522456252,-22.00593328913754,2 -47.89858522456252,-22.00593328913754,2 -47.89858318986335,-22.005932569279,2 -47.89857757021803,-22.00593031972103,2 -47.89856885007873,-22.00592753026916,2 -47.89855751389765,-22.00592483079961,2 -47.8985441430174,-22.00592276120628,2 -47.89852941567104,-22.0059218613831,2 -47.8985140100916,-22.00592222131237,2 -47.89849870140262,-22.00592375101179,2 -47.89848397405625,-22.00592609055207,2 -47.89847118451862,-22.00592852007467,2 -47.89846101102277,-22.00593094959726,2 -47.89845413180178,-22.00593274924363,2 -47.89845161265042,-22.00593328913754,2 -47.89845161265042,-22.00593328913754,2 -47.8984550038157,-22.00593400899609,2 -47.89846362706456,-22.00593607858942,2 -47.89847573836914,-22.0059394079352,2 -47.89848988437289,-22.00594336715722,2 -47.89850461171925,-22.00594723639691,2 -47.898518757723,-22.00595065572501,2 -47.89853086902758,-22.00595290528297,2 -47.89853958916687,-22.00595434500007,2 -47.89854288344172,-22.0059549748763,2 -47.89854288344172,-22.0059549748763,2 -47.89855751389765,-22.00595065572501,2 -47.89857989558851,-22.00594201742244,2 -47.89859094109828,-22.00593337911986,2 -47.89859501049662,-22.00592546067584,2 -47.8985962700723,-22.00591871200195,2 -47.89859869233322,-22.00591322308053,2 -47.89860634667771,-22.00591025366402,2 -47.8986179735301,-22.00590899391156,2 -47.89862417451805,-22.00590845401765,2 -47.89862417451805,-22.00590845401765,2 -47.89862717812158,-22.00590917387619,2 -47.89863522002782,-22.00591106350488,2 -47.89864636242803,-22.00591412290371,2 -47.89865944263699,-22.0059179921434,2 -47.89867310418854,-22.00592213133005,2 -47.89868608750704,-22.0059262705167,2 -47.8986973267977,-22.00592986980944,2 -47.8987052718135,-22.00593238931436,2 -47.89870837230747,-22.00593328913754,2 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl1</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987095,-22.0059325,0.03 -47.8987118,-22.0059312,1.95 -47.89870929999999,-22.0059334,1.98 -47.8987091,-22.0059335,1.98 -47.8987078,-22.0059337,1.98 -47.89870520000001,-22.005934,1.98 -47.89870359999999,-22.0059343,1.98 -47.8986992,-22.0059352,1.98 -47.898696,-22.0059356,1.98 -47.8986888,-22.0059364,1.98 -47.89868489999999,-22.0059368,1.99 -47.8986762,-22.0059376,1.99 -47.8986713,-22.0059379,1.99 -47.8986608,-22.0059382,1.99 -47.8986551,-22.0059383,1.99 -47.8986432,-22.0059385,1.99 -47.8986369,-22.0059383,1.99 -47.8986238,-22.0059371,1.99 -47.8986104,-22.0059354,1.99 -47.8986045,-22.0059347,1.99 -47.8985955,-22.0059339,1.99 -47.8985923,-22.0059337,1.99 -47.898588,-22.0059334,1.99 -47.8985861,-22.0059327,1.99 -47.89858090000001,-22.0059303,1.98 -47.8985775,-22.0059291,1.98 -47.8985689,-22.0059274,1.98 -47.8985597,-22.005925,1.98 -47.8985549,-22.0059236,1.98 -47.8985447,-22.0059216,1.98 -47.8985392,-22.0059211,1.98 -47.8985277,-22.0059208,1.98 -47.8985217,-22.005921,1.98 -47.89850919999999,-22.0059219,1.98 -47.8984957,-22.0059228,1.98 -47.8984818,-22.0059245,1.98 -47.89847499999999,-22.0059253,1.98 -47.89846440000001,-22.005928,1.99 -47.89846050000001,-22.0059293,1.99 -47.8984549,-22.005931,1.99 -47.8984519,-22.0059318,1.99 -47.8984514,-22.0059321,1.99 -47.89845220000001,-22.0059328,1.99 -47.8984548,-22.0059339,1.99 -47.8984568,-22.0059347,1.99 -47.8984621,-22.0059363,1.99 -47.8984655,-22.0059373,1.99 -47.8984732,-22.0059397,2 -47.8984776,-22.0059409,2 -47.89848779999999,-22.0059432,2 -47.8984933,-22.0059443,2 -47.89850510000001,-22.0059471,2 -47.8985178,-22.0059497,2 -47.8985237,-22.0059506,2 -47.8985331,-22.0059521,2 -47.8985367,-22.0059527,2 -47.8985418,-22.0059535,2 -47.8985445,-22.0059534,2 -47.8985526,-22.0059517,2 -47.8985621,-22.0059493,2 -47.8985673,-22.0059477,2.01 -47.89857789999999,-22.0059434,2.01 -47.89858259999999,-22.0059405,2.01 -47.8985899,-22.0059328,2.01 -47.8985927,-22.0059284,2.01 -47.89859749999999,-22.0059199,2.01 -47.898605,-22.0059144,2.01 -47.89860969999999,-22.0059126,2 -47.8986188,-22.00591,2.01 -47.89862309999999,-22.005908,2.01 -47.89862429999999,-22.0059072,2.01 -47.8986285,-22.0059063,2 -47.8986319,-22.0059064,2 -47.8986394,-22.0059079,2 -47.8986473,-22.0059107,2 -47.8986517,-22.005912,2 -47.8986614,-22.0059144,2 -47.8986718,-22.0059177,2 -47.8986771,-22.0059197,2 -47.8986883,-22.0059238,2 -47.8986935,-22.005926,2 -47.8987012,-22.0059299,2 -47.89870359999999,-22.0059312,2 -47.89870629999999,-22.0059325,1.98 -47.8987062,-22.0059323,1.76 -47.898706,-22.0059322,1.58 -47.898706,-22.0059323,1.23 -47.89870629999999,-22.0059325,1.08 -47.8987068,-22.0059328,0.77 -47.898707,-22.0059329,0.61 -47.8987074,-22.0059332,0.29 -47.89870749999999,-22.0059333,0.13 -47.8987079,-22.0059337,-0.17 -47.89870809999999,-22.0059339,-0.46 -47.89870809999999,-22.0059339,-0.59 -47.89870809999999,-22.0059338,-0.8499999999999999 -47.89870809999999,-22.0059338,-0.9700000000000001 -47.89870809999999,-22.0059338,-1.2 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl2</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987121,-22.0059313,1.95 -47.8987094,-22.0059332,1.98 -47.8987089,-22.0059332,1.99 -47.8987076,-22.0059335,1.98 -47.89870569999999,-22.0059338,1.98 -47.8987033,-22.0059342,1.99 -47.8987002,-22.0059348,1.99 -47.8986957,-22.0059354,1.99 -47.8986905,-22.005936,1.99 -47.89868489999999,-22.0059368,1.99 -47.8986786,-22.0059375,1.99 -47.8986714,-22.005938,1.99 -47.8986636,-22.0059382,1.99 -47.8986553,-22.0059384,1.99 -47.8986465,-22.0059385,1.99 -47.89863710000001,-22.0059383,1.99 -47.89862730000001,-22.0059373,1.99 -47.89861209999999,-22.0059353,1.99 -47.8986032,-22.0059344,1.99 -47.89859640000001,-22.0059338,1.99 -47.8985915,-22.0059336,1.99 -47.89858829999999,-22.0059333,1.98 -47.8985858,-22.0059326,1.98 -47.89858240000001,-22.005931,1.98 -47.8985751,-22.0059286,1.98 -47.89856870000001,-22.0059274,1.98 -47.8985619,-22.0059259,1.98 -47.8985549,-22.0059247,1.98 -47.8985475,-22.0059237,1.98 -47.8985395,-22.0059226,1.98 -47.8985311,-22.0059225,1.98 -47.8985178,-22.0059232,1.98 -47.8985082,-22.0059238,1.98 -47.8984983,-22.0059245,1.98 -47.8984879,-22.0059254,1.99 -47.89847739999999,-22.0059263,1.99 -47.8984684,-22.0059278,1.99 -47.89846170000001,-22.0059296,1.99 -47.898455,-22.0059313,1.99 -47.89845239999999,-22.0059319,1.99 -47.8984513,-22.0059323,1.99 -47.89845179999999,-22.0059327,1.99 -47.8984532,-22.0059334,2 -47.89845569999999,-22.0059344,2 -47.8984591,-22.0059354,2 -47.8984637,-22.0059367,1.99 -47.898469,-22.0059382,2 -47.8984752,-22.0059401,2 -47.8984823,-22.0059419,2 -47.8984945,-22.0059445,2 -47.8985035,-22.0059466,2 -47.8985129,-22.0059487,2 -47.8985225,-22.0059503,2 -47.8985304,-22.0059516,2.01 -47.8985363,-22.0059525,2.01 -47.8985403,-22.0059533,2 -47.8985436,-22.0059535,2 -47.8985519,-22.0059518,2 -47.8985588,-22.0059501,2 -47.8985661,-22.0059479,2 -47.898574,-22.005945,2 -47.8985813,-22.0059411,2 -47.8985872,-22.0059358,2 -47.8985918,-22.0059296,2 -47.8985953,-22.0059229,2 -47.8986027,-22.0059155,2 -47.8986059,-22.005914,2 -47.8986167,-22.0059107,2.01 -47.8986215,-22.005909,2.01 -47.89862369999999,-22.0059075,2.01 -47.8986265,-22.0059067,2 -47.8986311,-22.0059065,2 -47.89863669999999,-22.0059073,2 -47.8986425,-22.0059091,2 -47.8986488,-22.0059111,2 -47.8986557,-22.0059129,2 -47.8986672,-22.0059158,2 -47.898675,-22.0059187,2 -47.8986832,-22.0059218,2 -47.8986916,-22.0059251,2 -47.8986982,-22.0059283,2 -47.8987027,-22.0059307,2 -47.8987053,-22.0059322,2 -47.89870629999999,-22.0059325,1.86 -47.8987059,-22.0059324,1.61 -47.8987059,-22.0059324,1.35 -47.898706,-22.0059325,1.22 -47.8987066,-22.0059328,0.87 -47.898707,-22.005933,0.64 -47.8987073,-22.0059332,0.4 -47.8987076,-22.0059333,0.16 -47.8987079,-22.0059335,-0.07000000000000001 -47.89870809999999,-22.0059337,-0.3 -47.8987083,-22.0059338,-0.51 -47.8987082,-22.0059337,-0.82 -47.89870809999999,-22.0059337,-1 -47.89870809999999,-22.0059337,-1.17 -47.898708,-22.0059337,-1.33 -47.8987079,-22.0059319,0.08 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl3</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987095,-22.0059325,0.01 -47.8987113,-22.0059311,1.95 -47.8987082,-22.0059334,1.98 -47.89870809999999,-22.0059335,1.98 -47.8987072,-22.0059339,1.98 -47.8987064,-22.0059342,1.98 -47.89870359999999,-22.0059348,1.97 -47.8986998,-22.0059356,1.97 -47.8986969,-22.005936,1.97 -47.89869019999999,-22.0059369,1.97 -47.8986865,-22.0059374,1.98 -47.8986782,-22.0059382,1.98 -47.8986735,-22.0059386,1.98 -47.8986632,-22.0059388,1.98 -47.898652,-22.0059388,1.98 -47.89864600000001,-22.0059389,1.98 -47.8986334,-22.0059384,1.98 -47.89862689999999,-22.0059378,1.98 -47.8986134,-22.005936,1.99 -47.89860699999999,-22.0059352,1.99 -47.89859700000001,-22.0059342,1.99 -47.8985934,-22.0059339,1.99 -47.8985886,-22.0059335,1.99 -47.89858439999999,-22.005932,1.99 -47.8985816,-22.0059306,1.99 -47.89857429999999,-22.0059284,1.99 -47.89856990000001,-22.0059276,1.99 -47.8985606,-22.0059255,2 -47.8985558,-22.0059247,2 -47.8985457,-22.0059231,2 -47.89853479999999,-22.005922,2 -47.89852909999999,-22.0059221,2 -47.89851689999999,-22.0059227,2 -47.8985038,-22.0059233,2.01 -47.89849699999999,-22.0059237,2.01 -47.8984828,-22.0059248,2.01 -47.8984701,-22.0059268,2.01 -47.8984653,-22.005928,2.01 -47.8984579,-22.00593,2.01 -47.8984553,-22.0059307,2.01 -47.8984519,-22.0059315,2.01 -47.89845119999999,-22.0059322,2.01 -47.89845179999999,-22.0059325,2.01 -47.8984543,-22.0059335,2.01 -47.8984562,-22.0059342,2.01 -47.8984613,-22.0059357,2.01 -47.89846459999999,-22.0059365,2.01 -47.8984722,-22.0059387,2.01 -47.8984812,-22.0059412,2.01 -47.89848640000001,-22.0059423,2.01 -47.89849759999999,-22.0059447,2.01 -47.89850360000001,-22.0059461,2.01 -47.89851609999999,-22.0059487,2.01 -47.8985222,-22.0059497,2.01 -47.898532,-22.0059514,2.01 -47.8985386,-22.0059526,2.01 -47.8985409,-22.0059531,2.01 -47.89854579999999,-22.005953,2 -47.8985495,-22.0059523,2 -47.8985585,-22.0059502,2 -47.89856329999999,-22.0059489,2 -47.8985736,-22.0059453,2 -47.8985831,-22.0059399,2 -47.8985869,-22.0059363,2 -47.8985928,-22.005928,2 -47.8985978,-22.0059198,2 -47.8986013,-22.0059167,2 -47.8986105,-22.0059128,2 -47.8986153,-22.0059114,2 -47.8986217,-22.0059091,2 -47.8986254,-22.0059074,2 -47.8986282,-22.005907,1.99 -47.8986357,-22.0059075,1.99 -47.89863969999999,-22.0059085,1.99 -47.898648,-22.0059111,1.99 -47.8986526,-22.0059123,1.99 -47.8986626,-22.0059146,1.99 -47.89867310000001,-22.0059182,1.99 -47.8986785,-22.0059202,1.99 -47.8986898,-22.0059242,1.98 -47.8986948,-22.0059264,1.98 -47.89869890000001,-22.0059283,1.98 -47.89870419999999,-22.0059311,1.98 -47.8987066,-22.0059323,1.94 -47.8987068,-22.0059324,1.86 -47.8987065,-22.0059322,1.52 -47.8987065,-22.0059324,1.18 -47.8987068,-22.0059325,1.03 -47.8987072,-22.0059329,0.72 -47.8987074,-22.005933,0.5600000000000001 -47.8987077,-22.0059333,0.24 -47.8987079,-22.0059335,0.08 -47.8987082,-22.0059337,-0.21 -47.8987083,-22.0059337,-0.5 -47.8987083,-22.0059337,-0.64 -47.8987083,-22.0059336,-0.89 -47.8987082,-22.0059336,-1.13 -47.8987082,-22.0059335,-1.24 -47.8987089,-22.0059318,0.09999999999999999 -47.8987088,-22.0059316,0.11 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl4</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987095,-22.0059325,0.01 -47.8987112,-22.0059301,1.97 -47.89870689999999,-22.0059335,2.01 -47.8987065,-22.0059334,2.01 -47.898706,-22.0059335,2.01 -47.8987049,-22.0059337,2.01 -47.8987032,-22.005934,2 -47.89870070000001,-22.0059346,2 -47.89869709999999,-22.0059351,2 -47.89869240000001,-22.0059355,2 -47.8986871,-22.0059361,2 -47.8986782,-22.005937,2 -47.89867479999999,-22.0059372,2 -47.8986675,-22.0059375,2 -47.8986596,-22.0059375,2 -47.8986468,-22.0059374,2 -47.8986375,-22.0059372,2 -47.89862790000001,-22.0059363,2 -47.8986178,-22.0059349,2 -47.89860819999999,-22.0059336,2 -47.8986004,-22.0059328,2 -47.8985947,-22.0059325,2 -47.8985906,-22.0059325,2 -47.8985873,-22.0059317,2 -47.8985833,-22.0059298,1.99 -47.8985748,-22.0059275,1.99 -47.8985713,-22.0059269,1.99 -47.89856040000001,-22.0059246,1.99 -47.8985528,-22.0059234,1.99 -47.89854459999999,-22.0059221,1.99 -47.8985361,-22.0059212,1.99 -47.89852259999999,-22.0059215,1.99 -47.8985129,-22.0059219,1.99 -47.8985028,-22.0059224,1.99 -47.89849229999999,-22.005923,1.99 -47.8984815,-22.0059238,1.99 -47.8984676,-22.005926,1.99 -47.8984612,-22.0059278,1.99 -47.8984565,-22.0059293,1.99 -47.8984532,-22.0059302,1.99 -47.8984514,-22.0059308,1.98 -47.89845119999999,-22.0059314,1.98 -47.89845220000001,-22.005932,1.98 -47.8984558,-22.0059334,1.98 -47.89845930000001,-22.0059346,1.98 -47.89846399999999,-22.0059359,1.97 -47.8984696,-22.0059374,1.98 -47.8984759,-22.0059393,1.98 -47.89848310000001,-22.0059411,1.97 -47.89849109999999,-22.0059428,1.97 -47.89849980000001,-22.0059447,1.97 -47.8985089,-22.0059468,1.97 -47.8985184,-22.0059485,1.98 -47.8985266,-22.0059499,1.98 -47.8985328,-22.005951,1.98 -47.8985374,-22.0059519,1.98 -47.898541,-22.0059524,1.98 -47.8985486,-22.0059513,1.98 -47.898552,-22.0059505,1.98 -47.8985629,-22.0059477,1.98 -47.8985709,-22.0059448,1.98 -47.8985786,-22.0059412,1.98 -47.8985851,-22.0059362,1.98 -47.8985902,-22.0059302,1.98 -47.8985941,-22.0059235,1.98 -47.8986009,-22.0059154,1.98 -47.8986077,-22.0059124,1.98 -47.8986152,-22.0059103,1.99 -47.8986209,-22.0059086,1.99 -47.8986244,-22.0059067,1.99 -47.8986256,-22.0059062,1.99 -47.8986322,-22.005906,1.99 -47.898638,-22.0059071,1.99 -47.8986438,-22.005909,1.99 -47.8986502,-22.005911,1.99 -47.8986572,-22.0059127,1.99 -47.89866499999999,-22.0059146,1.99 -47.8986728,-22.0059172,1.99 -47.898681,-22.0059202,2 -47.8986895,-22.0059233,2 -47.8986969,-22.0059266,2 -47.8987039,-22.0059304,2 -47.89870629999999,-22.0059316,2 -47.8987072,-22.0059318,1.93 -47.89870689999999,-22.0059316,1.72 -47.8987068,-22.0059315,1.59 -47.89870689999999,-22.0059316,1.2 -47.8987073,-22.0059319,0.9700000000000001 -47.8987076,-22.0059321,0.74 -47.8987077,-22.0059324,0.5 -47.8987079,-22.0059325,0.26 -47.8987082,-22.0059328,-0.09 -47.8987085,-22.0059331,-0.31 -47.8987086,-22.0059333,-0.53 -47.8987086,-22.0059333,-0.73 -47.8987086,-22.0059333,-0.9199999999999999 -47.8987085,-22.0059332,-1.1 -47.8987085,-22.0059331,-1.27 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl5</name>
+			<visibility>0</visibility>
+			<styleUrl>#msn_ylw-pushpin</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987095,-22.0059325,0.04 -47.8987095,-22.0059325,0.04 -47.8987095,-22.0059327,-0.03 -47.8987095,-22.0059327,1.91 -47.8987096,-22.0059326,1.99 -47.8987095,-22.0059326,1.99 -47.8987089,-22.0059329,1.99 -47.8987064,-22.0059337,1.99 -47.89870460000001,-22.0059342,1.99 -47.8986999,-22.0059352,1.99 -47.8986966,-22.0059357,1.99 -47.8986892,-22.0059368,1.99 -47.8986852,-22.0059374,1.99 -47.89867599999999,-22.0059384,1.99 -47.89867100000001,-22.0059387,1.99 -47.89866,-22.0059391,1.99 -47.898648,-22.0059394,1.98 -47.8986416,-22.0059395,1.98 -47.89862839999999,-22.0059387,1.98 -47.89861450000001,-22.0059371,1.99 -47.89860800000001,-22.0059364,1.99 -47.8985977,-22.0059354,1.99 -47.8985939,-22.0059351,1.99 -47.8985888,-22.0059347,1.99 -47.8985852,-22.0059336,1.98 -47.8985828,-22.0059325,1.98 -47.8985763,-22.0059301,1.98 -47.8985721,-22.0059293,1.99 -47.8985629,-22.0059275,1.99 -47.8985582,-22.0059265,1.99 -47.89854820000001,-22.0059251,1.99 -47.8985374,-22.0059237,1.99 -47.8985318,-22.0059237,1.99 -47.89852,-22.0059245,1.99 -47.8985072,-22.0059252,1.99 -47.89850059999999,-22.0059255,1.99 -47.8984867,-22.0059266,1.99 -47.8984797,-22.0059272,1.99 -47.8984677,-22.0059291,1.99 -47.8984631,-22.0059302,2 -47.8984566,-22.0059318,1.99 -47.8984529,-22.0059325,1.99 -47.8984519,-22.0059326,1.99 -47.898452,-22.0059331,1.99 -47.89845280000001,-22.0059334,1.99 -47.89845569999999,-22.0059345,1.99 -47.8984577,-22.0059352,1.99 -47.89846320000001,-22.0059367,1.99 -47.8984666,-22.0059376,1.99 -47.8984743,-22.0059399,1.99 -47.8984836,-22.0059422,1.99 -47.8984889,-22.0059433,1.99 -47.8985002,-22.0059457,1.99 -47.8985124,-22.0059486,1.99 -47.89851869999999,-22.0059499,1.99 -47.8985296,-22.0059518,1.99 -47.898537,-22.0059532,1.99 -47.89853960000001,-22.0059537,1.99 -47.89854519999999,-22.0059537,1.99 -47.89854940000001,-22.0059529,1.99 -47.8985589,-22.0059508,1.99 -47.898564,-22.0059495,1.99 -47.8985747,-22.0059456,2 -47.8985841,-22.0059399,2 -47.8985879,-22.0059361,2 -47.8985936,-22.0059273,2 -47.8985962,-22.0059231,2 -47.8985995,-22.0059196,2 -47.8986085,-22.005915,2 -47.8986181,-22.005912,2.01 -47.8986212,-22.0059107,2.01 -47.8986241,-22.0059087,2.01 -47.8986258,-22.005908,2.01 -47.8986315,-22.0059075,2.01 -47.8986352,-22.0059079,2.01 -47.8986427,-22.00591,2.01 -47.898651,-22.0059126,2.01 -47.8986556,-22.0059137,2.01 -47.89866559999999,-22.0059162,2.01 -47.8986758,-22.0059199,2.02 -47.8986812,-22.0059219,2.02 -47.8986921,-22.005926,2.02 -47.89870010000001,-22.0059299,2.03 -47.8987026,-22.0059313,2.03 -47.8987056,-22.0059327,2.02 -47.8987061,-22.0059329,1.97 -47.8987058,-22.0059328,1.67 -47.89870569999999,-22.0059328,1.49 -47.898706,-22.0059332,1.16 -47.89870629999999,-22.0059334,1.01 -47.8987068,-22.0059338,0.6899999999999999 -47.898707,-22.005934,0.53 -47.8987074,-22.0059342,0.21 -47.89870749999999,-22.0059344,0.05 -47.8987077,-22.0059346,-0.25 -47.8987079,-22.0059349,-0.55 -47.898708,-22.0059349,-0.6899999999999999 -47.89870809999999,-22.0059348,-0.9499999999999998 -47.8987082,-22.0059347,-1.19 -47.8987083,-22.0059347,-1.31 -47.8987091,-22.0059342,0.11 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>route_planned_real_flight</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed1</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.89870837230747,-22.00593328913754,2.7 -47.89870595004656,-22.00593391901377,2.7 -47.89869926460643,-22.00593544871319,2.7 -47.89868928489147,-22.00593715837724,2.7 -47.89867659224426,-22.00593895802361,2.7 -47.89866205867877,-22.00594066768766,2.7 -47.89864674998979,-22.0059418374578,2.7 -47.89863153819123,-22.00594174747548,2.7 -47.89861690773531,-22.00594048772302,2.7 -47.89860431197854,-22.00593823816506,2.7 -47.89859423537313,-22.00593580864246,2.7 -47.898587549933,-22.00593391901377,2.7 -47.89858522456252,-22.00593328913754,2.7 -47.89858522456252,-22.00593328913754,2.7 -47.89858318986335,-22.005932569279,2.7 -47.89857757021803,-22.00593031972103,2.7 -47.89856885007873,-22.00592753026916,2.7 -47.89855751389765,-22.00592483079961,2.7 -47.8985441430174,-22.00592276120628,2.7 -47.89852941567104,-22.0059218613831,2.7 -47.8985140100916,-22.00592222131237,2.7 -47.89849870140262,-22.00592375101179,2.7 -47.89848397405625,-22.00592609055207,2.7 -47.89847118451862,-22.00592852007467,2.7 -47.89846101102277,-22.00593094959726,2.7 -47.89845413180178,-22.00593274924363,2.7 -47.89845161265042,-22.00593328913754,2.7 -47.89845161265042,-22.00593328913754,2.7 -47.8984550038157,-22.00593400899609,2.7 -47.89846362706456,-22.00593607858942,2.7 -47.89847573836914,-22.0059394079352,2.7 -47.89848988437289,-22.00594336715722,2.7 -47.89850461171925,-22.00594723639691,2.7 -47.898518757723,-22.00595065572501,2.7 -47.89853086902758,-22.00595290528297,2.7 -47.89853958916687,-22.00595434500007,2.7 -47.89854288344172,-22.0059549748763,2.7 -47.89854288344172,-22.0059549748763,2.7 -47.89855751389765,-22.00595065572501,2.7 -47.89857989558851,-22.00594201742244,2.7 -47.89859094109828,-22.00593337911986,2.7 -47.89859501049662,-22.00592546067584,2.7 -47.8985962700723,-22.00591871200195,2.7 -47.89859869233322,-22.00591322308053,2.7 -47.89860634667771,-22.00591025366402,2.7 -47.8986179735301,-22.00590899391156,2.7 -47.89862417451805,-22.00590845401765,2.7 -47.89862417451805,-22.00590845401765,2.7 -47.89862717812158,-22.00590917387619,2.7 -47.89863522002782,-22.00591106350488,2.7 -47.89864636242803,-22.00591412290371,2.7 -47.89865944263699,-22.0059179921434,2.7 -47.89867310418854,-22.00592213133005,2.7 -47.89868608750704,-22.0059262705167,2.7 -47.8986973267977,-22.00592986980944,2.7 -47.8987052718135,-22.00593238931436,2.7 -47.89870837230747,-22.00593328913754,2.7 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_exec_real_flight1</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed5</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987006,-22.0059341,2.59 -47.8986997,-22.0059324,2.6 -47.8986979,-22.0059339,2.66 -47.89869649999999,-22.0059358,2.74 -47.8986944,-22.0059368,2.75 -47.8986881,-22.0059378,2.63 -47.8986838,-22.0059398,2.66 -47.8986793,-22.0059406,2.68 -47.8986753,-22.0059408,2.67 -47.8986702,-22.0059415,2.68 -47.8986635,-22.0059426,2.7 -47.8986498,-22.0059435,2.71 -47.8986421,-22.0059434,2.67 -47.898634,-22.0059429,2.64 -47.8986262,-22.0059421,2.67 -47.8986172,-22.0059403,2.67 -47.8986087,-22.0059383,2.69 -47.8986004,-22.0059365,2.7 -47.89859190000001,-22.0059341,2.72 -47.89858889999999,-22.0059327,2.73 -47.8985886,-22.0059315,2.7 -47.8985867,-22.0059296,2.72 -47.8985822,-22.0059271,2.74 -47.8985759,-22.0059262,2.76 -47.8985694,-22.0059264,2.73 -47.8985632,-22.0059249,2.74 -47.8985575,-22.005923,2.76 -47.8985449,-22.0059212,2.72 -47.8985365,-22.0059206,2.86 -47.89853029999999,-22.0059207,2.95 -47.8985243,-22.0059209,3.05 -47.8985184,-22.0059209,3.01 -47.8985141,-22.0059214,2.91 -47.8985078,-22.0059232,2.82 -47.89850059999999,-22.0059247,2.79 -47.8984826,-22.0059263,2.69 -47.89847439999999,-22.0059281,2.69 -47.8984664,-22.0059303,2.66 -47.898459,-22.0059322,2.59 -47.8984564,-22.0059343,2.56 -47.8984561,-22.0059352,2.47 -47.8984568,-22.0059346,2.43 -47.8984583,-22.0059344,2.45 -47.8984601,-22.0059347,2.43 -47.8984622,-22.0059357,2.45 -47.89846579999999,-22.0059368,2.48 -47.8984752,-22.0059383,2.58 -47.8984804,-22.0059401,2.66 -47.8984868,-22.0059422,2.78 -47.8984936,-22.0059429,2.85 -47.89850209999999,-22.0059431,2.84 -47.8985086,-22.0059441,2.8 -47.8985157,-22.0059467,2.8 -47.8985229,-22.00595,2.77 -47.8985383,-22.0059536,2.7 -47.8985422,-22.0059542,2.65 -47.8985428,-22.0059542,2.69 -47.8985427,-22.0059538,2.64 -47.89855270000001,-22.0059537,2.67 -47.898559,-22.0059524,2.74 -47.8985647,-22.0059503,2.68 -47.8985697,-22.0059485,2.67 -47.8985751,-22.0059461,2.64 -47.89858030000001,-22.0059428,2.66 -47.898587,-22.0059346,2.7 -47.8985899,-22.0059298,2.69 -47.8985924,-22.0059256,2.72 -47.8985947,-22.0059199,2.75 -47.8985982,-22.0059158,2.79 -47.8986038,-22.005914,2.83 -47.89861799999999,-22.0059112,2.94 -47.8986215,-22.0059098,2.93 -47.89862280000001,-22.0059087,2.84 -47.8986241,-22.0059085,2.81 -47.89862689999999,-22.0059086,2.88 -47.8986388,-22.0059068,2.93 -47.8986433,-22.0059078,2.91 -47.8986467,-22.0059097,2.92 -47.898652,-22.0059115,2.86 -47.89866679999999,-22.005913,2.84 -47.89866679999999,-22.005913,2.84 -47.8986824,-22.0059213,2.75 -47.8986883,-22.0059251,2.82 -47.8986949,-22.0059273,2.79 -47.898701,-22.0059295,2.77 -47.89870419999999,-22.0059324,2.86 -47.8987038,-22.0059329,2.87 -47.8987031,-22.0059312,2.72 -47.8987033,-22.0059297,2.57 -47.8987037,-22.0059292,2.4 -47.8987038,-22.0059301,2.19 -47.89870359999999,-22.0059315,2 -47.89870359999999,-22.0059328,1.68 -47.89870400000001,-22.0059339,1.35 -47.89870400000001,-22.0059355,0.9199999999999999 -47.89870359999999,-22.0059374,0.41 -47.89870359999999,-22.0059374,0.41 -47.89870419999999,-22.0059372,0.09999999999999999 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_exec_real_flight2</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.89869830000001,-22.0059322,2.87 -47.8987049,-22.0059309,2.92 -47.8987059,-22.00593,2.95 -47.89870479999999,-22.0059298,2.95 -47.8987041,-22.0059337,3.02 -47.8987041,-22.0059337,3.02 -47.8986962,-22.0059369,2.86 -47.89868970000001,-22.0059388,2.76 -47.89868249999999,-22.0059409,2.67 -47.8986728,-22.0059432,2.54 -47.8986655,-22.0059443,2.53 -47.8986559,-22.0059447,2.58 -47.89864780000001,-22.0059446,2.64 -47.8986404,-22.0059446,2.63 -47.8986322,-22.0059447,2.62 -47.8986123,-22.0059412,2.71 -47.8986031,-22.0059395,2.8 -47.8985943,-22.005938,2.76 -47.8985884,-22.0059362,2.65 -47.8985864,-22.0059353,2.54 -47.8985853,-22.0059335,2.56 -47.8985813,-22.0059279,2.68 -47.8985758,-22.0059223,2.71 -47.89856930000001,-22.005921,2.68 -47.89856220000001,-22.0059227,2.79 -47.898557,-22.005922,2.92 -47.8985516,-22.0059204,2.82 -47.8985421,-22.0059233,2.79 -47.8985352,-22.0059242,2.78 -47.8985281,-22.005923,2.72 -47.8985201,-22.0059224,2.65 -47.8985127,-22.0059241,2.68 -47.898507,-22.0059255,2.83 -47.8985008,-22.0059246,2.74 -47.898492,-22.0059234,2.66 -47.8984823,-22.0059241,2.64 -47.8984745,-22.005927,2.65 -47.898467,-22.0059306,2.66 -47.89846050000001,-22.0059327,2.46 -47.89845749999999,-22.0059341,2.47 -47.898455,-22.0059335,2.59 -47.898455,-22.0059339,2.58 -47.8984571,-22.005934,2.67 -47.8984602,-22.0059346,2.69 -47.8984643,-22.0059361,2.74 -47.89846849999999,-22.0059373,2.79 -47.898474,-22.0059387,2.89 -47.8984777,-22.0059401,2.95 -47.8984815,-22.0059407,3.2 -47.89848700000001,-22.0059395,3.169999999999999 -47.8984916,-22.0059391,2.83 -47.8985003,-22.0059419,2.52 -47.8985108,-22.0059463,2.61 -47.898529,-22.0059537,2.67 -47.898529,-22.0059537,2.67 -47.8985448,-22.0059553,2.63 -47.8985461,-22.0059549,2.55 -47.8985451,-22.005956,2.5 -47.8985469,-22.0059567,2.46 -47.89855349999999,-22.0059548,2.56 -47.89856040000001,-22.0059518,2.55 -47.89856329999999,-22.005948,2.52 -47.8985655,-22.0059451,2.64 -47.8985677,-22.0059427,2.78 -47.8985704,-22.0059405,2.91 -47.8985704,-22.0059405,2.91 -47.8985746,-22.0059378,3 -47.8985799,-22.0059345,2.95 -47.89858499999999,-22.0059308,2.86 -47.898591,-22.0059249,2.75 -47.8985947,-22.0059169,2.75 -47.8985986,-22.0059124,2.48 -47.8986091,-22.0059124,2.48 -47.8986187,-22.005912,2.5 -47.89862550000001,-22.0059099,2.58 -47.8986247,-22.0059079,2.6 -47.8986276,-22.0059085,2.53 -47.8986353,-22.0059107,2.63 -47.8986423,-22.0059129,2.79 -47.8986484,-22.005915,2.82 -47.8986584,-22.0059178,2.96 -47.8986661,-22.0059202,2.96 -47.89867040000001,-22.0059214,2.98 -47.898677,-22.0059228,2.83 -47.8986888,-22.0059268,2.88 -47.8986945,-22.0059274,2.82 -47.8986976,-22.0059283,2.77 -47.89870010000001,-22.0059295,2.69 -47.8987023,-22.0059313,2.6 -47.8987047,-22.0059332,2.6 -47.8987047,-22.0059332,2.6 -47.898708,-22.0059358,2.43 -47.8987083,-22.0059372,2.25 -47.8987095,-22.0059375,2 -47.8987095,-22.0059375,2 -47.8987102,-22.0059379,1.6 -47.8987085,-22.0059387,1.34 -47.8987073,-22.0059391,1.01 -47.8987072,-22.0059389,0.6899999999999999 -47.8987082,-22.0059383,0.42 -47.8987082,-22.0059383,0.42 -47.8987068,-22.0059371,0.19 -47.898705,-22.0059347,-0.02 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_exec_real_flight3_rtl</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8986775,-22.0059495,2.7 -47.8986781,-22.0059486,2.69 -47.8986796,-22.0059467,2.65 -47.8986823,-22.0059439,2.68 -47.8986869,-22.0059395,2.72 -47.8986908,-22.0059357,2.72 -47.8986953,-22.0059323,2.73 -47.898698,-22.0059316,2.66 -47.8986991,-22.0059317,2.66 -47.8986991,-22.0059315,2.68 -47.8986987,-22.0059318,2.68 -47.8986986,-22.005933,2.69 -47.898698,-22.0059337,2.71 -47.8986966,-22.0059339,2.65 -47.8986924,-22.005935,2.68 -47.8986881,-22.0059358,2.74 -47.8986822,-22.0059364,2.75 -47.898676,-22.0059369,2.73 -47.8986682,-22.005938,2.72 -47.8986617,-22.0059391,2.71 -47.8986542,-22.0059396,2.71 -47.8986462,-22.0059398,2.62 -47.8986377,-22.005941,2.6 -47.8986276,-22.0059428,2.68 -47.8986122,-22.0059408,2.6 -47.8986038,-22.0059384,2.56 -47.8985963,-22.0059373,2.59 -47.8985916,-22.005938,2.59 -47.8985905,-22.0059387,2.49 -47.8985906,-22.005938,2.46 -47.8985882,-22.0059357,2.51 -47.8985817,-22.0059315,2.56 -47.8985747,-22.00593,2.59 -47.8985667,-22.0059285,2.6 -47.8985605,-22.005926,2.61 -47.8985524,-22.0059239,2.67 -47.8985441,-22.0059233,2.67 -47.8985374,-22.0059229,2.67 -47.8985311,-22.0059221,2.72 -47.8985254,-22.005922,2.72 -47.8985194,-22.0059222,2.75 -47.8985126,-22.0059228,2.72 -47.898505,-22.0059232,2.86 -47.8984983,-22.0059232,2.95 -47.8984908,-22.0059231,2.81 -47.8984818,-22.0059239,2.76 -47.898472,-22.0059264,2.87 -47.8984633,-22.0059288,2.86 -47.898456,-22.0059315,2.74 -47.8984549,-22.0059346,2.69 -47.8984551,-22.0059351,2.64 -47.8984555,-22.0059343,2.61 -47.898457,-22.0059342,2.64 -47.8984615,-22.0059343,2.7 -47.8984662,-22.0059347,2.75 -47.8984713,-22.0059354,2.75 -47.8984793,-22.0059373,2.77 -47.8984883,-22.0059404,2.84 -47.8984883,-22.0059404,2.84 -47.8984976,-22.0059422,2.83 -47.898507,-22.0059447,2.81 -47.8985153,-22.0059484,2.85 -47.8985248,-22.0059522,2.92 -47.8985329,-22.0059535,2.83 -47.8985377,-22.005954,2.71 -47.8985405,-22.0059553,2.72 -47.8985445,-22.0059544,2.75 -47.8985534,-22.0059503,2.72 -47.8985611,-22.0059469,2.77 -47.8985665,-22.0059443,2.8 -47.8985665,-22.0059443,2.8 -47.8985731,-22.0059399,2.7 -47.8985797,-22.0059363,2.62 -47.898585,-22.005933,2.6 -47.8985904,-22.0059275,2.66 -47.8985936,-22.0059206,2.67 -47.8986033,-22.0059145,2.67 -47.8986118,-22.0059162,2.82 -47.898611,-22.0059177,2.86 -47.898611,-22.0059177,2.86 -47.8986062,-22.0059191,2.8 -47.8986052,-22.0059209,2.79 -47.8986076,-22.0059205,2.76 -47.8986057,-22.0059196,2.81 -47.8986043,-22.0059184,2.85 -47.8986039,-22.0059164,2.78 -47.8986039,-22.0059164,2.78
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_exec_real_flight3_mpga_exec</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8986931,-22.0059501,2.66 -47.8986917,-22.0059502,2.73 -47.8986933,-22.0059489,2.72 -47.8986964,-22.0059441,2.7 -47.8986985,-22.0059382,2.63 -47.8986982,-22.0059357,2.56 -47.8986974,-22.005937,2.53 -47.898697,-22.0059394,2.6 -47.8986958,-22.0059394,2.59 -47.8986935,-22.0059387,2.54 -47.8986899,-22.0059396,2.56 -47.898686,-22.0059407,2.73 -47.8986814,-22.0059405,2.74 -47.8986755,-22.0059403,2.66 -47.8986666,-22.0059411,2.69 -47.898659,-22.0059427,2.57 -47.8986521,-22.0059443,2.59 -47.8986476,-22.0059446,2.57 -47.8986359,-22.0059451,2.57 -47.8986285,-22.0059453,2.64 -47.8986216,-22.0059439,2.65 -47.8986137,-22.0059416,2.64 -47.8986047,-22.0059391,2.71 -47.8985942,-22.0059359,2.73 -47.8985878,-22.0059352,2.73 -47.8985856,-22.0059333,2.71 -47.8985841,-22.0059303,2.59 -47.8985841,-22.0059303,2.59 -47.8985822,-22.0059277,2.58 -47.8985779,-22.0059258,2.67 -47.8985725,-22.0059248,2.95 -47.8985642,-22.0059228,3.08 -47.8985575,-22.0059203,3.09 -47.8985496,-22.0059187,3.08 -47.8985437,-22.0059191,3.06 -47.8985367,-22.005921,3.0 -47.8985303,-22.0059231,2.94 -47.8985239,-22.005924,2.85 -47.8985164,-22.0059249,2.81 -47.8985081,-22.0059258,2.71 -47.8984993,-22.0059267,2.62 -47.8984901,-22.0059278,2.55 -47.8984801,-22.0059287,2.44 -47.8984702,-22.0059301,2.42 -47.898461,-22.0059316,2.44 -47.8984547,-22.0059332,2.45 -47.8984549,-22.0059345,2.48 -47.8984568,-22.0059337,2.36 -47.8984578,-22.0059326,2.33 -47.8984595,-22.0059331,2.47 -47.8984643,-22.0059339,2.54 -47.8984693,-22.0059353,2.57 -47.8984752,-22.0059365,2.78 -47.898483,-22.0059371,2.75 -47.8984906,-22.0059378,2.75 -47.8984978,-22.0059386,2.84 -47.8985043,-22.005941,2.74 -47.8985105,-22.005944,2.58 -47.8985194,-22.0059486,2.57 -47.8985268,-22.0059514,2.83 -47.8985354,-22.0059516,2.83 -47.898544,-22.0059533,2.83 -47.898544,-22.0059533,2.83 -47.898546,-22.0059542,3.17 -47.8985579,-22.0059555,2.3 -47.8985634,-22.0059543,2.27 -47.8985681,-22.0059524,2.19 -47.8985714,-22.0059514,2.49 -47.898576,-22.0059468,2.78 -47.8985814,-22.005942,2.79 -47.8985884,-22.0059367,2.75 -47.898594,-22.0059311,2.71 -47.8985962,-22.0059254,2.74 -47.8985974,-22.0059217,2.74 -47.8986055,-22.0059168,2.71 -47.8986055,-22.0059168,2.71 -47.8986042,-22.0059158,2.66 -47.8986048,-22.0059152,2.7 -47.8986025,-22.0059194,2.76 -47.8986002,-22.005924,2.7 -47.8985973,-22.0059306,2.52 -47.8985961,-22.0059358,2.24 -47.8985948,-22.0059417,2.01 -47.8985944,-22.0059453,2.09 -47.8985962,-22.0059466,2.02 -47.8985968,-22.0059463,1.92 -47.8985941,-22.0059466,1.89 -47.8985886,-22.0059479,1.91 -47.8985817,-22.0059498,2.02 -47.8985786,-22.0059495,2.04 -47.8985772,-22.0059473,1.93 -47.8985761,-22.0059464,1.88 -47.8985761,-22.0059464,1.97 -47.8985784,-22.0059451,2.05 -47.8985819,-22.0059426,2.04 -47.8985931,-22.0059413,1.99 -47.8985992,-22.0059416,1.82 -47.8986055,-22.0059421,1.55 -47.8986112,-22.005942,1.3 -47.8986164,-22.0059432,0.92 -47.8986157,-22.0059434,0.55 -47.8986143,-22.0059431,0.45 -47.8986144,-22.0059424,0.48 -47.8986146,-22.0059419,0.52
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_exec_real_flight3_mpga_path_planning</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.89855985670841,-22.005953132038414,2.152857142857143 -47.89857485825471,-22.005950570241808,1.9571428571428573 -47.89858917672343,-22.005948244198876,1.7614285714285716 -47.8986035484819,-22.005945924454704,1.5657142857142858 -47.89861807138944,-22.005943582214954,1.37 -47.89863171065621,-22.005941382147267,1.1742857142857144 -47.898644570923864,-22.005939308054828,0.9785714285714286 -47.898656744238316,-22.00593734464064,0.7828571428571429 -47.898668299391794,-22.005935447813364,0.5871428571428572 -47.89867929451854,-22.005933642768056,0.39142857142857146 -47.898689782908306,-22.005931921406304,0.19571428571428573 -47.89869980913068,-22.005930275629698,0.0
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987087,-22.0059306,2.61 -47.8987042,-22.0059361,2.69 -47.8987043,-22.0059359,2.69 -47.8987036,-22.005936,2.69 -47.8987021,-22.0059366,2.68 -47.8987024,-22.0059363,2.68 -47.8987034,-22.0059352,2.68 -47.8987021,-22.0059349,2.68 -47.8987009,-22.0059353,2.68 -47.8986978,-22.0059358,2.67 -47.8986954,-22.005936,2.67 -47.8986895,-22.0059364,2.67 -47.8986827,-22.0059371,2.67 -47.8986789,-22.0059375,2.67 -47.8986705,-22.005938,2.67 -47.8986613,-22.0059381,2.67 -47.8986565,-22.0059382,2.67 -47.8986471,-22.0059384,2.67 -47.8986374,-22.0059387,2.67 -47.8986277,-22.0059388,2.67 -47.8986229,-22.0059384,2.67 -47.8986125,-22.005937,2.67 -47.8986015,-22.0059355,2.67 -47.8985964,-22.0059349,2.68 -47.8985964,-22.0059349,2.68 -47.8985881,-22.005934,2.68 -47.8985849,-22.0059327,2.68 -47.8985824,-22.0059315,2.68 -47.8985758,-22.0059294,2.69 -47.8985673,-22.0059279,2.69 -47.8985629,-22.0059268,2.7 -47.8985541,-22.0059242,2.7 -47.8985448,-22.0059224,2.7 -47.8985397,-22.005922,2.7 -47.8985294,-22.0059215,2.71 -47.8985191,-22.0059215,2.71 -47.8985138,-22.0059218,2.71 -47.898503,-22.0059227,2.72 -47.8984922,-22.0059236,2.72 -47.8984867,-22.0059241,2.72 -47.8984758,-22.0059258,2.72 -47.8984707,-22.005927,2.73 -47.8984609,-22.0059287,2.73 -47.8984545,-22.0059311,2.73 -47.8984529,-22.005932,2.73 -47.898452,-22.0059328,2.73 -47.8984534,-22.0059335,2.73 -47.8984534,-22.0059335,2.73 -47.8984585,-22.0059357,2.74 -47.8984643,-22.0059376,2.74 -47.8984714,-22.0059399,2.74 -47.8984752,-22.0059412,2.74 -47.8984792,-22.0059423,2.74 -47.8984921,-22.0059449,2.74 -47.8984966,-22.0059458,2.74 -47.8985059,-22.0059479,2.74 -47.8985155,-22.0059502,2.73 -47.8985206,-22.0059513,2.73 -47.8985257,-22.0059521,2.73 -47.8985351,-22.0059532,2.73 -47.8985406,-22.0059537,2.72 -47.8985422,-22.0059538,2.72 -47.8985442,-22.0059536,2.72 -47.8985557,-22.0059509,2.71 -47.8985602,-22.0059496,2.71 -47.8985693,-22.0059465,2.71 -47.8985781,-22.0059421,2.71 -47.8985821,-22.0059392,2.7 -47.8985889,-22.0059324,2.7 -47.8985941,-22.0059245,2.7 -47.898596,-22.0059205,2.7 -47.8986017,-22.0059145,2.7 -47.8986101,-22.0059115,2.69 -47.8986183,-22.0059094,2.69 -47.8986498,-22.0059146,2.68 -47.8986534,-22.0059162,2.68 -47.8986582,-22.0059191,2.68 -47.8986601,-22.0059206,2.67 -47.8986601,-22.005921,2.66 -47.8986582,-22.005922,2.64 -47.8986535,-22.0059229,2.6 -47.8986503,-22.0059233,2.57 -47.8986429,-22.0059243,2.51 -47.8986352,-22.0059257,2.46 -47.8986314,-22.0059265,2.43 -47.8986233,-22.0059277,2.38 -47.898619,-22.0059282,2.36 -47.89861,-22.0059292,2.3 -47.8986003,-22.0059304,2.25 -47.8985954,-22.005931,2.22 -47.8985852,-22.0059322,2.17 -47.8985747,-22.0059334,2.11 -47.8985694,-22.0059342,2.07 -47.8985586,-22.0059357,2.01 -47.8985476,-22.0059372,1.95 -47.898542,-22.005938,1.91 -47.8985365,-22.0059388,1.88 -47.8985261,-22.0059404,1.81 -47.8985161,-22.0059421,1.69 -47.8985082,-22.0059406,1.57 -47.8985019,-22.0059355,1.43 -47.8984986,-22.0059327,1.36 -47.8984952,-22.0059303,1.28 -47.8984902,-22.0059283,1.18 -47.8984877,-22.0059301,1.09 -47.8984866,-22.0059319,1.04 -47.8984866,-22.0059319,1.04 -47.8984808,-22.0059369,0.83 -47.8984808,-22.0059369,0.83 -47.8984808,-22.0059369,0.83 -47.898465,-22.0059473,0.41 -47.8984623,-22.0059503,0.32 -47.8984625,-22.0059505,0.34 -47.8984643,-22.005949,0.45 -47.8984649,-22.0059486,0.45 -47.898465,-22.0059491,0.28 -47.8984649,-22.0059499,-0.05 -47.8984649,-22.0059499,-0.05 -47.8984656,-22.0059497,-0.54 -47.898466,-22.0059495,-0.81 -47.8984661,-22.0059493,-0.94 -47.8984661,-22.0059492,-1.18 -47.898466,-22.0059492,-1.43 -47.8984658,-22.0059492,-1.55 -47.8984654,-22.0059493,-1.78 -47.8984649,-22.0059497,-1.99 -47.8984647,-22.0059499,-2.09 -47.8984645,-22.00595,-2.25 -47.8984646,-22.00595,-2.38 -47.8984646,-22.00595,-2.43 -47.8984647,-22.00595,-2.51 -47.8984629,-22.0059514,0.11
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>route_planned_sitl_mpga</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed7</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.89854466913246,-22.005964317740425,2.0 -47.8985299417861,-22.005964795546536,2.0 -47.89852429598036,-22.005952696523995,2.0 -47.89851898638443,-22.005940824256893,2.0 -47.89850550795579,-22.005942499727663,2.0 -47.898498438829535,-22.005932220147603,2.0 -47.89849095985673,-22.0059227774031,2.0 -47.89848643894896,-22.0059332369478,2.0 -47.898477757565836,-22.00594039054212,2.0 -47.89846949087379,-22.005947201303805,2.0 -47.89846153035551,-22.005953760115,2.0 -47.89846899479475,-22.00594714371512,0.0
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga1</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed141</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987132,-22.0059322,2.59 -47.8987095,-22.0059338,2.69 -47.8987092,-22.0059339,2.69 -47.8987086,-22.0059341,2.69 -47.8987065,-22.0059346,2.69 -47.8987036,-22.0059349,2.69 -47.898702,-22.0059354,2.69 -47.8986973,-22.0059363,2.69 -47.898694,-22.0059366,2.69 -47.8986869,-22.0059376,2.69 -47.8986791,-22.0059386,2.69 -47.8986747,-22.0059391,2.69 -47.8986654,-22.0059397,2.69 -47.8986604,-22.0059398,2.69 -47.8986502,-22.00594,2.69 -47.8986449,-22.0059401,2.69 -47.8986345,-22.0059403,2.69 -47.8986296,-22.0059404,2.69 -47.8986196,-22.0059395,2.69 -47.898609,-22.0059378,2.69 -47.8986007,-22.0059368,2.69 -47.8985979,-22.0059365,2.69 -47.8985942,-22.005936,2.69 -47.8985942,-22.005936,2.69 -47.8985906,-22.0059351,2.69 -47.898592,-22.0059354,2.69 -47.8985978,-22.0059363,2.69 -47.8986068,-22.0059372,2.69 -47.8986117,-22.0059375,2.69 -47.8986166,-22.0059375,2.69 -47.8986266,-22.005937,2.68 -47.8986371,-22.0059363,2.68 -47.8986424,-22.0059358,2.68 -47.8986531,-22.0059346,2.68 -47.8986584,-22.0059338,2.69 -47.8986692,-22.0059324,2.68 -47.8986748,-22.0059319,2.68 -47.8986862,-22.0059311,2.68 -47.8986949,-22.0059302,2.69 -47.8986975,-22.00593,2.68 -47.8986993,-22.0059299,2.64 -47.8986988,-22.0059299,2.53 -47.8986976,-22.0059301,2.2 -47.8986976,-22.00593,1.85 -47.8986978,-22.00593,1.69 -47.8986985,-22.0059299,1.37 -47.8986989,-22.0059299,1.21 -47.8986995,-22.0059301,0.89 -47.8986997,-22.0059301,0.73 -47.8987002,-22.0059301,0.41 -47.8987008,-22.0059301,0.09 -47.898701,-22.0059301,-0.06 -47.8987011,-22.0059302,-0.35 -47.898701,-22.0059302,-0.63 -47.898701,-22.0059302,-0.77 -47.8987008,-22.0059301,-1.02 -47.8987007,-22.0059299,-1.26 -47.8987006,-22.0059299,-1.37 -47.8987004,-22.0059298,-1.57 -47.8987004,-22.0059298,-1.66 -47.8987002,-22.0059297,-1.81 -47.8987002,-22.0059297,-1.88 
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga2</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed141</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987137,-22.0059324,2.61 -47.8987095,-22.0059335,2.68 -47.8987091,-22.0059335,2.69 -47.8987085,-22.0059336,2.68 -47.8987067,-22.005934,2.69 -47.8987054,-22.0059342,2.69 -47.8987024,-22.0059349,2.69 -47.8987005,-22.0059354,2.69 -47.898695,-22.0059364,2.69 -47.8986916,-22.0059369,2.69 -47.8986843,-22.005938,2.69 -47.898676,-22.0059391,2.69 -47.8986714,-22.0059395,2.69 -47.8986616,-22.0059399,2.69 -47.8986565,-22.00594,2.69 -47.8986463,-22.0059401,2.69 -47.8986411,-22.0059403,2.69 -47.898631,-22.0059404,2.69 -47.8986262,-22.0059402,2.69 -47.898616,-22.0059389,2.69 -47.8986049,-22.0059371,2.69 -47.8985995,-22.0059364,2.69 -47.8985916,-22.0059353,2.69 -47.8985878,-22.0059347,2.69 -47.8985861,-22.005934,2.69 -47.8985811,-22.0059314,2.69 -47.8985777,-22.0059303,2.69 -47.8985694,-22.0059287,2.69 -47.8985606,-22.0059267,2.69 -47.8985561,-22.0059259,2.69 -47.8985466,-22.0059244,2.69 -47.8985371,-22.0059228,2.69 -47.8985324,-22.0059226,2.69 -47.8985225,-22.0059233,2.69 -47.898512,-22.0059239,2.69 -47.8985034,-22.0059242,2.69 -47.8985034,-22.0059242,2.69 -47.8984961,-22.0059245,2.69 -47.8984998,-22.0059241,2.69 -47.8985074,-22.0059244,2.69 -47.8985122,-22.0059247,2.69 -47.8985224,-22.005925,2.69 -47.8985274,-22.005925,2.69 -47.8985375,-22.0059245,2.68 -47.8985427,-22.0059241,2.68 -47.8985535,-22.0059237,2.68 -47.8985591,-22.0059236,2.68 -47.8985705,-22.0059237,2.68 -47.8985763,-22.0059238,2.68 -47.8985865,-22.0059245,2.68 -47.89859,-22.0059248,2.68 -47.8985936,-22.0059252,2.66 -47.8985936,-22.0059252,2.6 -47.8985923,-22.0059251,2.32 -47.8985919,-22.0059251,2.13 -47.898592,-22.0059251,1.79 -47.8985926,-22.0059253,1.47 -47.8985928,-22.0059254,1.32 -47.8985933,-22.0059257,1.0 -47.8985939,-22.0059259,0.68 -47.8985941,-22.005926,0.52 -47.8985947,-22.0059262,0.2 -47.8985951,-22.0059264,-0.1 -47.8985952,-22.0059265,-0.25 -47.8985953,-22.0059266,-0.53 -47.8985953,-22.0059265,-0.67 -47.8985952,-22.0059263,-0.92 -47.8985951,-22.0059261,-1.16 -47.898595,-22.005926,-1.26 -47.8985948,-22.0059258,-1.46 -47.8985947,-22.0059257,-1.55 -47.8985945,-22.0059255,-1.7
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga3</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed141</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987137,-22.0059324,2.6 -47.8987095,-22.0059335,2.68 -47.8987093,-22.0059335,2.68 -47.8987087,-22.0059336,2.68 -47.898707,-22.0059341,2.69 -47.8987057,-22.0059343,2.69 -47.8987028,-22.005935,2.69 -47.8986987,-22.005936,2.69 -47.8986957,-22.0059364,2.69 -47.8986889,-22.0059374,2.69 -47.8986852,-22.005938,2.69 -47.898677,-22.0059389,2.69 -47.8986725,-22.0059394,2.69 -47.8986628,-22.0059399,2.69 -47.8986577,-22.00594,2.69 -47.8986475,-22.0059402,2.69 -47.8986423,-22.0059403,2.69 -47.8986321,-22.0059405,2.69 -47.8986273,-22.0059403,2.69 -47.8986173,-22.0059391,2.69 -47.8986063,-22.0059374,2.69 -47.8986007,-22.0059366,2.69 -47.8985922,-22.0059354,2.69 -47.898588,-22.0059349,2.69 -47.8985866,-22.0059344,2.69 -47.8985822,-22.005932,2.69 -47.8985791,-22.0059307,2.69 -47.8985712,-22.0059291,2.69 -47.8985625,-22.0059271,2.69 -47.898558,-22.0059262,2.69 -47.8985487,-22.0059248,2.69 -47.8985392,-22.0059231,2.69 -47.8985345,-22.0059226,2.69 -47.8985248,-22.0059231,2.69 -47.8985197,-22.0059235,2.69 -47.898509,-22.005924,2.69 -47.8984982,-22.0059247,2.69 -47.8984877,-22.0059258,2.69 -47.8984824,-22.0059264,2.69 -47.898472,-22.0059278,2.69 -47.8984669,-22.0059284,2.7 -47.8984584,-22.0059302,2.7 -47.8984539,-22.0059324,2.7 -47.8984529,-22.0059328,2.7 -47.8984528,-22.0059333,2.69 -47.8984535,-22.0059336,2.69 -47.8984559,-22.0059346,2.69 -47.8984578,-22.0059353,2.69 -47.8984629,-22.0059368,2.69 -47.8984661,-22.0059377,2.69 -47.8984733,-22.0059399,2.69 -47.8984817,-22.0059423,2.69 -47.8984863,-22.0059434,2.69 -47.8984947,-22.005945,2.69 -47.898498,-22.0059456,2.69 -47.8985029,-22.0059464,2.69 -47.8985075,-22.0059471,2.68 -47.898506,-22.0059466,2.68 -47.8985035,-22.0059461,2.68 -47.8984962,-22.0059444,2.68 -47.8984918,-22.0059432,2.68 -47.8984832,-22.0059404,2.67 -47.8984794,-22.0059388,2.67 -47.8984751,-22.0059368,2.67 -47.8984745,-22.0059359,2.67 -47.8984751,-22.0059356,2.67 -47.898478,-22.0059348,2.67 -47.8984798,-22.0059343,2.68 -47.8984846,-22.0059329,2.68 -47.8984877,-22.0059321,2.68 -47.8984947,-22.0059306,2.68 -47.8985027,-22.0059295,2.68 -47.8985071,-22.0059289,2.68 -47.8985152,-22.0059278,2.68 -47.8985207,-22.005927,2.69 -47.8985224,-22.0059268,2.68 -47.8985247,-22.0059264,2.67 -47.8985253,-22.0059262,2.63 -47.8985258,-22.005926,2.35 -47.8985261,-22.0059258,2.0 -47.8985263,-22.0059257,1.84 -47.8985268,-22.0059253,1.53 -47.8985271,-22.005925,1.22 -47.8985272,-22.0059249,1.06 -47.8985273,-22.0059248,0.74 -47.8985273,-22.0059247,0.58 -47.8985274,-22.0059248,0.26 -47.8985274,-22.0059248,-0.04 -47.8985273,-22.0059248,-0.2 -47.8985272,-22.0059248,-0.49 -47.8985272,-22.0059249,-0.63 -47.8985272,-22.0059251,-0.9 -47.8985273,-22.0059251,-1.15 -47.8985273,-22.0059252,-1.27 -47.8985274,-22.0059252,-1.48 -47.8985275,-22.0059252,-1.58 -47.8985275,-22.0059251,-1.76 -47.8985275,-22.0059251,-1.84 -47.8985267,-22.0059228,0.0
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga4</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed141</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987105,-22.005932,2.61 -47.8987079,-22.0059344,2.69 -47.8987076,-22.0059345,2.69 -47.8987069,-22.0059347,2.69 -47.8987052,-22.0059348,2.69 -47.8987024,-22.0059351,2.69 -47.8987008,-22.0059355,2.69 -47.8986959,-22.0059363,2.68 -47.8986927,-22.0059367,2.68 -47.8986856,-22.0059375,2.68 -47.8986819,-22.005938,2.68 -47.8986734,-22.0059388,2.68 -47.8986641,-22.0059393,2.68 -47.8986592,-22.0059394,2.68 -47.8986541,-22.0059395,2.68 -47.8986439,-22.0059395,2.68 -47.8986336,-22.0059398,2.67 -47.8986288,-22.0059399,2.68 -47.898619,-22.0059389,2.67 -47.8986137,-22.0059381,2.67 -47.8986025,-22.0059365,2.67 -47.8985932,-22.0059353,2.68 -47.8985903,-22.0059349,2.68 -47.898587,-22.0059344,2.68 -47.8985853,-22.0059334,2.68 -47.8985799,-22.0059309,2.68 -47.8985723,-22.005929,2.68 -47.8985679,-22.0059282,2.68 -47.8985591,-22.0059261,2.68 -47.8985497,-22.0059247,2.69 -47.8985449,-22.0059239,2.69 -47.8985351,-22.0059225,2.69 -47.898525,-22.0059229,2.69 -47.8985199,-22.0059233,2.69 -47.8985091,-22.0059239,2.69 -47.8985036,-22.0059241,2.69 -47.8984929,-22.005925,2.7 -47.8984823,-22.0059263,2.7 -47.898477,-22.005927,2.7 -47.8984669,-22.0059283,2.7 -47.8984621,-22.0059289,2.7 -47.8984556,-22.0059312,2.7 -47.898454,-22.0059321,2.7 -47.8984527,-22.0059329,2.7 -47.898453,-22.0059331,2.71 -47.8984546,-22.0059337,2.71 -47.898458,-22.005935,2.71 -47.8984603,-22.0059358,2.71 -47.8984662,-22.0059375,2.71 -47.8984697,-22.0059385,2.71 -47.8984775,-22.005941,2.71 -47.8984819,-22.0059422,2.71 -47.898491,-22.0059442,2.71 -47.8985004,-22.0059462,2.71 -47.8985051,-22.0059473,2.71 -47.8985147,-22.0059497,2.71 -47.8985247,-22.0059518,2.71 -47.8985298,-22.0059525,2.71 -47.898538,-22.0059533,2.71 -47.8985405,-22.0059536,2.71 -47.898544,-22.0059537,2.71 -47.8985506,-22.0059523,2.7 -47.8985544,-22.0059515,2.7 -47.8985587,-22.0059505,2.71 -47.8985597,-22.0059499,2.71 -47.8985821,-22.005946,2.71 -47.8985862,-22.0059455,2.71 -47.8985912,-22.0059452,2.71 -47.8985925,-22.0059457,2.71 -47.898592,-22.005946,2.71 -47.8985886,-22.0059465,2.71 -47.8985859,-22.0059468,2.71 -47.8985792,-22.0059475,2.71 -47.8985755,-22.0059478,2.71 -47.8985694,-22.0059481,2.71 -47.8985672,-22.005948,2.7 -47.8985645,-22.0059475,2.7 -47.898564,-22.0059473,2.7 -47.8985646,-22.005947,2.7 -47.8985657,-22.0059468,2.7 -47.8985688,-22.0059465,2.7 -47.898571,-22.0059463,2.7 -47.8985771,-22.0059457,2.7 -47.8985843,-22.005945,2.7 -47.8985884,-22.0059446,2.7 -47.898597,-22.0059436,2.7 -47.8986015,-22.0059429,2.7 -47.8986107,-22.0059415,2.69 -47.8986204,-22.0059403,2.69 -47.8986253,-22.0059398,2.69 -47.8986354,-22.0059386,2.69 -47.8986458,-22.0059372,2.69 -47.8986509,-22.0059364,2.69 -47.898661,-22.0059353,2.69 -47.898666,-22.0059348,2.69 -47.898676,-22.0059331,2.69 -47.8986866,-22.0059313,2.69 -47.8986912,-22.0059306,2.7 -47.8986969,-22.0059298,2.7 -47.898698,-22.0059295,2.68 -47.8986973,-22.0059293,2.53 -47.8986959,-22.0059293,2.19 -47.8986957,-22.0059293,2.01 -47.8986959,-22.0059292,1.68 -47.8986962,-22.0059291,1.53 -47.8986967,-22.0059289,1.21 -47.8986972,-22.0059288,0.9 -47.8986974,-22.0059287,0.74 -47.8986981,-22.0059286,0.42 -47.8986984,-22.0059287,0.26 -47.8986988,-22.0059288,-0.04 -47.898699,-22.0059288,-0.2 -47.8986993,-22.0059288,-0.49 -47.8986994,-22.0059288,-0.76 -47.8986994,-22.0059288,-0.89 -47.8986994,-22.0059288,-1.13 -47.8986993,-22.0059288,-1.25 -47.8986992,-22.0059289,-1.45 -47.8986991,-22.0059289,-1.55 -47.898699,-22.0059289,-1.71 -47.8986989,-22.005929,-1.85 -47.8986961,-22.0059279,0.09
+				</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>mission_sitl_mpga5</name>
+			<visibility>0</visibility>
+			<styleUrl>#failed141</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+					-47.8987095,-22.005931,2.62 -47.8987067,-22.0059341,2.7 -47.8987065,-22.0059342,2.7 -47.8987056,-22.0059349,2.7 -47.8987052,-22.0059352,2.7 -47.8987035,-22.0059352,2.7 -47.8987006,-22.0059359,2.7 -47.8986986,-22.0059363,2.7 -47.898696,-22.0059366,2.69 -47.8986896,-22.0059372,2.69 -47.8986861,-22.0059377,2.7 -47.8986783,-22.0059387,2.69 -47.8986694,-22.0059394,2.69 -47.8986647,-22.0059396,2.69 -47.8986546,-22.0059398,2.69 -47.8986441,-22.00594,2.69 -47.8986388,-22.0059401,2.69 -47.8986286,-22.0059401,2.69 -47.8986237,-22.0059397,2.69 -47.898613,-22.0059382,2.69 -47.8986074,-22.0059375,2.69 -47.8985966,-22.0059361,2.7 -47.8985896,-22.0059353,2.7 -47.8985877,-22.0059351,2.7 -47.8985843,-22.0059338,2.7 -47.8985787,-22.0059315,2.69 -47.8985751,-22.0059307,2.69 -47.8985666,-22.0059291,2.69 -47.8985577,-22.005927,2.7 -47.8985531,-22.0059262,2.7 -47.8985436,-22.0059248,2.69 -47.8985388,-22.0059239,2.69 -47.8985289,-22.0059233,2.69 -47.8985238,-22.0059237,2.69 -47.898513,-22.0059244,2.69 -47.8985018,-22.005925,2.69 -47.8984961,-22.0059254,2.69 -47.8984846,-22.0059266,2.69 -47.8984735,-22.0059281,2.69 -47.8984681,-22.0059287,2.69 -47.8984585,-22.0059302,2.69 -47.8984554,-22.0059314,2.69 -47.8984521,-22.005933,2.7 -47.8984519,-22.0059336,2.7 -47.8984526,-22.0059338,2.7 -47.8984552,-22.0059348,2.7 -47.8984571,-22.0059357,2.7 -47.8984623,-22.0059375,2.7 -47.8984656,-22.0059385,2.7 -47.8984726,-22.0059407,2.7 -47.8984804,-22.0059429,2.7 -47.8984847,-22.0059439,2.7 -47.8984934,-22.0059456,2.7 -47.8984979,-22.0059465,2.7 -47.8985071,-22.0059487,2.7 -47.8985119,-22.0059499,2.7 -47.8985219,-22.0059521,2.7 -47.898527,-22.005953,2.7 -47.8985358,-22.005954,2.7 -47.8985406,-22.0059546,2.7 -47.8985422,-22.0059547,2.69 -47.898548,-22.0059537,2.69 -47.8985567,-22.0059517,2.69 -47.8985612,-22.0059505,2.7 -47.8985702,-22.0059474,2.7 -47.8985788,-22.0059429,2.7 -47.8985825,-22.00594,2.7 -47.8985888,-22.0059334,2.7 -47.8985915,-22.0059299,2.7 -47.8985956,-22.0059226,2.7 -47.8985977,-22.0059192,2.69 -47.8986044,-22.0059147,2.69 -47.8986125,-22.0059119,2.69 -47.8986152,-22.0059107,2.7 -47.8986179,-22.0059089,2.7 -47.8986197,-22.0059077,2.7 -47.8986197,-22.0059077,2.7 -47.8986218,-22.005906,2.7 -47.8986206,-22.005908,2.7 -47.8986186,-22.0059135,2.7 -47.8986176,-22.0059173,2.7 -47.8986159,-22.0059258,2.7 -47.8986155,-22.0059299,2.7 -47.8986157,-22.0059331,2.7 -47.8986194,-22.0059362,2.7 -47.8986263,-22.0059372,2.7 -47.8986301,-22.0059376,2.7 -47.8986383,-22.0059384,2.7 -47.8986428,-22.0059388,2.7 -47.8986521,-22.0059389,2.69 -47.8986569,-22.0059386,2.69 -47.8986662,-22.0059375,2.69 -47.8986757,-22.0059356,2.69 -47.8986806,-22.0059345,2.69 -47.8986902,-22.0059328,2.69 -47.898694,-22.0059322,2.69 -47.8986985,-22.0059311,2.69 -47.8986991,-22.0059307,2.66 -47.8986982,-22.0059303,2.42 -47.8986975,-22.0059299,2.06 -47.8986976,-22.0059297,1.89 -47.8986982,-22.0059293,1.58 -47.8986988,-22.0059291,1.27 -47.8986991,-22.0059291,1.11 -47.8986998,-22.0059289,0.78 -47.8987003,-22.0059288,0.47 -47.8987005,-22.0059287,0.31 -47.8987009,-22.0059287,0.0 -47.898701,-22.0059287,-0.15 -47.8987012,-22.0059287,-0.43 -47.8987012,-22.0059288,-0.71 -47.8987012,-22.0059289,-0.84 -47.8987013,-22.0059289,-1.07 -47.8987013,-22.0059289,-1.18 -47.8987013,-22.0059288,-1.38 -47.8987012,-22.0059287,-1.47 -47.8987012,-22.0059286,-1.62 -47.8987015,-22.0059269,0.1
+				</coordinates>
+			</LineString>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

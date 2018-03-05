@@ -1,7 +1,9 @@
 #************************Makefile***************************
-#Program: UAV-MOSA-C
+#Program: UAV-Toolkit-C
 #Compiler: GCC
 #Author: Jesimar da Silva Arantes
+#Date: 12/01/2018
+#Last Update: 12/01/2018
 #***********************************************************
 
 all: mini_mosa monitoring pos_analyser
