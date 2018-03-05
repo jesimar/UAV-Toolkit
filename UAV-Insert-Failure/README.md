@@ -41,10 +41,10 @@ OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 No diretório principal desse projeto existe um arquivo de propriedades (config.properties), onde se define o IP da máquina e a porta usada na comunicação.
 Edite esse arquivo caso deseje executar esse código de outro computador remotamente.
 
-`
+```
 prop.host=localhost
 prop.port=5556
-`
+```
 
 ## Ações Possíveis
 

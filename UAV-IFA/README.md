@@ -1,6 +1,6 @@
 # UAV-IFA
 
-Projeto escrito em Java usando a IDE Netbeans para monitoramento da segurança em voo do drone  através da implementação do sistema IFA (In-Flight Awareness).
+Projeto escrito em Java usando a IDE Netbeans para monitoramento da segurança em voo do drone  através da implementação do sistema *In-Flight Awareness* (IFA) [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
 
 ## Como Executar
 

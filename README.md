@@ -1,8 +1,7 @@
 # UAV-Toolkit
 
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
-
-------
+Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
 
 ## Visão Geral
 
@@ -22,12 +21,10 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave.
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave.
-* **UAV-Services-DroneKit** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.
-* **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-Services-Dronekit.
+* **UAV-SOA-Interface** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.
+* **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-SOA-Interface.
 * **UAV-Toolkit-C** -> Conjunto de códigos em C para gerenciamento do drone.
 * **UAV-Voice-Commands** -> Projeto em Java para controlar o drone utilizando comandos de voz.
-
-------
 
 ## Instalação
 
@@ -45,7 +42,7 @@ ou
 ou 
 * Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)]
 
-### Instação Caso I:
+### Instalação Caso I:
 
 Caso você deseje modificar o projeto atual incluindo melhorias, então deve-se ter instalado em seu computador a IDE Netbeans ou alguma outra IDE de seu interesse.
 
@@ -57,7 +54,7 @@ Uma vez terminado, navegue até o diretório RAIZ. Neste caso você estará em .
 
 Então você poderá importar cada um dos projetos que você deseja melhorar. 
 
-### Instação Caso II:
+### Instalação Caso II:
 
 Caso você deseje apenas utilizar o projeto atual sem incluir melhorias, então não é necessária a instação de nenhuma IDE para edição dos projetos desenvolvidos.
 
@@ -69,25 +66,29 @@ Uma vez terminado, navegue até o diretório RAIZ. Neste caso você estará em .
 
 Pronto, o projeto já está pronto para o uso.
 
-------
+## Arquitetura de Hardware
 
-## Lista de Softwares Estáveis
+![](./Figures/config-inteledison-usb.png)
 
-A seguir estão listados os projetos de software do UAV-Toolkit que estão estáveis.
+![](./Figures/config-inteledison-wifi.png)
 
-1. **UAV-Monitoring** [[Link](./UAV-Monitoring/)]
-2. **UAV-PosAnalyser** [[Link](./UAV-PosAnalyser/)]
-3. **UAV-Toolkit-C** [[Link](./UAV-Toolkit-C/)]
+![](./Figures/connections-autopilot-motors.png)
 
-------
+![](./Figures/connections-apm-radioreceiver.png)
 
-## Configurando o Ambiente de Trabalho
+![](./Figures/connections-inteledison-autopilot.png)
 
-TODO
+![](./Figures/integration-systems.png)
 
-![](./Figures/environment-edison-sitl.png)
+![](./Figures/iDroneAlpha.pdf)
 
-------
+![](./Figures/communication-system.pdf)
+
+![](./Figures/communication-inteledison-ap-gcs.pdf)
+
+![](./Figures/uav-soa-interface.pdf)
+
+![](./Figures/architecture-mosa-ifa-system.pdf)
 
 ## Citação
 
@@ -125,8 +126,6 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
   publisher = {ACM}
 } 
 ```
-
-------
 
 ## Licença
 

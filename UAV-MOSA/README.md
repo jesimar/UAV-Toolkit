@@ -1,6 +1,6 @@
 # UAV-MOSA
 
-Projeto escrito em Java usando a IDE Netbeans para monitoramento da missão do drone através da implementação do sistema MOSA (Mission Oriented Sensor Array).
+Projeto escrito em Java usando a IDE Netbeans para monitoramento da missão do drone através da implementação do sistema *Mission Oriented Sensor Array* (MOSA) [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)].
 
 ## Como Executar
 
