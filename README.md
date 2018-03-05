@@ -67,7 +67,7 @@ Logo em seguida, você deverá fazer o download do último release do nosso proj
 
 Uma vez terminado, navegue até o diretório RAIZ. Neste caso você estará em ./UAV-Toolkit:
 
-Pronto o projeto já está pronto para o uso.
+Pronto, o projeto já está pronto para o uso.
 
 ------
 
@@ -93,16 +93,38 @@ TODO
 
 Se você usar o UAV-Toolkit, por favor, cite minha Qualificação de Doutorado [[PDF](./Docs/Qualificação-Jesimar-2017.pdf)].
 
-@PhdThesis{ArantesJS2017,
-  title = {Sistema autônomo para supervisão de missão e segurança de voo em VANTs},
+```
+@phdthesis{ArantesJS2017Tese,
   author = {Jesimar da Silva Arantes},
-  School = {Universidade de São Paulo (USP)},
-  Year = {2017},
-  Month = {ago},
+  title = {Sistema autônomo para supervisão de missão e segurança de voo em VANTs},
+  school = {Universidade de São Paulo (USP)},
+  year = {2017},
+  month = {ago},
   pages = {1--140},
-  Note = {São Carlos, SP},
-  Type = {Qualificação de Doutorado}
+  note = {São Carlos, SP},
+  type = {Qualificação de Doutorado}
 }
+```
+
+O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementados [[Link](https://dl.acm.org/citation.cfm?id=3071178.3071302)].
+
+```
+@inproceedings{ArantesJS2017GECCO,
+  author = {da Silva Arantes, Jesimar and da Silva Arantes, M\'{a}rcio and Toledo, Claudio Fabiano Motta and J\'{u}nior, Onofre Trindade and Williams, Brian C.},
+  title = {An Embedded System Architecture Based on Genetic Algorithms for Mission and Safety Planning with UAV},
+  booktitle = {Proceedings of the Genetic and Evolutionary Computation Conference},
+  series = {GECCO '17},
+  year = {2017},
+  isbn = {978-1-4503-4920-8},
+  location = {Berlin, Germany},
+  pages = {1049--1056},
+  numpages = {8},
+  url = {http://doi.acm.org/10.1145/3071178.3071302},
+  doi = {10.1145/3071178.3071302},
+  acmid = {3071302},
+  publisher = {ACM}
+} 
+```
 
 ------
 
