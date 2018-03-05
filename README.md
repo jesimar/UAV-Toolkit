@@ -85,6 +85,8 @@ A seguir estão listados os projetos de software do UAV-Toolkit que estão está
 
 TODO
 
+![](./Figures/environment-edison-sitl.png)
+
 ------
 
 ## Citação
