@@ -14,7 +14,7 @@ Para compilar os códigos digite no terminal:
 
 `make all`
 
-Para apagar os código digite no terminal:
+Para apagar os códigos digite no terminal:
 
 `make clean`
 

@@ -13,6 +13,7 @@
 * Calibration of the Modules-IFA
 * Calibration of the Modules-MOSA
 * Code of system UAV-Insertion-Failure
+* Code of system UAV-Routes-Standard
 * Added module CCQSP4m
 * Added module OpenParachute4s in IFA
 * Added module Alarm4s in IFA
