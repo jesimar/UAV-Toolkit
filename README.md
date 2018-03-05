@@ -1,7 +1,7 @@
 # UAV-Toolkit
 
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
-Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
+Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
 
 ## Visão Geral
 
@@ -68,27 +68,27 @@ Pronto, o projeto já está pronto para o uso.
 
 ## Arquitetura de Hardware
 
-![](./Figures/config-inteledison-usb.png)
+![](./Figures/config-inteledison-usb.png =400x)
 
-![](./Figures/config-inteledison-wifi.png)
+![](./Figures/config-inteledison-wifi.png =400x)
 
-![](./Figures/connections-autopilot-motors.png)
+![](./Figures/connections-autopilot-motors.png =400x)
 
-![](./Figures/connections-apm-radioreceiver.png)
+![](./Figures/connections-apm-radioreceiver.png =400x)
 
-![](./Figures/connections-inteledison-autopilot.png)
+![](./Figures/connections-inteledison-autopilot.png =400x)
 
-![](./Figures/integration-systems.png)
+![](./Figures/integration-systems.png =400x)
 
-![](./Figures/iDroneAlpha.pdf)
+![](./Figures/iDroneAlpha.png =400x)
 
-![](./Figures/communication-system.pdf)
+![](./Figures/communication-system.png =400x)
 
-![](./Figures/communication-inteledison-ap-gcs.pdf)
+![](./Figures/communication-inteledison-ap-gcs.png =400x)
 
-![](./Figures/uav-soa-interface.pdf)
+![](./Figures/uav-soa-interface.png =400x)
 
-![](./Figures/architecture-mosa-ifa-system.pdf)
+![](./Figures/architecture-mosa-ifa-system.png =400x)
 
 ## Citação
 
