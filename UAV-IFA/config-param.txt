@@ -2,7 +2,7 @@
 #Date: 30/01/2018
 #Last Update: 14/02/2018
 #Description: Configuration file of AutoPilot parameters.
-#Descrição: Arquivo de configuração dos parâmetros do piloto automático. 
+#Descricao: Arquivo de configuracao dos parametros do piloto automatico. 
 #Format: ATTRIBUTE_NAME=VALUE
 
 RTL_ALT=800.0

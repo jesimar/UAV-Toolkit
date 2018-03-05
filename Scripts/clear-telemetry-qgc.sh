@@ -7,6 +7,8 @@
 
 echo "====================Clear Files Telemetry QGC====================="
 
-rm /home/jesimar/Documentos/QGroundControl/Telemetry/*.tlog
+DIR=/home/jesimar/Documentos/QGroundControl/Telemetry
+
+rm $DIR/*.tlog
 
 echo "==============================Done================================"

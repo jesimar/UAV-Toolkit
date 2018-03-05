@@ -146,8 +146,7 @@ public class ReaderFileConfig {
         }
         if (typeAltitudeDecay == null ||
                 (!typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_CONSTANTE) && 
-                !typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_LINEAR) &&
-                !typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_LOG))){
+                !typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_LINEAR))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type altitude decay not valid");
             return false;
         }

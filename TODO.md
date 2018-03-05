@@ -42,7 +42,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Definir no Google Earth um waypoint específico para TAKEOFF.
 * Definir no Google Earth um waypoint específico para LAND_VERTICAL.
 
-
 ## GitHub
 
 * Melhorar a descrição do projeto no github.

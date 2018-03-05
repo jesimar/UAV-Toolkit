@@ -32,7 +32,6 @@ public class Constants {
     
     public static final String TYPE_ALTITUDE_DECAY_CONSTANTE  = "CONSTANT";
     public static final String TYPE_ALTITUDE_DECAY_LINEAR     = "LINEAR";
-    public static final String TYPE_ALTITUDE_DECAY_LOG        = "LOG";
     
     public static final String TYPE_CONTROLLER_VOICE     = "VOICE_COMMANDS";
     public static final String TYPE_CONTROLLER_TEXT      = "TEXT_COMMANDS";

@@ -81,8 +81,6 @@ public class MPGA4s extends Replanner{
                 double y = readRoute3D.nextDouble();           
                 if (config.getTypeAltitudeDecay().equals(Constants.TYPE_ALTITUDE_DECAY_LINEAR)){
                     h = h - frac;
-                }else if (config.getTypeAltitudeDecay().equals(Constants.TYPE_ALTITUDE_DECAY_LOG)){
-                    h = h - h/qtdWpt;//Falta Terminar
                 }
                 printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));
                 countLines++;

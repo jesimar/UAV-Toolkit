@@ -4,6 +4,10 @@ Este diretório contém um conjunto de scripts utilizados para facilitar a execu
 
 Os scripts mais importantes e utilizados são:
 
+* **clear-simulations.sh** -> Limpa um conjunto de arquivos gerado durante a simulação e o voo.
+* **clear-telemetry-qgc.sh** -> Limpa um conjunto de arquivos de telemetria gerados pelo software QGroundControl.
+* **dir** -> Script para facilitar a navegação na Intel Edison até o diretório de scripts.
+* **exec-fgfs.sh** -> Executa o simulador de voo FlightGear.
 * **exec-sitl.sh** -> Executa o Dronekit-SITL no computador local. Usado em experimentos SITL.
 * **exec-mavproxy-local.sh** -> Executa o MAVProxy na máquina local. Usado em experimentos SITL.
 * **exec-mavproxy-edison.sh** -> Executa o MAVProxy na Intel Edison. Usado em experimentos com o drone real.
@@ -17,3 +21,22 @@ Os scripts mais importantes e utilizados são:
 * **exec-tests.sh** -> Executa o sistema UAV-Tests para testar as funcionalidades do UAV-Services-Dronekit.
 * **exec-monitoring.sh** -> Executa o sistema UAV-Monitoring para monitoramento dos sensores do drone.
 * **exec-pos-analyser.sh** -> Executa o sistema UAV-PosAnalyser para análise da posição do drone.
+* **exec-turn-off-buzzer.sh** -> Executa um código em python que desliga o buzzer caso o mesmo esteja apitando.
+* **list-info-hd.sh** -> Lista informações do HD.
+* **list-ips-in-use.sh** -> Lista todos os IPs que estão em uso na rede (todos os computadores que estão na rede).
+* **list-ports-in-use.sh** -> Lista todas as portas de rede que estão em uso.
+* **show-my-ip.sh*** -> Mostra o IP do meu computador.
+* **show-my-linux.sh** Mostra a versão detalhada do meu sistema operacional.
+
+Os scripts a seguir necessitam ser configurados para serem utilizados:
+
+* **clear-telemetry-qgc.sh** -> Necessita configurar o diretório em que estão os arquivos de telemetria do QGC.
+* **exec-login-edison.sh** -> Necessita configurar o IP da Intel Edison.
+* **exec-mavproxy-edison.sh** -> Necessita configurar o IP da Estação de Controle de Solo.
+* **exec-mavproxy-edison-sitl.sh** -> Necessita configurar o IP da Estação de Controle de Solo.
+* **exec-swap-mission.sh** -> Necessita trocar o diretório em que encontra-se os arquivos da nova missão.
+* **list-ips-in-use.sh** -> Necessita configurar o IP base da rede em que o notebook está logado.
+
+Os scripts a seguir não estão concluídos: 
+
+* **exec-copy-files-results.sh**
