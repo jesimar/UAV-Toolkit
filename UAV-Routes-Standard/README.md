@@ -25,6 +25,8 @@ make clean
 Existe um arquivo de configuração (config.txt) de parâmetros de entrada do algoritmo:
 
 ```
+#IS_PRINT
+0
 #POS_Z
 10
 #RADIUS_CIRCLE
@@ -33,14 +35,28 @@ Existe um arquivo de configuração (config.txt) de parâmetros de entrada do al
 20
 #BASE_RECTANGLE
 20
-``` 
+```
+
+O valor de IS_PRINT pode ser apenas 0 (false) e 1 (true). Os valores restantes podem ser quaisquer valores reais. As linhas de comentários não podem ser trocadas por outros comentários, mas podem ser suprimidas se desejar, no entanto, os valores default do código serão utilizados.
 
 ## Arquivos de Saída
 
 Um conjunto de arquivos de saída (route*.txt) são gerados nas pastas Circle, Triangle, Rectangle.
-Os arquivos de saída contém rotas calculadas em coordenadas cartesianas separadas por vírgulas.
+Os arquivos de saída contém rotas calculadas em coordenadas cartesianas separadas por vírgulas. Abaixo encontra-se o arquivo route_rectangle_8wpt.txt.
 
-## Arquivos de Saída
+```
+0.00 0.00 10.00
+0.00 10.00 10.00
+0.00 20.00 10.00
+10.00 20.00 10.00
+20.00 20.00 10.00
+20.00 10.00 10.00
+20.00 0.00 10.00
+10.00 0.00 10.00
+0.00 0.00 10.00
+```
+
+## Funções Principais do Programa
 
 As funções que criam as rotas de circulo, triângulo e retângulo são respectivamente: 
 

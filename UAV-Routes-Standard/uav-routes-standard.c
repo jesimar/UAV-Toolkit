@@ -17,10 +17,10 @@
 
 int IS_PRINT = FALSE;
 
-int POS_Z = 100;
-int RADIUS_CIRCLE = 1000;
-int BASE_TRIANGLE = 2000;
-int BASE_RECTANGLE = 2000;
+double POS_Z = 100.0;
+double RADIUS_CIRCLE = 1000.0;
+double BASE_TRIANGLE = 2000.0;
+double BASE_RECTANGLE = 2000.0;
 
 typedef struct pos{
 	double posX;
@@ -72,13 +72,13 @@ void readFileConfig(char name[]){
 			if (strcmp(str, "#IS_PRINT") == 0){
 				fscanf(file, "%d", &IS_PRINT);
 			}else if (strcmp(str, "#POS_Z") == 0){
-				fscanf(file, "%d", &POS_Z);
+				fscanf(file, "%lf", &POS_Z);
 			}else if (strcmp(str, "#RADIUS_CIRCLE") == 0){
-				fscanf(file, "%d", &RADIUS_CIRCLE);
+				fscanf(file, "%lf", &RADIUS_CIRCLE);
 			}else if (strcmp(str, "#BASE_TRIANGLE") == 0){
-				fscanf(file, "%d", &BASE_TRIANGLE);
+				fscanf(file, "%lf", &BASE_TRIANGLE);
 			}else if (strcmp(str, "#BASE_RECTANGLE") == 0){
-				fscanf(file, "%d", &BASE_RECTANGLE);
+				fscanf(file, "%lf", &BASE_RECTANGLE);
 			}
 		}
 		fclose(file);
