@@ -5,10 +5,6 @@
 #Description: Script that runs the MAVProxy software on the local computer for SITL tests on the PC.
 #Descrição: Script que executa o software MAVProxy no computador local para testes SITL no PC.
 
-rm mav.parm
-rm mav.tlog
-rm mav.tlog.raw
-
 IP=127.0.0.1
 PORT_IN_1=5760
 PORT_IN_2=5501

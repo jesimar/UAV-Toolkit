@@ -5,12 +5,9 @@
 #Description: Script that runs MAVProxy software on Intel Edison for real in-flight drone testing.
 #Descrição: Script que executa o software MAVProxy na Intel Edison para testes reais em voo no drone.
 
-rm mav.parm
-rm mav.tlog
-rm mav.tlog.raw
-
 #IP_GCS=192.168.43.124
 IP_GCS=192.168.205.231
+
 IP_EDISON=127.0.0.1
 
 PORT_OUT_1=14550
