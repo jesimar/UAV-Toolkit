@@ -21,6 +21,7 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave.
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave.
+* **UAV-Routes-Standard** -> Código em C que gera um conjunto de rotas com formato padrão (círculo, triângulo e retângulo).
 * **UAV-SOA-Interface** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.
 * **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-SOA-Interface.
 * **UAV-Toolkit-C** -> Conjunto de códigos em C para gerenciamento do drone.
@@ -89,6 +90,11 @@ Pronto, o projeto já está pronto para o uso.
 ![](./Figures/uav-soa-interface.png)
 
 ![](./Figures/architecture-mosa-ifa-system.png)
+
+## Características do Sistema
+
+* O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
+* O sistema IFA suporta apenas um cliente MOSA. 
 
 ## Citação
 
