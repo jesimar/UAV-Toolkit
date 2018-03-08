@@ -29,3 +29,4 @@ cplex.jar
 mav.parm
 mav.tlog
 mav.tlog.raw
+exec-planner.sh
