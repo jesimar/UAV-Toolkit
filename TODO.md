@@ -15,22 +15,23 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison para ler informações do sonar.
 * Melhorar a calibração do sensor de alarme de bateria, pois ele está apintando apenas quando a bateria esta terminando.
 * Melhorar a calibração do power module.
+* Verificar/corrigir problema da alimentação do ESC (não esta mais conseguindo alimentar a Intel Edison), medir a tensão do ESC.
 
 ## Sistem IFA:
 
 * Incorporar funcionalidade no monitoramento do IFA as seguintes leituras: 
-    + Armazenar o tempo atual do Sistema Operacional.
     + Armazenar o tempo transcorrido do Sistema Operacional.
-* Gravar todos os prints na tela em um arquivo de log para posterir análise. 
-* Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
 * Colocar no MOSA e IFA um objeto com todos os waypoints da rota.
+* Colocar no IFA uma thread que fica monitorando qualquer comando digitado via teclado: 
+	+ Comandos possíveis: MPGA, LAND, RTL, BUZZER, FOTO, START_VIDEO, STOP_VIDEO.
+	+ Com esse sistema posso retirar (deletar) o sistema UAV-Insert-Failure.
+* Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
 
 ## Sistema MOSA:
 
 * Incorporar funcionalidade de recalculo de rota após um terminado tempo (feito).
 * Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint (fazer).
 * Incorporar planejador de missão CCQSP4m no MOSA.
-* Gravar todos os prints na tela em um arquivo de log para posterir análise.
 
 ## Sistema UAV-SOA-Interface:
 
@@ -40,6 +41,15 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar.
     + Observar: O porque o drone esta pousando no final da missão.
 * Verificar se a função que verifica overhead está correta. O ideal é medir o overhead apenas do piloto automático, pois talvez o gargalo seja a comunicação entre a minha aplicação em java e a aplicação em python o que eu dúvido que seja isso, mas é bom testar. Dessa forma, é interessante capturar os instantes de tempo inicial e final dentro do código em python.
+* Função getGPS() -> modificar
+* Função getBarometer() -> criar
+* Diagramar as dependências entre os arquivos .py do sistema UAV-SOA-Interface com suas respectivas funções.
+* Melhorar código UAV-SOA-Interface na função getAllInfoSensors para retornar também o getDistanceToHome(), dessa forma, evita-se de chamar no MOSA e IFA essa função.
+
+## Modules-MOSA:
+
+* Colocar rotas standard na pasta Fixed-Route4m: Circle, Triangle, Rectangle, Infinity, Star, etc.
+* Colocar para chamar as rotas standard dentro do sistema MOSA a partir do ponto onde o drone está.
 
 ## QGroundControl:
 
@@ -73,4 +83,13 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Colocar uma descrição em todos os arquivos de properties e o que eles fazem.
 * Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
 * Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g.
+* Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
+* Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
+* Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
+
+## Não Fazer Mais
+
+* Armazenar o tempo atual do Sistema Operacional.
+* Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
+* Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).

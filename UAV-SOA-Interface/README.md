@@ -60,3 +60,40 @@ Métodos POST:
 * '/set-parameter/'
 * '/set-heading/'
 * '/set-mode/'
+
+## Como Fazer Requisições usando o Navegador:
+
+```
+http://localhost:50000/get-gps/
+http://localhost:50000/get-battery/
+http://localhost:50000/get-attitude/
+http://localhost:50000/get-velocity/
+http://localhost:50000/get-heading/
+http://localhost:50000/get-groundspeed/
+http://localhost:50000/get-airspeed/
+http://localhost:50000/get-gpsinfo/
+http://localhost:50000/get-mode/
+http://localhost:50000/get-mode/
+http://localhost:50000/get-groundspeed/
+http://localhost:50000/get-groundspeed/
+http://localhost:50000/get-groundspeed/
+```
+
+
+    '/get-system-status/': views.getSystemStatus,
+    '/get-armed/': views.getArmed,
+    '/get-is-armable/': views.isArmable,
+    '/get-ekf-ok/': views.getEkfOk,
+    '/get-home-location/': views.getHomeLocation,
+    '/get-parameters/': views.getParameters,
+    '/get-distance-to-home/': views.getDistanceToHome,
+    '/get-all-sensors/': views.getAllInfoSensors
+
+    '/set-waypoint/': views.setWaypoint,
+    '/append-waypoint/': views.appendWaypoint,
+    '/set-mission/': views.setMission,
+    '/append-mission/': views.appendMission,
+    '/set-velocity/': views.setVelocity,
+    '/set-parameter/': views.setParameter,
+    '/set-heading/': views.setHeading,
+    '/set-mode/': views.setMode
