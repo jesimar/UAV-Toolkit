@@ -1,9 +1,14 @@
 # Changelog
 
+## Version v1.2.0 (17/02/2018)
+
+* Added directory Instances
+
 ## Version v1.1.0 (17/02/2018)
 
 ### Features:
 
+* Github documentation update
 * Inclusion of pre-planned files in Ardupilot-SITL (directory Missions-Ardupilot-SITL/)
 * Inclusion of directory Print-Screen (directory Print-Screen/)
 * Inclusion of directory Figures (directory Figures/)
@@ -14,6 +19,7 @@
 * Calibration of the Modules-MOSA
 * Code of system UAV-Insertion-Failure
 * Code of system UAV-Routes-Standard
+* Update libraries to latest version
 * Added module CCQSP4m
 * Added module OpenParachute4s in IFA
 * Added module Alarm4s in IFA
