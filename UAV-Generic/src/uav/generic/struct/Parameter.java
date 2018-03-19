@@ -2,32 +2,33 @@ package uav.generic.struct;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class Parameter {
     
-    private final String name;
+    private final String key;
     private final double value;
-                
-    public Parameter(String name, double value){
-        this.name = name;
+
+    public Parameter(String key, double value) {
+        this.key = key;
         this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public String getKey() {
+        return key;
     }
 
     public double getValue() {
         return value;
     }
     
-    public String getString(){
-        return name + ", " + value;
+    public String string(){
+        return key + ", " + value;
     }
-
+    
     @Override
     public String toString() {
-        return "Parameter: [" + name + ", " + value + "]";
-    } 
+        return "Parameter{" + "key=" + key + ", value=" + value + '}';
+    }        
+    
 }

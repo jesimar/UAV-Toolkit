@@ -1,23 +1,21 @@
 package uav.ifa.module.decision_making;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_acquisition.DataAcquisition;
-import uav.generic.struct.Command;
-import uav.generic.struct.Constants;
-import uav.generic.struct.Mission;
+import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.struct.constants.TypeWaypoint;
+import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Parameter;
-import uav.generic.struct.ParameterJSON;
 import uav.generic.struct.Waypoint;
-import uav.generic.struct.WaypointJSON;
 import uav.generic.util.UtilString;
-import uav.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.module.sensors_actuators.ParachuteControl;
+import uav.generic.struct.constants.TypeInputCommand;
+import uav.generic.struct.constants.TypeReplanner;
+import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.ifa.struct.ReaderFileConfig;
 import uav.ifa.module.path_replanner.DE4s;
 import uav.ifa.module.path_replanner.GA4s;
@@ -25,22 +23,22 @@ import uav.ifa.module.path_replanner.GH4s;
 import uav.ifa.module.path_replanner.MPGA4s;
 import uav.ifa.module.path_replanner.Replanner;
 import uav.ifa.struct.Failure;
-import uav.ifa.struct.states.StateReplanning;
+import uav.generic.struct.states.StateReplanning;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class DecisionMaking {
 
     private final Drone drone;
-    private final DataAcquisition dataAcquisition;
+    private final DataCommunication dataAcquisition;
     private final ReaderFileConfig config;
     private Replanner replanner;
     private StateReplanning stateReplanning;
     private String typeAction = "";
     
-    public DecisionMaking(Drone drone, DataAcquisition dataAcquisition) {
+    public DecisionMaking(Drone drone, DataCommunication dataAcquisition) {
         this.config = ReaderFileConfig.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;
@@ -49,9 +47,9 @@ public class DecisionMaking {
     
     public void actionToDoSomething(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (config.getSystemExec().equals(Constants.SYS_EXEC_REPLANNER)){
-            if (failure.typeOfFailure != null){
-                switch (failure.typeOfFailure) {
+        if (config.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)){
+            if (failure.typeFailure != null){
+                switch (failure.typeFailure) {
                     case FAIL_AP_POWEROFF:
                         openParachute();
                         break;
@@ -59,6 +57,9 @@ public class DecisionMaking {
                         openParachute();
                         break;
                     case FAIL_GPS:
+                        openParachute();
+                        break;
+                    case FAIL_ENGINE:
                         openParachute();
                         break;
                     case FAIL_SYSTEM_IFA:
@@ -70,21 +71,15 @@ public class DecisionMaking {
                     case FAIL_SYSTEM_MOSA:
                         execEmergencyLanding();
                         break;
-                    case FAIL_BASED_TIME:
-                        //land(-22.00593264981567,-47.89870966454083);
-                        //landVertical();
-                        //RTL();
-                        //openParachute();
-                        execEmergencyLanding();
-                        break;
                     case FAIL_BASED_INSERT_FAILURE:
-                        if (typeAction.equals("MPGA")){
+                        if (typeAction.equals(TypeInputCommand.CMD_MPGA)){
                             execEmergencyLanding();
-                        } else if (typeAction.equals("LAND")){
+                        } else if (typeAction.equals(TypeInputCommand.CMD_LAND)){
                             landVertical();
-                        } else if (typeAction.equals("RTL")){
+                        } else if (typeAction.equals(TypeInputCommand.CMD_RTL)){
                             RTL();
-                        }                        
+                        }
+                        //land(-22.00593264981567,-47.89870966454083);             
                         break;
                     default:
                         break;
@@ -94,6 +89,10 @@ public class DecisionMaking {
         stateReplanning = StateReplanning.READY;
     }
     
+    /**
+     * Este comando chama o algoritmo de pouso emergencial caso algo dê errado
+     * então o paraquedas é disparado.
+     */
     private void execEmergencyLanding(){
         boolean itIsOkEmergencyLanding = emergenyLanding();
         if (!itIsOkEmergencyLanding){
@@ -101,25 +100,26 @@ public class DecisionMaking {
         }
     }
 
+    /**
+     * Este comando calcula uma rota de pouso emergencial usando algum algoritmo 
+     * configurado para isso, então passa a nova rota para o AutoPilot.
+     * @return true - se ocorrer tudo bem.
+     * <br>    false - caso contrário.
+     */
     private boolean emergenyLanding() {
-        changeVelocityNavigation(20);
-        
+        double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
+        System.out.println("value WPNAV_SPEED = " + navSpeed);
+        changeNavigationSpeed(navSpeed/10);
+
         StandardPrints.printMsgEmph("decison making -> emergeny landing");
-        switch (config.getMethodRePlanner()) {
-            case "GH4s":
-                replanner = new GH4s(drone);
-                break;
-            case "GA4s":
-                replanner = new GA4s(drone);
-                break;
-            case "MPGA4s":
-                replanner = new MPGA4s(drone);
-                break;
-            case "DE4s":
-                replanner = new DE4s(drone);
-                break;
-            default:
-                break;
+        if (config.getTypeReplanner().equals(TypeReplanner.GH4S)) {
+            replanner = new GH4s(drone);
+        }else if (config.getTypeReplanner().equals(TypeReplanner.GA4S)) {
+            replanner = new GA4s(drone);   
+        }else if (config.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
+            replanner = new MPGA4s(drone);
+        }else if (config.getTypeReplanner().equals(TypeReplanner.DE4S)) {
+            replanner = new DE4s(drone);
         }
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();
@@ -127,11 +127,11 @@ public class DecisionMaking {
             return false;
         }
         
-        changeVelocityNavigation(200);
+        changeNavigationSpeed(navSpeed);
         
         try{
             Mission mission = new Mission();
-            String path = config.getDirRePlanner() + "routeGeo.txt";
+            String path = config.getDirReplanner() + "routeGeo.txt";
             BufferedReader br = new BufferedReader(new FileReader(path));
             String sCurrentLine;
             double lat = 0.0;
@@ -145,12 +145,12 @@ public class DecisionMaking {
                 lng = Double.parseDouble(s[1]);
                 alt = Double.parseDouble(s[2]);
                 if (i > 1){//trabalhar nessa linha
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, lat, lng, alt));  
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));  
                 }
                 i++;
             }
             if (mission.getMission().size() > 0){
-                mission.addWaypoint(new Waypoint(Command.CMD_LAND, lat, lng, 0.0)); 
+                mission.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0)); 
                 mission.printMission();
                 dataAcquisition.setMission(mission);
             }
@@ -164,66 +164,76 @@ public class DecisionMaking {
         }
     }
     
-    //Este comando vai ate a posicao especificada e entao pousa verticalmente
-    //quando o veiculo eh um multi-rotor.
+    /**
+     * Este comando guia a aeronave até a posição especificada e então pousa 
+     * verticalmente quando o veículo eh um multi-rotor.
+     * @param lat latitude da região onde ocorrerá o pouso.
+     * @param lng longitude da região onde ocorrerá o pouso.
+     */
     private void land(double lat, double lng){ 
         StandardPrints.printMsgEmph("decison making -> land");
-        Waypoint wpt = new Waypoint(Command.CMD_LAND, lat, lng, 0.0);
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
+        Waypoint wpt = new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0);
+        dataAcquisition.setWaypoint(wpt);
     }
     
+    /**
+     * Este comando pousa a aeronave verticalmente no local em que a aeronave 
+     * estava quando esse comando foi chamado.
+     */      
     private void landVertical(){ 
         StandardPrints.printMsgEmph("decison making -> land vertical");
-        Waypoint wpt = new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0);
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
+        Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
+        dataAcquisition.setWaypoint(wpt);
     }
     
+    /**
+     * Este comando faz a aeronave voltar ao ponto de lançamento, para isso a 
+     * aeronave primeiramente sobe até a altitude RTL_ALT então volta ao local
+     * de lançamento e por fim pousa na vertical quando é um multi-rotor. 
+     */
     private void RTL(){
         StandardPrints.printMsgEmph("decison making -> rtl");
-        Waypoint wpt = new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0);        
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));
+        Waypoint wpt = new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);        
+        dataAcquisition.setWaypoint(wpt);
     }
     
-    //melhorar no futuro
-    //Desarmar o motor e entao abrir o paraquedas.
+    /**
+     * Este comando é responsável por fazer o disparo do paraquedas.
+     * Deve-se desarmar o motor e entao abrir o paraquedas.
+     * Melhorar no futuro
+     */
     private void openParachute(){
         StandardPrints.printMsgEmph("decison making -> open parachute");
-        Waypoint wpt = new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0);//retirar essa linha
-        dataAcquisition.setWaypoint(new WaypointJSON(wpt));//retirar essa linha
-        
-        try {
-            boolean print = true;
-            File f = new File(config.getDirOpenParachute());
-            final Process comp = Runtime.getRuntime().exec(config.getCmdExecOpenParachute(), null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] openParachute()");
-        }
+        Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);//remover linha
+        dataAcquisition.setWaypoint(wpt);//remover linha        
+        //desarmar o motor.
+        ParachuteControl parachute = new ParachuteControl();
+        parachute.open();
     }
     
+    /**
+     * Retorna o estado do planejador [WAITING, REPLANNING, READY, DISABLED].
+     * @return estado do planejador.
+     */
     public StateReplanning getStateReplanning() {
         return stateReplanning;
     }
     
+    /**
+     * Define o tipo de ação executada pelo sistema de decisão do IFA
+     * [CMD_MPGA, CMD_LAND, CMD_RTL].
+     * @param action representa a ação a ser executada.
+     */
     public void setTypeAction(String action){
         this.typeAction = action;
     }
     
-    
-    public void changeVelocityNavigation(double value){
+    /**
+     * Este comando troca a velocidade de navegação da aeronave.
+     * @param value novo valor de velocidade de navegação em cm/s.
+     */
+    public void changeNavigationSpeed(double value){
         Parameter param = new Parameter("WPNAV_SPEED", value);
-        ParameterJSON ps = new ParameterJSON(param);        
-        dataAcquisition.setParameter(ps);
+        dataAcquisition.setParameter(param);
     }
 }

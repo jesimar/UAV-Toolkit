@@ -1,9 +1,21 @@
+/**
+* Author: Jesimar da Silva Arantes
+* Date: 03/01/2018
+* Last Update: 16/03/2018
+* Description: Code that defines some data structures used in the MOSA system in C.
+* Descricao: Codigo que define algumas estruturas de dados usadas no sistema MOSA em C.
+*/
+
+//============================USED LIBRARIES============================
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <curl/curl.h>
+
+//=========================STRUCTS and TYPEDEF==========================
 
 typedef struct Data {
 	char *memory;
@@ -13,9 +25,12 @@ typedef struct Data {
 typedef struct GPS{
 	double lat;
 	double lng;
+}gps;
+
+typedef struct Barometer{
 	double alt_rel;//altitude in m
 	double alt_abs;//altitude in m
-}gps;
+}barometer;
 
 typedef struct Battery{
 	double voltage;//in millivolts
@@ -56,19 +71,28 @@ typedef struct StatusUAV{
 	bool ekfOk;
 }statusuav;
 
-void monitoring(float freq_hertz, gps *vgps, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav);
-void posAnalyser(float freq_hertz, gps *vgps);
-void getGPS2(gps *vgps);
-void getAllInfo(gps *vgps, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav);
-void printGPS(gps vgps);
-void printAllInfo(gps vgps, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav);
-void fprintAllInfo(FILE *f, gps vgps, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav);
+//=========================FUNCTION PROTOTYPES==========================
+
+void monitoring(float freq_hertz, gps *vgps, barometer *vbaro, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav);
+void posAnalyser(float freq_hertz, gps *vgps, barometer *vbaro);
+void getGPS(gps *vgps);
+void getBarometer(barometer *vbaro);
+void getAllInfo(gps *vgps, barometer *vbaro, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav);
+void printGPS(gps vgps, barometer vbaro);
+void printAllInfo(gps vgps, barometer vbaro, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav);
+void fprintAllInfo(FILE *f, gps vgps, barometer vbaro, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav);
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp);
 
+//==============================FUNCTIONS===============================
+
+/**
+ * Metodo principal para execucao do uav-mini-mosa.
+ */
 int main(){
 	int mode = 1;			// 1 - SENSOR_ANALYSER      2 - POS_ANALYSER
 	float freq_hertz = 1.0;	//hertz
 	gps vgps;
+	barometer vbaro;
 	battery vbattery;
 	attitude vattitude;
 	velocity vvelocity;
@@ -78,37 +102,47 @@ int main(){
 	
 	printf("MOSA\n");
 	if (mode == 1){
-		monitoring(freq_hertz, &vgps, &vbattery, &vattitude, &vvelocity, &vgpsinfo, &vsensoruav, &vstatusuav);
+		monitoring(freq_hertz, &vgps, &vbaro, &vbattery, &vattitude, &vvelocity, &vgpsinfo, &vsensoruav, &vstatusuav);
 	} else if (mode == 2){
-		posAnalyser(freq_hertz, &vgps);
+		posAnalyser(freq_hertz, &vgps, &vbaro);
 	}
 	return 0;
 }
 
-void posAnalyser(float freq_hertz, gps *vgps){
+/**
+ * Metodo que faz a captura das informações de GPS e Barometro e imprime na tela.
+ */
+void posAnalyser(float freq_hertz, gps *vgps, barometer *vbaro){
 	printf("    posAnalyser\n");
 	while(true){
 		sleep(1.0/freq_hertz);
-		getGPS2(vgps);
-		printGPS(*vgps);
+		getGPS(vgps);
+		getBarometer(vbaro);
+		printGPS(*vgps, *vbaro);
 	}
 }
 
-void monitoring(float freq_hertz, gps *vgps, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav){
+/**
+ * Metodo que faz a captura das informações de diversos sensores do drone e imprime na tela e em arquivo.
+ */
+void monitoring(float freq_hertz, gps *vgps, barometer *vbaro, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav){
 	printf("    monitoring\n");
-	FILE *f = fopen("log-aircraft-mosa.csv", "w");  
+	FILE *f = fopen("log-aircraft.csv", "w");  
 	fprintf(f, "lat;lng;alt_rel;alt_abs;voltage;current;level;pitch;yaw;roll;vx;vy;vz;fixtype;satellitesvisible;eph;epv;heading;groundspeed;airspeed\n");//";mode;system-status;armed;is-armable;ekf-ok"
 	while (true){
 		sleep(1.0/freq_hertz);
-		getAllInfo(vgps, vbattery, vattitude, vvelocity, vgpsinfo, vsensoruav, vstatusuav);
-		printAllInfo(*vgps, *vbattery, *vattitude, *vvelocity, *vgpsinfo, *vsensoruav, *vstatusuav);
-		fprintAllInfo(f, *vgps, *vbattery, *vattitude, *vvelocity, *vgpsinfo, *vsensoruav, *vstatusuav);
+		getAllInfo(vgps, vbaro, vbattery, vattitude, vvelocity, vgpsinfo, vsensoruav, vstatusuav);
+		printAllInfo(*vgps, *vbaro, *vbattery, *vattitude, *vvelocity, *vgpsinfo, *vsensoruav, *vstatusuav);
+		fprintAllInfo(f, *vgps, *vbaro, *vbattery, *vattitude, *vvelocity, *vgpsinfo, *vsensoruav, *vstatusuav);
 		fflush(f);
 	}
 	fclose(f);
 }
 
-void getGPS2(gps *vgps) {
+/**
+ * Faz uma requisição HTTP - GET para obter informações do GPS (lat, lng).
+ */
+void getGPS(gps *vgps) {
 	CURL *curl;
 	data chunk;
 	chunk.memory = malloc(1);
@@ -116,7 +150,7 @@ void getGPS2(gps *vgps) {
 	CURLcode res;
 	curl = curl_easy_init();
 	if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:50000/gps/");
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:50000/get-gps/");
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 		res = curl_easy_perform(curl);
@@ -124,13 +158,16 @@ void getGPS2(gps *vgps) {
 			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
 		}
 		curl_easy_cleanup(curl);
-		sscanf(chunk.memory, "{\"gps\": [%lf,%lf,%lf,%lf]", &vgps->lat, &vgps->lng, &vgps->alt_rel, &vgps->alt_abs);
+		sscanf(chunk.memory, "{\"gps\": [%lf,%lf]", &vgps->lat, &vgps->lng);
 	}
 	free(chunk.memory);
 	curl_global_cleanup();
 }
 
-void getAllInfo(gps *vgps, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav) {
+/**
+ * Faz uma requisição HTTP - GET para obter informações do Barometro (alt_rel, alt_abs).
+ */
+void getBarometer(barometer *vbaro) {
 	CURL *curl;
 	data chunk;
 	chunk.memory = malloc(1);
@@ -138,7 +175,32 @@ void getAllInfo(gps *vgps, battery *vbattery, attitude *vattitude, velocity *vve
 	CURLcode res;
 	curl = curl_easy_init();
 	if(curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:50000/allinfo/");
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:50000/get-barometer/");
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+		res = curl_easy_perform(curl);
+		if(res != CURLE_OK){
+			fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+		}
+		curl_easy_cleanup(curl);
+		sscanf(chunk.memory, "{\"barometer\": [%lf,%lf]", &vbaro->alt_rel, &vbaro->alt_abs);
+	}
+	free(chunk.memory);
+	curl_global_cleanup();
+}
+
+/**
+ *  Faz uma requisição HTTP - GET para obter todas as informações dos sensores do drone.
+ */
+void getAllInfo(gps *vgps, barometer *vbaro, battery *vbattery, attitude *vattitude, velocity *vvelocity, gpsinfo *vgpsinfo, sensoruav *vsensoruav, statusuav *vstatusuav) {
+	CURL *curl;
+	data chunk;
+	chunk.memory = malloc(1);
+	chunk.size = 0;
+	CURLcode res;
+	curl = curl_easy_init();
+	if(curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:50000/get-all-sensors/");
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 		res = curl_easy_perform(curl);
@@ -148,13 +210,14 @@ void getAllInfo(gps *vgps, battery *vbattery, attitude *vattitude, velocity *vve
 		curl_easy_cleanup(curl);
 		//printf("%s\n", chunk.memory);
 		sscanf(chunk.memory, 
-			"{\"allinfo\": [%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %d, %d, %d, %d, [%lf, %lf, %lf]]}",
-			&vgps->lat, &vgps->lng, &vgps->alt_rel, &vgps->alt_abs,
+			"{\"all-sensors\": [%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %d, %d, %d, %d, [%lf, %lf, %lf]]}",
+			&vgps->lat, &vgps->lng, &vbaro->alt_rel, &vbaro->alt_abs,
 			&vbattery->voltage, &vbattery->current, &vbattery->level,
 			&vattitude->pitch, &vattitude->yaw, &vattitude->roll, 
 			&vsensoruav->heading, &vsensoruav->groundspeed, &vsensoruav->airspeed,
 			&vgpsinfo->fixType, &vgpsinfo->satellitesVisible, &vgpsinfo->eph, &vgpsinfo->epv, 
 			&vvelocity->vx, &vvelocity->vy, &vvelocity->vz
+			//"next_wpt;count_wpt;dist_to_home;dist_to_current_wpt"
 			//, vstatusuav->mode, vstatusuav->systemStatus, &vstatusuav->armed, &vstatusuav->isArmable, &vstatusuav->ekfOk
 		);
 	}
@@ -162,25 +225,33 @@ void getAllInfo(gps *vgps, battery *vbattery, attitude *vattitude, velocity *vve
 	curl_global_cleanup();
 }
 
-void printGPS(gps vgps){
-	printf("      gps (lat, lng, alt_rel, alt_abs): [%3.7f, %3.7f, %3.2f, %3.2f]\n", vgps.lat, vgps.lng, vgps.alt_rel, vgps.alt_abs);
+/**
+ * Imprime informações de GPS e Barometro de forma formatada.
+ */
+void printGPS(gps vgps, barometer vbaro){
+	printf("      gps (lat, lng, alt_rel, alt_abs): [%3.7f, %3.7f, %3.2f, %3.2f]\n", vgps.lat, vgps.lng, vbaro.alt_rel, vbaro.alt_abs);
 }
 
-void printAllInfo(gps vgps, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav){
+/**
+ *  Imprime as informações lidas na tela de forma formatada.
+ */
+void printAllInfo(gps vgps, barometer vbaro, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav){
 	printf("      allinfo : [%3.7f;%3.7f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%d;%d;%d;%d;%3.2f;%3.2f;%3.2f]\n", 
-		vgps.lat, vgps.lng, vgps.alt_rel, vgps.alt_abs, 
+		vgps.lat, vgps.lng, vbaro.alt_rel, vbaro.alt_abs, 
 		vbattery.voltage, vbattery.current, vbattery.level, 
 		vattitude.pitch, vattitude.yaw, vattitude.roll, 
 		vvelocity.vx, vvelocity.vy, vvelocity.vz, 
 		vgpsinfo.fixType, vgpsinfo.satellitesVisible, vgpsinfo.eph, vgpsinfo.epv,
 		vsensoruav.heading, vsensoruav.groundspeed, vsensoruav.airspeed
-		//, vstatusuav.mode, vstatusuav.systemStatus, vstatusuav.armed, vstatusuav.isArmable, vstatusuav.ekfOk
 	);
 }
 
-void fprintAllInfo(FILE *f, gps vgps, battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav){
+/**
+ *  Imprime as informações lidas em um arquivo de forma formatada.
+ */
+void fprintAllInfo(FILE *f, gps vgps, barometer vbaro,  battery vbattery, attitude vattitude, velocity vvelocity, gpsinfo vgpsinfo, sensoruav vsensoruav, statusuav vstatusuav){
 	fprintf(f, "%3.7f;%3.7f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%3.2f;%d;%d;%d;%d;%3.2f;%3.2f;%3.2f\n", 
-		vgps.lat, vgps.lng, vgps.alt_rel, vgps.alt_abs, 
+		vgps.lat, vgps.lng, vbaro.alt_rel, vbaro.alt_abs, 
 		vbattery.voltage, vbattery.current, vbattery.level, 
 		vattitude.pitch, vattitude.yaw, vattitude.roll, 
 		vvelocity.vx, vvelocity.vy, vvelocity.vz, 
@@ -189,6 +260,9 @@ void fprintAllInfo(FILE *f, gps vgps, battery vbattery, attitude vattitude, velo
 	);
 }
 
+/**
+ * Funcao que aloca os dados lidos atraves do metodo HTTP GET.
+ */
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp){
 	size_t realsize = size * nmemb;
 	data *mem = (data *)userp;

@@ -1,7 +1,14 @@
+#Authors: Jesimar da Silva Arantes and Andre Missaglia
+#Date: 01/06/2017
+#Last Update: 15/03/2018
+#Description: Code that defines the possible request headers.
+#Descricao: Codigo que define os cabecalhos das requisicoes possiveis.
+
 import views
 
 GET_URLS = {
     '/get-gps/': views.getGPS,
+    '/get-barometer/': views.getBarometer,
     '/get-battery/': views.getBattery,
     '/get-attitude/': views.getAttitude,
     '/get-velocity/': views.getVelocity,
@@ -12,7 +19,7 @@ GET_URLS = {
     '/get-mode/': views.getMode,
     '/get-system-status/': views.getSystemStatus,
     '/get-armed/': views.getArmed,
-    '/get-is-armable/': views.isArmable,
+    '/get-is-armable/': views.getIsArmable,
     '/get-ekf-ok/': views.getEkfOk,
     '/get-home-location/': views.getHomeLocation,
     '/get-parameters/': views.getParameters,

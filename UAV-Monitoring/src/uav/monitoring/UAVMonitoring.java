@@ -6,9 +6,9 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_acquisition.DataAcquisition;
-import uav.hardware.aircraft.Ararinha;
-import uav.hardware.aircraft.Drone;
+import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.RotaryWing;
 
 /**
  *
@@ -16,8 +16,10 @@ import uav.hardware.aircraft.Drone;
  */
 public final class UAVMonitoring {        
        
+    private final long timeInit;
+    private long timeActual;
     private final Drone drone;
-    private final DataAcquisition dataAcquisition;
+    private final DataCommunication dataAcquisition;
     private PrintStream printLogAircraft;
        
     public static void main(String[] args) {
@@ -29,8 +31,9 @@ public final class UAVMonitoring {
     }    
         
     public UAVMonitoring() {
-        this.drone = new Ararinha();    
-        this.dataAcquisition = new DataAcquisition(drone, "IFA");                
+        timeInit = System.currentTimeMillis();
+        this.drone = new RotaryWing("iDroneAlpha");    
+        this.dataAcquisition = new DataCommunication(drone, "IFA");                
     }
     
     public void createFileLogAircraft(){
@@ -50,18 +53,20 @@ public final class UAVMonitoring {
     }
     
     private void monitoringAircraft() {
-        System.out.println(drone.toString());
+        System.out.println(drone.title());
         printLogAircraft.println(drone.title());   
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 while(true){
-                    try {                       
+                    try {
+                        timeActual = System.currentTimeMillis();
+                        double timeDiff = (timeActual - timeInit)/1000.0;
+                        drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();    
                         System.out.println(drone.toString());
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
-                        drone.incrementTime(1000);
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();

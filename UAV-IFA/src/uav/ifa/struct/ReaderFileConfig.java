@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import lib.color.StandardPrints;
-import uav.generic.struct.Constants;
+import uav.generic.struct.constants.TypeAltitudeDecay;
+import uav.generic.struct.constants.TypeReplanner;
+import uav.generic.struct.constants.TypeSystemExecIFA;
 
 /**
  *
@@ -19,34 +21,20 @@ public class ReaderFileConfig {
     private InputStream input;
 
     //global
-    private String nameDrone;
     private String systemExec;
-    private String freqUpdateDataAP;
-    private String fileLogAircraft;
     private String levelBatteryToFail;
-    private String timeToFail;
     private String uavInsertFailure;
     
     //replanner
-    private String methodRePlanner;
-    private String dirRePlanner;
-    private String cmdExecRePlanner;
-    private String fileGeoBase;    
+    private String typeReplanner;
+    private String methodReplanner;
+    private String dirReplanner;
+    private String cmdExecReplanner;    
     private String timeExec;
     private String qtdWaypoints;
     private String delta; 
     private String typeAltitudeDecay;
     
-    //alarm
-    private String dirAlarm;
-    private String cmdExecAlarm;
-    
-    //alarm
-    private String dirOpenParachute;
-    private String cmdExecOpenParachute;
-    
-    private double freqUpdateData;
-    private int timeToFailure;
     private int levelMinBatteryToFail;
     private boolean isUavInsertFailure;
 
@@ -61,32 +49,20 @@ public class ReaderFileConfig {
     public boolean read(){
         try {
             prop = new Properties();
-            input = new FileInputStream("./config.properties");
+            input = new FileInputStream("./config-ifa.properties");
             prop.load(input);
             
-            nameDrone                = prop.getProperty("prop.global.name_aircraft");
             systemExec               = prop.getProperty("prop.global.system_exec");
-            freqUpdateDataAP         = prop.getProperty("prop.global.freq_update_data_ap");
-            fileLogAircraft          = prop.getProperty("prop.global.file_log_aircraft");
             levelBatteryToFail       = prop.getProperty("prop.global.level_min_battery_to_fail");
-            timeToFail               = prop.getProperty("prop.global.time_to_fail");
             uavInsertFailure         = prop.getProperty("prop.global.uav_insert_failure");
             
-            methodRePlanner          = prop.getProperty("prop.replanner.method");
-            dirRePlanner             = prop.getProperty("prop.replanner.dir");
-            cmdExecRePlanner         = prop.getProperty("prop.replanner.cmd_exec");
-            fileGeoBase              = prop.getProperty("prop.replanner.file_geo_base");
+            methodReplanner          = prop.getProperty("prop.replanner.method");
+            cmdExecReplanner         = prop.getProperty("prop.replanner.cmd_exec");
             timeExec                 = prop.getProperty("prop.replanner.time_exec");
             qtdWaypoints             = prop.getProperty("prop.replanner.qtd_waypoints");
             delta                    = prop.getProperty("prop.replanner.delta");
             typeAltitudeDecay        = prop.getProperty("prop.replanner.type_altitude_decay");
-            
-            dirAlarm                 = prop.getProperty("prop.alarm.dir");
-            cmdExecAlarm             = prop.getProperty("prop.alarm.cmd_exec");
-            
-            dirOpenParachute         = prop.getProperty("prop.openparachute.dir");
-            cmdExecOpenParachute     = prop.getProperty("prop.openparachute.cmd_exec");
-            
+                        
             return true;
         } catch (FileNotFoundException ex){     
             StandardPrints.printMsgError2("Error [FileNotFoundException] ReaderLoadConfig()");
@@ -99,54 +75,23 @@ public class ReaderFileConfig {
         }
     }
     
-    public void printProperties(){
-        System.out.println(nameDrone);
-        System.out.println(systemExec);
-        System.out.println(freqUpdateDataAP);
-        System.out.println(fileLogAircraft);        
-        System.out.println(levelBatteryToFail);
-        System.out.println(timeToFail);
-        System.out.println(uavInsertFailure);
-        
-        System.out.println(methodRePlanner);
-        System.out.println(dirRePlanner);
-        System.out.println(cmdExecRePlanner);
-        System.out.println(fileGeoBase);               
-        System.out.println(timeExec);
-        System.out.println(qtdWaypoints);
-        System.out.println(delta);
-        System.out.println(typeAltitudeDecay);    
-        
-        System.out.println(dirAlarm);
-        System.out.println(cmdExecAlarm);
-        
-        System.out.println(dirOpenParachute);
-        System.out.println(cmdExecOpenParachute);
-    }
-    
-    public boolean checkReadFields(){
-        if (nameDrone == null || 
-                (!nameDrone.equals(Constants.NAME_DRONE_ARARINHA) && 
-                !nameDrone.equals(Constants.NAME_DRONE_iDRONE_ALPHA))){
-            StandardPrints.printMsgError2("Error [[file ./config.properties]] name of aircraft not valid");
-            return false;
-        }
+    public boolean checkReadFields(){        
         if (systemExec == null || 
-                !systemExec.equals(Constants.SYS_EXEC_REPLANNER)){
+                !systemExec.equals(TypeSystemExecIFA.REPLANNER)){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of replanner not valid");
             return false;
         }
-        if (methodRePlanner == null || 
-                (!methodRePlanner.equals(Constants.METHOD_REPLANNER_GH4s) &&
-                !methodRePlanner.equals(Constants.METHOD_REPLANNER_GA4s) &&
-                !methodRePlanner.equals(Constants.METHOD_REPLANNER_MPGA4s) && 
-                !methodRePlanner.equals(Constants.METHOD_REPLANNER_DE4s))){
+        if (methodReplanner == null || 
+               (!methodReplanner.equals(TypeReplanner.GH4S) &&
+                !methodReplanner.equals(TypeReplanner.GA4S) &&
+                !methodReplanner.equals(TypeReplanner.MPGA4S) && 
+                !methodReplanner.equals(TypeReplanner.DE4S))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of method not valid");
             return false;
         }
         if (typeAltitudeDecay == null ||
-                (!typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_CONSTANTE) && 
-                !typeAltitudeDecay.equals(Constants.TYPE_ALTITUDE_DECAY_LINEAR))){
+                (!typeAltitudeDecay.equals(TypeAltitudeDecay.CONSTANTE) && 
+                !typeAltitudeDecay.equals(TypeAltitudeDecay.LINEAR))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type altitude decay not valid");
             return false;
         }
@@ -155,10 +100,21 @@ public class ReaderFileConfig {
     
     public boolean parseToVariables(){
         try{
-            freqUpdateData = Double.parseDouble(freqUpdateDataAP);
             levelMinBatteryToFail = Integer.parseInt(levelBatteryToFail);
-            timeToFailure = Integer.parseInt(timeToFail);
             isUavInsertFailure = Boolean.parseBoolean(uavInsertFailure);
+            if (methodReplanner.equals(TypeReplanner.DE4S)){
+                typeReplanner = TypeReplanner.DE4S;
+                dirReplanner = "../Modules-IFA/DE4s/";
+            }else if (methodReplanner.equals(TypeReplanner.GH4S)){
+                typeReplanner = TypeReplanner.GH4S;
+                dirReplanner = "../Modules-IFA/GH4s/";
+            }else if (methodReplanner.equals(TypeReplanner.GA4S)){
+                typeReplanner = TypeReplanner.GA4S;
+                dirReplanner = "../Modules-IFA/GA4s/";
+            }else if (methodReplanner.equals(TypeReplanner.MPGA4S)){
+                typeReplanner = TypeReplanner.MPGA4S;
+                dirReplanner = "../Modules-IFA/MPGA4s/";
+            }
             return true;
         }catch (NumberFormatException ex){
             StandardPrints.printMsgError2("Error [NumberFormatException] parseToVariables()");
@@ -167,50 +123,30 @@ public class ReaderFileConfig {
         }
     }
     
-    public String getNameDrone() {
-        return nameDrone;
-    }
-    
     public String getSystemExec() {
         return systemExec;
     }
 
-    public double getFreqUpdateData() {
-        return freqUpdateData;
-    }   
-
-    public String getFileLogAircraft() {
-        return fileLogAircraft;
-    }
-    
     public int getLevelMinBatteryToFail() {
         return levelMinBatteryToFail;
-    }
-    
-    public int getTimeToFailure() {
-        return timeToFailure;
     }
     
     public boolean isUavInsertFailure() {
         return isUavInsertFailure;
     }
     
-    public String getMethodRePlanner() {
-        return methodRePlanner;
+    public String getTypeReplanner() {
+        return typeReplanner;
     }
 
-    public String getDirRePlanner() {
-        return dirRePlanner;
+    public String getDirReplanner() {
+        return dirReplanner;
     }
 
-    public String getCmdExecRePlanner() {
-        return cmdExecRePlanner;
+    public String getCmdExecReplanner() {
+        return cmdExecReplanner;
     }
-
-    public String getFileGeoBase() {
-        return fileGeoBase;
-    }
-
+    
     public String getTimeExec() {
         return timeExec;
     }
@@ -225,21 +161,5 @@ public class ReaderFileConfig {
     
     public String getTypeAltitudeDecay() {
         return typeAltitudeDecay;
-    }
-    
-    public String getDirAlarm() {
-        return dirAlarm;
-    }
-
-    public String getCmdExecAlarm() {
-        return cmdExecAlarm;
-    }
-    
-    public String getDirOpenParachute() {
-        return dirOpenParachute;
-    }
-
-    public String getCmdExecOpenParachute() {
-        return cmdExecOpenParachute;
     }
 }

@@ -1,3 +1,9 @@
+#Authors: Jesimar da Silva Arantes and Andre Missaglia
+#Date: 01/06/2017
+#Last Update: 15/03/2018
+#Description: Code that defines the mavlink commands for drone control.
+#Descricao: Codigo que define os comandos mavlink para controle do drone.
+
 from dronekit import Command, mavutil, VehicleMode, LocationGlobalRelative
 import time
 import math

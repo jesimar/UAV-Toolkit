@@ -2,44 +2,44 @@ package uav.generic.struct;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class Heading {
     
     private final int value;
-    private final String direction;
-    private final String angle;    
+    private final String typeDirection;
+    private final String typeAngle;    
     
     /**
-     * Contrutor da classe.
+     * Class builder.
      * @param value angle between 0 and 360
-     * @param direction "ccw" or "cw"
-     * @param angle "absolute" or "relative"
+     * @param typeDirection CCW or CW
+     * @param typeAngle ABSOLUTE or RELATIVE
      */
-    public Heading(int value, String direction, String angle){
+    public Heading(int value, String typeDirection, String typeAngle){
         this.value = value;
-        this.direction = direction;
-        this.angle = angle;
+        this.typeDirection = typeDirection;
+        this.typeAngle = typeAngle;
     }
     
     public double getValue() {
         return value;
     }
 
-    public String getDirection() {
-        return direction;
+    public String getTypeDirection() {
+        return typeDirection;
     }
 
-    public String getAngle() {
-        return angle;
+    public String getTypeAngle() {
+        return typeAngle;
     }
 
-    public String getString(){
-        return value  + ", " + direction + ", " + angle;
+    public String string(){
+        return value  + ", " + typeDirection + ", " + typeAngle;
     }
 
     @Override
     public String toString() {
-        return "Heading: [" + value + ", " + direction + ", " + angle + "]";
+        return "Heading: [" + value + ", " + typeDirection + ", " + typeAngle + "]";
     } 
 }

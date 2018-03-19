@@ -13,16 +13,24 @@ import java.util.Scanner;
  */
 public class ReaderFileParam {
     
+    private static final ReaderFileParam instance = new ReaderFileParam();
+    
     private final List<String> nameParam = new LinkedList<>();
-    private final List<Double> valueParam = new LinkedList<>();    
+    private final List<Double> valueParam = new LinkedList<>();  
+    
+    private final File file = new File("../Modules-Global/config-param.properties");
     
     public ReaderFileParam(){
         
     }
     
-    public void reader(File inFile) throws FileNotFoundException {
+    public static ReaderFileParam getInstance() {
+        return instance;
+    }
+    
+    public void read() throws FileNotFoundException {
         try {
-            Scanner sc = new Scanner(inFile);
+            Scanner sc = new Scanner(file);
             while(sc.hasNextLine()){
                 String line = sc.nextLine();                
                 if (!line.contains("#")){
@@ -47,7 +55,7 @@ public class ReaderFileParam {
         return valueParam.get(i);
     }
     
-    public int getSize(){
+    public int size(){
         return nameParam.size();
     }
         

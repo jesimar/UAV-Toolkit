@@ -5,22 +5,25 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.ReaderFileConfigGlobal;
 import uav.ifa.struct.ReaderFileConfig;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public abstract class Replanner {
     
-    final ReaderFileConfig config;
+    final ReaderFileConfig configLocal;
+    final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone; 
 
     public Replanner(Drone drone) {
-        this.config = ReaderFileConfig.getInstance();
-        this.dir = config.getDirRePlanner();
+        this.configLocal = ReaderFileConfig.getInstance();
+        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.dir = configLocal.getDirReplanner();
         this.drone = drone;      
     }
     
@@ -37,7 +40,7 @@ public abstract class Replanner {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(config.getCmdExecRePlanner(), null, f);
+            final Process comp = Runtime.getRuntime().exec(configLocal.getCmdExecReplanner(), null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

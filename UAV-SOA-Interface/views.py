@@ -1,19 +1,32 @@
-from dronekit import mavutil, VehicleMode, LocationGlobal
+#Authors: Jesimar da Silva Arantes and Andre Missaglia
+#Date: 01/06/2017
+#Last Update: 15/03/2018
+#Description: Code that defines the commands that can be requested to the drone through the GET and POST methods.
+#Descricao: Codigo que define os comandos que podem ser requisitados ao drone atraves dos metodos GET e POST.
+
+from dronekit import VehicleMode
 import commands
 import time
 
 '''
 Comando que captura as informacoes do GPS.
 '''
-#Dica: trocar esse comando por dois comandos.
-#      getGPS -> retorna apenas a lat e lon.
-#      getBarometer -> retorna a altitude relativa e absoluta.
 def getGPS(request):
     vehicle = request['vehicle']
     gps = vehicle.location.global_relative_frame
+    return {
+        'gps': [gps.lat, gps.lon]
+    }
+
+'''
+Comando que captura as informacoes do barometro.
+'''
+def getBarometer(request):
+    vehicle = request['vehicle']
+    alt_rel = vehicle.location.global_relative_frame.alt
     alt_abs = vehicle.location.global_frame.alt
     return {
-        'gps': [gps.lat, gps.lon, gps.alt, alt_abs]
+        'barometer': [alt_rel, alt_abs]
     }
 
 '''
@@ -117,7 +130,7 @@ def getArmed(request):
 '''
 Comando que obtem informacoes se o drone eh armavel.
 '''
-def isArmable(request):
+def getIsArmable(request):
     vehicle = request['vehicle']
     return {
         'is-armable': vehicle.is_armable
@@ -179,16 +192,21 @@ def getAllInfoSensors(request):
     alt_abs = vehicle.location.global_frame.alt
     bat = vehicle.battery
     att = vehicle.attitude
-    nextwpt = vehicle.commands.next
-    print 'next-waypoint = %s    count-waypoint = %s' % (nextwpt, vehicle.commands.count)
-    print 'dist-to-home: ', commands.getDistanceMeters(gps, vehicle.home_location)
-    print 'dist-to-current-wpt (%s): %s' % (nextwpt, commands.getDistanceToCurrentWaypoint(vehicle))
+    dist_to_home = commands.getDistanceMeters(gps, vehicle.home_location)
+    dist_to_current_waypoint = commands.getDistanceToCurrentWaypoint(vehicle)
+    next_waypoint = vehicle.commands.next
+    count_waypoint = vehicle.commands.count
+    print 'next-waypoint = %s    count-waypoint = %s' % (next_waypoint, count_waypoint)
+    print 'dist-to-home: ', dist_to_home
+    print 'dist-to-current-wpt (%s): %s' % (next_waypoint, dist_to_current_waypoint)
     return {
-        'all-sensors': [gps.lat, gps.lon, gps.alt, alt_abs, bat.voltage, bat.current, bat.level, 
-        att.pitch, att.yaw, att.roll, vehicle.heading, vehicle.groundspeed, 
-        vehicle.airspeed, vehicle.gps_0.fix_type, vehicle.gps_0.satellites_visible, vehicle.gps_0.eph, vehicle.gps_0.epv,
-        vehicle.velocity, vehicle.mode.name, vehicle.system_status.state, 
-        vehicle.armed, vehicle.is_armable, vehicle.ekf_ok]
+        'all-sensors': [float('%.7g' % gps.lat), float('%.7g' % gps.lon), float('%.2g' % gps.alt), 
+        float('%.2g' % alt_abs), float('%.3g' % bat.voltage), float('%.2g' % bat.current), bat.level, 
+        float('%.4g' % att.pitch), float('%.4g' % att.yaw), float('%.4g' % att.roll), vehicle.heading, 
+        float('%.2g' % vehicle.groundspeed), float('%.2g' % vehicle.airspeed), vehicle.gps_0.fix_type, 
+        vehicle.gps_0.satellites_visible, vehicle.gps_0.eph, vehicle.gps_0.epv, vehicle.velocity, 
+        next_waypoint, count_waypoint, dist_to_home, dist_to_current_waypoint, vehicle.mode.name, 
+        vehicle.system_status.state, vehicle.armed, vehicle.is_armable, vehicle.ekf_ok]
     }
 
 '''
@@ -197,9 +215,9 @@ Comando que define novas valores para os parametros do piloto automatico.
 def setParameter(request):
     parameter = request['body']['parameter']
     vehicle = request['vehicle']
-    param = parameter['name'].encode()
+    key = parameter['key'].encode()
     value = parameter['value']
-    vehicle.parameters[param]=value
+    vehicle.parameters[key]=value
     return {
         'status-set-parameter': 'ok'
     }
@@ -240,7 +258,7 @@ def setWaypoint(request):
     cmds.next = 0
     if waypoint['action'] == 'takeoff':
         commands.takeoff(vehicle, waypoint['alt'], cmds)
-    elif waypoint['action'] == 'waypoint':
+    elif waypoint['action'] == 'goto':
         commands.goto(waypoint['lat'], waypoint['lng'], waypoint['alt'], cmds)
     elif waypoint['action'] == 'land':
         commands.land(waypoint['lat'], waypoint['lng'], cmds)
@@ -278,7 +296,7 @@ def appendWaypoint(request):
     cmds.wait_ready()
     if waypoint['action'] == 'takeoff':
         commands.takeoff(vehicle, waypoint['alt'], cmds)
-    elif waypoint['action'] == 'waypoint':
+    elif waypoint['action'] == 'goto':
         commands.goto(waypoint['lat'], waypoint['lng'], waypoint['alt'], cmds)
     elif waypoint['action'] == 'land':
         commands.land(waypoint['lat'], waypoint['lng'], cmds)
@@ -310,7 +328,7 @@ def setMission(request):
     for item in mission:
         if item['action'] == 'takeoff':
             commands.takeoff(vehicle, item['alt'], cmds)
-        elif item['action'] == 'waypoint':
+        elif item['action'] == 'goto':
             commands.goto(item['lat'], item['lng'], item['alt'], cmds)
         elif item['action'] == 'land':
             commands.land(item['lat'], item['lng'], cmds)
@@ -341,7 +359,7 @@ def appendMission(request):
     for item in mission:
         if item['action'] == 'takeoff':
             commands.takeoff(vehicle, item['alt'], cmds)
-        elif item['action'] == 'waypoint':
+        elif item['action'] == 'goto':
             commands.goto(item['lat'], item['lng'], item['alt'], cmds)
         elif item['action'] == 'land':
             commands.land(item['lat'], item['lng'], cmds)
@@ -376,14 +394,16 @@ def setHeading(request):
         'status-set-heading': 'ok'
     }
 
+
+#====================== Comando ainda nao usados =======================
+
 """
 Este comando limpa a missao corrente.
 """
-def clear_mission(vehicle):
+def clearMission(vehicle):
     cmds = vehicle.commands
     vehicle.commands.clear()
     vehicle.flush()
-
     # After clearing the mission you MUST re-download the mission from the vehicle
     # before vehicle.commands can be used again
     # (see https://github.com/dronekit/dronekit-python/issues/230)
@@ -392,19 +412,13 @@ def clear_mission(vehicle):
     cmds.wait_ready()
 
 """
-Download da missao corrente do veiculo
-"""
-def download_mission(vehicle):
-    cmds = vehicle.commands
-    cmds.download()
-    cmds.wait_ready() # wait until download is complete.
-
-"""
 Downloads the mission and returns the wp list and number of WP.
 """
-def get_current_mission(vehicle):
+def getCurrentMission(vehicle):
     print "Downloading mission"
-    download_mission(vehicle)
+    cmds = vehicle.commands
+    cmds.download()
+    cmds.wait_ready()
     missionList = []
     n_WP = 0
     for wp in vehicle.commands:

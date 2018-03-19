@@ -1,10 +1,30 @@
 # Changelog
 
-## Version v1.2.0 (17/02/2018)
+## Version v2.0.0 (09/03/2018)
 
+* Added code UAV-GCS
 * Added directory Instances
+* Added method getBarometer(...) in UAV-SOA-Interface
+* Updated method getGPS(...) in UAV-SOA-Interface
+* Updated method getAllInfoSensors(...) in UAV-SOA-Interface to return next_waypoint, count_waypoint, dist_to_home, dist_to_current_waypoint
+* Updated method getAllInfoSensors(...) in UAV-SOA-Interface number of decimal places returned optimized
+* Updated codes in UAV-Generic (time, getBarometer, nextWaypoint, countWaypoint, distToHome, distToCurrentWaypoint, fully refactored)
+* Updated codes in UAV-IFA (time, removed getDistanceToHome, fully refactored)
+* Updated codes in UAV-MOSA (time, removed getDistanceToHome, fully refactored)
+* Updated codes in UAV-Tests (time, removed getDistanceToHome)
+* Updated codes in UAV-PosAnalyser (time - little modifications)
+* Updated codes in UAV-Monitoring (time - little modifications)
+* Added UAV-GCS system codes
+* Documentation update GitHub, codes, properties files and UAV-Toolkit
+* Updated print format in file log-aircraft (UAV-Generic)
+* Several classes were refactored
+* Several properties file were refactored
+* Include new commands controller
+* Updating communication messages between IFA and MOSA.
+* Added Modules-Global (Sonar, Buzzer, Parachute, Camera)
+* Updated scripts
 
-## Version v1.1.0 (17/02/2018)
+## Version v1.1.0 (07/03/2018)
 
 ### Features:
 

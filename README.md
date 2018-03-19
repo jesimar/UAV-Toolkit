@@ -3,6 +3,8 @@
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
 Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
 
+![](./Figures/logo-uav-toolkit.png)
+
 ## Visão Geral
 
 Nesse projeto podemos encontrar os seguintes diretórios:
@@ -132,6 +134,10 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
   publisher = {ACM}
 } 
 ```
+
+## Changelog
+
+A versão do ChangeLog pode ser acessado [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/CHANGELOG.md). 
 
 ## Licença
 

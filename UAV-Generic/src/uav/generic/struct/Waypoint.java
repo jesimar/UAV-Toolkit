@@ -1,23 +1,18 @@
 package uav.generic.struct;
 
+import uav.generic.struct.geom.PointGeo;
+
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class Waypoint {
     
     private final String action;
-    private final double lat;//equivale a coordenada y.
-    private final double lng;//equivale a coordenada x.
-    private final double alt;//equivale a coordenada z.
+    private final double lat;//is equivalent to y coordinate.
+    private final double lng;//is equivalent to x coordinate.
+    private final double alt;//is equivalent to z coordinate.
     
-    public Waypoint(double lat, double lng, double alt){
-        this.action = "";
-        this.lat = lat;
-        this.lng = lng;
-        this.alt = alt;
-    }
-            
     public Waypoint(String action, double lat, double lng, double alt){
         this.action = action;
         this.lat = lat;
@@ -25,11 +20,18 @@ public class Waypoint {
         this.alt = alt;
     }
     
+    public Waypoint(double lat, double lng, double alt){
+        this.action = "";
+        this.lat = lat;
+        this.lng = lng;
+        this.alt = alt;
+    }
+    
     public Waypoint(PointGeo pGeo){
-        this.action = pGeo.getName();
-        this.lat = pGeo.getLatitude();
-        this.lng = pGeo.getLongitude();
-        this.alt = pGeo.getAltitude();
+        this.action = "";
+        this.lat = pGeo.getLat();
+        this.lng = pGeo.getLng();
+        this.alt = pGeo.getAlt();
     }
 
     public String getAction() {
@@ -48,11 +50,11 @@ public class Waypoint {
         return alt;
     }
     
-    public String getString(){
+    public String string(){
         return action + ", " + lat + ", " + lng + ", " + alt;
     }
     
-    public String getString2(){
+    public String string2(){
         return lat + ", " + lng + ", " + alt;
     }
 

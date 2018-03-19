@@ -1,15 +1,16 @@
 package uav.ifa.struct;
 
+import uav.generic.struct.ReaderFileConfigGlobal;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import uav.generic.struct.Position3D;
-import uav.generic.struct.Route3D;
+import uav.generic.struct.geom.Position3D;
+import uav.generic.struct.mission.Route3D;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class ReaderRoute {
     
@@ -18,7 +19,7 @@ public class ReaderRoute {
     
     public ReaderRoute(Route3D route3D){
         this.route3D = route3D;
-        this.alt = Double.parseDouble(ReaderFileConfig.getInstance().getTypeAltitudeDecay());
+        this.alt = ReaderFileConfigGlobal.getInstance().getAltitudeRelativeMission();
     }
     
     public void reader(File inFile) throws FileNotFoundException {
@@ -27,8 +28,6 @@ public class ReaderRoute {
             while(sc.hasNextLine()){
                 double px = sc.nextDouble();
                 double py = sc.nextDouble();
-                double vx = sc.nextDouble();
-                double vy = sc.nextDouble();
                 Position3D p3d = new Position3D(px, py, alt);
                 route3D.addPosition3D(p3d);
             }

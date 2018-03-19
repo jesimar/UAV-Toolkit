@@ -7,14 +7,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.struct.Position3D;
-import uav.hardware.aircraft.Drone;
-import uav.mosa.module.decision_making.DecisionMaking;
-import uav.mosa.struct.states.StateCommunication;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.states.StateCommunication;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class CommunicationControl {
     
@@ -22,37 +22,22 @@ public class CommunicationControl {
     private BufferedReader input;
     private PrintWriter output;         
     private final Drone drone;
-    private final DecisionMaking decisionMaking;
     private StateCommunication stateCommunication;
     
-    private final String HOST;
-    private final int PORT;
-    private final int SLEEP_TIME_RECEIVE_MSG = 100;
     private boolean startMission;
     private boolean stopMission;
     
-    public CommunicationControl(Drone drone, DecisionMaking decisionMaking){      
+    public CommunicationControl(Drone drone){      
         this.drone = drone;
-        this.decisionMaking = decisionMaking;
-        this.HOST = "localhost";
-        this.PORT = 5555;
         stateCommunication = StateCommunication.WAITING;
         startMission = false;
         stopMission = false;
     }
     
-    public CommunicationControl(Drone drone, DecisionMaking decisionMaking, String host, int port){      
-        this.drone = drone;
-        this.decisionMaking = decisionMaking;
-        this.HOST = host;
-        this.PORT = port;
-        stateCommunication = StateCommunication.WAITING;
-    }
-    
     public void connectClient(){        
         try{
             StandardPrints.printMsgEmph("connecting in the IFA ...");
-            socket = new Socket(HOST, PORT);
+            socket = new Socket(Constants.HOST_IFA, Constants.PORT_COMMUNICATION_BETWEEN_IFA_MOSA);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             StandardPrints.printMsgEmph("MOSA connected in IFA ...");
@@ -74,27 +59,24 @@ public class CommunicationControl {
                         String answer = input.readLine();
                         if (answer != null){
                             StandardPrints.printMsgYellow("Data IFA: " + answer);
-                            if (answer.contains("HomeLocation: ")){
-                                String home = answer.substring(14);                               
+                            if (answer.contains(TypeMsgCommunication.IFA_MOSA_HOMELOCATION)){
+                                String home = answer.substring(23);                               
                                 String h[] = home.split(", ");
                                 double lat = Double.parseDouble(h[0]);
                                 double lng = Double.parseDouble(h[1]);
                                 double alt = Double.parseDouble(h[2]);
                                 drone.defineHomeLocation(lat, lng, alt);
-                            } else if (answer.equals("MOSA.START")){
+                            } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_START)){
                                 startMission = true;
-                                sendData("MOSA.STARTED");
-                            } else if (answer.equals("MOSA.GET_LOCATION_FUTURE")){
-                                Position3D p = decisionMaking.getPlanner().getMission3D().getPosition3D(5);
-                                sendData("LOCATION_FUTURE: " + p.string());
-                            } else if (answer.equals("MOSA.STOP")){
+                                sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
+                            } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
                                 stopMission = true;
-                                sendData("MOSA.STOPPED");
+                                sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
                                 Thread.sleep(100);
                                 System.exit(0);
                             } 
                         }else{
-                            Thread.sleep(SLEEP_TIME_RECEIVE_MSG);
+                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }                    
                     }
                 } catch (InterruptedException ex){
@@ -114,6 +96,18 @@ public class CommunicationControl {
         output.println(msg);
     }
     
+    public StateCommunication getStateCommunication() {
+        return stateCommunication;
+    }      
+
+    public boolean isStartMission() {
+        return startMission;
+    }
+    
+    public boolean isStopMission() {
+        return stopMission;
+    }
+    
     public void close(){
         try {
             output.close();
@@ -127,15 +121,4 @@ public class CommunicationControl {
         }
     }
 
-    public StateCommunication getStateCommunication() {
-        return stateCommunication;
-    }      
-
-    public boolean isStartMission() {
-        return startMission;
-    }
-    
-    public boolean isStopMission() {
-        return stopMission;
-    }
 }

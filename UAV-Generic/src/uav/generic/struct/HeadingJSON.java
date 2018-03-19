@@ -14,8 +14,8 @@ public class HeadingJSON {
         this.heading = heading;
     }
     
-    public HeadingJSON(int value, String direction, String type){
-        this.heading = new Heading(value, direction, type);        
+    public HeadingJSON(int value, String typeDirection, String typeAngle){
+        this.heading = new Heading(value, typeDirection, typeAngle);        
     }
     
     public Heading getHeading(){

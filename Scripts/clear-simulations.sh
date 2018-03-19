@@ -6,6 +6,10 @@
 #Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
 echo "===========================Clear Files============================"
+
+echo "Clear files telemetry QGC"
+rm /home/jesimar/Documentos/QGroundControl/Telemetry/*.tlog 2>/dev/null
+
 echo "Clear files mav.*"
 rm mav.* 2>/dev/null
 
@@ -13,6 +17,7 @@ echo "Clear files *.csv"
 rm ../UAV-MOSA/*.csv 2>/dev/null
 rm ../UAV-IFA/*.csv 2>/dev/null
 rm ../UAV-Monitoring/*.csv 2>/dev/null
+rm ../UAV-Tests/*.csv 2>/dev/null
 
 echo "Clear files in HGA4m [*.png *.log route3D* routeGeo*]"
 rm ../Modules-MOSA/HGA4m/*.png 2>/dev/null

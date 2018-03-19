@@ -7,10 +7,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeInputCommand;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class CommunicationFailure {
     
@@ -18,24 +20,17 @@ public class CommunicationFailure {
     private Socket socket;
     private BufferedReader input;
 
-    private final int PORT;
-    private final int SLEEP_TIME_RECEIVE_MSG = 200;
     private boolean failure = false;
     private String typeAction = "";
 
     public CommunicationFailure() {
-        this.PORT = 5556;
-    }
-
-    public CommunicationFailure(int port) {
-        this.PORT = port;
     }
 
     public void startServerFailure() {
         try {
             StandardPrints.printMsgEmph("waiting a connection to UAV-Insert-Failure ...");
-            server = new ServerSocket(PORT);
-            socket = server.accept();//aguarda conexao
+            server = new ServerSocket(Constants.PORT_COMMUNICATION_BETWEEN_IFA_IF);
+            socket = server.accept();//wait the connection
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] startServerFailure()");
@@ -53,18 +48,19 @@ public class CommunicationFailure {
                         String answer = input.readLine();
                         if (answer != null) {
                             StandardPrints.printMsgYellow("Data FAILURE: " + answer);
-                            if (answer.equals("MPGA")){
+                            answer = answer.toLowerCase();
+                            if (answer.equals(TypeInputCommand.CMD_MPGA)){
                                 failure = true;
-                                typeAction = "MPGA";
-                            } else if (answer.equals("LAND")){
+                                typeAction = TypeInputCommand.CMD_MPGA;
+                            } else if (answer.equals(TypeInputCommand.CMD_LAND)){
                                 failure = true;
-                                typeAction = "LAND";
-                            } else if (answer.equals("RTL")){
+                                typeAction = TypeInputCommand.CMD_LAND;
+                            } else if (answer.equals(TypeInputCommand.CMD_RTL)){
                                 failure = true;
-                                typeAction = "RTL";
+                                typeAction = TypeInputCommand.CMD_RTL;
                             }
                         } else {
-                            Thread.sleep(SLEEP_TIME_RECEIVE_MSG);
+                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }
                     }
                 } catch (InterruptedException ex) {
@@ -77,6 +73,14 @@ public class CommunicationFailure {
             }
         });
     }
+    
+    public boolean getFailure(){
+        return failure;
+    }
+    
+    public String getTypeAction(){
+        return typeAction;
+    }
 
     public void close() {
         try {
@@ -87,13 +91,5 @@ public class CommunicationFailure {
             StandardPrints.printMsgWarning("Warning [IOException] close()");
             ex.printStackTrace();
         }
-    }
-    
-    public boolean getFailure(){
-        return failure;
-    }
-    
-    public String getTypeAction(){
-        return typeAction;
     }
 }
