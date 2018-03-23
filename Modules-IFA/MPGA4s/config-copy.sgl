@@ -1,0 +1,33 @@
+--------------- Incerteza da Posicao da Aeronave (P0) [Asa Fixa 10.0] [Asa Rotativa 0.25]--------------
+0.25
+--------------- Constante Baseada na Resistencia do Ar (G) [G = Amax/(Vterm 2)] [Asa Fixa 0.0021421488] [Asa Rotativa 0.04]---------------
+0.04
+--------------- Time Step (dt) ---------------
+1
+--------------- Initial State [Xinit (px, py, vel, ang)] ---------------
+20.26 -6.75 1.5 -1.49372918900284
+------- Maximum Velocity (metro/s) [Terminal] [Asa Fixa 30.5555] [Asa Rotativa 3.0]-------
+3.0
+------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------
+1.0
+------- Leme Maximo - Giro Maximo (Radianos) (+30) [Asa Fixa +0.261799] [Asa Rotativa +3.14159] -------
+3.1415
+------- Leme Minimo - Giro Minimo (Radianos) (-30) [Asa Fixa -0.261799] [Asa Rotativa -3.14159] -------
+-3.1415
+------- Maximum Acceleration (m/(s2)) -------
+0.2
+----------- Horizonte de Tempo (Horizonte de Planejamento) (K) ---------
+16
+----------- Dimension Window Plot (Width x Heigth) -----------
+800	700
+----------- Sistema de Coordenadas [false - Cartesian, true - Geographical] ---------------
+false
+----------- precision of UAV position (Delta) -----------
+0.01
+------ Tipo de Problema [0 - Sem Problema, 1 - Motor, 2 - Bateria, 3 - Girar Direita Somente, 4 - Girar Esquerda Somente]-----
+2
+------ Online [Integrado com Player Stage - Via Socket]-----
+false
+
+<TrueName>
+configB.sgl

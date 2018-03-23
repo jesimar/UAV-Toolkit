@@ -24,29 +24,34 @@ rm ../Modules-MOSA/HGA4m/*.png 2>/dev/null
 rm ../Modules-MOSA/HGA4m/*.log 2>/dev/null
 rm ../Modules-MOSA/HGA4m/route3D* 2>/dev/null
 rm ../Modules-MOSA/HGA4m/routeGeo* 2>/dev/null
+rm ../Modules-MOSA/HGA4m/log_error.txt 2>/dev/null
 
 echo "Clear files in MPGA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null
 rm ../Modules-IFA/MPGA4s/route.txt 2>/dev/null
 rm ../Modules-IFA/MPGA4s/routeGeo.txt 2>/dev/null
 rm ../Modules-IFA/MPGA4s/*.png 2>/dev/null
+rm ../Modules-IFA/MPGA4s/log_error.txt 2>/dev/null
 
 echo "Clear files in GH4s [output-simulation.log route.txt routeGeo.txt *.png]"
 rm ../Modules-IFA/GH4s/output-simulation.log 2>/dev/null
 rm ../Modules-IFA/GH4s/route.txt 2>/dev/null
 rm ../Modules-IFA/GH4s/routeGeo.txt 2>/dev/null
 rm ../Modules-IFA/GH4s/*.png 2>/dev/null
+rm ../Modules-IFA/GH4s/log_error.txt 2>/dev/null
 
 echo "Clear files in GA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 rm ../Modules-IFA/GA4s/output-simulation.log 2>/dev/null
 rm ../Modules-IFA/GA4s/route.txt 2>/dev/null
 rm ../Modules-IFA/GA4s/routeGeo.txt 2>/dev/null
 rm ../Modules-IFA/GA4s/*.png 2>/dev/null
+rm ../Modules-IFA/GA4s/log_error.txt 2>/dev/null
 
 echo "Clear files in DE4s [output-simulation.log route.txt routeGeo.txt *.png]"
 rm ../Modules-IFA/DE4s/output-simulation.log 2>/dev/null
 rm ../Modules-IFA/DE4s/route.txt 2>/dev/null
 rm ../Modules-IFA/DE4s/routeGeo.txt 2>/dev/null
 rm ../Modules-IFA/DE4s/*.png 2>/dev/null
+rm ../Modules-IFA/DE4s/log_error.txt 2>/dev/null
 
 echo "==============================Done================================"

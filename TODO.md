@@ -63,11 +63,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## UAV-Mission-Creator:
 
-* Definir no Google Earth o Home-Location da missão.
-* Definir no Google Earth um padrão para missão com foto.
-* Definir no Google Earth um padrão para missão com vídeo.
 * Definir no Google Earth um waypoint específico para TAKEOFF.
 * Definir no Google Earth um waypoint específico para LAND_VERTICAL.
+* Definir no Google Earth um padrão para missão com foto.
+* Definir no Google Earth um padrão para missão com vídeo.
+* Definir no Google Earth um padrão para missão com pulverização.
 
 ## GitHub
 
@@ -77,7 +77,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Documentação UAV-Toolkit
 
-* Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
+* **Futuro** Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 
 ## Legislação
 
@@ -93,9 +93,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
 * Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
-* Discutir diferenças entre Home-Location e Launch
-* Discutir com verônica se nossa simulação SITL-Edison não é na verdade HITL. Pois quem esta controlando o drone é na verdade o AP ou não?
 * Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
+* Discutir com verônica se nossa simulação SITL-Edison não é na verdade HITL. Pois quem esta controlando o drone é na verdade o AP ou não?
 
 ## Não Fazer Mais
 

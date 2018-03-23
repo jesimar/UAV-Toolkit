@@ -14,6 +14,7 @@
 * Updated codes in UAV-Tests (time, removed getDistanceToHome)
 * Updated codes in UAV-PosAnalyser (time - little modifications)
 * Updated codes in UAV-Monitoring (time - little modifications)
+* Updated codes in UAV-Mission-Creator
 * Added UAV-GCS system codes
 * Documentation update GitHub, codes, properties files and UAV-Toolkit
 * Updated print format in file log-aircraft (UAV-Generic)

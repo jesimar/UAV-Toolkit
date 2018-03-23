@@ -29,7 +29,7 @@ public class ReaderFileConfig {
     private String methodPlanner;
     private String dirPlanner;
     private String cmdExecPlanner;
-    private String localCalcMission;
+    private String missionProcessingLocation;
     private String fileWaypointsMission;
     private String timeExec;
     private String delta;
@@ -69,7 +69,7 @@ public class ReaderFileConfig {
             methodPlanner            = prop.getProperty("prop.planner.method");            
             dirPlanner               = prop.getProperty("prop.planner.dir");
             cmdExecPlanner           = prop.getProperty("prop.planner.cmd_exec");
-            localCalcMission         = prop.getProperty("prop.planner.local_calc_mission");
+            missionProcessingLocation         = prop.getProperty("prop.planner.mission_processing_location");
             fileWaypointsMission     = prop.getProperty("prop.planner.file_waypoints_mission");         
             timeExec                 = prop.getProperty("prop.planner.time_exec");
             delta                    = prop.getProperty("prop.planner.delta");
@@ -159,8 +159,8 @@ public class ReaderFileConfig {
         return cmdExecPlanner;
     } 
     
-    public String getLocalCalcMission() {
-        return localCalcMission;
+    public String getMissionProcessingLocation() {
+        return missionProcessingLocation;
     }
 
     public String getFileWaypointsMission() {

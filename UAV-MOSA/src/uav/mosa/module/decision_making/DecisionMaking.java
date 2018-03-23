@@ -62,11 +62,11 @@ public class DecisionMaking {
         
         if (config.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
             boolean respM = false;
-            if (config.getLocalCalcMission().equals(LocalCalcMission.GROUND)){
+            if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND)){
                 respM = sendMissionsToDroneCalcGround();
-            }else if (config.getLocalCalcMission().equals(LocalCalcMission.GROUND_AND_AIR)) {
+            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND_AND_AIR)) {
                 respM = sendMissionsToDroneCalcGroundAndAir();
-            }else if (config.getLocalCalcMission().equals(LocalCalcMission.AIR)) {
+            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.AIR)) {
                 respM = sendMissionsToDroneCalcAir();
             }
             if (respM){

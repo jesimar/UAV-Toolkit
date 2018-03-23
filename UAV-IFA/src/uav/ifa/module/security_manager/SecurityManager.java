@@ -254,7 +254,7 @@ public class SecurityManager {
             decisonMaking.setTypeAction(communicationFailure.getTypeAction());
             StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: "+drone.getTime());
         }
-        if (drone.getBattery().level < configLocal.getLevelMinBatteryToFail() && 
+        if (drone.getBattery().level < configGlobal.getLevelMinimumBattery() && 
                 !hasFailure(TypeFailure.FAIL_BATTERY)){
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY));
             StandardPrints.printMsgError("FAIL BATTERY -> Time: "+drone.getTime());

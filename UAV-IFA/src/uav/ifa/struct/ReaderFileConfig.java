@@ -22,7 +22,6 @@ public class ReaderFileConfig {
 
     //global
     private String systemExec;
-    private String levelBatteryToFail;
     private String uavInsertFailure;
     
     //replanner
@@ -35,7 +34,6 @@ public class ReaderFileConfig {
     private String delta; 
     private String typeAltitudeDecay;
     
-    private int levelMinBatteryToFail;
     private boolean isUavInsertFailure;
 
     private ReaderFileConfig() {
@@ -53,7 +51,6 @@ public class ReaderFileConfig {
             prop.load(input);
             
             systemExec               = prop.getProperty("prop.global.system_exec");
-            levelBatteryToFail       = prop.getProperty("prop.global.level_min_battery_to_fail");
             uavInsertFailure         = prop.getProperty("prop.global.uav_insert_failure");
             
             methodReplanner          = prop.getProperty("prop.replanner.method");
@@ -100,7 +97,6 @@ public class ReaderFileConfig {
     
     public boolean parseToVariables(){
         try{
-            levelMinBatteryToFail = Integer.parseInt(levelBatteryToFail);
             isUavInsertFailure = Boolean.parseBoolean(uavInsertFailure);
             if (methodReplanner.equals(TypeReplanner.DE4S)){
                 typeReplanner = TypeReplanner.DE4S;
@@ -125,10 +121,6 @@ public class ReaderFileConfig {
     
     public String getSystemExec() {
         return systemExec;
-    }
-
-    public int getLevelMinBatteryToFail() {
-        return levelMinBatteryToFail;
     }
     
     public boolean isUavInsertFailure() {

@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
@@ -23,6 +24,7 @@ public class CommunicationControl {
     private PrintWriter output;         
     private final Drone drone;
     private StateCommunication stateCommunication;
+    private final ReaderFileConfigGlobal configGlobal;
     
     private boolean startMission;
     private boolean stopMission;
@@ -32,12 +34,13 @@ public class CommunicationControl {
         stateCommunication = StateCommunication.WAITING;
         startMission = false;
         stopMission = false;
+        configGlobal = ReaderFileConfigGlobal.getInstance();
     }
     
     public void connectClient(){        
         try{
             StandardPrints.printMsgEmph("connecting in the IFA ...");
-            socket = new Socket(Constants.HOST_IFA, Constants.PORT_COMMUNICATION_BETWEEN_IFA_MOSA);
+            socket = new Socket(configGlobal.getHostIFA(), configGlobal.getPortNetworkIFAandMOSA());
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             StandardPrints.printMsgEmph("MOSA connected in IFA ...");

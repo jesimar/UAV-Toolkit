@@ -7,7 +7,10 @@
 
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
-DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
+#DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
+DIR_FILES=UAV-Mission-Creator/mission/kml/pos-iros1
+
+echo "=============swap file mission============="
 
 echo "copy file geoBase.txt to files"
 cp ../$DIR_FILES/geoBase.txt ../Modules-Global/Files/. 2>/dev/null
@@ -26,3 +29,5 @@ cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/. 2>/dev/null
 
 echo "copy file waypointsBuzzer.txt to files"
 cp ../$DIR_FILES/waypointsBuzzer.txt ../Modules-Global/Files/. 2>/dev/null
+
+echo "====================done==================="
