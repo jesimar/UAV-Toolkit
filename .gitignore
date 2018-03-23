@@ -30,3 +30,12 @@ mav.parm
 mav.tlog
 mav.tlog.raw
 exec-planner.sh
+
+ideias-todo.txt
+dicas-voo.txt
+/UAV-GCS2/nbproject/private/
+/UAV-GCS2/dist/
+/ExecMPGA4sMassive/nbproject/private/
+/ExecMPGA4sMassive/dist/
+/Exec-MPGA4s-Massive/nbproject/private/
+/Exec-MPGA4s-Massive/dist/

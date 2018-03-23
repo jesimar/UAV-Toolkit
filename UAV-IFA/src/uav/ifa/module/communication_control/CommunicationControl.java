@@ -8,12 +8,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.hardware.aircraft.Drone;
-import uav.ifa.struct.states.StateCommunication;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.states.StateCommunication;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class CommunicationControl {
     
@@ -24,29 +27,20 @@ public class CommunicationControl {
     private final Drone drone;
     private StateCommunication stateCommunication;
     private boolean mosaDisabled;
-
-    private final int PORT;
-    private final int SLEEP_TIME_RECEIVE_MSG = 100;    
+    private final ReaderFileConfigGlobal configGlobal;
 
     public CommunicationControl(Drone drone) {
         this.drone = drone;
-        this.PORT = 5555;
         stateCommunication = StateCommunication.WAITING;
         mosaDisabled = false;
-    }
-
-    public CommunicationControl(Drone drone, int port) {
-        this.drone = drone;
-        this.PORT = port;
-        stateCommunication = StateCommunication.WAITING;
-        mosaDisabled = false;
+        configGlobal = ReaderFileConfigGlobal.getInstance();
     }
 
     public void startServerIFA() {
         try {
             StandardPrints.printMsgEmph("waiting a connection from MOSA ...");
-            server = new ServerSocket(PORT);
-            socket = server.accept();//aguarda conexao
+            server = new ServerSocket(configGlobal.getPortNetworkIFAandMOSA());
+            socket = server.accept();//wait the connection
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             StandardPrints.printMsgEmph("MOSA connected in IFA ...");
@@ -68,18 +62,19 @@ public class CommunicationControl {
                         String answer = input.readLine();
                         if (answer != null) {
                             StandardPrints.printMsgYellow("Data MOSA: " + answer);
-                            if (answer.equals("StateMOSA.INITIALIZED")){
-                                sendData("HomeLocation: " + drone.getHomeLocation().string());
-                                sendData("MOSA.START");
-                            } else if (answer.equals("MOSA.STARTED")){
-                                //Nao precisa fazer nada
-                            } else if (answer.equals("MOSA.STOPPED")){
-                                //Nao precisa fazer nada
-                            } else if (answer.equals("StateMOSA.DISABLED")){
+                            if (answer.equals(TypeMsgCommunication.MOSA_IFA_INITIALIZED)){
+                                sendData(TypeMsgCommunication.IFA_MOSA_HOMELOCATION + 
+                                        drone.getHomeLocation().string());
+                                sendData(TypeMsgCommunication.IFA_MOSA_START);
+                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STARTED)){
+                                //Não precisa fazer nada
+                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STOPPED)){
+                                //Não precisa fazer nada
+                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_DISABLED)){
                                 mosaDisabled = true;
                             }
                         } else {
-                            Thread.sleep(SLEEP_TIME_RECEIVE_MSG);
+                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }
                     }
                 } catch (InterruptedException ex) {
@@ -98,6 +93,14 @@ public class CommunicationControl {
     public void sendData(String msg) {
         output.println(msg);
     }
+    
+    public StateCommunication getStateCommunication() {
+        return stateCommunication;
+    } 
+
+    public boolean isMosaDisabled() {
+        return mosaDisabled;
+    }
 
     public void close() {
         try {
@@ -111,14 +114,6 @@ public class CommunicationControl {
             ex.printStackTrace();
             stateCommunication = StateCommunication.DISABLED;
         }
-    }
-    
-    public StateCommunication getStateCommunication() {
-        return stateCommunication;
-    } 
-
-    public boolean isMosaDisabled() {
-        return mosaDisabled;
     }
 
 }

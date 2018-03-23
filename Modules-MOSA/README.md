@@ -15,7 +15,3 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 
 * **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave (somente SITL).
 * **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave (somente SITL).
-
-O diretório a seguir contém códigos utilizados pelo sistema MOSA.
-
-* **Buzzer4m** -> Código responsável por acionar o buzzer do drone após um waypoint específico ter sido alcançado. 

@@ -6,17 +6,18 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.Mission3D;
-import uav.generic.struct.PointGeo;
-import uav.generic.struct.Position3D;
+import uav.generic.struct.mission.Mission3D;
+import uav.generic.struct.geom.PointGeo;
+import uav.generic.struct.geom.Position3D;
 import uav.generic.struct.Waypoint;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
-import uav.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.FixedWing;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class HGA4m extends Planner{
     
@@ -43,17 +44,18 @@ public class HGA4m extends Planner{
             double py2 = waypointsMission.getPosition3D(i+1).getY();
             double dx = px2 - px1;
             double dy = py2 - py1;
-            //distancia mais uma margem de seguranca
+            //distancia entre os pontos com uma margem de seguranca
             double dist = Math.sqrt(dx*dx+dy*dy)*2;
             
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = config.getTimeExec(i);
+            String time = configLocal.getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
-            String qtdWpt = String.format("%d", (int)(dist/2));//usando metade dos waypoints DeltaT=2
-            String delta = config.getDelta();
-            String maxVel = config.getMaxVelocity();
-            String maxCtrl = config.getMaxControl();
+            //usando metade dos waypoints DeltaT=2
+            String qtdWpt = String.format("%d", (int)(dist/2));
+            String delta = configLocal.getDelta();
+            String maxVel = configLocal.getMaxVelocity();
+            String maxCtrl = configLocal.getMaxControl();
             UtilIO.copyFileMofifMosa(src_ga, dst_ga, time, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
@@ -86,13 +88,13 @@ public class HGA4m extends Planner{
             
             PrintStream print = new PrintStream(new File(dir + "mission-config.sgl"));
             print.println("----------- start state (px py vx vy) -----------");
-            if (config.isDynBetweenWpts()){
+            if (drone instanceof FixedWing){
                 print.println(px1 + "," + py1 + "," + vx1 + "," + vy1);
             } else {
                 print.println(px1 + "," + py1 + ",0.0,0.0");
             }
             print.println("--------------- end point (px py)---------------");
-            if (config.isDynBetweenWpts()){
+            if (drone instanceof FixedWing){
                 print.println(px2 + "," + py2 + "," + vx2 + "," + vy2);
             } else {
                 print.println(px2 + "," + py2 + ",0.0,0.0");
@@ -149,7 +151,8 @@ public class HGA4m extends Planner{
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
             String nameFileRouteGeo = "routeGeo" + i + ".txt";
-            PointGeo pGeoBase = UtilGeo.getPointGeo(dir + config.getFileGeoBase());
+            PointGeo pGeoBase = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
+                    configGlobal.getFileGeoBase());
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
@@ -159,7 +162,7 @@ public class HGA4m extends Planner{
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
-                double h = config.getAltitudeRelative();            
+                double h = configGlobal.getAltitudeRelativeMission();            
                 printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
                 mission3D.addPosition3D(new Position3D(x, y, h));
                 missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));

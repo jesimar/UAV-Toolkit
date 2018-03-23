@@ -2,7 +2,7 @@ package uav.ifa.module.sensor_fusion;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class SensorFusion {
     

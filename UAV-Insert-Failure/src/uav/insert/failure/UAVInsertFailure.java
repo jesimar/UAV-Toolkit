@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class UAVInsertFailure {
 

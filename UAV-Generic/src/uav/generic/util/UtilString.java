@@ -1,11 +1,11 @@
 package uav.generic.util;
 
-import uav.generic.struct.Position2D;
-import uav.generic.struct.Position3D;
+import uav.generic.struct.geom.Position2D;
+import uav.generic.struct.geom.Position3D;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class UtilString {
     

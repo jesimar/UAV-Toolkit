@@ -8,3 +8,5 @@
 echo "my ip:"
 
 ip addr | grep 'BROADCAST,MULTICAST,UP,LOWER_UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/'
+
+#ip addr | grep [0-9]*[.][0-9] | tail -n 1 | awk '{print $2}' | cut -f1  -d/

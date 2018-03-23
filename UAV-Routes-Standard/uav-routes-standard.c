@@ -1,12 +1,12 @@
-/*************************Makefile***************************
-#Program: UAV-Routes-Standard
-#Compiler: GCC
-#Author: Jesimar da Silva Arantes
-#Date: 08/06/2016
-#Last Update: 05/02/2018
-#Description: Program to generate routes with standard formats for the UAV.
-#Descrição: Programa para gerar rotas com formatos padrões para o VANT.
-************************************************************/
+/**
+* Author: Jesimar da Silva Arantes
+* Date: 08/06/2016
+* Last Update: 05/02/2018
+* Description: Program to generate routes with standard formats for the UAV.
+* Descrição: Programa para gerar rotas com formatos padrões para o VANT.
+*/
+
+//============================USED LIBRARIES============================
 
 #include <stdio.h>
 #include <math.h>
@@ -15,6 +15,8 @@
 #define TRUE 1
 #define FALSE 0
 
+//===========================GLOBAL VARIABLES===========================
+
 int IS_PRINT = FALSE;
 
 double POS_Z = 100.0;
@@ -22,16 +24,22 @@ double RADIUS_CIRCLE = 1000.0;
 double BASE_TRIANGLE = 2000.0;
 double BASE_RECTANGLE = 2000.0;
 
+//=========================STRUCTS and TYPEDEF==========================
+
 typedef struct pos{
 	double posX;
 	double posY;
 	double posZ;
 }position;
 
+//=========================FUNCTION PROTOTYPES==========================
+
 void readFileConfig(char name[]);
 void createRouteCircle(int discretization, char name[]);
 void createRouteTriangle(int discretization, char name[]);
 void createRouteRectangle(int discretization, char name[]);
+
+//==============================FUNCTIONS===============================
 
 int main(){
 	readFileConfig("config.txt");
@@ -63,6 +71,9 @@ int main(){
 	return 0;
 }
 
+/**
+ * Lê o arquivo de configurações contendo os parametros usados para gerar rotas.
+ */
 void readFileConfig(char name[]){
 	FILE *file = fopen(name, "r");
 	char str[50];
@@ -85,6 +96,9 @@ void readFileConfig(char name[]){
 	}
 }
 
+/**
+ * Função usada para criar uma rota em formato circular.
+ */
 void createRouteCircle(int discretization, char name[]){
 	printf("\n------------%s------------\n\n", name);
 	FILE *file = fopen(name, "w+");
@@ -108,6 +122,9 @@ void createRouteCircle(int discretization, char name[]){
 	fclose(file);
 }
 
+/**
+ * Função usada para criar uma rota em formato triangular.
+ */
 void createRouteTriangle(int discretization, char name[]){
 	printf("\n------------%s------------\n\n", name);
 	FILE *file = fopen(name, "w+");
@@ -143,6 +160,9 @@ void createRouteTriangle(int discretization, char name[]){
 	fclose(file);
 }
 
+/**
+ * Função usada para criar uma rota em formato retangular (quadrado).
+ */
 void createRouteRectangle(int discretization, char name[]){
 	printf("\n------------%s------------\n\n", name);
 	FILE *file = fopen(name, "w+");

@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.Constants;
-import uav.generic.struct.PointGeo;
+import uav.generic.struct.geom.PointGeo;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
-import uav.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.constants.TypeAltitudeDecay;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class DE4s extends Replanner{
     
@@ -30,11 +30,11 @@ public class DE4s extends Replanner{
         return itIsOkUpdate && itIsOkExec && itIsOkParse;
     }
     
-    //melhorar
     @Override
     public boolean updateFileConfig() { 
         try {
-            PointGeo pGeo = UtilGeo.getPointGeo(dir + config.getFileGeoBase());
+            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
+                    configGlobal.getFileGeoBase());
             double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
             double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
@@ -42,19 +42,19 @@ public class DE4s extends Replanner{
             //double vx = drone.getVelocity().vx;
             //double vy = drone.getVelocity().vy;            
             //double dt = 2;
-            //px = px + vx * dt;//esse tipo de projeção não fica bom
-            //py = py + vy * dt;//esse tipo de projeção não fica bom
+            //px = px + vx * dt;//esse tipo de projecao nao fica bom
+            //py = py + vy * dt;//esse tipo de projecao nao fica bom
             
             File src = new File(dir + "config-base.sgl");
             File dst = new File(dir + "config.sgl");
             String state = px + " " + py + " " + vel + " " + angle;
-            String qtdWpt = config.getQtdWaypoints();
-            String delta = config.getDelta();
+            String qtdWpt = configLocal.getQtdWaypoints();
+            String delta = configLocal.getDelta();
             UtilIO.copyFileMofifIfa(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             File src_ga = new File(dir + "instance-base");
             File dst_ga = new File(dir + "instance");
-            String time = config.getTimeExec();
+            String time = configLocal.getTimeExec();
             UtilIO.copyFileMofifIfa(src_ga, dst_ga, time, 117);
             return true;
         } catch (FileNotFoundException ex) {
@@ -68,18 +68,19 @@ public class DE4s extends Replanner{
         try {
             String nameFileRoute3D =  "route.txt";
             String nameFileRouteGeo = "routeGeo.txt";
-            PointGeo pGeo = UtilGeo.getPointGeo(dir + config.getFileGeoBase());
+            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
+                    configGlobal.getFileGeoBase());
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
-            double h = drone.getGPS().alt_rel;
+            double h = drone.getBarometer().alt_rel;
             int qtdWpt = UtilIO.getLineNumber(new File(dir + nameFileRoute3D));
             double frac = h/qtdWpt;
             int countLines = 0;
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
-                if (config.getTypeAltitudeDecay().equals(Constants.TYPE_ALTITUDE_DECAY_LINEAR)){
+                if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
                 printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));

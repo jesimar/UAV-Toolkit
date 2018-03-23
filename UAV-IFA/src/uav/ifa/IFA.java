@@ -6,7 +6,7 @@ import uav.ifa.module.security_manager.SecurityManager;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public final class IFA {            
     

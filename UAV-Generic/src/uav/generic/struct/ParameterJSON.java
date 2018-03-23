@@ -9,15 +9,15 @@ import lib.color.StandardPrints;
 public class ParameterJSON {
     
     /**
-     * Lista com alguns parametros que costumo alterar.
-     * Name Value      
-     *   RTL_ALT 1200.0           //1200cm de altura para voltar o RTL
-     *   WPNAV_RADIUS 50.0        //  50cm de raio para antender um waypoint
-     *   WPNAV_SPEED 100.0        // 300cm/s velocidade horizontal
-     *   WPNAV_SPEED_UP 100.0     // 150cm/s velocidade para cima 
-     *   WPNAV_SPEED_DN 100.0     // 120cm/s velocidade para baixo         
-     *   WPNAV_LOIT_SPEED 300.0   // 300cm/s velocidade horizontal em modo loiter
-     *   LAND_SPEED 50.0          //  50cm/s velocidade de pouso
+     * List with some parameters that I usually change.
+     * Format: KEY VALUE      
+     *   RTL_ALT 1200.0           //in cm
+     *   WPNAV_RADIUS 50.0        //in cm
+     *   WPNAV_SPEED 200.0        //in cm/s
+     *   WPNAV_SPEED_UP 50.0      //in cm/s
+     *   WPNAV_SPEED_DN 50.0      //in cm/s         
+     *   WPNAV_LOIT_SPEED 300.0   //in cm/s
+     *   LAND_SPEED 50.0          //in cm/s
      */
     
     private final Parameter parameter;
@@ -26,8 +26,8 @@ public class ParameterJSON {
         this.parameter = parameter;
     }
     
-    public ParameterJSON(String parameter, double value){
-        this.parameter = new Parameter(parameter, value);        
+    public ParameterJSON(String key, double value){
+        this.parameter = new Parameter(key, value);        
     }
     
     public Parameter getParameter(){

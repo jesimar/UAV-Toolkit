@@ -1,3 +1,9 @@
+#Authors: Jesimar da Silva Arantes and Andre Missaglia
+#Date: 01/06/2017
+#Last Update: 15/03/2018
+#Description: Code that initializes the HTTP server that responds to GET and POST requests.
+#Descricao: Codigo que inicia o servidor HTTP que responde a requisicoes GET e POST.
+
 import BaseHTTPServer
 import json
 import traceback
@@ -53,19 +59,17 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response))
             traceback.print_exc()
 
-def runServer(con):
+def runServer(con, host, port):
     global vehicle
     vehicle = con
-    PORT = 50000
-    HOST = "Localhost"
-    print "Server Starts - %s:%s" % (HOST, PORT)
+    print "Server Starts - %s:%s" % (host, port)
     print time.asctime()
-    httpd = BaseHTTPServer.HTTPServer(("", PORT), Handler)
-    print "serving at port", PORT
+    httpd = BaseHTTPServer.HTTPServer((host, port), Handler)
+    print "serving at port", port
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print "Server Stops - %s:%s" % (HOST, PORT)
+    print "Server Stops - %s:%s" % (host, port)
     print time.asctime()

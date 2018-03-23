@@ -5,6 +5,6 @@
 #Description: Script that makes it easy to navigate to the scripts folder in Intel Edison.
 #Descrição: Script que facilita na navegação até a pasta de scripts na Intel Edison.
 
-#Comando para executar esse script: "$ . ./dir.sh"
+#Command to execute: "$ . ./dir.sh"
 
 cd /media/sdcard/git_version/UAV-Toolkit/Scripts/

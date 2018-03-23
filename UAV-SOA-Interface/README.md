@@ -67,6 +67,7 @@ Para fazer as requisições do tipo GET basta digitar algumas dos comandos abaix
 
 ```
 http://localhost:50000/get-gps/
+http://localhost:50000/get-barometer/
 http://localhost:50000/get-battery/
 http://localhost:50000/get-attitude/
 http://localhost:50000/get-velocity/

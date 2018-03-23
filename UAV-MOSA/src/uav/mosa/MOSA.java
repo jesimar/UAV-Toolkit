@@ -6,7 +6,7 @@ import uav.mosa.module.mission_manager.MissionManager;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public final class MOSA {        
        

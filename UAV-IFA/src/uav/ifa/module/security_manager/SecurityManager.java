@@ -2,82 +2,100 @@ package uav.ifa.module.security_manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_acquisition.DataAcquisition;
-import uav.generic.struct.Constants;
+import uav.generic.module.data_communication.DataCommunication;
 import uav.generic.struct.Parameter;
-import uav.generic.struct.ParameterJSON;
-import uav.hardware.aircraft.Ararinha;
-import uav.hardware.aircraft.Drone;
-import uav.hardware.aircraft.iDroneAlpha;
+import uav.generic.hardware.aircraft.FixedWing;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.module.sensors_actuators.BuzzerControl;
+import uav.generic.struct.constants.TypeAircraft;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.struct.ReaderFileConfig;
 import uav.ifa.module.communication_control.CommunicationControl;
 import uav.ifa.module.communication_control.CommunicationFailure;
 import uav.ifa.struct.Failure;
 import uav.ifa.struct.ReaderFileParam;
-import uav.ifa.struct.TypesOfFailures;
-import uav.ifa.struct.states.StateCommunication;
-import uav.ifa.struct.states.StateIFA;
-import uav.ifa.struct.states.StateMonitoring;
-import uav.ifa.struct.states.StateReplanning;
+import uav.ifa.struct.TypeFailure;
+import uav.generic.struct.states.StateCommunication;
+import uav.generic.struct.states.StateSystem;
+import uav.generic.struct.states.StateMonitoring;
+import uav.generic.struct.states.StateReplanning;
+import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeMsgCommunication;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class SecurityManager {
         
     private final Drone drone;
-    private final DataAcquisition dataAcquisition;
+    private final DataCommunication dataAcquisition;
     private final CommunicationControl communicationControl;
     private CommunicationFailure communicationFailure;
     private final DecisionMaking decisonMaking;
-    private final ReaderFileConfig config;
+    
+    private final ReaderFileConfig configLocal;
+    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileParam readerParam;
     
     private PrintStream printLogAircraft; 
     private PrintStream printLogOverhead; 
-    private StateIFA stateIFA;
+    private StateSystem stateSystem;
     private StateMonitoring stateMonitoring;
         
-    private long timeInitApp;
+    private long timeInit;
     private long timeActual;
-    private final int SLEEP_TIME_WAITING_SERVER = 1000;//in milliseconds
-    private final int SLEEP_TIME_WAITING_ACTION = 100;//in milliseconds
-    private final int SLEEP_TIME_WAITING_CHANGE_STATES = 100;//in milliseconds
     
     private final List<Failure> listOfFailure = new LinkedList<>();    
 
     public SecurityManager() {
-        this.config = ReaderFileConfig.getInstance();
-        if (!config.read()){
+        timeInit = System.currentTimeMillis();
+        
+        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        if (!configGlobal.read()){
             System.exit(0);
         }
-        if (!config.checkReadFields()){
+        if (!configGlobal.checkReadFields()){
             System.exit(0);
         }
-        if (!config.parseToVariables()){
+        if (!configGlobal.parseToVariables()){
             System.exit(0);
         }
-        if (config.getNameDrone().equals(Constants.NAME_DRONE_ARARINHA)){
-            drone = new Ararinha();
-        } else {
-            drone = new iDroneAlpha();
+        this.configLocal = ReaderFileConfig.getInstance();
+        if (!configLocal.read()){
+            System.exit(0);
         }
+        if (!configLocal.checkReadFields()){
+            System.exit(0);
+        }
+        if (!configLocal.parseToVariables()){
+            System.exit(0);
+        }
+        this.readerParam = ReaderFileParam.getInstance();
+        
+        if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
+            drone = new FixedWing("Ararinha");
+        } else if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+            drone = new RotaryWing("iDroneAlpha");
+        } else{
+            drone = new RotaryWing("iDroneAlpha");
+        }
+        
         createFileLogOverhead();
-        this.dataAcquisition = new DataAcquisition(drone, "IFA", printLogOverhead);
+        this.dataAcquisition = new DataCommunication(drone, "IFA", printLogOverhead);
         this.communicationControl = new CommunicationControl(drone);
-        if (config.isUavInsertFailure()){
+        if (configLocal.isUavInsertFailure()){
             this.communicationFailure = new CommunicationFailure();
         }
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
-        stateIFA = StateIFA.INITIALIZING;
+        stateSystem = StateSystem.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
     }
     
@@ -90,7 +108,7 @@ public class SecurityManager {
         dataAcquisition.getParameters();
         dataAcquisition.getHomeLocation();
         
-        if (config.isUavInsertFailure()){
+        if (configLocal.isUavInsertFailure()){
             communicationFailure.startServerFailure();//blocked
             communicationFailure.receiveData();     //Thread
         }
@@ -98,14 +116,13 @@ public class SecurityManager {
         communicationControl.startServerIFA();  //blocked
         communicationControl.receiveData();     //Thread
         
-        timeInitApp = System.currentTimeMillis();
         monitoringAircraft();                   //Thread
         waitingForAnAction();                   //Thread                
         monitoringStateMachine();               //Thread
                 
-        stateIFA = StateIFA.INITIALIZED;
+        stateSystem = StateSystem.INITIALIZED;
         StandardPrints.printMsgEmph("initialized ...");
-        timeInitApp = System.currentTimeMillis();
+        timeInit = System.currentTimeMillis();
     }
     
     private void createFileLogOverhead(){
@@ -135,7 +152,7 @@ public class SecurityManager {
             File file;
             do{
                 i++;
-                file = new File(config.getFileLogAircraft() + i + ".csv");  
+                file = new File("log-aircraft" + i + ".csv");  
             }while(file.exists());
             printLogAircraft = new PrintStream(file);
         } catch (FileNotFoundException ex) {
@@ -155,10 +172,10 @@ public class SecurityManager {
             boolean serverIsRunning = dataAcquisition.serverIsRunning();
             while(!serverIsRunning){          
                 StandardPrints.printMsgWarning("waiting for the server uav-services-dronekit...");
-                Thread.sleep(SLEEP_TIME_WAITING_SERVER);
+                Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_SERVER);
                 serverIsRunning = dataAcquisition.serverIsRunning();
             }
-            Thread.sleep(SLEEP_TIME_WAITING_SERVER);
+            Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_SERVER);
         } catch(InterruptedException ex){
             StandardPrints.printMsgError2("Error [InterruptedException]: waitingForTheServer()");
             ex.printStackTrace();
@@ -172,15 +189,13 @@ public class SecurityManager {
     
     private void configParametersToFlight() {
         StandardPrints.printMsgEmph("config parameters to flight ...");
-        ReaderFileParam readerParam = new ReaderFileParam();
         try {
-            readerParam.reader(new File("./config-param.txt"));
-            for (int i = 0; i < readerParam.getSize(); i++){
+            readerParam.read();
+            for (int i = 0; i < readerParam.size(); i++){
                 String name = readerParam.getName(i);
                 double value = readerParam.getValue(i);
-                Parameter param = new Parameter(name, value);
-                ParameterJSON ps = new ParameterJSON(param);        
-                dataAcquisition.setParameter(ps);
+                Parameter param = new Parameter(name, value);       
+                dataAcquisition.setParameter(param);
             }
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException] configParametersToFlight()");
@@ -195,7 +210,7 @@ public class SecurityManager {
     
     private void monitoringAircraft() {
         StandardPrints.printMsgEmph("monitoring aircraft");        
-        int time = (int)(1000.0/config.getFreqUpdateData());
+        int time = (int)(1000.0/configGlobal.getFreqUpdateData());
         stateMonitoring = StateMonitoring.MONITORING;
         printLogAircraft.println(drone.title());        
         
@@ -203,15 +218,14 @@ public class SecurityManager {
             @Override
             public void run() {
                 try {
-                    while(stateIFA != StateIFA.DISABLED){            
+                    while(stateSystem != StateSystem.DISABLED){    
                         timeActual = System.currentTimeMillis();
-//                        System.out.print((timeActual - timeInitApp)/1000 + "  ");
+                        double timeDiff = (timeActual - timeInit)/1000.0;
+                        drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        dataAcquisition.getDistanceToHome();
                         checkStatusSystem();
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
-                        drone.incrementTime(time);
                         Thread.sleep(time);
                     }
                 } catch (InterruptedException ex) {
@@ -233,49 +247,49 @@ public class SecurityManager {
     //Adicionar ao sistema as seguintes falhas somente se o drone estiver voando 
     //caso contrario isso nao faz sentido.
     private void checkStatusSystem(){
-        if (config.isUavInsertFailure() && 
+        if (configLocal.isUavInsertFailure() && 
                 communicationFailure.getFailure() && 
-                !hasFailure(TypesOfFailures.FAIL_BASED_INSERT_FAILURE)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_INSERT_FAILURE));
+                !hasFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BASED_INSERT_FAILURE));
             decisonMaking.setTypeAction(communicationFailure.getTypeAction());
             StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: "+drone.getTime());
         }
-        if (timeActual - timeInitApp > config.getTimeToFailure() * 1000 && 
-                !hasFailure(TypesOfFailures.FAIL_BASED_TIME)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BASED_TIME));
-            StandardPrints.printMsgError("FAIL BASED TIME -> Time: "+drone.getTime());
-        }
-        if (drone.getBattery().level < config.getLevelMinBatteryToFail() && 
-                !hasFailure(TypesOfFailures.FAIL_BATTERY)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_BATTERY));
+        if (drone.getBattery().level < configGlobal.getLevelMinimumBattery() && 
+                !hasFailure(TypeFailure.FAIL_BATTERY)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY));
             StandardPrints.printMsgError("FAIL BATTERY -> Time: "+drone.getTime());
         } 
         if (drone.getGPSInfo().fixType != 3 && 
-                !hasFailure(TypesOfFailures.FAIL_GPS)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_GPS));
+                !hasFailure(TypeFailure.FAIL_GPS)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_GPS));
             StandardPrints.printMsgError("FAIL GPS -> Time: "+drone.getTime());            
         }
-        if (stateIFA == StateIFA.DISABLED && 
-                !hasFailure(TypesOfFailures.FAIL_SYSTEM_IFA)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_SYSTEM_IFA));
+        if (stateSystem == StateSystem.DISABLED && 
+                !hasFailure(TypeFailure.FAIL_SYSTEM_IFA)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_IFA));
             StandardPrints.printMsgError("FAIL IFA -> Time: "+drone.getTime());
         }
         if ((communicationControl.getStateCommunication() == StateCommunication.DISABLED || 
                 communicationControl.isMosaDisabled()) && 
-                !hasFailure(TypesOfFailures.FAIL_SYSTEM_MOSA)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_SYSTEM_MOSA));
+                !hasFailure(TypeFailure.FAIL_SYSTEM_MOSA)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_MOSA));
             StandardPrints.printMsgError("FAIL MOSA -> Time: "+drone.getTime());
         }
         if (drone.getStatusUAV().systemStatus.equals("EMERGENCY") && 
-                !hasFailure(TypesOfFailures.FAIL_AP_EMERGENCY)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_AP_EMERGENCY));
+                !hasFailure(TypeFailure.FAIL_AP_EMERGENCY)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_EMERGENCY));
             StandardPrints.printMsgError("FAIL AP EMERGENCY -> Time: "+drone.getTime());
         }
         if (drone.getStatusUAV().systemStatus.equals("POWEROFF") && 
-                !hasFailure(TypesOfFailures.FAIL_AP_POWEROFF)){
-            listOfFailure.add(new Failure(drone, TypesOfFailures.FAIL_AP_POWEROFF));
+                !hasFailure(TypeFailure.FAIL_AP_POWEROFF)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_POWEROFF));
             StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: "+drone.getTime());
         }
+//        if (drone.engineCrash() && 
+//                !hasFailure(TypeFailure.FAIL_ENGINE)){
+//            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_ENGINE));
+//            StandardPrints.printMsgError("FAIL ENGINE -> Time: "+drone.getTime());
+//        }
     }   
     
     //melhorar: por enquanto esta tratando apenas a primeira falha.
@@ -285,17 +299,16 @@ public class SecurityManager {
         Executors.newSingleThreadExecutor().execute(new Runnable(){            
             @Override
             public void run(){
-                while(stateIFA != StateIFA.DISABLED){
+                while(stateSystem != StateSystem.DISABLED){
                     try {
                         //Melhorar verificacao para ver se a aeronave esta voando.
                         if (drone.getStatusUAV().armed && hasFailure()){
-//                            communicationControl.sendData("MOSA.GET_LOCATION_FUTURE");
-                            communicationControl.sendData("MOSA.STOP");
+                            communicationControl.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
                             actionTurnOnTheAlarm();
                             decisonMaking.actionToDoSomething(listOfFailure.get(0));
                             break;
                         }
-                        Thread.sleep(SLEEP_TIME_WAITING_ACTION);
+                        Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);
                     } catch (InterruptedException ex) {
                         
                     } 
@@ -310,17 +323,17 @@ public class SecurityManager {
             @Override
             public void run(){
                 try {
-                    while(stateIFA != StateIFA.DISABLED){                    
+                    while(stateSystem != StateSystem.DISABLED){                    
                         if (decisonMaking.getStateReplanning()== StateReplanning.DISABLED){
-                            stateIFA = StateIFA.DISABLED;
+                            stateSystem = StateSystem.DISABLED;
                         }
                         if (stateMonitoring == StateMonitoring.DISABLED){
-                            stateIFA = StateIFA.DISABLED;
+                            stateSystem = StateSystem.DISABLED;
                         }
 //                        if (communicationControl.getStateCommunication() == StateCommunication.DISABLED){
 //                            stateIFA = StateIFA.DISABLED;                            
 //                        }
-                        Thread.sleep(SLEEP_TIME_WAITING_CHANGE_STATES);                     
+                        Thread.sleep(Constants.TIME_TO_SLEEP_MONITORING_STATE_MACHINE);                     
                     }
                 } catch (InterruptedException ex) {
                     
@@ -334,9 +347,9 @@ public class SecurityManager {
         });        
     }
     
-    private boolean hasFailure(TypesOfFailures failure){        
+    private boolean hasFailure(TypeFailure failure){        
         for (Failure fail : listOfFailure){
-            if (fail.typeOfFailure == failure){
+            if (fail.typeFailure == failure){
                 return true;
             }
         }
@@ -349,24 +362,7 @@ public class SecurityManager {
     
     private void actionTurnOnTheAlarm(){
         StandardPrints.printMsgEmph("turn on the alarm");
-        try {
-            boolean print = true;
-            File f = new File(config.getDirAlarm());
-            final Process comp = Runtime.getRuntime().exec(config.getCmdExecAlarm(), null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] actionTurnOnTheBuzzer()");
-        } 
+        BuzzerControl buzzer = new BuzzerControl();
+        buzzer.turnOnAlarm();
     }
 }

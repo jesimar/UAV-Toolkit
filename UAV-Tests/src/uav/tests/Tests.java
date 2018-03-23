@@ -6,25 +6,24 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_acquisition.DataAcquisition;
-import uav.generic.struct.Command;
-import uav.generic.struct.Mission;
-import uav.generic.struct.Parameter;
-import uav.generic.struct.ParameterJSON;
+import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.struct.constants.TypeWaypoint;
+import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Waypoint;
-import uav.generic.struct.WaypointJSON;
-import uav.hardware.aircraft.Drone;
-import uav.hardware.aircraft.iDroneAlpha;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.RotaryWing;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class Tests {
         
+    private final long timeInit;
+    private long timeActual;
     private final ReaderFileConfig config;
     private final Drone drone;
-    private final DataAcquisition dataAcquisition;
+    private final DataCommunication dataAcquisition;
     
     private PrintStream printLogAircraft;        
     
@@ -35,13 +34,14 @@ public class Tests {
         testes.init();
     }
     
-    public Tests() {      
+    public Tests() {
+        timeInit = System.currentTimeMillis();
         config = ReaderFileConfig.getInstance();  
         if (!config.read()){
             System.exit(0);
         }
-        drone = new iDroneAlpha();
-        dataAcquisition = new DataAcquisition(drone, "IFA");
+        drone = new RotaryWing("iDroneAlpha");
+        dataAcquisition = new DataCommunication(drone, "IFA");
     }
     
     public void init() {
@@ -55,148 +55,133 @@ public class Tests {
     
     private void sendCommandsToTest() {
         StandardPrints.printMsgEmph("send commands to test");
-        WaypointJSON wpt;
+        Waypoint wpt;
         Mission mission;
         System.out.println("Number test: " +config.getNumberTest() );
         try {
             switch (config.getNumberTest()){
                 case 1: //SET_WAYPOINT        => OK
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
+                    wpt = new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 2: //SET_WAYPOINT        => OK
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 3: //SET_WAYPOINT        => OK
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.LAND, 0.0, 0.0, 0.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 4: //SET_WAYPOINT        => OK
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 5: //APPEND_WAYPOINT     => OK
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
+                    wpt = new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 6: //APPEND_WAYPOINT     => OK
-                    wpt= new WaypointJSON(
-                            new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    wpt= new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 7: //APPEND_WAYPOINT     => OK
-                    wpt= new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND, 0.0, 0.0, 0.0));
+                    wpt= new Waypoint(TypeWaypoint.LAND, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 8: //APPEND_WAYPOINT     => OK
-                    wpt= new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
+                    wpt= new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 9: //SET_MISSION         => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0));
                     dataAcquisition.setMission(mission);
                     break;
                 case 10: //SET_MISSION -> APPEND_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));        
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));        
                     dataAcquisition.setMission(mission);
                     Thread.sleep(9000);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
+                    wpt = new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 11: //SET_MISSION -> APPEND_WAYPOINT     => NAO OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));        
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));        
                     dataAcquisition.setMission(mission);                    
                     Thread.sleep(15000);                    
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
+                    wpt = new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 12: //SET_MISSION -> APPEND_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));        
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));        
                     dataAcquisition.setMission(mission);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 13: //SET_MISSION -> APPEND_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));        
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));        
                     dataAcquisition.setMission(mission);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.LAND, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 14: //SET_MISSION -> APPEND_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));        
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));        
                     dataAcquisition.setMission(mission);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
                     dataAcquisition.appendWaypoint(wpt);
                     break;
                 case 15: //SET MISSION -> SET_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0));
                     dataAcquisition.setMission(mission);
                     Thread.sleep(10000);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_WAYPOINT,  -22.00554778, -47.89853005, 4.0));
+                    wpt = new Waypoint(TypeWaypoint.GOTO,  -22.00554778, -47.89853005, 4.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 16: //SET MISSION -> SET_WAYPOINT     => OK
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0));
                     dataAcquisition.setMission(mission);
                     Thread.sleep(10000);
-                    wpt = new WaypointJSON(
-                            new Waypoint(Command.CMD_RTL, 0.0, 0.0, 0.0));
+                    wpt = new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);
                     dataAcquisition.setWaypoint(wpt);
                     break;
                 case 17: //SET MISSION -> APPEND_MISSION
                     mission = new Mission();
-                    mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 2.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));
-                    mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 2.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0));
                     dataAcquisition.setMission(mission);
                     Thread.sleep(20000);
                     Mission mission2 = new Mission();        
-                    mission2.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00582424, -47.89874454, 3.0));
-                    mission2.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89855124, 5.0));
-                    mission2.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89854005, 2.0));
-                    mission2.addWaypoint(new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
+                    mission2.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00582424, -47.89874454, 3.0));
+                    mission2.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89855124, 5.0));
+                    mission2.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89854005, 2.0));
+                    mission2.addWaypoint(new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0));
                     dataAcquisition.appendMission(mission2);
                     break;
                 case 18:
@@ -265,11 +250,12 @@ public class Tests {
             public void run() {
                 try {
                     while(true){
+                        timeActual = System.currentTimeMillis();
+                        double timeDiff = (timeActual - timeInit)/1000.0;
+                        drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        dataAcquisition.getDistanceToHome();
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
-                        drone.incrementTime(time);
                         Thread.sleep(time);
                     }
                 } catch (InterruptedException ex) {

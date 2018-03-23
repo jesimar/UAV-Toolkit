@@ -5,13 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.Scanner;
-import uav.generic.struct.PointGeo;
-import uav.generic.struct.Line3D;
-import uav.generic.struct.Point3D;
+import uav.generic.struct.geom.PointGeo;
+import uav.generic.struct.geom.Line3D;
+import uav.generic.struct.geom.Point3D;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class UtilGeo {
         
@@ -19,44 +19,44 @@ public class UtilGeo {
     public final static double CIRC_MERIDIONAL = 40007860.0;//40000000.0;            
     
     public static String parseToGeo(PointGeo base, double x, double y, double h, String separator){
-        double lat = converteYtoLatitude(base.getLatitude(), y);
-        double lon = converteXtoLongitude(base.getLongitude(), base.getLatitude(), x);        
-        double alt = base.getAltitude() + h;
+        double lat = converteYtoLatitude(base.getLat(), y);
+        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);        
+        double alt = base.getAlt() + h;
         return lat + separator + lon + separator + alt;
     }
     
     public static PointGeo parseToGeo(PointGeo base, Point3D point){
         return new PointGeo(
-            converteXtoLongitude(base.getLongitude(), base.getLatitude(), point.getX()), 
-            converteYtoLatitude(base.getLatitude(), point.getY()), 
-            base.getAltitude() + point.getZ()
+            converteXtoLongitude(base.getLng(), base.getLat(), point.getX()), 
+            converteYtoLatitude(base.getLat(), point.getY()), 
+            base.getAlt() + point.getZ()
         );
     }
     
     public static PointGeo parseToGeo1(PointGeo base, double x, double y, double h){
         return new PointGeo(
-            converteXtoLongitude(base.getLongitude(), base.getLatitude(), x), 
-            converteYtoLatitude(base.getLatitude(), y), 
-            base.getAltitude() + h
+            converteXtoLongitude(base.getLng(), base.getLat(), x), 
+            converteYtoLatitude(base.getLat(), y), 
+            base.getAlt() + h
         );
     }
     
     public static String parseToGeo2(PointGeo base, double x, double y, double h){
-        double lat = converteYtoLatitude(base.getLatitude(), y);
-        double lon = converteXtoLongitude(base.getLongitude(), base.getLatitude(), x);        
-        double alt = base.getAltitude() + h;
+        double lat = converteYtoLatitude(base.getLat(), y);
+        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);        
+        double alt = base.getAlt() + h;
         return lat + "\t" + lon + "\t" + alt;
     }
     
     public static String parseToGeo3(PointGeo base, double x, double y){
-        double lat = converteYtoLatitude(base.getLatitude(), y);
-        double lon = converteXtoLongitude(base.getLongitude(), base.getLatitude(), x);
+        double lat = converteYtoLatitude(base.getLat(), y);
+        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);
         return lon + "," + lat + ",0 ";
     }
     
     public static String parseToGeoRelativeGround2(PointGeo base, double x, double y, double h){
-        double lat = converteYtoLatitude(base.getLatitude(), y);
-        double lon = converteXtoLongitude(base.getLongitude(), base.getLatitude(), x);
+        double lat = converteYtoLatitude(base.getLat(), y);
+        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);
         return lat + "\t" + lon + "\t" + h;
     }
     
@@ -69,29 +69,29 @@ public class UtilGeo {
     }
     
     public static double convertGeoToX(PointGeo base, PointGeo point){
-        double eixo = CIRC_EQUATORIAL*Math.cos(base.getLatitude()*Math.PI/180.0);
-        return (point.getLongitude() - base.getLongitude())*eixo/360.0;
+        double eixo = CIRC_EQUATORIAL*Math.cos(base.getLat()*Math.PI/180.0);
+        return (point.getLng() - base.getLng())*eixo/360.0;
     }
     
     public static double convertGeoToX(PointGeo base, double longitude){
-        double eixo = CIRC_EQUATORIAL*Math.cos(base.getLatitude()*Math.PI/180.0);
-        return (longitude - base.getLongitude())*eixo/360.0;
+        double eixo = CIRC_EQUATORIAL*Math.cos(base.getLat()*Math.PI/180.0);
+        return (longitude - base.getLng())*eixo/360.0;
     }
     
     public static double convertGeoToY(PointGeo base, PointGeo point){
-        return (point.getLatitude() - base.getLatitude())*CIRC_MERIDIONAL/360.0;
+        return (point.getLat() - base.getLat())*CIRC_MERIDIONAL/360.0;
     }  
     
     public static double convertGeoToY(PointGeo base, double latitude){
-        return (latitude - base.getLatitude())*CIRC_MERIDIONAL/360.0;
+        return (latitude - base.getLat())*CIRC_MERIDIONAL/360.0;
     } 
     
     public static double convertGeoToZ(PointGeo base, PointGeo point){
-        return point.getAltitude() - base.getAltitude();
+        return point.getAlt() - base.getAlt();
     }
     
     public static double convertGeoToZ(PointGeo base, double altitudeAbs){
-        return altitudeAbs - base.getAltitude();
+        return altitudeAbs - base.getAlt();
     }
     
     public static Point3D convertGeoTo3D(PointGeo base, PointGeo point){

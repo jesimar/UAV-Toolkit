@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class UtilGeom {    
     
