@@ -4,13 +4,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * Classe que agrupa todos os parâmetros do piloto automático.
  * @author Jesimar S. Arantes
  */
 public class ListParameters {
     
     private final List<Parameter> listParameter;
+    private final double ERROR = -111111;//represent an error
 
+    /**
+     * Class constructor.
+     */
     public ListParameters() {
         this.listParameter = new LinkedList();        
     }
@@ -26,9 +30,7 @@ public class ListParameters {
             double value = Double.parseDouble(v[1]);
             listParameter.add(new Parameter(key, value));
         }
-    }
-    
-    private final double ERROR = -111111;//represent an error
+    }   
     
     public double getValue(String nome){
         double value = ERROR;

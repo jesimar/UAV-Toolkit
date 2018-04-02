@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela algumas informações do GPS do drone.
  * @author Jesimar S. Arantes
  */
 public class GPSInfo {
@@ -11,9 +11,20 @@ public class GPSInfo {
     public int eph;                 //GPS horizontal dilution of position (HDOP)
     public int epv;                 //GPS vertical   dilution of position (VDOP)
 
+    /**
+     * Class constructor.
+     */
     public GPSInfo() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param fix 0-1: no fix, 2: 2D fix, 3: 3D fix
+     * @param num_sat number of visible satellites
+     * @param eph GPS horizontal dilution of position (HDOP)
+     * @param epv GPS vertical   dilution of position (VDOP)
+     */
     public GPSInfo(int fix, int num_sat, int eph, int epv) {
         this.fixType = fix;
         this.satellitesVisible = num_sat;
@@ -21,6 +32,10 @@ public class GPSInfo {
         this.epv = epv;
     }
     
+    /**
+     * Converts line in JSON format to fixtype, num_sat, eph and epv values.
+     * @param line FORMAT: {"gpsinfo": [3, 10, 121, 65535]}
+     */
     public void parserInfoGPSInfo(String line) {
         try{
             line = line.substring(13, line.length() - 2);        

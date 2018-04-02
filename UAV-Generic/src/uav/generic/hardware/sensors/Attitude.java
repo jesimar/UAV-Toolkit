@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela a attitude do drone (pitch, yaw, roll).
  * @author Jesimar S. Arantes
  */
 public class Attitude {
@@ -10,15 +10,29 @@ public class Attitude {
     public double yaw;  //in radians
     public double roll; //in radians
 
+    /**
+     * Class constructor.
+     */
     public Attitude() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param pitch angle of pitch (in radians) (range -&pi; to &pi;)
+     * @param yaw angle of yaw (in radians) (range -&pi; to &pi;)
+     * @param roll angle of roll (in radians) (range -&pi; to &pi;)
+     */
     public Attitude(double pitch, double yaw, double roll) {
         this.pitch = pitch;
         this.yaw = yaw;
         this.roll = roll;
     }
     
+    /**
+     * Converts line in JSON format to pitch, yaw and roll values.
+     * @param line FORMAT: {"att": [-0.0018487547, 1.9062933921, -0.001687332987]}
+     */
     public void parserInfoAttitude(String line) {
         try{
             line = line.substring(9, line.length() - 2);

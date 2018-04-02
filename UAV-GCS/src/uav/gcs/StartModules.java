@@ -15,58 +15,14 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 
 /**
- *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class StartModules {
 
     public StartModules() {
+        
     }
     
-    public static void main(String[] args) {
-        execTest();
-    }
-    
-    public static void execTest() {
-        try {
-            File f = new File("../Scripts/");
-            final Process comp = Runtime.getRuntime().exec("./exec-ifa.sh", null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("open sitl");
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    Scanner sc2 = new Scanner(comp.getErrorStream());
-                    while(true){
-                        try{
-                            try {
-                                System.out.println("sc next line");
-                                String str = sc.nextLine();
-//                                textArea.append(str + "\n");
-                                System.out.println("str: " + str); 
-
-                                
-                                Thread.sleep(200);
-                            } catch (NoSuchElementException ex) {
-                                System.out.println("no element");
-                                String str2 = sc2.nextLine();
-                                System.out.println("str2: " + str2); 
-                                Thread.sleep(200);
-                            }
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(StartModules.class.getName()).log(Level.SEVERE, null, ex);
-                            break;
-                        }
-                    }
-                    sc.close();
-                    System.out.println("close sitl");                    
-                }
-            });
-        } catch (IOException ex) {
-            System.err.println("ERROR: " + ex);
-        }
-    }
-
     public void execSITL(JTextArea textArea) {
         try {
             File f = new File("../Scripts/");

@@ -6,4 +6,4 @@
 #Descrição: Script que executa sistema UAV-GCS.
 
 cd ../UAV-GCS/
-java -jar dist/UAV-GCS.jar
+/home/jesimar/jdk1.8.0_151/bin/java -jar dist/UAV-GCS.jar

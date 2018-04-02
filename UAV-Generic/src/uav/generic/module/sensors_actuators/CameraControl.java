@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.constants.TypeOperationMode;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 
 /**
  *
@@ -23,7 +24,14 @@ public class CameraControl {
         try {
             boolean print = true;
             File f = new File(configGlobal.getDirCamera());
-            String cmd = configGlobal.getCmdExecCameraPicture();
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "./picture";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+                cmd = "python picture.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = "python picture.py";
+            }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -38,7 +46,7 @@ public class CameraControl {
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] turnOn()");
+            StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
         } 
     }
     
@@ -46,7 +54,14 @@ public class CameraControl {
         try {
             boolean print = true;
             File f = new File(configGlobal.getDirCamera());
-            String cmd = configGlobal.getCmdExecCameraVideo();
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "./video";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+                cmd = "python video.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = "python video.py";
+            }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -61,7 +76,7 @@ public class CameraControl {
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] turnOn()");
+            StandardPrints.printMsgWarning("Warning [IOException] makeAVideo()");
         } 
     }
 }

@@ -4,7 +4,7 @@ import uav.generic.struct.geom.Position2D;
 import uav.generic.struct.geom.Position3D;
 
 /**
- *
+ * Classe com métodos úteis sobre string.
  * @author Jesimar S. Arantes
  */
 public class UtilString {

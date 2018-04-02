@@ -3,7 +3,7 @@ package uav.generic.struct.geom;
 import java.util.List;
 
 /**
- *
+ * Classe concreta que implementa uma linha 2D.
  * @author Jesimar S. Arantes
  */
 public class Line2D extends Line{
@@ -13,6 +13,12 @@ public class Line2D extends Line{
     private final double vety[];
     private final int npoints;
     
+    /**
+     * Class constructor.
+     * @param name line name.
+     * @param vetx vector with coordinates x.
+     * @param vety vector with coordinates y.
+     */
     public Line2D(String name, double vetx[], double vety[]){
         this.name = name;
         this.vetx = vetx;
@@ -20,6 +26,11 @@ public class Line2D extends Line{
         this.npoints = vetx.length;
     }
     
+    /**
+     * Class constructor.
+     * @param name line name.
+     * @param listLine2D list with 2D line points.
+     */
     public Line2D(String name, List<Point2D> listLine2D){
         this.name = name;
         this.npoints = listLine2D.size();

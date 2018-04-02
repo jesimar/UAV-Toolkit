@@ -13,11 +13,15 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeAltitudeDecay;
 
 /**
- *
+ * Classe que modela o replanejador de rotas DE4s.
  * @author Jesimar S. Arantes
  */
 public class DE4s extends Replanner{
     
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     */
     public DE4s(Drone drone) {
         super(drone);
     }

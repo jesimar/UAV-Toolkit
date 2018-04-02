@@ -4,7 +4,7 @@ import java.awt.Polygon;
 import java.awt.geom.Point2D;
 
 /**
- *
+ * Classe com métodos úteis sobre Geometria.
  * @author Jesimar S. Arantes
  */
 public class UtilGeom {    

@@ -2,7 +2,7 @@
 #Date: 15/03/2018
 #Last Update: 15/03/2018
 #Description: Code that turns on the alarm when the buzzer is turned on several times.
-#Descrição: Código que liga soa um alarme ao ligar o buzzer diversas vezes.
+#Descricao: Codigo que liga soa um alarme ao ligar o buzzer diversas vezes.
 
 import mraa
 import time

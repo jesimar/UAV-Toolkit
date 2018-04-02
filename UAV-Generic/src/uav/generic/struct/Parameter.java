@@ -1,7 +1,7 @@
 package uav.generic.struct;
 
 /**
- *
+ * Classe que modela os valores de parâmetros do piloto automático.
  * @author Jesimar S. Arantes
  */
 public class Parameter {
@@ -9,6 +9,11 @@ public class Parameter {
     private final String key;
     private final double value;
 
+    /**
+     * Class constructor.
+     * @param key attribute (name of parameter)
+     * @param value value of key attribute
+     */
     public Parameter(String key, double value) {
         this.key = key;
         this.value = value;

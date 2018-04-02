@@ -12,7 +12,7 @@ import java.nio.channels.FileChannel;
 import java.util.Scanner;
 
 /**
- *
+ * Classe com métodos úteis sobre Input/Output (IO).
  * @author Jesimar S. Arantes
  */
 public class UtilIO {

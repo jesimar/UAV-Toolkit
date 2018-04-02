@@ -21,7 +21,7 @@ import uav.generic.struct.WaypointJSON;
 import uav.generic.hardware.aircraft.Drone;
 
 /**
- *
+ * Classe que modela toda a comunicação do sistema MOSA e IFA com o UAV-SOA-Interface.
  * @author Jesimar S. Arantes
  */
 public class DataCommunication {
@@ -35,32 +35,36 @@ public class DataCommunication {
     private final PrintStream printLogOverhead;
     private boolean debug = false; 
 
-    public DataCommunication(Drone drone, String uav_source) {
+    /**
+     * Class constructor.
+     * @param drone object drone
+     * @param uavSource IFA or MOSA
+     */
+    public DataCommunication(Drone drone, String uavSource) {
         this.drone = drone;
-        this.UAV_SOURCE = uav_source;
+        this.UAV_SOURCE = uavSource;
         this.HOST = "localhost";
         this.PROTOCOL = "http://";
         this.PORT = 50000;
         this.printLogOverhead = null;
     }
     
-    public DataCommunication(Drone drone, String uav_source, PrintStream overhead) {
+    /**
+     * Class constructor.
+     * @param drone object drone
+     * @param uavSource IFA or MOSA
+     * @param host ip of UAV-SOA-Interface
+     * @param port network port used in UAV-SOA-Interface
+     * @param overhead file to print informations overhead
+     */
+    public DataCommunication(Drone drone, String uavSource, String host, int port, 
+            PrintStream overhead) {
         this.drone = drone;
-        this.UAV_SOURCE = uav_source;               
-        this.printLogOverhead = overhead;
-        this.HOST = "localhost";
-        this.PROTOCOL = "http://";
-        this.PORT = 50000;        
-    }  
-    
-    public DataCommunication(Drone drone, String uav_source, String host, 
-            String protocol, int port, PrintStream overhead) {
-        this.drone = drone;
-        this.UAV_SOURCE = uav_source;           
-        this.HOST = host;
-        this.PROTOCOL = protocol;
+        this.UAV_SOURCE = uavSource;           
+        this.HOST = host;        
         this.PORT = port;
         this.printLogOverhead = overhead;
+        this.PROTOCOL = "http://";
     } 
     
     public void setDebug(boolean debug){
@@ -84,10 +88,10 @@ public class DataCommunication {
         }        
     }
     
-    public boolean POST(String typePost, String jsonMsg){
+    public boolean POST(String urlPost, String jsonMsg){
         try {
             long timeInit = System.currentTimeMillis();
-            URL url = new URL(PROTOCOL + HOST + ":" + PORT + typePost);
+            URL url = new URL(PROTOCOL + HOST + ":" + PORT + urlPost);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
@@ -105,7 +109,7 @@ public class DataCommunication {
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
             if (printLogOverhead != null){
-                printLogOverhead.println("Time-in-POST(ms);" + typePost + ";" + time);
+                printLogOverhead.println("Time-in-POST(ms);" + urlPost + ";" + time);
                 printLogOverhead.flush();
             }
             return true;
@@ -124,7 +128,7 @@ public class DataCommunication {
         }
     }
     
-    public boolean PersistentePOST(String typePost, String jsonMsg) {
+    public boolean PersistentePOST(String urlPost, String jsonMsg) {
         boolean ok = false;
         long timeInitial = System.currentTimeMillis();
         long timeActual;
@@ -132,7 +136,7 @@ public class DataCommunication {
         int t = 0;
         do{
             timeActual = System.currentTimeMillis();
-            ok = POST(typePost, jsonMsg);
+            ok = POST(urlPost, jsonMsg);
             diff = timeActual - timeInitial;            
             if ((diff/1000) == t){
                 if (t > 0){
@@ -197,11 +201,11 @@ public class DataCommunication {
         return PersistentePOST("/set-mode/", jsonMode);
     }
        
-    public String GET(String typeGet) {
+    public String GET(String urlGet) {
         String inputLine = "";
         try{
             long timeInit = System.currentTimeMillis();
-            URL url = new URL(PROTOCOL + HOST + ":" + PORT + typeGet);
+            URL url = new URL(PROTOCOL + HOST + ":" + PORT + urlGet);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("UAV-Source", UAV_SOURCE);
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));        
@@ -210,7 +214,7 @@ public class DataCommunication {
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
             if (printLogOverhead != null){
-                printLogOverhead.println("Time-in-GET(ms);" + typeGet + ";" + time);
+                printLogOverhead.println("Time-in-GET(ms);" + urlGet + ";" + time);
                 printLogOverhead.flush();
             }
             return inputLine;
@@ -374,6 +378,13 @@ public class DataCommunication {
         }
     }
    
+    /**
+     * Request for UAV-SOA-Interface of all sensor data.
+     * FORMAT:
+     * {"all-sensors": [-22.00597, -47.89869, 0.0, 870.0, 12.6, 0.0, 100, 0.001778, 
+     * 1.919, 0.001383, 109, 0.0, 0.0, 3, 10, 121, 65535, [-0.01, -0.04, 0.0], 0, 
+     * 0, 0.15128897785633125, null, "STABILIZE", "STANDBY", false, true, true]}
+     */
     public void getAllInfoSensors() {
         String allinfo = GET("/get-all-sensors/");
         allinfo = allinfo.replace("[", "");

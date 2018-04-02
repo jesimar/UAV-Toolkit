@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela alguns sensores do drone (heading, groundspeed, airspeed).
  * @author Jesimar S. Arantes
  */
 public class SensorUAV {
@@ -10,15 +10,29 @@ public class SensorUAV {
     public double groundspeed;//in metres/second
     public double airspeed;   //in metres/second
 
+    /**
+     * Class constructor.
+     */
     public SensorUAV() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param heading angle of aircraft (in degrees) (range 0 to 360)
+     * @param groundspeed velocity in m/s
+     * @param airspeed velocity in m/s
+     */
     public SensorUAV(double heading, double groundspeed, double airspeed) {
         this.heading = heading;
         this.groundspeed = groundspeed;
         this.airspeed = airspeed;
     }
     
+    /**
+     * Converts line in JSON format to heading values.
+     * @param line FORMAT: {"heading": 110}
+     */
     public void parserInfoHeading(String line) {
         try{
             line = line.substring(12, line.length() - 1);        
@@ -28,6 +42,10 @@ public class SensorUAV {
         }
     }
     
+    /**
+     * Converts line in JSON format to groundspeed values.
+     * @param line FORMAT: {"groundspeed": 2.21}
+     */
     public void parserInfoGroundSpeed(String line) {
         try{
             line = line.substring(16, line.length() - 1);        
@@ -37,6 +55,10 @@ public class SensorUAV {
         }
     }
     
+    /**
+     * Converts line in JSON format to airspeed values.
+     * @param line FORMAT: {"airspeed": 1.53}
+     */
     public void parserInfoAirSpeed(String line) {
         try{
             line = line.substring(13, line.length() - 1);        

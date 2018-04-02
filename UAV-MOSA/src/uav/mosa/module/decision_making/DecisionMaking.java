@@ -9,6 +9,10 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.module.sensors_actuators.BuzzerControl;
+import uav.generic.module.sensors_actuators.CameraControl;
+import uav.generic.module.sensors_actuators.ParachuteControl;
+import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeAngle;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.constants.Constants;
@@ -17,30 +21,26 @@ import uav.generic.struct.Heading;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.Waypoint;
-import uav.generic.util.UtilString;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.sensors_actuators.BuzzerControl;
-import uav.generic.module.sensors_actuators.CameraControl;
-import uav.generic.module.sensors_actuators.ParachuteControl;
 import uav.generic.struct.constants.LocalCalcMission;
 import uav.generic.struct.constants.TypeActionAfterFinishMission;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 import uav.generic.struct.constants.TypeInputCommand;
-import uav.mosa.module.path_planner.HGA4m;
-import uav.mosa.struct.ReaderFileConfig;
-import uav.mosa.module.path_planner.Planner;
+import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.states.StatePlanning;
-import uav.mosa.struct.ReaderMission;
+import uav.generic.util.UtilString;
+import uav.mosa.module.path_planner.HGA4m;
+import uav.mosa.struct.ReaderFileConfigMOSA;
+import uav.mosa.module.path_planner.Planner;
 
 /**
- *
+ * Classe que faz as tomadas de decisão do sistema MOSA.
  * @author Jesimar S. Arantes
  */
 public class DecisionMaking {
 
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final ReaderFileConfig config;
+    private final ReaderFileConfigMOSA config;
     private final Mission3D wptsMission3D;
     private Planner planner;
     private StatePlanning statePlanning;    
@@ -49,11 +49,18 @@ public class DecisionMaking {
     private final double FACTOR_DESLC = Constants.FACTOR_DESLC_CONTROLLER;
     private final double ONE_METER = Constants.ONE_METER;
     
-    public DecisionMaking(Drone drone, DataCommunication dataAcquisition) {
-        this.config = ReaderFileConfig.getInstance();
+    /**
+     * Class constructor.
+     * @param drone instance of the aircraft
+     * @param dataAcquisition object to send commands to drone
+     * @param wptsMission3D waypoints of the mission 3D
+     */
+    public DecisionMaking(Drone drone, DataCommunication dataAcquisition, 
+            Mission3D wptsMission3D) {
+        this.config = ReaderFileConfigMOSA.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;       
-        this.wptsMission3D = new Mission3D();
+        this.wptsMission3D = wptsMission3D;
         this.statePlanning = StatePlanning.WAITING;       
     }
     
@@ -100,11 +107,7 @@ public class DecisionMaking {
     private boolean sendMissionsToDroneCalcGround() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground");
-        boolean respM = readMission(); 
-        if (!respM){
-            return false;
-        }
-        if (config.getMethodPlanner().equals("HGA4m")){
+        if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
             planner = new HGA4m(drone, wptsMission3D);
         }
         planner.clearLogs();  
@@ -154,11 +157,7 @@ public class DecisionMaking {
     private boolean sendMissionsToDroneCalcAir() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc air");
-        boolean respM = readMission(); 
-        if (!respM){
-            return false;
-        }
-        if (config.getMethodPlanner().equals("HGA4m")){
+        if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
             planner = new HGA4m(drone, wptsMission3D);
         }
         planner.clearLogs();  
@@ -207,11 +206,7 @@ public class DecisionMaking {
     private boolean sendMissionsToDroneCalcGroundAndAir() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground and air");
-        boolean respM = readMission(); 
-        if (!respM){
-            return false;
-        }
-        if (config.getMethodPlanner().equals("HGA4m")){
+        if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
             planner = new HGA4m(drone, wptsMission3D);
         }
         planner.clearLogs();  
@@ -340,19 +335,6 @@ public class DecisionMaking {
             return false;
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException]: readFileRoute()");
-            return false;
-        }
-    }   
-    
-    private boolean readMission(){
-        try {
-            ReaderMission read = new ReaderMission();
-            String path = config.getDirPlanner() + config.getFileWaypointsMission();
-            read.readerMission(new File(path), wptsMission3D);
-            return true;
-        } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException] readMission()");
-            ex.printStackTrace();            
             return false;
         }
     }
@@ -495,9 +477,5 @@ public class DecisionMaking {
     
     public StatePlanning getStatePlanning() {
         return statePlanning;
-    }
-    
-    public Planner getPlanner(){
-        return planner;
     }
 }

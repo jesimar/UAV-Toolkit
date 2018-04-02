@@ -10,7 +10,7 @@ import uav.generic.struct.geom.Line3D;
 import uav.generic.struct.geom.Point3D;
 
 /**
- *
+ * Classe com métodos úteis sobre transformações entre coordenadas cartesianas e geográficas.
  * @author Jesimar S. Arantes
  */
 public class UtilGeo {

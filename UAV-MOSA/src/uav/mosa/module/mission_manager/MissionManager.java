@@ -6,28 +6,30 @@ import java.io.PrintStream;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.mission.Mission;
-import uav.generic.hardware.aircraft.FixedWing;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.RotaryWing;
 import uav.generic.module.sensors_actuators.BuzzerControl;
 import uav.generic.module.sensors_actuators.CameraControl;
-import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.hardware.aircraft.Drone;
+import uav.generic.hardware.aircraft.FixedWing;
+import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.struct.constants.Constants;
+import uav.generic.struct.mission.Mission;
+import uav.generic.struct.reader.ReaderFileConfigAircraft;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.states.StateCommunication;
-import uav.mosa.module.communication_control.CommunicationControl;
-import uav.mosa.module.decision_making.DecisionMaking;
-import uav.mosa.struct.ReaderFileConfig;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StatePlanning;
+import uav.generic.struct.reader.ReaderFileMission;
 import uav.generic.util.UtilGeom;
-import uav.mosa.struct.ReaderMission;
+import uav.mosa.module.communication_control.CommunicationControl;
+import uav.mosa.module.decision_making.DecisionMaking;
+import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
- *
+ * Classe que gerencia toda a missão em curso pela aeronave.
  * @author Jesimar S. Arantes
  */
 public class MissionManager {
@@ -36,8 +38,12 @@ public class MissionManager {
     private final DataCommunication dataAcquisition;
     private final CommunicationControl communicationControl;
     private final DecisionMaking decisonMaking;
-    private final ReaderFileConfig configLocal;
+    
+    private final ReaderFileConfigMOSA configLocal;
     private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfigAircraft configAircraft;
+    
+    private final Mission3D wptsMission3D;
     private final Mission wptsBuzzer;
     private final Mission wptsCamera;
     private PrintStream printLogOverhead;     
@@ -51,6 +57,9 @@ public class MissionManager {
     private final double HORIZONTAL_ERROR = Constants.HORIZONTAL_ERROR_GPS;
     private final double VERTICAL_ERROR = Constants.VERTICAL_ERROR_BAROMETER;
         
+    /**
+     * Class constructor.
+     */
     public MissionManager() {
         timeInit = System.currentTimeMillis();
         
@@ -64,7 +73,7 @@ public class MissionManager {
         if (!configGlobal.parseToVariables()){
             System.exit(0);
         }
-        this.configLocal = ReaderFileConfig.getInstance();
+        this.configLocal = ReaderFileConfigMOSA.getInstance();
         if (!configLocal.read()){
             System.exit(0);
         }
@@ -75,20 +84,44 @@ public class MissionManager {
             System.exit(0);
         }
         
+        this.configAircraft = ReaderFileConfigAircraft.getInstance();
+        if (!configAircraft.read()){
+            System.exit(0);
+        }
+        if (!configAircraft.checkReadFields()){
+            System.exit(0);
+        }
+        
         if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
-            drone = new FixedWing("Ararinha");
+            drone = new FixedWing(configAircraft.getNameAircraft(), 
+                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(), 
+                    configAircraft.getMass(), configAircraft.getPayload(), 
+                    configAircraft.getEndurance());
         } else if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
-            drone = new RotaryWing("iDroneAlpha");
+            drone = new RotaryWing(configAircraft.getNameAircraft(), 
+                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(), 
+                    configAircraft.getMass(), configAircraft.getPayload(), 
+                    configAircraft.getEndurance());
         } else{
             drone = new RotaryWing("iDroneAlpha");
         }
         
         createFileLogOverhead();
-        this.dataAcquisition = new DataCommunication(drone, "MOSA", printLogOverhead);
-        this.decisonMaking = new DecisionMaking(drone, dataAcquisition); 
+        this.dataAcquisition = new DataCommunication(drone, "MOSA", 
+                configGlobal.getHostSOA(), configGlobal.getPortNetworkSOA(), 
+                printLogOverhead);
+        this.wptsMission3D = new Mission3D();
+        readMission3D();
+        this.decisonMaking = new DecisionMaking(drone, dataAcquisition, wptsMission3D); 
         this.communicationControl = new CommunicationControl(drone);
         this.wptsBuzzer = new Mission();
+        if (configGlobal.hasBuzzer()){
+            readerFileBuzzer();
+        }
         this.wptsCamera = new Mission(); 
+        if (configGlobal.hasCamera()){
+            readerFileCamera();
+        }
         stateMOSA = StateSystem.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
     }
@@ -96,7 +129,6 @@ public class MissionManager {
     public void init() {
         StandardPrints.printMsgEmph("initializing ...");    
         
-        readerFileBuzzer();
         dataAcquisition.getParameters();
         
         communicationControl.connectClient();   //blocked        
@@ -134,11 +166,21 @@ public class MissionManager {
         }
     }
     
+    private void readMission3D(){
+        try {
+            String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMission();
+            ReaderFileMission.mission3D(new File(path), wptsMission3D);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException] readMission()");
+            ex.printStackTrace();            
+            System.exit(0);
+        }
+    }
+    
     private void readerFileBuzzer(){
         try {
-            ReaderMission readerBuzzer = new ReaderMission();
-            readerBuzzer.readerMissionBuzzer(new File(configGlobal.getDirFiles()+ 
-                    configGlobal.getFileWaypointsBuzzer()), wptsBuzzer);
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileWaypointsBuzzer();
+            ReaderFileMission.missionBuzzer(new File(path), wptsBuzzer);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileBuzzer()");
             ex.printStackTrace();
@@ -148,9 +190,8 @@ public class MissionManager {
     
     private void readerFileCamera(){
         try {
-            ReaderMission readerCamera = new ReaderMission();
-            readerCamera.readerMissionCamera(new File(configGlobal.getDirFiles()+ 
-                    configGlobal.getFileWaypointsCamera()), wptsCamera);
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileWaypointsCamera();
+            ReaderFileMission.missionCamera(new File(path), wptsCamera);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCamera()");
             ex.printStackTrace();
@@ -160,7 +201,7 @@ public class MissionManager {
     
     private void monitoringAircraft() {
         StandardPrints.printMsgEmph("monitoring aircraft");
-        int time = (int)(1000.0/configGlobal.getFreqUpdateData());      
+        int time = (int)(1000.0/configGlobal.getFreqUpdateDataAP());      
         stateMonitoring = StateMonitoring.MONITORING;
         
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -172,7 +213,9 @@ public class MissionManager {
                         double timeDiff = (timeActual - timeInit)/1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        actionTurnOnTheBuzzer();
+                        if (configGlobal.hasBuzzer()){
+                            actionTurnOnTheBuzzer();
+                        }
                         Thread.sleep(time);                    
                     }
                 } catch (InterruptedException ex) {
@@ -197,7 +240,6 @@ public class MissionManager {
                     try {
                         if (communicationControl.isStartMission()){
                             decisonMaking.actionToDoSomething();
-//                            communicationControl.sendData("MOSA_READY");
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);
@@ -261,7 +303,7 @@ public class MissionManager {
         for (int i = 0; i < wptsBuzzer.size(); i++){
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
-            double altDestiny = configGlobal.getAltitudeRelativeMission();            
+            double altDestiny = configGlobal.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(
                 drone.getGPS().lat, drone.getGPS().lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(drone.getBarometer().alt_rel - altDestiny); 
@@ -281,7 +323,8 @@ public class MissionManager {
         }
     }
     
-    private boolean waypointWasReached(double latDestiny, double lngDestiny, double altDestiny){   
+    private boolean waypointWasReached(double latDestiny, double lngDestiny, 
+            double altDestiny){   
         double distH = UtilGeom.distanceEuclidian(
                 drone.getGPS().lat, drone.getGPS().lng, latDestiny, lngDestiny);
         double distV = Math.abs(drone.getBarometer().alt_rel - altDestiny);
@@ -303,7 +346,7 @@ public class MissionManager {
         for (int i = 0; i < wptsBuzzer.size(); i++){
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
-            double altDestiny = configGlobal.getAltitudeRelativeMission();            
+            double altDestiny = configGlobal.getAltRelMission();            
             double distHActual = Math.sqrt(
                     (lat - latDestiny) * (lat - latDestiny) + 
                     (lng - lngDestiny) * (lng - lngDestiny));

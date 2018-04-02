@@ -2,7 +2,7 @@
 #Date: 15/03/2018
 #Last Update: 15/03/2018
 #Description: Code that turns on the buzzer for one second and then turns off.
-#Descrição: Código que liga o buzzer por um segundo e então o desliga.
+#Descricao: Codigo que liga o buzzer por um segundo e entao o desliga.
 
 import mraa
 import time

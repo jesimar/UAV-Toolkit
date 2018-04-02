@@ -3,7 +3,7 @@ package uav.generic.struct;
 import uav.generic.struct.geom.PointGeo;
 
 /**
- *
+ * Classe que modela um waypoint.
  * @author Jesimar S. Arantes
  */
 public class Waypoint {
@@ -13,6 +13,13 @@ public class Waypoint {
     private final double lng;//is equivalent to x coordinate.
     private final double alt;//is equivalent to z coordinate.
     
+    /**
+     * Class constructor.
+     * @param action command of action (TAKEOFF, GOTO, LAND, LAND_VERTICAL, RTL)
+     * @param lat latitude of waypoint.
+     * @param lng longitude of waypoint.
+     * @param alt altitude of waypoint.
+     */
     public Waypoint(String action, double lat, double lng, double alt){
         this.action = action;
         this.lat = lat;
@@ -20,6 +27,12 @@ public class Waypoint {
         this.alt = alt;
     }
     
+    /**
+     * Class constructor.
+     * @param lat latitude of waypoint.
+     * @param lng longitude of waypoint.
+     * @param alt altitude of waypoint.
+     */
     public Waypoint(double lat, double lng, double alt){
         this.action = "";
         this.lat = lat;
@@ -27,6 +40,10 @@ public class Waypoint {
         this.alt = alt;
     }
     
+    /**
+     * Class constructor.
+     * @param pGeo point in coordinates geographical.
+     */
     public Waypoint(PointGeo pGeo){
         this.action = "";
         this.lat = pGeo.getLat();

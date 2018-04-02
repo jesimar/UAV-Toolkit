@@ -6,13 +6,16 @@ import java.util.List;
 import lib.color.StandardPrints;
 
 /**
- *
+ * Classe que modela a missão do drone em coordenadas geográficas.
  * @author Jesimar S. Arantes
  */
 public class Mission {
     
     private final List<Waypoint> mission = new LinkedList<>();
     
+    /**
+     * Class constructor.
+     */
     public Mission(){
         
     }

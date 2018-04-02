@@ -1,7 +1,7 @@
 package uav.generic.struct.constants;
 
 /**
- *
+ * Classe que modela as direções possíveis para se virar o drone.
  * @author Jesimar S. Arantes
  */
 public class TypeDirection {

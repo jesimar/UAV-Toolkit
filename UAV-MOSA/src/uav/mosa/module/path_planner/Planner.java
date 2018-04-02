@@ -5,19 +5,20 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.ReaderFileConfigGlobal;
-import uav.mosa.struct.ReaderFileConfig;
+import uav.generic.struct.constants.TypeOperationMode;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
- *
+ * Classe que modela o planejador da missão do drone evitando obstáculos.
  * @author Jesimar S. Arantes
  */
 public abstract class Planner {
     
-    final ReaderFileConfig configLocal;
+    final ReaderFileConfigMOSA configLocal;
     final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone;
@@ -25,8 +26,13 @@ public abstract class Planner {
     final Mission3D mission3D;
     final Mission missionGeo;
 
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     * @param waypointsMission waypoints of the mission
+     */
     public Planner(Drone drone, Mission3D waypointsMission) {
-        this.configLocal = ReaderFileConfig.getInstance();
+        this.configLocal = ReaderFileConfigMOSA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.dir = configLocal.getDirPlanner();
         this.drone = drone;
@@ -56,7 +62,15 @@ public abstract class Planner {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(configLocal.getCmdExecPlanner(), null, f);
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = configLocal.getCmdExecPlanner() + " local";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+                cmd = configLocal.getCmdExecPlanner() + " edison";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = configLocal.getCmdExecPlanner() + " edison";
+            }
+            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

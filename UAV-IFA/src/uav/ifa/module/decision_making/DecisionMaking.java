@@ -6,40 +6,47 @@ import java.io.FileReader;
 import java.io.IOException;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.module.sensors_actuators.ParachuteControl;
+import uav.generic.util.UtilString;
+import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Parameter;
 import uav.generic.struct.Waypoint;
-import uav.generic.util.UtilString;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.sensors_actuators.ParachuteControl;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeReplanner;
 import uav.generic.struct.constants.TypeSystemExecIFA;
-import uav.ifa.struct.ReaderFileConfig;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.states.StateReplanning;
 import uav.ifa.module.path_replanner.DE4s;
 import uav.ifa.module.path_replanner.GA4s;
 import uav.ifa.module.path_replanner.GH4s;
 import uav.ifa.module.path_replanner.MPGA4s;
 import uav.ifa.module.path_replanner.Replanner;
 import uav.ifa.struct.Failure;
-import uav.generic.struct.states.StateReplanning;
+import uav.ifa.struct.ReaderFileConfigIFA;
 
 /**
- *
+ * Classe que faz as tomadas de decisão do sistema IFA.
  * @author Jesimar S. Arantes
  */
 public class DecisionMaking {
 
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final ReaderFileConfig config;
+    private final ReaderFileConfigIFA configLocal;
+    private final ReaderFileConfigGlobal configGlobal;
     private Replanner replanner;
     private StateReplanning stateReplanning;
     private String typeAction = "";
-    
+    /**
+     * Class constructor.
+     * @param drone instance of the aircraft
+     * @param dataAcquisition object to send commands to drone
+     */
     public DecisionMaking(Drone drone, DataCommunication dataAcquisition) {
-        this.config = ReaderFileConfig.getInstance();
+        this.configLocal = ReaderFileConfigIFA.getInstance();
+        this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;
         this.stateReplanning = StateReplanning.WAITING;
@@ -47,23 +54,43 @@ public class DecisionMaking {
     
     public void actionToDoSomething(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (config.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)){
-            if (failure.typeFailure != null){
-                switch (failure.typeFailure) {
+        if (configLocal.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)){
+            if (failure.getTypeFailure() != null){
+                switch (failure.getTypeFailure()) {
                     case FAIL_AP_POWEROFF:
-                        openParachute();
+                        if (configGlobal.hasParachute()){
+                            openParachute();
+                        } else{
+                            landVertical();
+                        }
                         break;
                     case FAIL_AP_EMERGENCY:
-                        openParachute();
+                        if (configGlobal.hasParachute()){
+                            openParachute();
+                        } else{
+                            landVertical();
+                        }
                         break;
                     case FAIL_GPS:
-                        openParachute();
+                        if (configGlobal.hasParachute()){
+                            openParachute();
+                        } else{
+                            landVertical();
+                        }
                         break;
                     case FAIL_ENGINE:
-                        openParachute();
+                        if (configGlobal.hasParachute()){
+                            openParachute();
+                        } else{
+                            landVertical();
+                        }
                         break;
                     case FAIL_SYSTEM_IFA:
-                        openParachute();
+                        if (configGlobal.hasParachute()){
+                            openParachute();
+                        } else{
+                            landVertical();
+                        }
                         break;
                     case FAIL_BATTERY:
                         execEmergencyLanding();
@@ -96,7 +123,11 @@ public class DecisionMaking {
     private void execEmergencyLanding(){
         boolean itIsOkEmergencyLanding = emergenyLanding();
         if (!itIsOkEmergencyLanding){
-            openParachute();
+            if (configGlobal.hasParachute()){
+                openParachute();
+            }else{
+                landVertical();
+            }
         }
     }
 
@@ -112,13 +143,13 @@ public class DecisionMaking {
         changeNavigationSpeed(navSpeed/10);
 
         StandardPrints.printMsgEmph("decison making -> emergeny landing");
-        if (config.getTypeReplanner().equals(TypeReplanner.GH4S)) {
+        if (configLocal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
             replanner = new GH4s(drone);
-        }else if (config.getTypeReplanner().equals(TypeReplanner.GA4S)) {
+        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
             replanner = new GA4s(drone);   
-        }else if (config.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
+        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
             replanner = new MPGA4s(drone);
-        }else if (config.getTypeReplanner().equals(TypeReplanner.DE4S)) {
+        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
             replanner = new DE4s(drone);
         }
         replanner.clearLogs();
@@ -131,7 +162,7 @@ public class DecisionMaking {
         
         try{
             Mission mission = new Mission();
-            String path = config.getDirReplanner() + "routeGeo.txt";
+            String path = configLocal.getDirReplanner() + "routeGeo.txt";
             BufferedReader br = new BufferedReader(new FileReader(path));
             String sCurrentLine;
             double lat = 0.0;
@@ -199,16 +230,15 @@ public class DecisionMaking {
     
     /**
      * Este comando é responsável por fazer o disparo do paraquedas.
-     * Deve-se desarmar o motor e entao abrir o paraquedas.
-     * Melhorar no futuro
+     * Melhorar no futuro: Deve-se desarmar o motor e entao abrir o paraquedas.
      */
     private void openParachute(){
         StandardPrints.printMsgEmph("decison making -> open parachute");
-        Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);//remover linha
-        dataAcquisition.setWaypoint(wpt);//remover linha        
-        //desarmar o motor.
         ParachuteControl parachute = new ParachuteControl();
-        parachute.open();
+        boolean isOpen = parachute.open();
+        if (!isOpen){
+            stateReplanning = StateReplanning.DISABLED;
+        }
     }
     
     /**

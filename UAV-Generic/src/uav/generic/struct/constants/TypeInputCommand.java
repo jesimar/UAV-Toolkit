@@ -1,7 +1,7 @@
 package uav.generic.struct.constants;
 
 /**
- *
+ * Classe que modela os tipos de comando de entrada.
  * @author Jesimar S. Arantes
  */
 public class TypeInputCommand {
@@ -17,11 +17,15 @@ public class TypeInputCommand {
     public static final String CMD_ROTATE = "rotate";
     public static final String CMD_QUIT = "quit";
     
-    public static final String CMD_OPEN_PARACHUTE = "openparachute";//new
-    public static final String CMD_RTL = "rtl";//new
-    public static final String CMD_BUZZER = "buzzer";//new]
-    public static final String CMD_ALARM = "alarm";//new
-    public static final String CMD_PICTURE = "picture";//new
-    public static final String CMD_MPGA = "mpga";//new
+    public static final String CMD_RTL = "rtl";
+    public static final String CMD_MPGA = "mpga";
+    public static final String CMD_BUZZER = "buzzer";
+    public static final String CMD_ALARM = "alarm";
+    public static final String CMD_PICTURE = "picture";
+    public static final String CMD_VIDEO = "video";
+    public static final String CMD_LED = "led";
+    public static final String CMD_BLINK = "blink";
+    public static final String CMD_SPRAYING = "spraying";    
+    public static final String CMD_OPEN_PARACHUTE = "openparachute";
     
 }

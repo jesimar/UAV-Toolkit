@@ -18,14 +18,15 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Verificar/corrigir problema da alimentação do ESC (não esta mais conseguindo alimentar a Intel Edison), medir a tensão do ESC.
 * Melhorar forma de alimentação da Intel Edison, ao invés de ligar os pinos do ESC (pinos de alimentação positivo e GND) na edison. Ligar os pinos Positivo e GND em um conector padrão de alimentação do Breakeout da Edison.
 * Trabalhar no sistema de hardware de disparo de paraquedas.
+* Calibrar o meu drone melhor (PIDs), segundo onofre eles estão descalibrados.
 
 ## Sistem IFA:
 
 * Colocar no MOSA e IFA um objeto com todos os waypoints da rota.
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
-* Remover do IFA o UAV-Insert-Failure
 * Sistema de Carregar rota fixa (semelhante a ideia do artigo modelo PLIM mestrado).
 * Discutir com Claudio uma forma fácil de fazer a projeção da aeronave no futuro após ocorrer a falha crítica.
+* Fazer experimentos em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
 
 ## Sistema MOSA:
 
@@ -35,8 +36,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Sistema UAV-GCS
 
 * Desenvolver uma GCS própria que possui as seguintes funcionalidades: 
-	+ Comandos possíveis: MPGA, LAND, RTL, BUZZER, PICTURE, START_VIDEO, STOP_VIDEO, OPEN_PARACHUTE, HOVER, SUBIR_1METRO, DESCER_1METRO.
-* Desenvolver uma interface gráfica para esse sistema
+	+ Comandos possíveis: HOVER, STOP_MISSION, SUBIR_1METRO, DESCER_1METRO.
 * Comunicação com sistema da Fernanda
 * Executar scripts automaticamente
 
@@ -72,12 +72,13 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## GitHub
 
 * Melhorar a descrição do projeto no github.
+* Traduzir a descrição do projeto no github para o Inglês.
 * Melhorar as descrições através de links, figuras, diagramas e vídeos.
 * Colocar informações sobre como configurar os arquivos de properties.
 
 ## Documentação UAV-Toolkit
 
-* **Futuro** Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
+* Futuro: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 
 ## Legislação
 
@@ -95,9 +96,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
 * Discutir com verônica se nossa simulação SITL-Edison não é na verdade HITL. Pois quem esta controlando o drone é na verdade o AP ou não?
+* Corrigir problema em que o drone (autopilot) mostra status informando CRITICAL, acredito que tenha algum problema de hardware.
+* Corrigir problema do drone em que fica informando mensagem na momento de armar (low battery) (verificar se é algo com power module) (nem sempre é necessário armar de forma manual)
+* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 ## Não Fazer Mais
 
-* Armazenar o tempo atual do Sistema Operacional.
 * Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
 * Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).

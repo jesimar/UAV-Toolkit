@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela o sensor de velocidade do drone.
  * @author Jesimar S. Arantes
  */
 public class Velocity {
@@ -10,15 +10,29 @@ public class Velocity {
     public double vy;//velocity in m/s
     public double vz;//velocity in m/s
 
+    /**
+     * Class constructor.
+     */
     public Velocity() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param vx velocity on the x axis (in m/s)
+     * @param vy velocity on the y axis (in m/s)
+     * @param vz velocity on the z axis (in m/s)
+     */
     public Velocity(double vx, double vy, double vz) {
         this.vx = vx;
         this.vy = vy;
         this.vz = vz;
     }
     
+    /**
+     * Converts line in JSON format to vx, vy and vz values.
+     * @param line FORMAT: {"vel": [-0.02, -0.05, 0.0]}
+     */
     public void parserInfoVelocity(String line) {
         try{
             line = line.substring(9, line.length() - 2);

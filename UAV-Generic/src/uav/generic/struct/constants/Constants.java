@@ -1,7 +1,7 @@
 package uav.generic.struct.constants;
 
 /**
- *
+ * Classe que modela algumas constantes utilizadas no sistema MOSA e IFA.
  * @author Jesimar S. Arantes
  */
 public class Constants {
@@ -15,8 +15,6 @@ public class Constants {
     
     public static final double HORIZONTAL_ERROR_GPS = 1.0;//in meters
     public static final double VERTICAL_ERROR_BAROMETER = 0.5;//in meters
-    
-    public static final int PORT_COMMUNICATION_BETWEEN_IFA_IF = 5556;
     
     public static final int TIME_TO_SLEEP_BETWEEN_MSG = 100;//in milliseconds
     

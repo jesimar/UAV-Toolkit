@@ -1,7 +1,7 @@
 package uav.generic.struct;
 
 /**
- *
+ * Classe que modela a localização do home do drone.
  * @author Jesimar S. Arantes
  */
 public class HomeLocation {
@@ -10,10 +10,19 @@ public class HomeLocation {
     private double lng;
     private double alt;
 
+    /**
+     * Class constructor.
+     */
     public HomeLocation() {
         
     }        
 
+    /**
+     * Class constructor.
+     * @param lat coordinate latitude.
+     * @param lng coordinate longitude.
+     * @param alt coordinate altitude.
+     */
     public HomeLocation(double lat, double lng, double alt) {
         this.lat = lat;
         this.lng = lng;

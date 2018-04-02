@@ -1,7 +1,7 @@
 package uav.generic.struct.geom;
 
 /**
- *
+ * Classe concreta que implementa um ponto 3D.
  * @author Jesimar S. Arantes
  */
 public class Point3D extends Point{
@@ -10,15 +10,28 @@ public class Point3D extends Point{
     private double y;
     private double z;
 
+    /**
+     * Class constructor.
+     */
     public Point3D() {
     }
 
+    /**
+     * Class constructor.
+     * @param x coordinate x of point.
+     * @param y coordinate y of point.
+     * @param z coordinate z of point.
+     */
     public Point3D(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
+    /**
+     * Class constructor.
+     * @param point3D point with 3D coordinates.
+     */
     public Point3D(Point3D point3D) {
         this.x = point3D.x;
         this.y = point3D.y;

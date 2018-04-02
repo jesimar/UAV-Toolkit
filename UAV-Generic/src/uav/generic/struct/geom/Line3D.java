@@ -3,7 +3,7 @@ package uav.generic.struct.geom;
 import java.util.List;
 
 /**
- *
+ * Classe concreta que implementa uma linha 3D.
  * @author Jesimar S. Arantes
  */
 public class Line3D extends Line{
@@ -14,6 +14,13 @@ public class Line3D extends Line{
     private final double vetz[];
     private final int npoints;
     
+    /**
+     * Class constructor.
+     * @param name line name.
+     * @param vetx vector with coordinates x.
+     * @param vety vector with coordinates y.
+     * @param vetz vector with coordinates z.
+     */
     public Line3D(String name, double vetx[], double vety[], double vetz[]){
         this.name = name;
         this.vetx = vetx;
@@ -22,6 +29,11 @@ public class Line3D extends Line{
         this.npoints = vetx.length;
     }
     
+    /**
+     * Class constructor.
+     * @param name line name.
+     * @param listLine3D list with 3D line points.
+     */
     public Line3D(String name, List<Point3D> listLine3D){
         this.name = name;
         this.npoints = listLine3D.size();

@@ -6,13 +6,16 @@ import java.util.List;
 import lib.color.StandardPrints;
 
 /**
- *
+ * Classe que modela a missão do drone em coordenadas cartesianas.
  * @author Jesimar S. Arantes
  */
 public class Mission3D {
     
     private final List<Position3D> mission = new LinkedList<>();
     
+    /**
+     * Class constructor.
+     */
     public Mission3D(){
         
     }

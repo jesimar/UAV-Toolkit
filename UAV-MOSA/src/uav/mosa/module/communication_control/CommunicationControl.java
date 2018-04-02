@@ -8,13 +8,13 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- *
+ * Classe que faz o controle da comunicação com o sistema IFA.
  * @author Jesimar S. Arantes
  */
 public class CommunicationControl {
@@ -22,18 +22,20 @@ public class CommunicationControl {
     private Socket socket;
     private BufferedReader input;
     private PrintWriter output;         
-    private final Drone drone;
     private StateCommunication stateCommunication;
+    private final Drone drone;
     private final ReaderFileConfigGlobal configGlobal;
     
     private boolean startMission;
-    private boolean stopMission;
     
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     */
     public CommunicationControl(Drone drone){      
         this.drone = drone;
         stateCommunication = StateCommunication.WAITING;
         startMission = false;
-        stopMission = false;
         configGlobal = ReaderFileConfigGlobal.getInstance();
     }
     
@@ -73,7 +75,6 @@ public class CommunicationControl {
                                 startMission = true;
                                 sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
                             } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
-                                stopMission = true;
                                 sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
                                 Thread.sleep(100);
                                 System.exit(0);
@@ -105,10 +106,6 @@ public class CommunicationControl {
 
     public boolean isStartMission() {
         return startMission;
-    }
-    
-    public boolean isStopMission() {
-        return stopMission;
     }
     
     public void close(){

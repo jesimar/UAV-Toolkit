@@ -1,7 +1,7 @@
 package uav.generic.struct.states;
 
 /**
- *
+ * Classe que modela os possíveis estados do sistema de planejador.
  * @author Jesimar S. Arantes
  */
 public enum StatePlanning {

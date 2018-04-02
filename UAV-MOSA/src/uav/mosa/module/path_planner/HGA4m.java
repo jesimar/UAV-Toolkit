@@ -16,11 +16,16 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.hardware.aircraft.FixedWing;
 
 /**
- *
+ * Classe que modela o planejador de rotas HGA4m. 
  * @author Jesimar S. Arantes
  */
 public class HGA4m extends Planner{
     
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     * @param waypointsMission waypoints of the mission
+     */
     public HGA4m(Drone drone, Mission3D waypointsMission) {
         super(drone, waypointsMission);
     }   
@@ -162,7 +167,7 @@ public class HGA4m extends Planner{
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
-                double h = configGlobal.getAltitudeRelativeMission();            
+                double h = configGlobal.getAltRelMission();            
                 printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
                 mission3D.addPosition3D(new Position3D(x, y, h));
                 missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));

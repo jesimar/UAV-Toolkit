@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela o GPS do drone.
  * @author jesimar
  */
 public class GPS {
@@ -9,14 +9,27 @@ public class GPS {
     public double lat;
     public double lng;
 
+    /**
+     * Class constructor.
+     */
     public GPS() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param lat latitude coordinete
+     * @param lng longitude coordinete
+     */
     public GPS(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
     }
     
+    /**
+     * Converts line in JSON format to latitude and longitude values.
+     * @param line FORMAT: {"gps": [-22.0059726, -47.8986881]}
+     */
     public void parserInfoGPS(String line) {
         try{
             line = line.substring(9, line.length() - 2);

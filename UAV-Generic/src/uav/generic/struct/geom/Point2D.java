@@ -1,7 +1,7 @@
 package uav.generic.struct.geom;
 
 /**
- *
+ * Classe concreta que implementa um ponto 2D.
  * @author Jesimar S. Arantes
  */
 public class Point2D extends Point{
@@ -9,14 +9,26 @@ public class Point2D extends Point{
     private double x;
     private double y;
 
+    /**
+     * Class constructor.
+     */
     public Point2D() {
     }
 
+    /**
+     * Class constructor.
+     * @param x coordinate x of point.
+     * @param y coordinate y of point.
+     */
     public Point2D(double x, double y) {
         this.x = x;
         this.y = y;
     }
     
+    /**
+     * Class constructor.
+     * @param point2D point with 2D coordinates.
+     */
     public Point2D(Point2D point2D) {
         this.x = point2D.x;
         this.y = point2D.y;

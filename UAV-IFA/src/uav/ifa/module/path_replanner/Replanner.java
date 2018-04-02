@@ -6,22 +6,26 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.ReaderFileConfigGlobal;
-import uav.ifa.struct.ReaderFileConfig;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.ifa.struct.ReaderFileConfigIFA;
 
 /**
- *
+ * Classe que modela o replanejador de rota do drone evitando obstáculos.
  * @author Jesimar S. Arantes
  */
 public abstract class Replanner {
     
-    final ReaderFileConfig configLocal;
+    final ReaderFileConfigIFA configLocal;
     final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone; 
 
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     */
     public Replanner(Drone drone) {
-        this.configLocal = ReaderFileConfig.getInstance();
+        this.configLocal = ReaderFileConfigIFA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.dir = configLocal.getDirReplanner();
         this.drone = drone;      

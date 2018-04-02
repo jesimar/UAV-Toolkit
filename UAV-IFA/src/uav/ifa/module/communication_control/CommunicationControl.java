@@ -9,13 +9,13 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- *
+ * Classe que faz o controle da comunicação com o sistema MOSA.
  * @author Jesimar S. Arantes
  */
 public class CommunicationControl {
@@ -24,11 +24,15 @@ public class CommunicationControl {
     private Socket socket;
     private BufferedReader input;
     private PrintWriter output;
-    private final Drone drone;
     private StateCommunication stateCommunication;
-    private boolean mosaDisabled;
+    private final Drone drone;    
     private final ReaderFileConfigGlobal configGlobal;
+    private boolean mosaDisabled;
 
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     */
     public CommunicationControl(Drone drone) {
         this.drone = drone;
         stateCommunication = StateCommunication.WAITING;
@@ -72,7 +76,7 @@ public class CommunicationControl {
                                 //Não precisa fazer nada
                             } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_DISABLED)){
                                 mosaDisabled = true;
-                            }
+                            } 
                         } else {
                             Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }

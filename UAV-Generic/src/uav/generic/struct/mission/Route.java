@@ -6,13 +6,16 @@ import java.util.List;
 import lib.color.StandardPrints;
 
 /**
- *
+ * Classe que modela a rota do drone em coordenadas geográficas.
  * @author Jesimar S. Arantes
  */
 public class Route {
     
     private final List<Waypoint> route = new LinkedList<>();
     
+    /**
+     * Class constructor.
+     */
     public Route(){
         
     }

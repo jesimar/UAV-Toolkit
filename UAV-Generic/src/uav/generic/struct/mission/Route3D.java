@@ -6,13 +6,16 @@ import java.util.List;
 import lib.color.StandardPrints;
 
 /**
- *
+ * Classe que modela a rota do drone em coordenadas cartesianas.
  * @author Jesimar S. Arantes
  */
 public class Route3D {
     
     private final List<Position3D> route = new LinkedList<>();
     
+    /**
+     * Class constructor.
+     */
     public Route3D(){
         
     }

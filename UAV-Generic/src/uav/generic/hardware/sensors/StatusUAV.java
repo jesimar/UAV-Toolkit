@@ -1,13 +1,13 @@
 package uav.generic.hardware.sensors;
 
 /**
- *
+ * Classe que modela o status do drone (mode, systemstatus, armed, isArmable, ekfOk).
  * @author Jesimar S. Arantes
  */
 public class StatusUAV {
     
     /**
-     * Possible autopilot mode values:.
+     * Possible autopilot flight mode values:.
      *     AUTO: 
      *     GUIDED: 
      *     STABILIZE: 
@@ -30,9 +30,21 @@ public class StatusUAV {
     public boolean isArmable;    
     public boolean ekfOk;
 
+    /**
+     * Class constructor.
+     */
     public StatusUAV() {
+        
     }
 
+    /**
+     * Class constructor.
+     * @param mode mode of flight [AUTO, GUIDED, STABILIZE, ...]
+     * @param systemStatus status of the system [UNINIT, BOOT, CALIBRATING, STANDBY, ACTIVE, CRITICAL, EMERGENCY, POWEROFF]
+     * @param armed drone is armed
+     * @param isArmable drone is Armable
+     * @param ekfOk Extended Kalman Filter is Ok
+     */
     public StatusUAV(String mode, String systemStatus, boolean armed, 
             boolean isArmable, boolean ekfOk) {
         this.mode = mode;
@@ -42,6 +54,10 @@ public class StatusUAV {
         this.ekfOk = ekfOk;
     }
     
+    /**
+     * Converts line in JSON format to mode values.
+     * @param line FORMAT: {"mode": "STABILIZE"}
+     */
     public void parserInfoMode(String line) {
         try{
             line = line.substring(10, line.length() - 2);        
@@ -51,6 +67,10 @@ public class StatusUAV {
         }
     }
     
+    /**
+     * Converts line in JSON format to systemStatus values.
+     * @param line FORMAT: {"system-status": "STANDBY"}
+     */
     public void parserInfoSystemStatus(String line) {
         try{
             line = line.substring(19, line.length() - 2);        
@@ -60,6 +80,10 @@ public class StatusUAV {
         }
     }
     
+    /**
+     * Converts line in JSON format to armed values.
+     * @param line FORMAT: {"armed": false}
+     */
     public void parserInfoArmed(String line) {
         try{
             line = line.substring(10, line.length() - 1);        
@@ -69,6 +93,10 @@ public class StatusUAV {
         }
     }
     
+    /**
+     * Converts line in JSON format to isArmable values.
+     * @param line FORMAT: {"is-armable": true}
+     */
     public void parserInfoIsArmable(String line) {
         try{
             line = line.substring(15, line.length() - 1);        
@@ -78,6 +106,10 @@ public class StatusUAV {
         }
     }        
     
+    /**
+     * Converts line in JSON format to ekfOk values.
+     * @param line FORMAT: {"ekf-ok": true}
+     */
     public void parserInfoEkfOk(String line) {
         try{
             line = line.substring(11, line.length() - 1);        

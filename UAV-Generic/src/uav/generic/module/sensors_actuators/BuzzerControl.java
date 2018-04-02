@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.struct.ReaderFileConfigGlobal;
+import uav.generic.struct.constants.TypeOperationMode;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 
 /**
  *
@@ -23,7 +24,14 @@ public class BuzzerControl {
         try {
             boolean print = true;
             File f = new File(configGlobal.getDirBuzzer());
-            String cmd = configGlobal.getCmdExecBuzzer();
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "./buzzer";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+                cmd = "python buzzer.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = "python buzzer.py";
+            }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -38,7 +46,7 @@ public class BuzzerControl {
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] turnOn()");
+            StandardPrints.printMsgWarning("Warning [IOException] turnOnBuzzer()");
         } 
     }
     
@@ -46,7 +54,14 @@ public class BuzzerControl {
         try {
             boolean print = true;
             File f = new File(configGlobal.getDirBuzzer());
-            String cmd = configGlobal.getCmdExecAlarm();
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "./alarm";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+                cmd = "python alarm.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = "python alarm.py";
+            }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -61,7 +76,7 @@ public class BuzzerControl {
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] turnOn()");
+            StandardPrints.printMsgWarning("Warning [IOException] turnOnAlarm()");
         } 
     }
     

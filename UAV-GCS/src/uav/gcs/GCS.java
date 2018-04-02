@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * @author Jesimar S. Arantes
+ */
 public final class GCS extends JFrame {
 
     private final JPanel panelTop;

@@ -1,15 +1,13 @@
 #ignorar todos os diretorios listados abaixo em qualquer subdiretorio
 
+nbproject/private/
 build/
 test/
 
 Simulations-AutoFG-Waypoints/
-UAV-Text-Commands/
 ProcessDataFG/
 ReaderKML/
 ManagerSITL/
-Text-Commands/
-Results/
 
 #ignorar todos os arquivos por extensao
 
@@ -29,13 +27,6 @@ cplex.jar
 mav.parm
 mav.tlog
 mav.tlog.raw
-exec-planner.sh
 
 ideias-todo.txt
 dicas-voo.txt
-/UAV-GCS2/nbproject/private/
-/UAV-GCS2/dist/
-/ExecMPGA4sMassive/nbproject/private/
-/ExecMPGA4sMassive/dist/
-/Exec-MPGA4s-Massive/nbproject/private/
-/Exec-MPGA4s-Massive/dist/
