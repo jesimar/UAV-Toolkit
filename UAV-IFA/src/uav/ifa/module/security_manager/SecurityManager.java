@@ -112,7 +112,7 @@ public class SecurityManager {
                 drone, "IFA", configGlobal.getHostSOA(),
                 configGlobal.getPortNetworkSOA(), printLogOverhead);
         this.communicationControl = new CommunicationControl(drone);
-        this.communicationGCS = new CommunicationGCS();
+        this.communicationGCS = new CommunicationGCS(drone);
 
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
         stateSystem = StateSystem.INITIALIZING;
@@ -130,6 +130,7 @@ public class SecurityManager {
 
         communicationGCS.startServerGCS();      //Thread
         communicationGCS.receiveData();         //Thread
+//        communicationGCS.sendData();            //Thread
 
         communicationControl.startServerIFA();  //blocked
         communicationControl.receiveData();     //Thread

@@ -15,5 +15,6 @@ pkill ifa
 pkill mosa
 pkill uav-tests
 pkill insert-failure
+pkill exec-gcs
 
 echo "=============================================="

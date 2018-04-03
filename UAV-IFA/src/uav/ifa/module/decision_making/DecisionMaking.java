@@ -11,7 +11,6 @@ import uav.generic.util.UtilString;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.Parameter;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeReplanner;
@@ -139,8 +138,7 @@ public class DecisionMaking {
      */
     private boolean emergenyLanding() {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
-        System.out.println("value WPNAV_SPEED = " + navSpeed);
-        changeNavigationSpeed(navSpeed/10);
+        dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
         StandardPrints.printMsgEmph("decison making -> emergeny landing");
         if (configLocal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
@@ -158,7 +156,7 @@ public class DecisionMaking {
             return false;
         }
         
-        changeNavigationSpeed(navSpeed);
+        dataAcquisition.changeNavigationSpeed(navSpeed);
         
         try{
             Mission mission = new Mission();
@@ -258,12 +256,4 @@ public class DecisionMaking {
         this.typeAction = action;
     }
     
-    /**
-     * Este comando troca a velocidade de navegação da aeronave.
-     * @param value novo valor de velocidade de navegação em cm/s.
-     */
-    public void changeNavigationSpeed(double value){
-        Parameter param = new Parameter("WPNAV_SPEED", value);
-        dataAcquisition.setParameter(param);
-    }
 }

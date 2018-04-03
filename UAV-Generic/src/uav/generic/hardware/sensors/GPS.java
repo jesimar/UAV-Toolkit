@@ -58,6 +58,10 @@ public class GPS {
         this.lng = lng;
     }
 
+    public String string() {
+        return lat + ", " + lng;
+    }
+
     @Override
     public String toString() {
         return "GPS{" + "lat=" + lat + ", lng=" + lng + '}';

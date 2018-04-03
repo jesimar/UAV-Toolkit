@@ -42,8 +42,8 @@ public final class GCS2 extends JFrame {
     private final int height = 500;
     
     private final ReaderFileConfig config;
-    private SendCommands sendCommands;
-    private GoogleMaps googleMaps;
+    private CommunicationControl sendCommands;
+    private final GoogleMaps googleMaps;
 
     public static void main(String[] args) {
         GCS2 gcs = new GCS2();
@@ -277,7 +277,7 @@ public final class GCS2 extends JFrame {
         
         panelRight = new JPanel(new BorderLayout());
         panelRight.setVisible(true);
-        googleMaps = new GoogleMaps(this, panelRight);
+        googleMaps = new GoogleMaps(this, panelRight, sendCommands);
         googleMaps.plot();
 
         this.add(panelTop);
@@ -297,8 +297,9 @@ public final class GCS2 extends JFrame {
     }
     
     private void communication(){
-        sendCommands = new SendCommands(config.getHost(), config.getPort());
+        sendCommands = new CommunicationControl(config.getHost(), config.getPort());
         sendCommands.connectClient();
+//        sendCommands.receiveData();
     }
     
     private void monitoringInterface(){
@@ -343,8 +344,7 @@ public final class GCS2 extends JFrame {
                             "Author: Jesimar da Silva Arantes\n" + 
                             "Version: 1.0.0\n" + 
                             "Date: 30/03/2018";
-        JOptionPane.showMessageDialog(null, 
-                msgAbout, "About",
+        JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -413,5 +413,14 @@ public class DataCommunication {
         drone.getStatusUAV().setArmed(v[26]);
         drone.getStatusUAV().setIsArmable(v[27]);
         drone.getStatusUAV().setEkfOk(v[28]);
-    }   
+    } 
+    
+    /**
+     * Este comando troca a velocidade de navegação da aeronave.
+     * @param value novo valor de velocidade de navegação em cm/s.
+     */
+    public void changeNavigationSpeed(double value){
+        Parameter param = new Parameter("WPNAV_SPEED", value);
+        setParameter(param);
+    }
 }

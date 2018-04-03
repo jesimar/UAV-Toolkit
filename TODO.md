@@ -39,6 +39,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 	+ Comandos possíveis: HOVER, STOP_MISSION, SUBIR_1METRO, DESCER_1METRO.
 * Comunicação com sistema da Fernanda
 * Executar scripts automaticamente
+* Colocar recurso para plotar a rota do drone em tempo real
+* Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
 
 ## Sistema UAV-SOA-Interface:
 

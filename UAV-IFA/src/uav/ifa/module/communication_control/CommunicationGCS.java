@@ -3,10 +3,12 @@ package uav.ifa.module.communication_control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.hardware.aircraft.Drone;
 import uav.generic.module.sensors_actuators.BuzzerControl;
 import uav.generic.module.sensors_actuators.CameraControl;
 import uav.generic.module.sensors_actuators.LEDControl;
@@ -23,15 +25,19 @@ public class CommunicationGCS {
     private ServerSocket server;
     private Socket socket;
     private BufferedReader input;
+    private PrintWriter output;
 
     private boolean hasFailure;
     private String typeAction;
     private final ReaderFileConfigGlobal configGlobal;
+    private final Drone drone;
 
     /**
      * Class contructor.
+     * @param drone instance of the drone
      */
-    public CommunicationGCS() {
+    public CommunicationGCS(Drone drone) {
+        this.drone = drone;
         configGlobal = ReaderFileConfigGlobal.getInstance();
         hasFailure = false;
         typeAction = "";
@@ -46,6 +52,7 @@ public class CommunicationGCS {
                     server = new ServerSocket(configGlobal.getPortNetworkIFAandGCS());
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    output = new PrintWriter(socket.getOutputStream(), true);
                     StandardPrints.printMsgEmph("GCS connected in IFA ...");
                 } catch (IOException ex) {
                     StandardPrints.printMsgWarning("Warning [IOException] startServerGCS()");
@@ -107,6 +114,26 @@ public class CommunicationGCS {
         });
     }
     
+    public void sendData() {
+        StandardPrints.printMsgEmph("sending data to the connection of UAV-GCS ...");
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        if (output != null){
+                            output.println(drone.getGPS().lat + ", " + drone.getGPS().lng);
+                        }
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
+                    }
+                } catch (InterruptedException ex) {
+                    StandardPrints.printMsgWarning("Warning [InterruptedException] sendData()");
+                    ex.printStackTrace();
+                } 
+            }
+        });
+    }
+    
     public boolean hasFailure(){
         return hasFailure;
     }
@@ -117,6 +144,7 @@ public class CommunicationGCS {
 
     public void close() {
         try {
+            output.close();
             input.close();
             socket.close();
             server.close();
