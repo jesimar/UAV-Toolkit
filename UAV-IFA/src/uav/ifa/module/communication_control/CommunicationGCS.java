@@ -74,9 +74,9 @@ public class CommunicationGCS {
                             if (answer != null) {
                                 StandardPrints.printMsgYellow("Data FAILURE: " + answer);
                                 answer = answer.toLowerCase();
-                                if (answer.equals(TypeInputCommand.CMD_MPGA)){
+                                if (answer.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)){
                                     hasFailure = true;
-                                    typeAction = TypeInputCommand.CMD_MPGA;
+                                    typeAction = TypeInputCommand.CMD_EMERGENCY_LANDING;
                                 } else if (answer.equals(TypeInputCommand.CMD_LAND)){
                                     hasFailure = true;
                                     typeAction = TypeInputCommand.CMD_LAND;

@@ -5,15 +5,15 @@
 --------------- Time Step (dt) ---------------
 1
 --------------- Initial State [Xinit (px, py, vel, ang)] ---------------
-14.483584814478471 -7.399118137656373 1.5 -1.52
+53.72 -11.08 1.5 0.337
 ------- Maximum Velocity (metro/s) [Terminal] [Asa Fixa 30.5555] [Asa Rotativa 3.0]-------
 3.0
 ------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------
 1.0
 ------- Leme Maximo - Giro Maximo (Radianos) (+30) [Asa Fixa +0.261799] [Asa Rotativa +3.14159] -------
-0.35
+0.50
 ------- Leme Minimo - Giro Minimo (Radianos) (-30) [Asa Fixa -0.261799] [Asa Rotativa -3.14159] -------
--0.35
+-0.50
 ------- Maximum Acceleration (m/(s2)) -------
 0.2
 ----------- Horizonte de Tempo (Horizonte de Planejamento) (K) ---------
@@ -23,7 +23,7 @@
 ----------- Sistema de Coordenadas [false - Cartesian, true - Geographical] ---------------
 false
 ----------- precision of UAV position (Delta) -----------
-0.10
+0.01
 ------ Tipo de Problema [0 - Sem Problema, 1 - Motor, 2 - Bateria, 3 - Girar Direita Somente, 4 - Girar Esquerda Somente]-----
 2
 ------ Online [Integrado com Player Stage - Via Socket]-----

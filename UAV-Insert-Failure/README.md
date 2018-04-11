@@ -1,4 +1,4 @@
-# UAV-Insert-Failure
+# UAV-Insert-Failure (Obsoleto)
 
 Projeto escrito em Java usando a IDE Netbeans para inserção de falhas de forma manual no drone.
 

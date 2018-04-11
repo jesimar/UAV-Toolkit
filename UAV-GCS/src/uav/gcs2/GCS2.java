@@ -26,7 +26,7 @@ public final class GCS2 extends JFrame {
     private final JPanel panelLeft;
     private final JPanel panelRight;   
     
-    private final JButton btnMPGA;
+    private final JButton btnPathReplanningEmergency;
     private final JButton btnLand;
     private final JButton btnRTL;
     private final JButton btnBuzzer;
@@ -146,19 +146,19 @@ public final class GCS2 extends JFrame {
         labelActions.setForeground(Color.BLACK);
         panelLeft.add(labelActions);
         
-        btnMPGA = new JButton("MPGA");
-        btnMPGA.setPreferredSize(new Dimension(170, 25));
-        btnMPGA.setEnabled(false);
-        btnMPGA.addActionListener(new ActionListener() {
+        btnPathReplanningEmergency = new JButton("EMERGENCY-LANDING");
+        btnPathReplanningEmergency.setPreferredSize(new Dimension(185, 25));
+        btnPathReplanningEmergency.setEnabled(false);
+        btnPathReplanningEmergency.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("MPGA");
+                sendCommands.sendData("EMERGENCYLANDING");
             }
         });
-        panelLeft.add(btnMPGA);
+        panelLeft.add(btnPathReplanningEmergency);
         
         btnLand = new JButton("LAND");
-        btnLand.setPreferredSize(new Dimension(170, 25));
+        btnLand.setPreferredSize(new Dimension(185, 25));
         btnLand.setEnabled(false);
         btnLand.addActionListener(new ActionListener() {
             @Override
@@ -169,7 +169,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnLand);
         
         btnRTL= new JButton("RTL");
-        btnRTL.setPreferredSize(new Dimension(170, 25));
+        btnRTL.setPreferredSize(new Dimension(185, 25));
         btnRTL.setEnabled(false);
         btnRTL.addActionListener(new ActionListener() {
             @Override
@@ -180,7 +180,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnRTL);
 
         btnBuzzer = new JButton("BUZZER-TURN-ON");
-        btnBuzzer.setPreferredSize(new Dimension(170, 25));
+        btnBuzzer.setPreferredSize(new Dimension(185, 25));
         btnBuzzer.setEnabled(false);
         btnBuzzer.addActionListener(new ActionListener() {
             @Override
@@ -191,7 +191,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnBuzzer);
         
         btnAlarm = new JButton("BUZZER-ALARM");
-        btnAlarm.setPreferredSize(new Dimension(170, 25));
+        btnAlarm.setPreferredSize(new Dimension(185, 25));
         btnAlarm.setEnabled(false);
         btnAlarm.addActionListener(new ActionListener() {
             @Override
@@ -202,7 +202,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnAlarm);
 
         btnPicture = new JButton("CAMERA-PICTURE");
-        btnPicture.setPreferredSize(new Dimension(170, 25));
+        btnPicture.setPreferredSize(new Dimension(185, 25));
         btnPicture.setEnabled(false);
         btnPicture.addActionListener(new ActionListener() {
             @Override
@@ -213,7 +213,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnPicture);
         
         btnVideo = new JButton("CAMERA-VIDEO");
-        btnVideo.setPreferredSize(new Dimension(170, 25));
+        btnVideo.setPreferredSize(new Dimension(185, 25));
         btnVideo.setEnabled(false);
         btnVideo.addActionListener(new ActionListener() {
             @Override
@@ -224,7 +224,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnVideo);
 
         btnLED = new JButton("LED-TURN-ON");
-        btnLED.setPreferredSize(new Dimension(170, 25));
+        btnLED.setPreferredSize(new Dimension(185, 25));
         btnLED.setEnabled(false);
         btnLED.addActionListener(new ActionListener() {
             @Override
@@ -235,7 +235,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnLED);
         
         btnBlink = new JButton("LED-BLINK");
-        btnBlink.setPreferredSize(new Dimension(170, 25));
+        btnBlink.setPreferredSize(new Dimension(185, 25));
         btnBlink.setEnabled(false);
         btnBlink.addActionListener(new ActionListener() {
             @Override
@@ -246,7 +246,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnBlink);
         
         btnSpraying = new JButton("SPRAYING-START");
-        btnSpraying.setPreferredSize(new Dimension(170, 25));
+        btnSpraying.setPreferredSize(new Dimension(185, 25));
         btnSpraying.setEnabled(false);
         btnSpraying.addActionListener(new ActionListener() {
             @Override
@@ -257,7 +257,7 @@ public final class GCS2 extends JFrame {
         panelLeft.add(btnSpraying);
         
         btnParachute = new JButton("PARACHUTE-OPEN");
-        btnParachute.setPreferredSize(new Dimension(170, 25));
+        btnParachute.setPreferredSize(new Dimension(185, 25));
         btnParachute.setEnabled(false);
         btnParachute.addActionListener(new ActionListener() {
             @Override
@@ -310,7 +310,7 @@ public final class GCS2 extends JFrame {
                     try{
                         Thread.sleep(100);
                         if (sendCommands.isConnected()){
-                            btnMPGA.setEnabled(true);
+                            btnPathReplanningEmergency.setEnabled(true);
                             btnLand.setEnabled(true);
                             btnRTL.setEnabled(true);
                             btnBuzzer.setEnabled(true);

@@ -11,9 +11,9 @@
 ------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------
 1.0
 ------- Leme Maximo - Giro Maximo (Radianos) (+30) [Asa Fixa +0.261799] [Asa Rotativa +3.14159] -------
-0.35
+0.50
 ------- Leme Minimo - Giro Minimo (Radianos) (-30) [Asa Fixa -0.261799] [Asa Rotativa -3.14159] -------
--0.35
+-0.50
 ------- Maximum Acceleration (m/(s2)) -------
 0.2
 ----------- Horizonte de Tempo (Horizonte de Planejamento) (K) ---------

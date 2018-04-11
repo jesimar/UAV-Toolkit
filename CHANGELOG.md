@@ -1,10 +1,9 @@
 # Changelog
 
-## Version v2.0.0 (02/04/2018)
+## Version v2.0.0 (11/04/2018)
 
-* Added code UAV-GCS
-* Added directory Instances
-* Added method getBarometer(...) in UAV-SOA-Interface
+### Features:
+
 * Updated method getGPS(...) in UAV-SOA-Interface
 * Updated method getAllInfoSensors(...) in UAV-SOA-Interface to return next_waypoint, count_waypoint, dist_to_home, dist_to_current_waypoint
 * Updated method getAllInfoSensors(...) in UAV-SOA-Interface number of decimal places returned optimized
@@ -15,17 +14,31 @@
 * Updated codes in UAV-PosAnalyser (time - little modifications)
 * Updated codes in UAV-Monitoring (time - little modifications)
 * Updated codes in UAV-Mission-Creator
-* Added UAV-GCS system codes
-* Documentation update GitHub, codes, properties files and UAV-Toolkit
-* Updated print format in file log-aircraft (UAV-Generic)
-* Several classes were refactored
-* Several properties file were refactored
-* Include new commands controller
-* Updating communication messages between IFA and MOSA.
-* Added Modules-Global (Sonar, Buzzer, Parachute, Camera, LED, Spraying)
-* Updated scripts
+* Updated several scripts
 * Updated Javadoc (UAV-MOSA, UAV-IFA, UAV-Generic)
-* Added field (date, hours, type-failure) file log-aircraftN.csv 
+* Updated print format in file log-aircraft (UAV-Generic)
+* Updated documentation GitHub, codes, properties files and UAV-Toolkit
+* Updated communication messages between IFA and MOSA
+* Updated several classes (refactored)
+* Updated several properties file (refactored)
+* Added new commands controller
+* Added code UAV-GCS
+* Added directory Instances
+* Added method getBarometer(...) in UAV-SOA-Interface
+* Added Modules-Global (Sonar, Buzzer, Parachute, Camera, LED, Spraying)
+* Added data field (date, hours, type-failure) in file log-aircraftN.csv 
+* Added GA-GH-4s module in IFA System
+* Added GA-GA-4s module in IFA System
+* Added Fixed-Route4s module in IFA System
+* Added UAV-GCS system codes
+* Added UAV-Exec-MPGA4s-Massive code
+* Added UAV-Ensemble-GA-GA_GA-GH code
+* Added UAV-Fixed-Route4s code
+
+### Bug Fixes:
+
+* Bug fixes in GH4s, DE4s, GA4s and MPGA4s modules (heading values were wrong)
+* Bug fixes in GH4s, DE4s modules (update files were wrong)
 
 ## Version v1.1.0 (07/03/2018)
 

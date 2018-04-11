@@ -128,6 +128,7 @@ public class DataCommunication {
         }
     }
     
+    //Atualmente foi removido esta funcao se nao der pala nos experimentos remove-la
     public boolean PersistentePOST(String urlPost, String jsonMsg) {
         boolean ok = false;
         long timeInitial = System.currentTimeMillis();
@@ -156,49 +157,49 @@ public class DataCommunication {
     public boolean setWaypoint(Waypoint wp) {
         Gson gson = new Gson();
         String jsonWaypoint = gson.toJson(new WaypointJSON(wp));
-        return PersistentePOST("/set-waypoint/", jsonWaypoint);
+        return POST("/set-waypoint/", jsonWaypoint);
     }
     
     public boolean appendWaypoint(Waypoint wp) {
         Gson gson = new Gson();
         String jsonWaypoint = gson.toJson(new WaypointJSON(wp));
-        return PersistentePOST("/append-waypoint/", jsonWaypoint); 
+        return POST("/append-waypoint/", jsonWaypoint); 
     }
     
     public boolean setMission(Mission mission) {
         Gson gson = new Gson();
         String jsonMission = gson.toJson(mission);
-        return PersistentePOST("/set-mission/", jsonMission);
+        return POST("/set-mission/", jsonMission);
     }
     
     public boolean appendMission(Mission mission) {
         Gson gson = new Gson();
         String jsonMission = gson.toJson(mission);
-        return PersistentePOST("/append-mission/", jsonMission);
+        return POST("/append-mission/", jsonMission);
     }
     
     public boolean setVelocity(double velocity) {
         Gson gson = new Gson();
         String jsonVelocity = gson.toJson(velocity);
-        return PersistentePOST("/set-velocity/", jsonVelocity);
+        return POST("/set-velocity/", jsonVelocity);
     }
     
     public boolean setParameter(Parameter parameter) {
         Gson gson = new Gson();
         String jsonParameter = gson.toJson(new ParameterJSON(parameter));
-        return PersistentePOST("/set-parameter/", jsonParameter);
+        return POST("/set-parameter/", jsonParameter);
     }
     
     public boolean setHeading(Heading heading) {
         Gson gson = new Gson();
         String jsonHeading = gson.toJson(new HeadingJSON(heading));
-        return PersistentePOST("/set-heading/", jsonHeading);
+        return POST("/set-heading/", jsonHeading);
     }
     
     public boolean setMode(String mode) {
         Gson gson = new Gson();
         String jsonMode = gson.toJson(mode);
-        return PersistentePOST("/set-mode/", jsonMode);
+        return POST("/set-mode/", jsonMode);
     }
        
     public String GET(String urlGet) {

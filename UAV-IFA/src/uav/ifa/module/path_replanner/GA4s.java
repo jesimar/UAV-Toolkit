@@ -42,7 +42,8 @@ public class GA4s extends Replanner{
             double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
             double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
-            double angle = Math.toRadians(drone.getSensorUAV().heading);//Math.atan2(vy, vx);            
+            int heading = UtilGeo.convertAngleAviationToAngleMath((int)drone.getSensorUAV().heading);
+            double angle = Math.toRadians(heading);//Math.atan2(vy, vx);             
             //double vx = drone.getVelocity().vx;
             //double vy = drone.getVelocity().vy;            
             //double dt = 2;

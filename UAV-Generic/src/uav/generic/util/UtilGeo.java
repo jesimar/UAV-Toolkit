@@ -113,6 +113,10 @@ public class UtilGeo {
         return new PointGeo(lon, lat, alt);        
     }
     
+    public static int convertAngleAviationToAngleMath(int heading){
+        return (360 - heading + 90) % 360;
+    }
+    
     public static void savePointsDirections(PrintStream output, Line3D line3d) {
         double vx = 24;
         double vy = 0;

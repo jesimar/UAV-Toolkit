@@ -87,7 +87,10 @@ public class ReaderFileConfigIFA {
                (!methodReplanner.equals(TypeReplanner.GH4S) &&
                 !methodReplanner.equals(TypeReplanner.GA4S) &&
                 !methodReplanner.equals(TypeReplanner.MPGA4S) && 
-                !methodReplanner.equals(TypeReplanner.DE4S))){
+                !methodReplanner.equals(TypeReplanner.DE4S) &&
+                !methodReplanner.equals(TypeReplanner.GA_GA_4S) && 
+                !methodReplanner.equals(TypeReplanner.GA_GH_4S) && 
+                !methodReplanner.equals(TypeReplanner.FIXED_ROUTE4s))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of method not valid");
             return false;
         }
@@ -114,6 +117,15 @@ public class ReaderFileConfigIFA {
             }else if (methodReplanner.equals(TypeReplanner.MPGA4S)){
                 typeReplanner = TypeReplanner.MPGA4S;
                 dirReplanner = "../Modules-IFA/MPGA4s/";
+            }else if (methodReplanner.equals(TypeReplanner.GA_GA_4S)){
+                typeReplanner = TypeReplanner.GA_GA_4S;
+                dirReplanner = "../Modules-IFA/GA-GA-4s/";
+            }else if (methodReplanner.equals(TypeReplanner.GA_GH_4S)){
+                typeReplanner = TypeReplanner.GA_GH_4S;
+                dirReplanner = "../Modules-IFA/GA-GH-4s/";
+            }else if (methodReplanner.equals(TypeReplanner.FIXED_ROUTE4s)){
+                typeReplanner = TypeReplanner.FIXED_ROUTE4s;
+                dirReplanner = "../Modules-IFA/Fixed-Route4s/";
             }
             return true;
         }catch (Exception ex){

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
-#Last Update: 07/03/2018
+#Last Update: 10/04/2018
 #Description: Script that removes (deletes) a set of files from old missions.
 #Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
@@ -53,5 +53,11 @@ rm ../Modules-IFA/DE4s/route.txt 2>/dev/null
 rm ../Modules-IFA/DE4s/routeGeo.txt 2>/dev/null
 rm ../Modules-IFA/DE4s/*.png 2>/dev/null
 rm ../Modules-IFA/DE4s/log_error.txt 2>/dev/null
+
+echo "Clear files in GA-GA-4s [output-simulation.log]"
+rm ../Modules-IFA/GA-GA-4s/output-simulation.log 2>/dev/null
+
+echo "Clear files in GA-GH-4s [output-simulation.log]"
+rm ../Modules-IFA/GA-GH-4s/output-simulation.log 2>/dev/null
 
 echo "==============================Done================================"

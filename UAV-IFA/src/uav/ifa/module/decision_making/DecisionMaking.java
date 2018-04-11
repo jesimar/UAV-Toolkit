@@ -18,7 +18,10 @@ import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.states.StateReplanning;
 import uav.ifa.module.path_replanner.DE4s;
+import uav.ifa.module.path_replanner.FixedRoute4s;
 import uav.ifa.module.path_replanner.GA4s;
+import uav.ifa.module.path_replanner.GA_GA_4s;
+import uav.ifa.module.path_replanner.GA_GH_4s;
 import uav.ifa.module.path_replanner.GH4s;
 import uav.ifa.module.path_replanner.MPGA4s;
 import uav.ifa.module.path_replanner.Replanner;
@@ -98,7 +101,7 @@ public class DecisionMaking {
                         execEmergencyLanding();
                         break;
                     case FAIL_BASED_INSERT_FAILURE:
-                        if (typeAction.equals(TypeInputCommand.CMD_MPGA)){
+                        if (typeAction.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)){
                             execEmergencyLanding();
                         } else if (typeAction.equals(TypeInputCommand.CMD_LAND)){
                             landVertical();
@@ -140,15 +143,21 @@ public class DecisionMaking {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
         dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
-        StandardPrints.printMsgEmph("decison making -> emergeny landing");
+        StandardPrints.printMsgEmph("decison making -> emergeny landing: " + typeAction);
         if (configLocal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
             replanner = new GH4s(drone);
-        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
             replanner = new GA4s(drone);   
-        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
             replanner = new MPGA4s(drone);
-        }else if (configLocal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
             replanner = new DE4s(drone);
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+            replanner = new GA_GA_4s(drone);
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+            replanner = new GA_GH_4s(drone);
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.FIXED_ROUTE4s)) {
+            replanner = new FixedRoute4s(drone);
         }
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();
@@ -161,6 +170,21 @@ public class DecisionMaking {
         try{
             Mission mission = new Mission();
             String path = configLocal.getDirReplanner() + "routeGeo.txt";
+            
+            if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+                System.out.println("TypeReplanner.GA_GA_4S");
+                path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
+            } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+                String best = ((GA_GH_4s)replanner).bestMethod();
+                if (best.equals("GA")){
+                    path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
+                } else if (best.equals("GH")) {
+                    path = "../Modules-IFA/GH4s/" + "routeGeo.txt";
+                } else {
+                    return false;
+                }
+            }
+            
             BufferedReader br = new BufferedReader(new FileReader(path));
             String sCurrentLine;
             double lat = 0.0;

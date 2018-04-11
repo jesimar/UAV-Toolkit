@@ -16,7 +16,7 @@ public class ListParameters {
      * Class constructor.
      */
     public ListParameters() {
-        this.listParameter = new LinkedList();        
+        this.listParameter = new LinkedList<>();        
     }
 
     public void parseInfoParameters(String parameters) {

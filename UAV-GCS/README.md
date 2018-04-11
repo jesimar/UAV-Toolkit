@@ -1,6 +1,6 @@
-# UAV-Insert-Failure
+# UAV-GCS
 
-Projeto escrito em Java usando a IDE Netbeans para inserção de falhas de forma manual no drone.
+Projeto escrito em Java usando a IDE Netbeans para interação com o drone.
 
 ## Como Executar
 
@@ -12,7 +12,7 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 2. ./exec-mavproxy-local.sh        (PC)
 3. ./exec-soa-interface.sh         (PC)
 4. ./exec-ifa.sh                   (PC)
-5. ./exec-insert-failure.sh        (PC)
+5. ./exec-gcs.sh                   (PC)
 6. ./exec-mosa.sh                  (PC)
 
 Forma 2 -> Execução em SITL-EDISON:
@@ -21,7 +21,7 @@ Forma 2 -> Execução em SITL-EDISON:
 2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
 3. ./exec-soa-interface.sh         (EDISON)
 4. ./exec-ifa.sh                   (EDISON)
-5. ./exec-insert-failure.sh        (EDISON)
+5. ./exec-gcs.sh                   (EDISON)
 6. ./exec-mosa.sh                  (EDISON)
 
 Forma 3 -> Execução no Drone na EDISON:
@@ -29,12 +29,10 @@ Forma 3 -> Execução no Drone na EDISON:
 1. ./exec-mavproxy-edison.sh       (EDISON)
 2. ./exec-soa-interface.sh         (EDISON)
 3. ./exec-ifa.sh                   (EDISON)
-4. ./exec-insert-failure.sh        (EDISON)
+4. ./exec-gcs.sh                   (EDISON)
 5. ./exec-mosa.sh                  (EDISON)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
-
-![](../Figures/exec-insert-failure.png)
 
 ## Arquivos de Entrada
 
@@ -50,8 +48,6 @@ prop.port=5556
 
 As seguintes ações são possíveis de serem chamadas a qualquer instante desde que aeronave esteja em voo:
 
-* MPGA -> Simula que a aeronave sofreu uma falha e deve pousar usando o algoritmo MPGA4s.
+* EMERGENCY-LANDING -> Simula que a aeronave sofreu uma falha e deve pousar usando o algoritmo (MPGA4s, GA4s, DE4s ou GH4s) especificado na pasta do sistema IFA.
 * LAND -> Simula que a aeronave sofreu uma falha e deve pousar na vertical.
 * RTL -> Simula que a aeronave sofreu uma falha e deve fazer um Return To Launch (RTL).
-
-Para chamar alguma dessas ações basta digitar o nome delas e teclar enter:
