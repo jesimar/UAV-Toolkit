@@ -18,7 +18,7 @@ import uav.generic.struct.states.StateCommunication;
  * Classe que faz o controle da comunicação com o sistema MOSA.
  * @author Jesimar S. Arantes
  */
-public class CommunicationControl {
+public class CommunicationMOSA {
     
     private ServerSocket server;
     private Socket socket;
@@ -33,7 +33,7 @@ public class CommunicationControl {
      * Class constructor
      * @param drone instance of the aircraft
      */
-    public CommunicationControl(Drone drone) {
+    public CommunicationMOSA(Drone drone) {
         this.drone = drone;
         stateCommunication = StateCommunication.WAITING;
         mosaDisabled = false;

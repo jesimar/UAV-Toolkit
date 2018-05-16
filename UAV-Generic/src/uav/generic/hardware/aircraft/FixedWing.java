@@ -35,6 +35,7 @@ public class FixedWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
+        temperatureBattery = 0;//in celsius
         
         typeFailure = "NONE";
         
@@ -74,6 +75,7 @@ public class FixedWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
+        temperatureBattery = 0;//in celsius
         
         typeFailure = "NONE";
         

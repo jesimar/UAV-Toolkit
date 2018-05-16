@@ -20,12 +20,13 @@ import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeFailure;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StateReplanning;
 import uav.ifa.module.decision_making.DecisionMaking;
-import uav.ifa.module.communication_control.CommunicationControl;
+import uav.ifa.module.communication_control.CommunicationMOSA;
 import uav.ifa.module.communication_control.CommunicationGCS;
 import uav.ifa.struct.ReaderFileConfigIFA;
 import uav.ifa.struct.Failure;
@@ -40,7 +41,7 @@ public class SecurityManager {
 
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final CommunicationControl communicationControl;
+    private final CommunicationMOSA communicationMOSA;
     private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
 
@@ -111,7 +112,7 @@ public class SecurityManager {
         this.dataAcquisition = new DataCommunication(
                 drone, "IFA", configGlobal.getHostSOA(),
                 configGlobal.getPortNetworkSOA(), printLogOverhead);
-        this.communicationControl = new CommunicationControl(drone);
+        this.communicationMOSA = new CommunicationMOSA(drone);
         this.communicationGCS = new CommunicationGCS(drone);
 
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
@@ -128,14 +129,16 @@ public class SecurityManager {
         dataAcquisition.getParameters();
         dataAcquisition.getHomeLocation();
 
-        communicationGCS.startServerGCS();      //Thread
+        communicationGCS.startServerIFA();      //Thread
         communicationGCS.receiveData();         //Thread
-//        communicationGCS.sendData();            //Thread
 
-        communicationControl.startServerIFA();  //blocked
-        communicationControl.receiveData();     //Thread
-
+        communicationMOSA.startServerIFA();     //blocked
+        communicationMOSA.receiveData();        //Thread
+        
         monitoringAircraft();                   //Thread
+        
+        communicationGCS.sendData();            //Thread
+        
         waitingForAnAction();                   //Thread                
         monitoringStateMachine();               //Thread
 
@@ -273,12 +276,25 @@ public class SecurityManager {
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE));
             StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: " + drone.getTime());
         }
+        if (communicationGCS.hasFailureBadWeather()
+                && !hasFailure(TypeFailure.FAIL_BAD_WEATHER)) {
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BAD_WEATHER));
+            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BAD_WEATHER));
+            StandardPrints.printMsgError("FAIL BAD WEATHER -> Time: " + drone.getTime());
+        }
         if (configGlobal.hasPowerModule()
                 && drone.getBattery().level < configGlobal.getLevelMinimumBattery()
-                && !hasFailure(TypeFailure.FAIL_BATTERY)) {
-            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY));
-            StandardPrints.printMsgError("FAIL BATTERY -> Time: " + drone.getTime());
+                && !hasFailure(TypeFailure.FAIL_LOW_BATTERY)) {
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_LOW_BATTERY));
+            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
+            StandardPrints.printMsgError("FAIL LOW BATTERY -> Time: " + drone.getTime());
+        }
+        if (configGlobal.hasTemperatureSensor()
+                && drone.getTemperatureBattery() > configGlobal.getLevelMaximumTemperature()
+                && !hasFailure(TypeFailure.FAIL_BATTERY_OVERHEATING)) {
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY_OVERHEATING));
+            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY_OVERHEATING));
+            StandardPrints.printMsgError("FAIL BATTERY OVERHEATING -> Time: " + drone.getTime());
         }
         if (drone.getGPSInfo().fixType != 3
                 && !hasFailure(TypeFailure.FAIL_GPS)) {
@@ -292,13 +308,27 @@ public class SecurityManager {
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_IFA));
             StandardPrints.printMsgError("FAIL IFA -> Time: " + drone.getTime());
         }
-        if ((communicationControl.getStateCommunication() == StateCommunication.DISABLED
-                || communicationControl.isMosaDisabled())
+        if ((communicationMOSA.getStateCommunication() == StateCommunication.DISABLED
+                || communicationMOSA.isMosaDisabled())
                 && !hasFailure(TypeFailure.FAIL_SYSTEM_MOSA)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_MOSA));
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_MOSA));
             StandardPrints.printMsgError("FAIL MOSA -> Time: " + drone.getTime());
         }
+//        if (configGlobal.hasMotorRotationSensor()
+//                && drone.getMotorFailure()
+//                && !hasFailure(TypeFailure.FAIL_ENGINE)) {
+//            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_ENGINE));
+//            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_ENGINE));
+//            StandardPrints.printMsgError("FAIL ENGINE -> Time: " + drone.getTime());
+//        }
+        //Descomentar quando for virar produto
+//        if (drone.getStatusUAV().systemStatus.equals("CRITICAL")
+//                && !hasFailure(TypeFailure.FAIL_AP_CRITICAL)) {
+//            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_CRITICAL));
+//            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_CRITICAL));
+//            StandardPrints.printMsgError("FAIL AP CRITICAL -> Time: " + drone.getTime());
+//        }
         if (drone.getStatusUAV().systemStatus.equals("EMERGENCY")
                 && !hasFailure(TypeFailure.FAIL_AP_EMERGENCY)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_EMERGENCY));
@@ -311,11 +341,7 @@ public class SecurityManager {
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_POWEROFF));
             StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: " + drone.getTime());
         }
-//        if (drone.engineCrash() && 
-//                !hasFailure(TypeFailure.FAIL_ENGINE)){
-//            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_ENGINE));
-//            StandardPrints.printMsgError("FAIL ENGINE -> Time: "+drone.getTime());
-//        }
+
     }
 
     //melhorar: por enquanto esta tratando apenas a primeira falha.
@@ -329,11 +355,16 @@ public class SecurityManager {
                     try {
                         //Melhorar verificacao para ver se a aeronave esta voando.
                         if (drone.getStatusUAV().armed && hasFailure()) {
-                            communicationControl.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
+                            communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
                             if (configGlobal.hasBuzzer()) {
                                 actionTurnOnTheAlarm();
                             }
-                            decisonMaking.actionToDoSomething(listOfFailure.get(0));
+                            if (configLocal.getLocalExecReplanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                                decisonMaking.actionToDoSomethingOnboard(listOfFailure.get(0));
+                            }else{
+                                decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), 
+                                        communicationGCS);
+                            }
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);
@@ -367,7 +398,7 @@ public class SecurityManager {
 
                 }
                 try {
-                    communicationControl.close();
+                    communicationMOSA.close();
                 } catch (Exception ex) {
 
                 }

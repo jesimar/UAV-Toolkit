@@ -17,6 +17,7 @@ import uav.generic.struct.reader.ReaderFileConfigAircraft;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.constants.TypeSystemExecMOSA;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
@@ -24,7 +25,7 @@ import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.struct.reader.ReaderFileMission;
 import uav.generic.util.UtilGeom;
-import uav.mosa.module.communication_control.CommunicationControl;
+import uav.mosa.module.communication_control.CommunicationIFA;
 import uav.mosa.module.decision_making.DecisionMaking;
 import uav.mosa.struct.ReaderFileConfigMOSA;
 
@@ -36,7 +37,7 @@ public class MissionManager {
     
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final CommunicationControl communicationControl;
+    private final CommunicationIFA communicationIFA;
     private final DecisionMaking decisonMaking;
     
     private final ReaderFileConfigMOSA configLocal;
@@ -113,7 +114,7 @@ public class MissionManager {
         this.wptsMission3D = new Mission3D();
         readMission3D();
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition, wptsMission3D); 
-        this.communicationControl = new CommunicationControl(drone);
+        this.communicationIFA = new CommunicationIFA(drone);
         this.wptsBuzzer = new Mission();
         if (configGlobal.hasBuzzer()){
             readerFileBuzzer();
@@ -131,8 +132,8 @@ public class MissionManager {
         
         dataAcquisition.getParameters();
         
-        communicationControl.connectClient();   //blocked        
-        communicationControl.receiveData();     //Thread  
+        communicationIFA.connectClient();       //blocked        
+        communicationIFA.receiveData();         //Thread  
         monitoringAircraft();                   //Thread
         waitingForAnAction();                   //Thread                            
         monitoringStateMachine();               //Thread
@@ -142,7 +143,7 @@ public class MissionManager {
             Thread.sleep(1000);
         }catch (InterruptedException ex){ }
         
-        communicationControl.sendData(TypeMsgCommunication.MOSA_IFA_INITIALIZED);
+        communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_INITIALIZED);
         StandardPrints.printMsgEmph("initialized ..."); 
     }
     
@@ -168,8 +169,10 @@ public class MissionManager {
     
     private void readMission3D(){
         try {
-            String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMission();
-            ReaderFileMission.mission3D(new File(path), wptsMission3D);
+            if (configLocal.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
+                String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMission();
+                ReaderFileMission.mission3D(new File(path), wptsMission3D);
+            }
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException] readMission()");
             ex.printStackTrace();            
@@ -238,7 +241,7 @@ public class MissionManager {
             public void run(){
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
-                        if (communicationControl.isStartMission()){
+                        if (communicationIFA.isStartMission()){
                             decisonMaking.actionToDoSomething();
                             break;
                         }
@@ -258,20 +261,20 @@ public class MissionManager {
             public void run(){
                 try {
                     while(stateMOSA != StateSystem.DISABLED){                    
-                        if (communicationControl.getStateCommunication() == StateCommunication.DISABLED){
-                            communicationControl.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                        if (communicationIFA.getStateCommunication() == StateCommunication.DISABLED){
+                            communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(0);
                         }
                         if (decisonMaking.getStatePlanning()== StatePlanning.DISABLED){
-                            communicationControl.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                            communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(0);
                         }
                         if (stateMonitoring == StateMonitoring.DISABLED){
-                            communicationControl.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                            communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(0);

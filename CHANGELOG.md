@@ -1,6 +1,6 @@
 # Changelog
 
-## Version v2.0.0 (11/04/2018)
+## Version v2.0.0 (10/05/2018)
 
 ### Features:
 
@@ -8,7 +8,7 @@
 * Updated method getAllInfoSensors(...) in UAV-SOA-Interface to return next_waypoint, count_waypoint, dist_to_home, dist_to_current_waypoint
 * Updated method getAllInfoSensors(...) in UAV-SOA-Interface number of decimal places returned optimized
 * Updated codes in UAV-Generic (time, getBarometer, nextWaypoint, countWaypoint, distToHome, distToCurrentWaypoint, date actual, fully refactored)
-* Updated codes in UAV-IFA (time, removed getDistanceToHome, fully refactored)
+* Updated codes in UAV-IFA (time, removed getDistanceToHome, fully refactored, added code Fixed-Route4s-Static)
 * Updated codes in UAV-MOSA (time, removed getDistanceToHome, fully refactored)
 * Updated codes in UAV-Tests (time, removed getDistanceToHome)
 * Updated codes in UAV-PosAnalyser (time - little modifications)
@@ -22,7 +22,7 @@
 * Updated several classes (refactored)
 * Updated several properties file (refactored)
 * Added new commands controller
-* Added code UAV-GCS
+* Added code UAV-GCS (with communication with Oracle Drone using DataBase)
 * Added directory Instances
 * Added method getBarometer(...) in UAV-SOA-Interface
 * Added Modules-Global (Sonar, Buzzer, Parachute, Camera, LED, Spraying)
@@ -34,6 +34,8 @@
 * Added UAV-Exec-MPGA4s-Massive code
 * Added UAV-Ensemble-GA-GA_GA-GH code
 * Added UAV-Fixed-Route4s code
+* Added UAV-IFA mode offline route processing (falta terminar)
+* Added UAV-MOSA mode offline route processing (falta terminar)
 
 ### Bug Fixes:
 

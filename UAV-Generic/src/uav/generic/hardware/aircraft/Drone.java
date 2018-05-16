@@ -32,6 +32,7 @@ public abstract class Drone {
     int countWaypoint;
     double distanceToHome;//in meters
     double distanceToCurrentWaypoint;//in meters
+    double temperatureBattery;
     
     String typeFailure;
     
@@ -89,6 +90,10 @@ public abstract class Drone {
     
     public double getDistanceToCurrentWaypoint() {
         return distanceToCurrentWaypoint;
+    }
+    
+    public double getTemperatureBattery(){
+        return temperatureBattery;
     }
     
     public void setTime(double time){

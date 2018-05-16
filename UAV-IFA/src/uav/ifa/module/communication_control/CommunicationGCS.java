@@ -14,6 +14,7 @@ import uav.generic.module.sensors_actuators.CameraControl;
 import uav.generic.module.sensors_actuators.LEDControl;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
+import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 
 /**
@@ -28,6 +29,9 @@ public class CommunicationGCS {
     private PrintWriter output;
 
     private boolean hasFailure;
+    private boolean hasFailureBadWeather;
+    private boolean hasReceiveRouteGCS;
+    private String routeReplannerGCS;
     private String typeAction;
     private final ReaderFileConfigGlobal configGlobal;
     private final Drone drone;
@@ -40,10 +44,12 @@ public class CommunicationGCS {
         this.drone = drone;
         configGlobal = ReaderFileConfigGlobal.getInstance();
         hasFailure = false;
+        hasFailureBadWeather = false;
+        hasReceiveRouteGCS = false;
         typeAction = "";
     }
 
-    public void startServerGCS() {
+    public void startServerIFA() {
         StandardPrints.printMsgEmph("waiting a connection to UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -72,9 +78,12 @@ public class CommunicationGCS {
                         if (input != null){
                             String answer = input.readLine();
                             if (answer != null) {
-                                StandardPrints.printMsgYellow("Data FAILURE: " + answer);
+                                StandardPrints.printMsgYellow("Data: " + answer);
                                 answer = answer.toLowerCase();
-                                if (answer.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)){
+                                if (answer.equals(TypeInputCommand.CMD_BAD_WEATHER)){
+                                    hasFailureBadWeather = true;
+                                    typeAction = TypeInputCommand.CMD_BAD_WEATHER;
+                                } else if (answer.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)){
                                     hasFailure = true;
                                     typeAction = TypeInputCommand.CMD_EMERGENCY_LANDING;
                                 } else if (answer.equals(TypeInputCommand.CMD_LAND)){
@@ -95,6 +104,9 @@ public class CommunicationGCS {
                                 } else if (answer.equals(TypeInputCommand.CMD_LED)){
                                     LEDControl led = new LEDControl();
                                     led.blinkLED();
+                                } else if (answer.contains("mission")){
+                                    hasReceiveRouteGCS = true;
+                                    routeReplannerGCS = answer;
                                 }
                             } else {
                                 Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
@@ -122,7 +134,7 @@ public class CommunicationGCS {
                 try {
                     while (true) {
                         if (output != null){
-                            output.println(drone.getGPS().lat + ", " + drone.getGPS().lng);
+                            output.println(TypeMsgCommunication.IFA_GCS_INFO + drone.toString());
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
@@ -134,8 +146,27 @@ public class CommunicationGCS {
         });
     }
     
+    public void sendDataReplannerInGCS(String attributes){
+        if (output != null){
+            output.println(TypeMsgCommunication.IFA_GCS_REPLANER + attributes);
+        }
+    }
+            
+    
     public boolean hasFailure(){
         return hasFailure;
+    }
+    
+    public boolean hasFailureBadWeather(){
+        return hasFailureBadWeather;
+    }
+
+    public boolean hasReceiveRouteGCS() {
+        return hasReceiveRouteGCS;
+    }
+    
+    public String getRouteReplannerGCS(){
+        return routeReplannerGCS;
     }
     
     public String getTypeAction(){

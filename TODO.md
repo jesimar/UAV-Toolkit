@@ -56,15 +56,12 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Definir no Google Earth um padrão para missão com vídeo.
 * Definir no Google Earth um padrão para missão com pulverização.
 
-## GitHub
+## GitHub e Documentação UAV-Toolkit
 
 * Melhorar a descrição do projeto no github.
 * Traduzir a descrição do projeto no github para o Inglês.
 * Melhorar as descrições através de links, figuras, diagramas e vídeos.
 * Colocar informações sobre como configurar os arquivos de properties.
-
-## Documentação UAV-Toolkit
-
 * Futuro: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 
 ## Legislação
@@ -105,6 +102,26 @@ QGroundControl:
 * Corrigir problema na mensagem no início do programa, quando começo uma missão e fala que PreArm 3D Fix.
 * Tentar descobrir como limpar a antiga missão do qgroundcontrol.
 
+
+## Documentação Formal das Falhas no Sistema
+
+* Falha no appendMission(MOSA) (SOA)
+1. Falha em wait_ready
+2. Não tem solução
+3. Drone pode cair
+
+* Falha no getHomeLocation (IFA) (SOA)
+1. Falha em wait_ready
+2. Não tem solução
+3. Drone não cai
+
+* Falha em getHomeLocation (IFA) (SOA)
+1. Falha em attribute lat
+2. Não tem solução (mas acredito que é só esperar mais 5 segundos entre a execução do SOA e o IFA)
+3. Drone não cai
+
+## Alguns Dilemas
+
 ## Trabalhos Futuros ou Não Fazer Mais
 
 * Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
@@ -115,6 +132,7 @@ QGroundControl:
 * Melhorar forma de alimentação da Intel Edison, ao invés de ligar os pinos do ESC (pinos de alimentação positivo e GND) na edison. Ligar os pinos Positivo e GND em um conector padrão de alimentação do Breakeout da Edison.
 * Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
 * Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
+* Incluir no IFA sistema para verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
 
 MOSA:
 * Path Planner:

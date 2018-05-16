@@ -8,12 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import uav.gcs2.struct.Drone;
+import uav.gcs2.struct.ReaderFileConfig;
+import uav.gcs2.communication.CommunicationIFA;
+import uav.gcs2.conection.SaveDB;
 import uav.gcs2.google_maps.GoogleMaps;
 
 /**
@@ -26,6 +31,7 @@ public final class GCS2 extends JFrame {
     private final JPanel panelLeft;
     private final JPanel panelRight;   
     
+    private final JButton btnBadWeather;
     private final JButton btnPathReplanningEmergency;
     private final JButton btnLand;
     private final JButton btnRTL;
@@ -38,20 +44,30 @@ public final class GCS2 extends JFrame {
     private final JButton btnSpraying;
     private final JButton btnParachute;
     
-    private final int width = 800;
-    private final int height = 500;
+    private final JLabel labelIsConnectedIFA;
     
+    private final int width = 800;
+    private final int height = 580;
+    
+    private final Drone drone;
     private final ReaderFileConfig config;
-    private CommunicationControl sendCommands;
-    private final GoogleMaps googleMaps;
+    private final CommunicationIFA communicationIFA;
+    private SaveDB saveDB;
+    private GoogleMaps googleMaps;
 
     public static void main(String[] args) {
         GCS2 gcs = new GCS2();
     }
 
     public GCS2() {
+        Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
         config.read();
+        drone = new Drone();
+        communicationIFA = new CommunicationIFA(drone, config.getHostIFA(), config.getPortIFA());
+        if (config.hasDB()){
+            saveDB = new SaveDB(config.getHostOD_DB(), config.getPortOD_DB());
+        }
         
         this.setTitle("UAV-GCS");
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -146,13 +162,24 @@ public final class GCS2 extends JFrame {
         labelActions.setForeground(Color.BLACK);
         panelLeft.add(labelActions);
         
+        btnBadWeather = new JButton("BAD-WEATHER");
+        btnBadWeather.setPreferredSize(new Dimension(185, 25));
+        btnBadWeather.setEnabled(false);
+        btnBadWeather.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("BAD-WEATHER");
+            }
+        });
+        panelLeft.add(btnBadWeather);
+        
         btnPathReplanningEmergency = new JButton("EMERGENCY-LANDING");
         btnPathReplanningEmergency.setPreferredSize(new Dimension(185, 25));
         btnPathReplanningEmergency.setEnabled(false);
         btnPathReplanningEmergency.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("EMERGENCYLANDING");
+                communicationIFA.sendData("EMERGENCYLANDING");
             }
         });
         panelLeft.add(btnPathReplanningEmergency);
@@ -163,7 +190,7 @@ public final class GCS2 extends JFrame {
         btnLand.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("LAND");
+                communicationIFA.sendData("LAND");
             }
         });
         panelLeft.add(btnLand);
@@ -174,7 +201,7 @@ public final class GCS2 extends JFrame {
         btnRTL.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("RTL");
+                communicationIFA.sendData("RTL");
             }
         });
         panelLeft.add(btnRTL);
@@ -185,7 +212,7 @@ public final class GCS2 extends JFrame {
         btnBuzzer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("BUZZER");
+                communicationIFA.sendData("BUZZER");
             }
         });
         panelLeft.add(btnBuzzer);
@@ -196,7 +223,7 @@ public final class GCS2 extends JFrame {
         btnAlarm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("ALARM");
+                communicationIFA.sendData("ALARM");
             }
         });
         panelLeft.add(btnAlarm);
@@ -207,7 +234,7 @@ public final class GCS2 extends JFrame {
         btnPicture.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("PICTURE");
+                communicationIFA.sendData("PICTURE");
             }
         });
         panelLeft.add(btnPicture);
@@ -218,7 +245,7 @@ public final class GCS2 extends JFrame {
         btnVideo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("VIDEO");
+                communicationIFA.sendData("VIDEO");
             }
         });
         panelLeft.add(btnVideo);
@@ -229,7 +256,7 @@ public final class GCS2 extends JFrame {
         btnLED.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("LED");
+                communicationIFA.sendData("LED");
             }
         });
         panelLeft.add(btnLED);
@@ -240,7 +267,7 @@ public final class GCS2 extends JFrame {
         btnBlink.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("BLINK");
+                communicationIFA.sendData("BLINK");
             }
         });
         panelLeft.add(btnBlink);
@@ -251,7 +278,7 @@ public final class GCS2 extends JFrame {
         btnSpraying.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("SPRAYING");
+                communicationIFA.sendData("SPRAYING");
             }
         });
         panelLeft.add(btnSpraying);
@@ -262,23 +289,38 @@ public final class GCS2 extends JFrame {
         btnParachute.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sendCommands.sendData("PARACHUTE");
+                communicationIFA.sendData("PARACHUTE");
             }
         });
         panelLeft.add(btnParachute);
 
-        communication();
-        monitoringInterface();
+        communicationIFA.connectServerIFA();
+        communicationIFA.receiveData();
+
+        if (config.hasDB()){
+            saveDB.saveDB(drone, communicationIFA);
+        }
         
-//        panelRight = new JPanel();
-//        panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        panelRight.setBackground(new Color(95, 161, 255));
-//        panelRight.setVisible(true);
+        enableComponentsInterface();
         
-        panelRight = new JPanel(new BorderLayout());
-        panelRight.setVisible(true);
-        googleMaps = new GoogleMaps(this, panelRight, sendCommands);
-        googleMaps.plot();
+        if (config.hasGoogleMaps()){
+            //Painel com google maps
+            panelRight = new JPanel(new BorderLayout());
+            panelRight.setVisible(true);
+            googleMaps = new GoogleMaps(this, panelRight, communicationIFA);
+            googleMaps.plot();
+        }else{
+            //Painel sem google maps
+            panelRight = new JPanel();
+            panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelRight.setBackground(new Color(95, 161, 255));
+            panelRight.setVisible(true);
+        }
+
+        labelIsConnectedIFA = new JLabel("Is Connected IFA");
+        labelIsConnectedIFA.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedIFA.setForeground(Color.RED);
+        panelRight.add(labelIsConnectedIFA);
 
         this.add(panelTop);
         this.add(panelMain);
@@ -296,20 +338,15 @@ public final class GCS2 extends JFrame {
         this.setVisible(true);
     }
     
-    private void communication(){
-        sendCommands = new CommunicationControl(config.getHost(), config.getPort());
-        sendCommands.connectClient();
-//        sendCommands.receiveData();
-    }
-    
-    private void monitoringInterface(){
+    private void enableComponentsInterface(){
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 while(true){
                     try{
-                        Thread.sleep(100);
-                        if (sendCommands.isConnected()){
+                        Thread.sleep(500);
+                        if (communicationIFA.isConnected()){
+                            btnBadWeather.setEnabled(true);
                             btnPathReplanningEmergency.setEnabled(true);
                             btnLand.setEnabled(true);
                             btnRTL.setEnabled(true);
@@ -321,6 +358,9 @@ public final class GCS2 extends JFrame {
                             btnBlink.setEnabled(true);
                             btnSpraying.setEnabled(true);
                             btnParachute.setEnabled(true);
+                            labelIsConnectedIFA.setForeground(Color.GREEN);
+                        }else{
+                            labelIsConnectedIFA.setForeground(Color.RED);
                         }
                     }catch (InterruptedException ex) {
 
@@ -343,7 +383,7 @@ public final class GCS2 extends JFrame {
         String msgAbout   = "Program: UAV-GCS\n" + 
                             "Author: Jesimar da Silva Arantes\n" + 
                             "Version: 1.0.0\n" + 
-                            "Date: 30/03/2018";
+                            "Date: 08/05/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }

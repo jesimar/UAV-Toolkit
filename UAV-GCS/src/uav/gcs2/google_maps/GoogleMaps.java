@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import uav.gcs2.CommunicationControl;
+import uav.gcs2.communication.CommunicationIFA;
 
 public class GoogleMaps {
 
@@ -20,12 +20,12 @@ public class GoogleMaps {
     
     private final JFrame frame;
     private final JPanel panel;
-    private final CommunicationControl sendCommands;
+    private final CommunicationIFA communicationControl;
 
-    public GoogleMaps(JFrame frame, JPanel panel, CommunicationControl sendCommands) {
+    public GoogleMaps(JFrame frame, JPanel panel, CommunicationIFA communicationIFA) {
         this.frame = frame;
         this.panel = panel;
-        this.sendCommands = sendCommands;
+        this.communicationControl = communicationIFA;
     }
 
     public void plot(){
@@ -87,7 +87,7 @@ public class GoogleMaps {
             public void run() {
                 while(true){
                     try{
-                        String latlng = sendCommands.latlng;
+                        String latlng = "0, 0";//communicationControl.latlng;
                         String javaScript = 
                             "var myLatlng = new google.maps.LatLng(" + latlng + ");\n"
                             + "var marker = new google.maps.Marker({\n"

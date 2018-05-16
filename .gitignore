@@ -8,6 +8,7 @@ Simulations-AutoFG-Waypoints/
 ProcessDataFG/
 ReaderKML/
 ManagerSITL/
+UAV-OD/
 Util-Spreadsheets/
 
 #ignorar todos os arquivos por extensao
@@ -31,13 +32,3 @@ mav.tlog.raw
 
 ideias-todo.txt
 dicas-voo.txt
-/GA-GA/nbproject/private/
-/GA-GA/dist/
-/UAV-IFA/dist/
-/Ensemble-GA-GA_GA-GH/nbproject/private/
-/UAV-Exec-MPGA4s-Massive/nbproject/private/
-/UAV-Ensemble-GA-GA_GA-GH/nbproject/private/
-/UAV-Exec-PathReplanner-Massive/nbproject/private/
-/UAV-Exec-PathReplanner-Massive/dist/
-/UAV-Fixed-Route4s/nbproject/private/
-/UAV-Fixed-Route4s/dist/

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeAltitudeDecay;
+import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeReplanner;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 
@@ -24,6 +25,7 @@ public class ReaderFileConfigIFA {
     private String systemExec;
     
     //replanner
+    private String localExecReplanner;
     private String typeReplanner;
     private String methodReplanner;
     private String dirReplanner;
@@ -55,6 +57,7 @@ public class ReaderFileConfigIFA {
             
             systemExec               = prop.getProperty("prop.global.system_exec");
             
+            localExecReplanner       = prop.getProperty("prop.replanner.local_exec");
             methodReplanner          = prop.getProperty("prop.replanner.method");
             cmdExecReplanner         = prop.getProperty("prop.replanner.cmd_exec");
             typeAltitudeDecay        = prop.getProperty("prop.replanner.type_altitude_decay");
@@ -81,6 +84,12 @@ public class ReaderFileConfigIFA {
                 (!systemExec.equals(TypeSystemExecIFA.REPLANNER) &&
                  !systemExec.equals(TypeSystemExecIFA.FIXED_ROUTE))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of system exec not valid");
+            return false;
+        }
+        if (localExecReplanner == null || 
+                (!localExecReplanner.equals(TypeLocalExecPlanner.ONBOARD) &&
+                 !localExecReplanner.equals(TypeLocalExecPlanner.OFFBOARD))){
+            StandardPrints.printMsgError2("Error [[file ./config.properties]] type of local exec method not valid");
             return false;
         }
         if (methodReplanner == null || 
@@ -137,6 +146,10 @@ public class ReaderFileConfigIFA {
     
     public String getSystemExec() {
         return systemExec;
+    }
+    
+    public String getLocalExecReplanner() {
+        return localExecReplanner;
     }
     
     public String getTypeReplanner() {

@@ -1,31 +1,29 @@
-package uav.gcs2;
+package uav.gcs2.communication;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
+import uav.gcs2.struct.Drone;
 
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationControl {
+public class CommunicationOD {
 
     private Socket socket;
-    private PrintWriter output; 
-    private BufferedReader input;
+    private PrintWriter output;
     
     private final String HOST;
     private final int PORT;
     
-    public CommunicationControl(String host, int port){
+    public CommunicationOD(String host, int port){
         this.HOST = host;
         this.PORT = port;
     }
     
-    public void connectClient(){    
-        System.out.println("Trying connect with IFA");
+    public void connectServer(){    
+        System.out.println("Trying connect with OD");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -34,8 +32,7 @@ public class CommunicationControl {
                         Thread.sleep(1000);
                         socket = new Socket(HOST, PORT);
                         output = new PrintWriter(socket.getOutputStream(), true);
-                        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        System.out.println("UAV GCS connected in IFA ...");
+                        System.out.println("UAV GCS connected in OD ...");
                         break;
                     }catch(IOException ex){
                         
@@ -45,34 +42,22 @@ public class CommunicationControl {
                 }
             }
         });
-    }
+    }   
     
-    public String latlng = "0,0";
-    
-    public void receiveData() {
-        System.out.println("Trying to listen the connection of UAV-IFA ...");
+    public void sendInfoDrone(Drone drone, CommunicationIFA communicationIFA){
+        System.out.println("Trying send info to OD");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    while (true) {
-                        if (input != null){
-                            String answer = input.readLine();                            
-                            if (answer != null) {
-                                System.out.println("Data : " + answer);
-                                latlng = answer;
-                            } 
-                            Thread.sleep(100);
-                        }else{
+                while(true){
+                    try{
+                        if (output != null && communicationIFA.isConnected()){
+                            output.println(drone.toString());
                             Thread.sleep(500);
                         }
+                    } catch (InterruptedException ex) {
+
                     }
-                } catch (InterruptedException ex) {
-                    System.out.println("Warning [InterruptedException] receiveData()");
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    System.out.println("Warning [IOException] receiveData()");
-                    ex.printStackTrace();
                 }
             }
         });
@@ -92,8 +77,7 @@ public class CommunicationControl {
     
     public void close(){
         try {
-            output.close(); 
-            input.close();
+            output.close();
             socket.close();
         } catch (IOException ex) {
             System.out.println("Warning [IOException] close()");

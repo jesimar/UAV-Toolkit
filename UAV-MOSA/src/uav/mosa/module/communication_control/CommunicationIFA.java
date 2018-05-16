@@ -17,7 +17,7 @@ import uav.generic.struct.states.StateCommunication;
  * Classe que faz o controle da comunicação com o sistema IFA.
  * @author Jesimar S. Arantes
  */
-public class CommunicationControl {
+public class CommunicationIFA {
     
     private Socket socket;
     private BufferedReader input;
@@ -32,7 +32,7 @@ public class CommunicationControl {
      * Class constructor
      * @param drone instance of the aircraft
      */
-    public CommunicationControl(Drone drone){      
+    public CommunicationIFA(Drone drone){      
         this.drone = drone;
         stateCommunication = StateCommunication.WAITING;
         startMission = false;

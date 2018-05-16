@@ -127,32 +127,6 @@ public class DataCommunication {
             return false;
         }
     }
-    
-    //Atualmente foi removido esta funcao se nao der pala nos experimentos remove-la
-    public boolean PersistentePOST(String urlPost, String jsonMsg) {
-        boolean ok = false;
-        long timeInitial = System.currentTimeMillis();
-        long timeActual;
-        long diff;
-        int t = 0;
-        do{
-            timeActual = System.currentTimeMillis();
-            ok = POST(urlPost, jsonMsg);
-            diff = timeActual - timeInitial;            
-            if ((diff/1000) == t){
-                if (t > 0){
-                    StandardPrints.printMsgError("time in seconds: " + diff/1000);
-                    try {
-                        Thread.sleep(250);
-                    } catch (InterruptedException ex) {                        
-                    
-                    }
-                }
-                t++;
-            }
-        }while(!ok && diff < TIME_OUT * 1000);
-        return ok;
-    }
         
     public boolean setWaypoint(Waypoint wp) {
         Gson gson = new Gson();
@@ -170,6 +144,10 @@ public class DataCommunication {
         Gson gson = new Gson();
         String jsonMission = gson.toJson(mission);
         return POST("/set-mission/", jsonMission);
+    }
+    
+    public boolean setMission(String missionJson) {
+        return POST("/set-mission/", missionJson);
     }
     
     public boolean appendMission(Mission mission) {

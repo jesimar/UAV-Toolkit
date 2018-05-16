@@ -7,6 +7,7 @@ import java.util.Properties;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeActionAfterFinishMission;
 import uav.generic.struct.constants.TypeController;
+import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 
@@ -26,6 +27,7 @@ public class ReaderFileConfigMOSA {
     private String actionAfterFinishMission;
     
     //planner
+    private String localExecPlanner;
     private String typePlanner;
     private String methodPlanner;
     private String cmdExecPlanner;
@@ -67,6 +69,7 @@ public class ReaderFileConfigMOSA {
             systemExec                = prop.getProperty("prop.global.system_exec");
             actionAfterFinishMission  = prop.getProperty("prop.global.action_after_finish_mission");
             
+            localExecPlanner          = prop.getProperty("prop.planner.local_exec");
             methodPlanner             = prop.getProperty("prop.planner.method");
             cmdExecPlanner            = prop.getProperty("prop.planner.cmd_exec");
             missionProcessingLocation = prop.getProperty("prop.planner.mission_processing_location");
@@ -107,6 +110,12 @@ public class ReaderFileConfigMOSA {
                  !actionAfterFinishMission.equals(TypeActionAfterFinishMission.CMD_LAND) && 
                  !actionAfterFinishMission.equals(TypeActionAfterFinishMission.CMD_RTL))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] action after finish mission not valid");
+            return false;
+        }
+        if (localExecPlanner == null || 
+                (!localExecPlanner.equals(TypeLocalExecPlanner.ONBOARD) &&
+                 !localExecPlanner.equals(TypeLocalExecPlanner.OFFBOARD))){
+            StandardPrints.printMsgError2("Error [[file ./config.properties]] type of local exec method not valid");
             return false;
         }
         if (methodPlanner == null || 
@@ -155,6 +164,10 @@ public class ReaderFileConfigMOSA {
     
     public boolean isDynamicFixedRoute() {
         return isDynamicFixedRoute;
+    }
+    
+    public String getLocalExecPlanner() {
+        return localExecPlanner;
     }
     
     public String getTypePlanner() {

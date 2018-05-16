@@ -62,6 +62,10 @@ public class ReaderFileConfigGlobal {
     //sensor power module
     private boolean hasPowerModule;
     private int levelMinimumBattery;
+    
+    //sensor temperature
+    private boolean hasTemperatureSensor;
+    private int levelMaximumTemperature;
 
     /**
      * Class constructor.
@@ -98,6 +102,7 @@ public class ReaderFileConfigGlobal {
             hasLED                = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_led"));
             hasSpraying           = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_spraying"));
             hasPowerModule        = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_powermodule"));
+            hasTemperatureSensor  = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_temperature_sensor"));
                     
             dirCamera             = prop.getProperty("prop.camera.dir");
             fileWaypointsCamera   = prop.getProperty("prop.camera.file_waypoints_camera");
@@ -113,6 +118,8 @@ public class ReaderFileConfigGlobal {
             dirSpraying           = prop.getProperty("prop.spraying.dir");
             
             levelMinimumBattery   = Integer.parseInt(prop.getProperty("prop.powermodule.level_minimum_battery"));
+            
+            levelMaximumTemperature = Integer.parseInt(prop.getProperty("prop.temperature_sensor.level_maximum_temperature"));
             return true;
         } catch (FileNotFoundException ex){     
             StandardPrints.printMsgError2("Error [FileNotFoundException] ReaderLoadConfig()");
@@ -228,6 +235,10 @@ public class ReaderFileConfigGlobal {
     public boolean hasPowerModule() {
         return hasPowerModule;
     }
+    
+    public boolean hasTemperatureSensor() {
+        return hasTemperatureSensor;
+    }
 
     public String getDirCamera() {
         return dirCamera;
@@ -263,6 +274,10 @@ public class ReaderFileConfigGlobal {
     
     public int getLevelMinimumBattery() {
         return levelMinimumBattery;
+    }
+    
+    public int getLevelMaximumTemperature() {
+        return levelMaximumTemperature;
     }
 
 }
