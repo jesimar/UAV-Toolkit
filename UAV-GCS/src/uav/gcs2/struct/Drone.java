@@ -15,7 +15,7 @@ import uav.generic.hardware.sensors.Velocity;
  */
 public class Drone {
     
-    public String email_user = "jesimar.arantes@gmail.com";
+    public String userEmail;
     public String date;//yyyy/MM/dd
     public String hour;//HH:mm:ss
     public double time;//in seconds
@@ -33,7 +33,8 @@ public class Drone {
     public SensorUAV sensorUAV;
     public StatusUAV statusUAV;
 
-    public Drone() {
+    public Drone(String userEmail) {
+        this.userEmail = userEmail;
         battery = new Battery();
         gps = new GPS(); 
         barometer = new Barometer();

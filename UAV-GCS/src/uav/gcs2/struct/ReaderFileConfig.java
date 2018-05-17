@@ -22,10 +22,8 @@ public class ReaderFileConfig {
     private int portIFA;
     
     private String hostOD;
-    private int portOD;
-    
-    private String hostOD_DB;
-    private String portOD_DB;
+    private String portOD;
+    private String userEmail;
 
     public ReaderFileConfig() {
         
@@ -43,14 +41,12 @@ public class ReaderFileConfig {
             hasDB = Boolean.parseBoolean(prop.getProperty("prop.general.hasDB"));
             hasGoogleMaps = Boolean.parseBoolean(prop.getProperty("prop.general.hasGoogleMaps"));
             
-            hostIFA = prop.getProperty("prop.ifa.host");
-            portIFA = Integer.parseInt(prop.getProperty("prop.ifa.port"));
-            
-            hostOD = prop.getProperty("prop.od.host");
-            portOD = Integer.parseInt(prop.getProperty("prop.od.port"));
-            
-            hostOD_DB = prop.getProperty("prop.od.host_db");
-            portOD_DB = prop.getProperty("prop.od.port_db");
+            hostIFA   = prop.getProperty("prop.ifa.host");
+            portIFA   = Integer.parseInt(prop.getProperty("prop.ifa.port"));
+                     
+            hostOD    = prop.getProperty("prop.od.host");
+            portOD    = prop.getProperty("prop.od.port");
+            userEmail = prop.getProperty("prop.od.user_email");
             return true;
         } catch (FileNotFoundException ex){     
             System.out.println("Error [FileNotFoundException] read()");
@@ -82,21 +78,17 @@ public class ReaderFileConfig {
     public int getPortIFA() {
         return portIFA;
     }    
-    
+
     public String getHostOD() {
         return hostOD;
     }
     
-    public int getPortOD() {
+    public String getPortOD() {
         return portOD;
-    } 
-
-    public String getHostOD_DB() {
-        return hostOD_DB;
     }
-    
-    public String getPortOD_DB() {
-        return portOD_DB;
+
+    public String getUserEmail() {
+        return userEmail;
     }
 
 }

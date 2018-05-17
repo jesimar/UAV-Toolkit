@@ -20,6 +20,7 @@ import uav.gcs2.struct.ReaderFileConfig;
 import uav.gcs2.communication.CommunicationIFA;
 import uav.gcs2.conection.SaveDB;
 import uav.gcs2.google_maps.GoogleMaps;
+import uav.gcs2.window.PainelInfo;
 
 /**
  * @author Jesimar S. Arantes
@@ -45,6 +46,9 @@ public final class GCS2 extends JFrame {
     private final JButton btnParachute;
     
     private final JLabel labelIsConnectedIFA;
+    private final JLabel labelIsConnectedDB;
+    private final JLabel labelIsRunningPathPlanner;
+    private final JLabel labelIsRunningPathReplanner;
     
     private final int width = 800;
     private final int height = 580;
@@ -52,9 +56,10 @@ public final class GCS2 extends JFrame {
     private final Drone drone;
     private final ReaderFileConfig config;
     private final CommunicationIFA communicationIFA;
+    private final PainelInfo painelInfo;
     private SaveDB saveDB;
     private GoogleMaps googleMaps;
-
+    
     public static void main(String[] args) {
         GCS2 gcs = new GCS2();
     }
@@ -63,10 +68,10 @@ public final class GCS2 extends JFrame {
         Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
         config.read();
-        drone = new Drone();
+        drone = new Drone(config.getUserEmail());
         communicationIFA = new CommunicationIFA(drone, config.getHostIFA(), config.getPortIFA());
         if (config.hasDB()){
-            saveDB = new SaveDB(config.getHostOD_DB(), config.getPortOD_DB());
+            saveDB = new SaveDB(config.getHostOD(), config.getPortOD());
         }
         
         this.setTitle("UAV-GCS");
@@ -77,54 +82,6 @@ public final class GCS2 extends JFrame {
         panelTop.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelTop.setBackground(new Color(166, 207, 255));
         panelTop.setVisible(true);
-        
-//        JPanel panelTop2 = new JPanel();
-//        panelTop2.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        panelTop2.setPreferredSize(new Dimension(400, 80));
-//        panelTop2.setBackground(new Color(100, 200, 255));
-//        panelTop2.setVisible(true);
-//        
-//        JLabel labelHOST = new JLabel("IP:   ");
-//        labelHOST.setPreferredSize(new Dimension(60, 20));
-//        labelHOST.setForeground(Color.BLACK);
-//        panelTop2.add(labelHOST);
-//        
-//        JTextField fieldHOST = new JTextField();
-//        fieldHOST.setPreferredSize(new Dimension(160, 20));
-//        fieldHOST.setForeground(Color.BLACK);
-//        panelTop2.add(fieldHOST);
-//        
-//        JButton btnConnect = new JButton("Connect");
-//        btnConnect.setPreferredSize(new Dimension(120, 25));
-//        btnConnect.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                
-//            }
-//        });
-//        panelTop2.add(btnConnect);
-//        
-//        JLabel labelPORT = new JLabel("PORT: ");
-//        labelPORT.setPreferredSize(new Dimension(60, 20));
-//        labelPORT.setForeground(Color.BLACK);
-//        panelTop2.add(labelPORT);
-//        
-//        JTextField fieldPORT = new JTextField();
-//        fieldPORT.setPreferredSize(new Dimension(160, 20));
-//        fieldPORT.setForeground(Color.BLACK);
-//        panelTop2.add(fieldPORT);      
-//        
-//        JButton btnDisconnect = new JButton("Disconnect");
-//        btnDisconnect.setPreferredSize(new Dimension(120, 25));
-//        btnDisconnect.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                
-//            }
-//        });
-//        panelTop2.add(btnDisconnect);
-//        
-//        panelTop.add(panelTop2);
         
         JButton btnAbout = new JButton("About");
         btnAbout.setPreferredSize(new Dimension(120, 25));
@@ -317,11 +274,27 @@ public final class GCS2 extends JFrame {
             panelRight.setVisible(true);
         }
 
-        labelIsConnectedIFA = new JLabel("Is Connected IFA");
+        labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(160, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
         panelRight.add(labelIsConnectedIFA);
-
+        
+        labelIsConnectedDB = new JLabel("Connected DB: False");
+        labelIsConnectedDB.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedDB.setForeground(Color.RED);
+        panelRight.add(labelIsConnectedDB);
+              
+        labelIsRunningPathPlanner = new JLabel("Run Planner: False");
+        labelIsRunningPathPlanner.setPreferredSize(new Dimension(160, 20));
+        labelIsRunningPathPlanner.setForeground(Color.RED);
+        panelRight.add(labelIsRunningPathPlanner);                
+                
+        labelIsRunningPathReplanner = new JLabel("Run Replanner: False");
+        labelIsRunningPathReplanner.setPreferredSize(new Dimension(160, 20));
+        labelIsRunningPathReplanner.setForeground(Color.RED);
+        panelRight.add(labelIsRunningPathReplanner);
+        
+        painelInfo = new PainelInfo(panelRight);
         this.add(panelTop);
         this.add(panelMain);
         panelMain.add(panelRight);
@@ -358,9 +331,36 @@ public final class GCS2 extends JFrame {
                             btnBlink.setEnabled(true);
                             btnSpraying.setEnabled(true);
                             btnParachute.setEnabled(true);
+                            labelIsConnectedIFA.setText("Connected IFA: True");
                             labelIsConnectedIFA.setForeground(Color.GREEN);
+                            if (communicationIFA.isRunningPlanner()){
+                                labelIsRunningPathPlanner.setText("Run Planner: True");
+                                labelIsRunningPathPlanner.setForeground(Color.GREEN);
+                            }
+                            if (communicationIFA.isRunningReplanner()){
+                                labelIsRunningPathReplanner.setText("Run Replanner: True");
+                                labelIsRunningPathReplanner.setForeground(Color.GREEN);  
+                            }
+                            painelInfo.updateInfo(drone);
                         }else{
+                            labelIsConnectedIFA.setText("Connected IFA: False");
                             labelIsConnectedIFA.setForeground(Color.RED);
+                            labelIsRunningPathPlanner.setText("Run Planner: False");
+                            labelIsRunningPathPlanner.setForeground(Color.RED);
+                            labelIsRunningPathReplanner.setText("Run Replanner: False");
+                            labelIsRunningPathReplanner.setForeground(Color.RED);        
+                        }
+                        if (config.hasDB()){
+                            if (saveDB.isConnected()){
+                                labelIsConnectedDB.setText("Connected DB: True");
+                                labelIsConnectedDB.setForeground(Color.GREEN);
+                            }else{
+                                labelIsConnectedDB.setText("Connected DB: False");
+                                labelIsConnectedDB.setForeground(Color.RED);
+                            }
+                        }else{
+                            labelIsConnectedDB.setText("Connected DB: False");
+                            labelIsConnectedDB.setForeground(Color.RED);
                         }
                     }catch (InterruptedException ex) {
 
@@ -383,7 +383,7 @@ public final class GCS2 extends JFrame {
         String msgAbout   = "Program: UAV-GCS\n" + 
                             "Author: Jesimar da Silva Arantes\n" + 
                             "Version: 1.0.0\n" + 
-                            "Date: 08/05/2018";
+                            "Date: 16/05/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }

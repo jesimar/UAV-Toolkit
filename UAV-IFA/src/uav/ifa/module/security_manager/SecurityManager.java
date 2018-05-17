@@ -389,9 +389,6 @@ public class SecurityManager {
                         if (stateMonitoring == StateMonitoring.DISABLED) {
                             stateSystem = StateSystem.DISABLED;
                         }
-//                        if (communicationControl.getStateCommunication() == StateCommunication.DISABLED){
-//                            stateIFA = StateIFA.DISABLED;                            
-//                        }
                         Thread.sleep(Constants.TIME_TO_SLEEP_MONITORING_STATE_MACHINE);
                     }
                 } catch (InterruptedException ex) {
@@ -399,6 +396,7 @@ public class SecurityManager {
                 }
                 try {
                     communicationMOSA.close();
+                    communicationGCS.close();
                 } catch (Exception ex) {
 
                 }

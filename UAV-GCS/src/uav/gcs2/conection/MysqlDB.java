@@ -36,12 +36,12 @@ public class MysqlDB {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(host);
 	    status = true;
-	    System.out.println("A conexao foi um sucesso");
+	    System.out.println("Conection DB create with sucess");
 	} catch (ClassNotFoundException e) {
-            System.out.println("Excecao classe nao encontrada");
+            System.out.println("Exception class not found");
 	    e.printStackTrace();
 	} catch(SQLException e) {
-            System.out.println("SQL Exception... Nao conectado");
+            System.out.println("SQL Exception... not found");
 	    e.printStackTrace();
 	}
     }
@@ -49,7 +49,7 @@ public class MysqlDB {
     public void disconnect() throws SQLException{
         conn.close();
         status = false;
-        System.out.println("Fechando conexao");
+        System.out.println("Finishing conection");
     }
     
     public boolean isConnected(){

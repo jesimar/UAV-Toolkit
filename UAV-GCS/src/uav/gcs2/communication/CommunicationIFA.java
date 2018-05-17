@@ -24,16 +24,21 @@ public class CommunicationIFA {
 
     private Socket socket;
     private PrintWriter output;
-    private BufferedReader input;
+    private BufferedReader input;    
 
     private final Drone drone;
     private final String HOST;
     private final int PORT;
+    
+    private boolean isRunningPlanner;
+    private boolean isRunningReplanner;
 
     public CommunicationIFA(Drone drone, String host, int port) {
         this.drone = drone;
         this.HOST = host;
         this.PORT = port;
+        this.isRunningPlanner = false;
+        this.isRunningReplanner = false;
     }
 
     public void connectServerIFA() {
@@ -75,6 +80,9 @@ public class CommunicationIFA {
                                 } else if (answer.contains("IFA->GCS[REPLANNER]")) {
                                     answer = answer.substring(19);
                                     replannerInGCS(answer);
+                                } else if (answer.contains("IFA->GCS[PLANNER]")) {
+                                    answer = answer.substring(19);
+                                    plannerInGCS(answer);
                                 }
                             }
                             Thread.sleep(100);
@@ -117,7 +125,6 @@ public class CommunicationIFA {
     }
 
     private void readInfoIFA(String answer) {
-//        System.out.println("Data: " + answer);
         String v[] = answer.split(";");
         drone.date = v[0];
         drone.hour = v[1];
@@ -155,6 +162,7 @@ public class CommunicationIFA {
     }
 
     private void replannerInGCS(String answer) {
+        isRunningReplanner = true;
         String v[] = answer.split(";");
         Replanner replanner = new MPGA4s(drone, v[0],
                 v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
@@ -175,6 +183,7 @@ public class CommunicationIFA {
         Gson gson = new Gson();
         String jsonMission = gson.toJson(mission);
         sendData(jsonMission);
+        isRunningReplanner = false;
     }
     
     private boolean readFileRoute(Mission wps, String path, int time) {
@@ -207,4 +216,38 @@ public class CommunicationIFA {
             return false;
         }
     }
+    
+    private void plannerInGCS(String answer) {
+        isRunningPlanner = true;
+//        String v[] = answer.split(";");
+//        Replanner replanner = new MPGA4s(drone, v[0],
+//                v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+//        replanner.clearLogs();
+//        boolean itIsOkExec = replanner.exec();
+//        if (!itIsOkExec) {
+//            sendData("failure");
+//            return;
+//        } 
+//        Mission mission = new Mission();
+//        String path = v[2] + "routeGeo.txt";
+//        boolean resp = readFileRoute(mission, path, 0);
+//        if (!resp) {
+//            sendData("failure");
+//            return;
+//        }
+//        mission.printMission();
+//        Gson gson = new Gson();
+//        String jsonMission = gson.toJson(mission);
+//        sendData(jsonMission);
+        isRunningPlanner = false;
+    }
+
+    public boolean isRunningPlanner() {
+        return isRunningPlanner;
+    }
+
+    public boolean isRunningReplanner() {
+        return isRunningReplanner;
+    }
+        
 }

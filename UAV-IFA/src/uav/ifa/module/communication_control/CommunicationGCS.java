@@ -108,19 +108,14 @@ public class CommunicationGCS {
                                     hasReceiveRouteGCS = true;
                                     routeReplannerGCS = answer;
                                 }
-                            } else {
-                                Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                             }
-                        }else{
-                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
-                    StandardPrints.printMsgWarning("Warning [InterruptedException] receiveData()");
-                    ex.printStackTrace();
+                    
                 } catch (IOException ex) {
-                    StandardPrints.printMsgWarning("Warning [IOException] receiveData()");
-                    ex.printStackTrace();
+                    
                 }
             }
         });
@@ -151,7 +146,6 @@ public class CommunicationGCS {
             output.println(TypeMsgCommunication.IFA_GCS_REPLANER + attributes);
         }
     }
-            
     
     public boolean hasFailure(){
         return hasFailure;

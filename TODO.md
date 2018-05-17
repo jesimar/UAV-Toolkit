@@ -20,7 +20,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * Colocar no MOSA e IFA um objeto com todos os waypoints da rota.
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
-* Fazer experimentos em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
 
 ## Sistema MOSA:
 
@@ -30,10 +29,10 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * Desenvolver no UAV-GCS as seguintes funcionalidades: 
 	+ Comandos possíveis: HOVER, STOP_MISSION, SUBIR_1METRO, DESCER_1METRO.
-* Comunicação com sistema da Fernanda
 * Executar scripts automaticamente
 * Colocar recurso para plotar a rota do drone em tempo real
 * Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
+* Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
 
 ## Sistema UAV-SOA-Interface:
 
@@ -133,8 +132,11 @@ QGroundControl:
 * Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
 * Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
 * Incluir no IFA sistema para verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
+* Fazer experimentos em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
 
 MOSA:
 * Path Planner:
 	* Integrar o módulo do HISA4m (Márcio).
 	* Integrar o módulo do CSA4m (Márcio).
+	* Baseado em Campos Potenciais.
+	* Baseado em A*.

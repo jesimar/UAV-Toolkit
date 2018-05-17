@@ -15,12 +15,10 @@ public class SaveDB {
     
     private final int TIME_CONNECTION = 480;//2 minutos
     
-    private final String ip;
-    private final String port;
+    private final MysqlDB db;
 
     public SaveDB(String ip, String port) {
-        this.ip = ip;
-        this.port = port;
+        db = new MysqlDB(ip, port);
     }
 
     public void saveDB(Drone drone, CommunicationIFA communicationIFA) {
@@ -29,16 +27,17 @@ public class SaveDB {
             @Override
             public void run() {
                 try {
-                    MysqlDB db = new MysqlDB(ip, port);
                     db.connect();
                     PreparedStatement ps = null;
                     int i = 0;
                     try {
                         do {
                             Thread.sleep(500);
-                        } while (communicationIFA.isConnected());
+                            System.out.println("isConnected");
+                        } while (!communicationIFA.isConnected());
                         do{
                             Thread.sleep(500);
+                            System.out.println("lat lng (0, 0)");
                         }while(drone.gps.lat == 0 && drone.gps.lng == 0);
                         while (i < TIME_CONNECTION) {
                             String sql = "INSERT INTO logidronereal(email_user,nome_rota,"
@@ -50,8 +49,9 @@ public class SaveDB {
                                     + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
                             ps = db.conn.prepareStatement(sql);
-                            String dateHour = new SimpleDateFormat("yyyy-MM-dd").format(new Date());//"yyyy-MM-dd_HH:mm:ss"
-                            ps.setString(1, drone.email_user);
+                            String dateHour = new SimpleDateFormat("yyyy-MM-dd")
+                                    .format(new Date());//"yyyy-MM-dd_HH:mm:ss"
+                            ps.setString(1, drone.userEmail);
                             ps.setString(2, "route-" + dateHour);
                             ps.setString(3, drone.date);
                             ps.setString(4, drone.hour);
@@ -101,5 +101,9 @@ public class SaveDB {
                 }
             }
         });
+    }
+    
+    public boolean isConnected(){
+        return db.isConnected();
     }
 }

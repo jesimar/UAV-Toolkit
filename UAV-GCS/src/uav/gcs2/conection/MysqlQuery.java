@@ -19,7 +19,7 @@ public class MysqlQuery {
             status = false;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.print("Erro ao criar Query!");
+            System.out.print("Error create Query!");
         }
     }
     
@@ -29,7 +29,7 @@ public class MysqlQuery {
             status = true;
 	} catch (SQLException e) {
             status = false;
-            System.out.print("Erro ao executar Query!");
+            System.out.print("Error exec Query!");
             e.printStackTrace();
 	}
     }
@@ -40,7 +40,7 @@ public class MysqlQuery {
             status = true;
 	} catch (SQLException e) {
             status = false;
-            System.out.print("Erro ao executar Query!");
+            System.out.print("Error exec Query!");
             e.printStackTrace();
 	}
     }
@@ -55,7 +55,7 @@ public class MysqlQuery {
             value = rs.getString(field);
             status = true;
         } catch (SQLException e) {
-            System.out.println("Field invalido!");
+            System.out.println("Field invalid!");
 	}
 	return value;
     }
@@ -78,7 +78,7 @@ public class MysqlQuery {
                 tot++;
 	} catch (SQLException e) {
             status = false;
-            System.out.print("Erro ao executar Query!");
+            System.out.print("Error exec Query!");
             e.printStackTrace();
 	}
 	return tot;
@@ -91,7 +91,7 @@ public class MysqlQuery {
                 result = true;
             }
         } catch (SQLException e) {
-            System.out.print("Erro ao executar Query!");
+            System.out.print("Error exec Query!");
         }
 	return result;
     }
@@ -103,7 +103,7 @@ public class MysqlQuery {
                 result = true;
             }
 	} catch (SQLException e) {
-            System.out.print("Erro ao executar previous!");
+            System.out.print("Error exec previous!");
         }
 	return result;
     }
@@ -115,7 +115,7 @@ public class MysqlQuery {
                 result = true;
             }
 	} catch (SQLException e) {
-            System.out.print("Erro ao executar first!");
+            System.out.print("Error exec first!");
 	}
 	return result;
     }
@@ -127,7 +127,7 @@ public class MysqlQuery {
                 result = true;
             }
 	} catch (SQLException e) {
-            System.out.print("Erro ao executar last!");
+            System.out.print("Error exec last!");
 	}
 	return result;
     }
