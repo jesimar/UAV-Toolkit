@@ -1,60 +1,90 @@
-package uav.gcs;
+package uav.gcs2;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.util.Locale;
+import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import uav.gcs2.struct.Drone;
+import uav.gcs2.struct.ReaderFileConfig;
+import uav.gcs2.communication.CommunicationIFA;
+import uav.gcs2.conection.SaveDB;
+import uav.gcs2.google_maps.GoogleMaps;
+import uav.gcs2.window.PainelInfo;
 
 /**
  * @author Jesimar S. Arantes
  */
-public final class GCS extends JFrame {
+public final class GCS2 extends JFrame {
 
     private final JPanel panelTop;
     private final JPanel panelMain;
     private final JPanel panelLeft;
-    private final JPanel panelRight;
+    private final JPanel panelRight;   
     
-    private final JTextArea textAreaGeneral;
-    private final JTextArea textAreaSITL;
-    private final JTextArea textAreaMAVProxy;
-    private final JTextArea textAreaSOA;
-    private final JTextArea textAreaIFA;
-    private final JTextArea textAreaMOSA;
+    private final JButton btnBadWeather;
+    private final JButton btnPathReplanningEmergency;
+    private final JButton btnLand;
+    private final JButton btnRTL;
+    private final JButton btnBuzzer;
+    private final JButton btnAlarm;
+    private final JButton btnPicture;
+    private final JButton btnVideo;
+    private final JButton btnLED;    
+    private final JButton btnBlink;
+    private final JButton btnSpraying;
+    private final JButton btnParachute;
     
-    private final int width = 1280;
-    private final int height = 740;
+    private final JLabel labelIsConnectedIFA;
+    private final JLabel labelIsConnectedDB;
+    private final JLabel labelIsRunningPathPlanner;
+    private final JLabel labelIsRunningPathReplanner;
     
-    private final StartModules start;
-
+    private final int width = 800;
+    private final int height = 580;
+    
+    private final Drone drone;
+    private final ReaderFileConfig config;
+    private final CommunicationIFA communicationIFA;
+    private final PainelInfo painelInfo;
+    private SaveDB saveDB;
+    private GoogleMaps googleMaps;
+    
     public static void main(String[] args) {
-        GCS gcs = new GCS();
+        GCS2 gcs = new GCS2();
     }
 
-    public GCS() {
-        start = new StartModules();
+    public GCS2() {
+        Locale.setDefault(Locale.US);
+        config = ReaderFileConfig.getInstance();
+        config.read();
+        drone = new Drone(config.getUserEmail());
+        communicationIFA = new CommunicationIFA(drone, config.getHostIFA(), config.getPortIFA());
+        if (config.hasDB()){
+            saveDB = new SaveDB(config.getHostOD(), config.getPortOD());
+        }
         
         this.setTitle("UAV-GCS");
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setLocationRelativeTo(null);
         
         panelTop = new JPanel();
-        panelTop.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelTop.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelTop.setBackground(new Color(166, 207, 255));
         panelTop.setVisible(true);
         
         JButton btnAbout = new JButton("About");
-        btnAbout.setPreferredSize(new Dimension(170, 25));
+        btnAbout.setPreferredSize(new Dimension(120, 25));
         btnAbout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +92,16 @@ public final class GCS extends JFrame {
             }
         });
         panelTop.add(btnAbout);
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setPreferredSize(new Dimension(120, 25));
+        btnExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        panelTop.add(btnExit);
 
         panelMain = new JPanel();
         panelMain.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -73,199 +113,195 @@ public final class GCS extends JFrame {
         panelLeft.setBackground(new Color(95, 161, 255));
         panelLeft.setVisible(true);
         panelMain.add(panelLeft);
-
-        panelRight = new JPanel();
-        panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelRight.setBackground(new Color(95, 161, 255));
-        panelRight.setVisible(true);
-        panelMain.add(panelRight);
         
         JLabel labelActions = new JLabel("Actions");
         labelActions.setPreferredSize(new Dimension(160, 20));
         labelActions.setForeground(Color.BLACK);
         panelLeft.add(labelActions);
         
-        JButton btnListIPs = new JButton("List IPs");
-        btnListIPs.setPreferredSize(new Dimension(170, 25));
-        btnListIPs.addActionListener(new ActionListener() {
+        btnBadWeather = new JButton("BAD-WEATHER");
+        btnBadWeather.setPreferredSize(new Dimension(185, 25));
+        btnBadWeather.setEnabled(false);
+        btnBadWeather.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                start.execListIPs(textAreaGeneral);
+                communicationIFA.sendData("BAD-WEATHER");
             }
         });
-        panelLeft.add(btnListIPs);
+        panelLeft.add(btnBadWeather);
         
-        JButton btnClearSimulations = new JButton("Clear Simulations");
-        btnClearSimulations.setPreferredSize(new Dimension(170, 25));
-        btnClearSimulations.addActionListener(new ActionListener() {
+        btnPathReplanningEmergency = new JButton("EMERGENCY-LANDING");
+        btnPathReplanningEmergency.setPreferredSize(new Dimension(185, 25));
+        btnPathReplanningEmergency.setEnabled(false);
+        btnPathReplanningEmergency.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                start.execClearSimulations(textAreaGeneral);
+                communicationIFA.sendData("EMERGENCYLANDING");
             }
         });
-        panelLeft.add(btnClearSimulations);
+        panelLeft.add(btnPathReplanningEmergency);
         
-        JButton btnCopyFilesResults = new JButton("Copy File Results");
-        btnCopyFilesResults.setPreferredSize(new Dimension(170, 25));
-        btnCopyFilesResults.addActionListener(new ActionListener() {
+        btnLand = new JButton("LAND");
+        btnLand.setPreferredSize(new Dimension(185, 25));
+        btnLand.setEnabled(false);
+        btnLand.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                start.execCopyFilesResults(textAreaGeneral);
+                communicationIFA.sendData("LAND");
             }
         });
-        panelLeft.add(btnCopyFilesResults);
-
-        JButton btnStartSITL = new JButton("Start SILT");
-        btnStartSITL.setPreferredSize(new Dimension(170, 25));
-        btnStartSITL.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start.execSITL(textAreaSITL);
-                btnStartSITL.setEnabled(false);
-            }
-        });
-        panelLeft.add(btnStartSITL);
-
-        JButton btnStartMavproxy = new JButton("Start MAVProxy");
-        btnStartMavproxy.setPreferredSize(new Dimension(170, 25));
-        btnStartMavproxy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start.execMAVProxy(textAreaMAVProxy);
-                btnStartMavproxy.setEnabled(false);
-            }
-        });
-        panelLeft.add(btnStartMavproxy);
-
-        JButton btnStartSOA = new JButton("Start SOA");
-        btnStartSOA.setPreferredSize(new Dimension(170, 25));
-        btnStartSOA.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start.execSOAInterface(textAreaSOA);
-                btnStartSOA.setEnabled(false);
-            }
-        });
-        panelLeft.add(btnStartSOA);
-
-        JButton btnStartIFA = new JButton("Start IFA");
-        btnStartIFA.setPreferredSize(new Dimension(170, 25));
-        btnStartIFA.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start.execIFA(textAreaIFA);
-                btnStartIFA.setEnabled(false);
-            }
-        });
-        panelLeft.add(btnStartIFA);
-
-        JButton btnStartMOSA = new JButton("Start MOSA");
-        btnStartMOSA.setPreferredSize(new Dimension(170, 25));
-        btnStartMOSA.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                start.execMOSA(textAreaMOSA);
-                btnStartMOSA.setEnabled(false);
-            }
-        });
-        panelLeft.add(btnStartMOSA);
+        panelLeft.add(btnLand);
         
-        JLabel labelGeneral = new JLabel("Terminal General");
-        labelGeneral.setPreferredSize(new Dimension(470, 20));
-        labelGeneral.setForeground(Color.WHITE);
-        panelRight.add(labelGeneral);
+        btnRTL= new JButton("RTL");
+        btnRTL.setPreferredSize(new Dimension(185, 25));
+        btnRTL.setEnabled(false);
+        btnRTL.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("RTL");
+            }
+        });
+        panelLeft.add(btnRTL);
 
-        JLabel labelSITL = new JLabel("Terminal Dronekit-SITL");
-        labelSITL.setPreferredSize(new Dimension(470, 20));
-        labelSITL.setForeground(Color.WHITE);
-        panelRight.add(labelSITL);
+        btnBuzzer = new JButton("BUZZER-TURN-ON");
+        btnBuzzer.setPreferredSize(new Dimension(185, 25));
+        btnBuzzer.setEnabled(false);
+        btnBuzzer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("BUZZER");
+            }
+        });
+        panelLeft.add(btnBuzzer);
         
-        JScrollPane scrollGeneral = new JScrollPane();
-        textAreaGeneral = new JTextArea(11, 36);
-        textAreaGeneral.setForeground(Color.BLACK);
-        textAreaGeneral.setSelectedTextColor(Color.RED);
-        textAreaGeneral.setBackground(Color.WHITE);
-        textAreaGeneral.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaGeneral.setEditable(false);
-        scrollGeneral.setViewportView(textAreaGeneral);
-        panelRight.add(scrollGeneral);
+        btnAlarm = new JButton("BUZZER-ALARM");
+        btnAlarm.setPreferredSize(new Dimension(185, 25));
+        btnAlarm.setEnabled(false);
+        btnAlarm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("ALARM");
+            }
+        });
+        panelLeft.add(btnAlarm);
 
-        JScrollPane scrollSITL = new JScrollPane();
-        textAreaSITL = new JTextArea(11, 36);
-        textAreaSITL.setForeground(Color.BLACK);
-        textAreaSITL.setSelectedTextColor(Color.RED);
-        textAreaSITL.setBackground(Color.WHITE);
-        textAreaSITL.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaSITL.setEditable(false);
-        scrollSITL.setViewportView(textAreaSITL);
-        panelRight.add(scrollSITL);
-       
-        JLabel labelMAVProxy = new JLabel("Terminal MAVProxy");
-        labelMAVProxy.setPreferredSize(new Dimension(450, 20));
-        labelMAVProxy.setForeground(Color.WHITE);
-        panelRight.add(labelMAVProxy);
+        btnPicture = new JButton("CAMERA-PICTURE");
+        btnPicture.setPreferredSize(new Dimension(185, 25));
+        btnPicture.setEnabled(false);
+        btnPicture.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("PICTURE");
+            }
+        });
+        panelLeft.add(btnPicture);
         
-        JLabel labelSOA = new JLabel("Terminal SOA Interface");
-        labelSOA.setPreferredSize(new Dimension(470, 20));
-        labelSOA.setForeground(Color.WHITE);
-        panelRight.add(labelSOA);
+        btnVideo = new JButton("CAMERA-VIDEO");
+        btnVideo.setPreferredSize(new Dimension(185, 25));
+        btnVideo.setEnabled(false);
+        btnVideo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("VIDEO");
+            }
+        });
+        panelLeft.add(btnVideo);
 
-        JScrollPane scrollMavproxy = new JScrollPane();
-        textAreaMAVProxy = new JTextArea(11, 36);
-        textAreaMAVProxy.setForeground(Color.BLACK);
-        textAreaMAVProxy.setSelectedTextColor(Color.RED);
-        textAreaMAVProxy.setBackground(Color.WHITE);
-        textAreaMAVProxy.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaMAVProxy.setEditable(false);
-        scrollMavproxy.setViewportView(textAreaMAVProxy);
-        panelRight.add(scrollMavproxy);
-
-        JScrollPane scrollSOA = new JScrollPane();
-        textAreaSOA = new JTextArea(11, 36);
-        textAreaSOA.setForeground(Color.BLACK);
-        textAreaSOA.setSelectedTextColor(Color.RED);
-        textAreaSOA.setBackground(Color.WHITE);
-        textAreaSOA.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaSOA.setEditable(false);
-        scrollSOA.setViewportView(textAreaSOA);
-        panelRight.add(scrollSOA);
+        btnLED = new JButton("LED-TURN-ON");
+        btnLED.setPreferredSize(new Dimension(185, 25));
+        btnLED.setEnabled(false);
+        btnLED.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("LED");
+            }
+        });
+        panelLeft.add(btnLED);
         
-        JLabel labelIFA = new JLabel("Terminal IFA");
-        labelIFA.setPreferredSize(new Dimension(450, 20));
-        labelIFA.setForeground(Color.WHITE);
-        panelRight.add(labelIFA);
+        btnBlink = new JButton("LED-BLINK");
+        btnBlink.setPreferredSize(new Dimension(185, 25));
+        btnBlink.setEnabled(false);
+        btnBlink.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("BLINK");
+            }
+        });
+        panelLeft.add(btnBlink);
         
-        JLabel labelMOSA = new JLabel("Terminal MOSA");
-        labelMOSA.setPreferredSize(new Dimension(450, 20));
-        labelMOSA.setForeground(Color.WHITE);
-        panelRight.add(labelMOSA);
+        btnSpraying = new JButton("SPRAYING-START");
+        btnSpraying.setPreferredSize(new Dimension(185, 25));
+        btnSpraying.setEnabled(false);
+        btnSpraying.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("SPRAYING");
+            }
+        });
+        panelLeft.add(btnSpraying);
+        
+        btnParachute = new JButton("PARACHUTE-OPEN");
+        btnParachute.setPreferredSize(new Dimension(185, 25));
+        btnParachute.setEnabled(false);
+        btnParachute.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationIFA.sendData("PARACHUTE");
+            }
+        });
+        panelLeft.add(btnParachute);
 
-        JScrollPane scrollIFA = new JScrollPane();
-        textAreaIFA = new JTextArea(11, 36);
-        textAreaIFA.setForeground(Color.BLACK);
-        textAreaIFA.setSelectedTextColor(Color.RED);
-        textAreaIFA.setBackground(Color.WHITE);
-        textAreaIFA.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaIFA.setEditable(false);
-        scrollIFA.setViewportView(textAreaIFA);
-        panelRight.add(scrollIFA);
+        communicationIFA.connectServerIFA();
+        communicationIFA.receiveData();
 
-        JScrollPane scrollMOSA = new JScrollPane();
-        textAreaMOSA = new JTextArea(11, 36);
-        textAreaMOSA.setForeground(Color.BLACK);
-        textAreaMOSA.setSelectedTextColor(Color.RED);
-        textAreaMOSA.setBackground(Color.WHITE);
-        textAreaMOSA.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaMOSA.setEditable(false);
-        scrollMOSA.setViewportView(textAreaMOSA);
-        panelRight.add(scrollMOSA);        
+        if (config.hasDB()){
+            saveDB.saveDB(drone, communicationIFA);
+        }
+        
+        enableComponentsInterface();
+        
+        if (config.hasGoogleMaps()){
+            //Painel com google maps
+            panelRight = new JPanel(new BorderLayout());
+            panelRight.setVisible(true);
+            googleMaps = new GoogleMaps(this, panelRight, communicationIFA);
+            googleMaps.plot();
+        }else{
+            //Painel sem google maps
+            panelRight = new JPanel();
+            panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelRight.setBackground(new Color(95, 161, 255));
+            panelRight.setVisible(true);
+        }
 
+        labelIsConnectedIFA = new JLabel("Connected IFA: False");
+        labelIsConnectedIFA.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedIFA.setForeground(Color.RED);
+        panelRight.add(labelIsConnectedIFA);
+        
+        labelIsConnectedDB = new JLabel("Connected DB: False");
+        labelIsConnectedDB.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedDB.setForeground(Color.RED);
+        panelRight.add(labelIsConnectedDB);
+              
+        labelIsRunningPathPlanner = new JLabel("Run Planner: False");
+        labelIsRunningPathPlanner.setPreferredSize(new Dimension(160, 20));
+        labelIsRunningPathPlanner.setForeground(Color.RED);
+        panelRight.add(labelIsRunningPathPlanner);                
+                
+        labelIsRunningPathReplanner = new JLabel("Run Replanner: False");
+        labelIsRunningPathReplanner.setPreferredSize(new Dimension(160, 20));
+        labelIsRunningPathReplanner.setForeground(Color.RED);
+        panelRight.add(labelIsRunningPathReplanner);
+        
+        painelInfo = new PainelInfo(panelRight);
         this.add(panelTop);
         this.add(panelMain);
+        panelMain.add(panelRight);
 
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.addWindowStateListener(new WindowStateListener() {
             @Override
             public void windowStateChanged(WindowEvent e) {
@@ -273,6 +309,65 @@ public final class GCS extends JFrame {
             }
         });
         this.setVisible(true);
+    }
+    
+    private void enableComponentsInterface(){
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try{
+                        Thread.sleep(500);
+                        if (communicationIFA.isConnected()){
+                            btnBadWeather.setEnabled(true);
+                            btnPathReplanningEmergency.setEnabled(true);
+                            btnLand.setEnabled(true);
+                            btnRTL.setEnabled(true);
+                            btnBuzzer.setEnabled(true);
+                            btnAlarm.setEnabled(true);
+                            btnPicture.setEnabled(true);
+                            btnVideo.setEnabled(true);
+                            btnLED.setEnabled(true);
+                            btnBlink.setEnabled(true);
+                            btnSpraying.setEnabled(true);
+                            btnParachute.setEnabled(true);
+                            labelIsConnectedIFA.setText("Connected IFA: True");
+                            labelIsConnectedIFA.setForeground(Color.GREEN);
+                            if (communicationIFA.isRunningPlanner()){
+                                labelIsRunningPathPlanner.setText("Run Planner: True");
+                                labelIsRunningPathPlanner.setForeground(Color.GREEN);
+                            }
+                            if (communicationIFA.isRunningReplanner()){
+                                labelIsRunningPathReplanner.setText("Run Replanner: True");
+                                labelIsRunningPathReplanner.setForeground(Color.GREEN);  
+                            }
+                            painelInfo.updateInfo(drone);
+                        }else{
+                            labelIsConnectedIFA.setText("Connected IFA: False");
+                            labelIsConnectedIFA.setForeground(Color.RED);
+                            labelIsRunningPathPlanner.setText("Run Planner: False");
+                            labelIsRunningPathPlanner.setForeground(Color.RED);
+                            labelIsRunningPathReplanner.setText("Run Replanner: False");
+                            labelIsRunningPathReplanner.setForeground(Color.RED);        
+                        }
+                        if (config.hasDB()){
+                            if (saveDB.isConnected()){
+                                labelIsConnectedDB.setText("Connected DB: True");
+                                labelIsConnectedDB.setForeground(Color.GREEN);
+                            }else{
+                                labelIsConnectedDB.setText("Connected DB: False");
+                                labelIsConnectedDB.setForeground(Color.RED);
+                            }
+                        }else{
+                            labelIsConnectedDB.setText("Connected DB: False");
+                            labelIsConnectedDB.setForeground(Color.RED);
+                        }
+                    }catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -285,11 +380,11 @@ public final class GCS extends JFrame {
     }
 
     public void showAbout(){
-        String msgAbout   = "Author: Jesimar da Silva Arantes\n" + 
+        String msgAbout   = "Program: UAV-GCS\n" + 
+                            "Author: Jesimar da Silva Arantes\n" + 
                             "Version: 1.0.0\n" + 
-                            "Date: 09/03/2018";
-        JOptionPane.showMessageDialog(null, 
-                msgAbout, "About",
+                            "Date: 16/05/2018";
+        JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 }
