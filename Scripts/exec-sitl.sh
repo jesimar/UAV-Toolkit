@@ -6,10 +6,10 @@
 #Descrição: Script que executa o Dronekit Software-In-The-Loop (SITL) para fazer simulações.
 
 #initial latitude of the drone, for example: -22.00593264981567, -22.005640, -22.00597264465543, -22.00593331794564
-LAT=-22.00601058013675 #-22.00593331794564
+LAT=-22.00593331794564
 
 #initial longitude of the drone, for example: -47.89870966454083, -47.932474, -47.89868819614218, -47.898708372577346
-LNG=-47.89870056439027 #-47.898708372577346
+LNG=-47.898708372577346
 
 #initial absolute altitude of the drone in meters, for example: 870
 ALT=870

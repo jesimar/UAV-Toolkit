@@ -20,6 +20,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * Colocar no MOSA e IFA um objeto com todos os waypoints da rota.
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
+* Adicionar campos no arquivo de log como altitude do sonar, ligou led, bateu foto, etc.
 
 ## Sistema MOSA:
 
@@ -28,11 +29,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Sistema UAV-GCS
 
 * Desenvolver no UAV-GCS as seguintes funcionalidades: 
-	+ Comandos possíveis: HOVER, STOP_MISSION, SUBIR_1METRO, DESCER_1METRO.
-* Executar scripts automaticamente
-* Colocar recurso para plotar a rota do drone em tempo real
-* Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
-* Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
+	+ Comandos possíveis: HOVER, STOP_MISSION
+* Melhorar os aspectos da interface gráfica do UAV-GCS.
+* Fazer planejamento de caminho na GCS (GROUND_AIR e apenas AIR).
 
 ## Sistema UAV-SOA-Interface:
 
@@ -40,7 +39,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
     + Observar: O porque o drone esta pousando no final da missão.
 * Verificar se a função que verifica overhead está correta. O ideal é medir o overhead apenas do AP, pois talvez o gargalo seja a comunicação entre a minha aplicação em java e a aplicação em python o que eu dúvido que seja isso, mas é bom testar. Dessa forma, é interessante capturar os instantes de tempo inicial e final dentro do código em python.
 * Diagramar as dependências entre os arquivos .py do sistema UAV-SOA-Interface com suas respectivas funções.
-* Criar comando para desarmar o motor (mesmo que a aeronave esteja no ar). Usado para abrir paraquedas.
+* UAV-SOA-Interface: Criar comando para desarmar o motor (mesmo que a aeronave esteja no ar). Usado para abrir paraquedas.
 
 ## Modules-MOSA:
 
@@ -118,8 +117,32 @@ QGroundControl:
 1. Falha em attribute lat
 2. Não tem solução (mas acredito que é só esperar mais 5 segundos entre a execução do SOA e o IFA)
 3. Drone não cai
+4. Print do Erro:
+```
+127.0.0.1 - - [22/May/2018 10:49:32] "GET /get-home-location/ HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/media/jesimar/Workspace/Work/UAV/UAV-SOA-Interface/server.py", line 25, in do_GET
+    response = GET_URLS[self.path](request)
+  File "/media/jesimar/Workspace/Work/UAV/UAV-SOA-Interface/views.py", line 161, in getHomeLocation
+    'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
+AttributeError: 'NoneType' object has no attribute 'lat'
+```
 
 ## Alguns Dilemas
+
+
+## Trabalho Alunos de IC:
+
+* Instalar/Configurar SO Yocto na Intel Galileo 
+* Instalar/Configurar SO de tempo real na Intel Galileo 
+* Fazer planejador baseado em A*
+* Fazer planejador baseado em Campos Potenciais
+* Fazer planejador baseado em AG Puro
+* Fazer simplificador de rotas baseado em derivadas
+* Trabalhar com sistema de paraquedas
+* Trabalhar com sistema de câmera
+* Trabalhar com sistema sonar + edison
+* Fazer tradução de código para linguagem C
 
 ## Trabalhos Futuros ou Não Fazer Mais
 
@@ -127,12 +150,17 @@ QGroundControl:
 * Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
-* Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint (no MOSA).
-* Melhorar forma de alimentação da Intel Edison, ao invés de ligar os pinos do ESC (pinos de alimentação positivo e GND) na edison. Ligar os pinos Positivo e GND em um conector padrão de alimentação do Breakeout da Edison.
-* Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
-* Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
-* Incluir no IFA sistema para verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
+* UAV-MOSA: Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
+* Hardware: Melhorar forma de alimentação da Intel Edison, ao invés de ligar os pinos do ESC (pinos de alimentação positivo e GND) na edison. Ligar os pinos Positivo e GND em um conector padrão de alimentação do Breakeout da Edison.
+* Experimento: Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
+* Experimento: Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
+* UAV-IFA: Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
+* UAV-IFA: Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
 * Fazer experimentos em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
+* UAV-GCS: Executar scripts automaticamente
+* UAV-GCS: Colocar recurso para plotar a rota do drone em tempo real
+* UAV-GCS: Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
+* UAV-GCS: Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
 
 MOSA:
 * Path Planner:

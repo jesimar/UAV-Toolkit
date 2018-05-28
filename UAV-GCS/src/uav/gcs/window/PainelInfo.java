@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uav.gcs2.window;
+package uav.gcs.window;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import uav.gcs2.struct.Drone;
+import uav.gcs.struct.Drone;
 
 /**
  *

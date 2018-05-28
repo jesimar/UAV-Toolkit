@@ -26,8 +26,8 @@ public class TypeMsgCommunication {
 //    public static final String MOSA_IFA_MISSION_COMPLETED = "MOSA->IFA[MISSION_COMPLETED]";
     
     //Mensagem em que IFA diz a GCS alguma informação.
-    public static final String IFA_GCS_LATLNG             = "IFA->GCS[LATLNG]";
     public static final String IFA_GCS_INFO               = "IFA->GCS[INFO]";
+    public static final String IFA_GCS_PLANER             = "IFA->GCS[PLANNER]";
     public static final String IFA_GCS_REPLANER           = "IFA->GCS[REPLANNER]";
     
 }

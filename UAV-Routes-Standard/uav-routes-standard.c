@@ -51,6 +51,11 @@ int main(){
 	createRouteCircle(80, "Circle/route_circle_80wpt.txt");
 	createRouteCircle(160, "Circle/route_circle_160wpt.txt");
 	createRouteCircle(320, "Circle/route_circle_320wpt.txt");
+	createRouteCircle(640, "Circle/route_circle_640wpt.txt");
+	createRouteCircle(1280, "Circle/route_circle_1280wpt.txt");
+	createRouteCircle(2560, "Circle/route_circle_2560wpt.txt");
+	createRouteCircle(750, "Circle/route_circle_750wpt.txt");
+	createRouteCircle(800, "Circle/route_circle_800wpt.txt");
 	
 	createRouteTriangle(3, "Triangle/route_triangle_3wpt.txt");
 	createRouteTriangle(6, "Triangle/route_triangle_6wpt.txt");

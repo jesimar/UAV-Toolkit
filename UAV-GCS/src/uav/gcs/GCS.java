@@ -1,4 +1,4 @@
-package uav.gcs2;
+package uav.gcs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,17 +15,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import uav.gcs2.struct.Drone;
-import uav.gcs2.struct.ReaderFileConfig;
-import uav.gcs2.communication.CommunicationIFA;
-import uav.gcs2.conection.SaveDB;
-import uav.gcs2.google_maps.GoogleMaps;
-import uav.gcs2.window.PainelInfo;
+import uav.gcs.struct.Drone;
+import uav.gcs.struct.ReaderFileConfig;
+import uav.gcs.communication.CommunicationIFA;
+import uav.gcs.conection.SaveDB;
+import uav.gcs.google_maps.GoogleMaps;
+import uav.gcs.commands.keyboard.KeyboardCommands;
+import uav.gcs.commands.voice.VoiceCommands;
+import uav.gcs.communication.CommunicationMOSA;
+import uav.gcs.window.PainelInfo;
+import uav.generic.struct.constants.TypeInputCommand;
 
 /**
  * @author Jesimar S. Arantes
  */
-public final class GCS2 extends JFrame {
+public final class GCS extends JFrame {
 
     private final JPanel panelTop;
     private final JPanel panelMain;
@@ -44,8 +48,11 @@ public final class GCS2 extends JFrame {
     private final JButton btnBlink;
     private final JButton btnSpraying;
     private final JButton btnParachute;
+    private final JButton btnKeyboardCommands;
+    private final JButton btnVoiceCommands;
     
     private final JLabel labelIsConnectedIFA;
+    private final JLabel labelIsConnectedMOSA;
     private final JLabel labelIsConnectedDB;
     private final JLabel labelIsRunningPathPlanner;
     private final JLabel labelIsRunningPathReplanner;
@@ -56,20 +63,26 @@ public final class GCS2 extends JFrame {
     private final Drone drone;
     private final ReaderFileConfig config;
     private final CommunicationIFA communicationIFA;
+    private final CommunicationMOSA communicationMOSA;
     private final PainelInfo painelInfo;
     private SaveDB saveDB;
     private GoogleMaps googleMaps;
+    private final KeyboardCommands keyboard;
+    private final VoiceCommands voice;
     
     public static void main(String[] args) {
-        GCS2 gcs = new GCS2();
+        GCS gcs = new GCS();
     }
 
-    public GCS2() {
+    public GCS() {
         Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
         config.read();
         drone = new Drone(config.getUserEmail());
-        communicationIFA = new CommunicationIFA(drone, config.getHostIFA(), config.getPortIFA());
+        communicationIFA  = new CommunicationIFA(drone, config.getHostIFA(), config.getPortIFA());
+        communicationMOSA = new CommunicationMOSA(drone, config.getHostMOSA(), config.getPortMOSA());
+        keyboard = new KeyboardCommands(communicationIFA);
+        voice = new VoiceCommands(communicationIFA);
         if (config.hasDB()){
             saveDB = new SaveDB(config.getHostOD(), config.getPortOD());
         }
@@ -125,7 +138,7 @@ public final class GCS2 extends JFrame {
         btnBadWeather.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("BAD-WEATHER");
+                communicationIFA.sendData(TypeInputCommand.CMD_BAD_WEATHER);
             }
         });
         panelLeft.add(btnBadWeather);
@@ -136,7 +149,7 @@ public final class GCS2 extends JFrame {
         btnPathReplanningEmergency.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("EMERGENCYLANDING");
+                communicationIFA.sendData(TypeInputCommand.CMD_EMERGENCY_LANDING);
             }
         });
         panelLeft.add(btnPathReplanningEmergency);
@@ -147,7 +160,7 @@ public final class GCS2 extends JFrame {
         btnLand.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("LAND");
+                communicationIFA.sendData(TypeInputCommand.CMD_LAND);
             }
         });
         panelLeft.add(btnLand);
@@ -158,7 +171,7 @@ public final class GCS2 extends JFrame {
         btnRTL.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("RTL");
+                communicationIFA.sendData(TypeInputCommand.CMD_RTL);
             }
         });
         panelLeft.add(btnRTL);
@@ -169,7 +182,7 @@ public final class GCS2 extends JFrame {
         btnBuzzer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("BUZZER");
+                communicationIFA.sendData(TypeInputCommand.CMD_BUZZER);
             }
         });
         panelLeft.add(btnBuzzer);
@@ -180,7 +193,7 @@ public final class GCS2 extends JFrame {
         btnAlarm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("ALARM");
+                communicationIFA.sendData(TypeInputCommand.CMD_ALARM);
             }
         });
         panelLeft.add(btnAlarm);
@@ -191,7 +204,7 @@ public final class GCS2 extends JFrame {
         btnPicture.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("PICTURE");
+                communicationIFA.sendData(TypeInputCommand.CMD_PICTURE);
             }
         });
         panelLeft.add(btnPicture);
@@ -202,7 +215,7 @@ public final class GCS2 extends JFrame {
         btnVideo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("VIDEO");
+                communicationIFA.sendData(TypeInputCommand.CMD_VIDEO);
             }
         });
         panelLeft.add(btnVideo);
@@ -213,7 +226,7 @@ public final class GCS2 extends JFrame {
         btnLED.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("LED");
+                communicationIFA.sendData(TypeInputCommand.CMD_LED);
             }
         });
         panelLeft.add(btnLED);
@@ -224,7 +237,7 @@ public final class GCS2 extends JFrame {
         btnBlink.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("BLINK");
+                communicationIFA.sendData(TypeInputCommand.CMD_BLINK);
             }
         });
         panelLeft.add(btnBlink);
@@ -235,7 +248,7 @@ public final class GCS2 extends JFrame {
         btnSpraying.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("SPRAYING");
+                communicationIFA.sendData(TypeInputCommand.CMD_SPRAYING);
             }
         });
         panelLeft.add(btnSpraying);
@@ -246,13 +259,40 @@ public final class GCS2 extends JFrame {
         btnParachute.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                communicationIFA.sendData("PARACHUTE");
+                communicationIFA.sendData(TypeInputCommand.CMD_OPEN_PARACHUTE);
             }
         });
         panelLeft.add(btnParachute);
+        
+        btnKeyboardCommands = new JButton("Keyboard Commands");
+        btnKeyboardCommands.setPreferredSize(new Dimension(185, 25));
+        btnKeyboardCommands.setEnabled(false);
+        btnKeyboardCommands.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                keyboard.openTheWindow();
+                keyboard.listenerTheKeyboard();
+            }
+        });
+        panelLeft.add(btnKeyboardCommands);
+        
+        btnVoiceCommands = new JButton("Voice Commands");
+        btnVoiceCommands.setPreferredSize(new Dimension(185, 25));
+        btnVoiceCommands.setEnabled(false);
+        btnVoiceCommands.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                voice.openTheWindow();
+                voice.listenerTheSpeech();
+            }
+        });
+        panelLeft.add(btnVoiceCommands);
 
         communicationIFA.connectServerIFA();
         communicationIFA.receiveData();
+        
+        communicationMOSA.connectServerMOSA();
+        communicationMOSA.receiveData();
 
         if (config.hasDB()){
             saveDB.saveDB(drone, communicationIFA);
@@ -278,6 +318,11 @@ public final class GCS2 extends JFrame {
         labelIsConnectedIFA.setPreferredSize(new Dimension(160, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
         panelRight.add(labelIsConnectedIFA);
+        
+        labelIsConnectedMOSA = new JLabel("Connected MOSA: False");
+        labelIsConnectedMOSA.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedMOSA.setForeground(Color.RED);
+        panelRight.add(labelIsConnectedMOSA);
         
         labelIsConnectedDB = new JLabel("Connected DB: False");
         labelIsConnectedDB.setPreferredSize(new Dimension(160, 20));
@@ -331,24 +376,35 @@ public final class GCS2 extends JFrame {
                             btnBlink.setEnabled(true);
                             btnSpraying.setEnabled(true);
                             btnParachute.setEnabled(true);
+                            btnKeyboardCommands.setEnabled(true);
+                            btnVoiceCommands.setEnabled(true);
                             labelIsConnectedIFA.setText("Connected IFA: True");
                             labelIsConnectedIFA.setForeground(Color.GREEN);
-                            if (communicationIFA.isRunningPlanner()){
-                                labelIsRunningPathPlanner.setText("Run Planner: True");
-                                labelIsRunningPathPlanner.setForeground(Color.GREEN);
-                            }
                             if (communicationIFA.isRunningReplanner()){
                                 labelIsRunningPathReplanner.setText("Run Replanner: True");
                                 labelIsRunningPathReplanner.setForeground(Color.GREEN);  
+                            }else{
+                                labelIsRunningPathReplanner.setText("Run Replanner: False");
+                                labelIsRunningPathReplanner.setForeground(Color.RED);
                             }
                             painelInfo.updateInfo(drone);
                         }else{
                             labelIsConnectedIFA.setText("Connected IFA: False");
-                            labelIsConnectedIFA.setForeground(Color.RED);
-                            labelIsRunningPathPlanner.setText("Run Planner: False");
-                            labelIsRunningPathPlanner.setForeground(Color.RED);
-                            labelIsRunningPathReplanner.setText("Run Replanner: False");
-                            labelIsRunningPathReplanner.setForeground(Color.RED);        
+                            labelIsConnectedIFA.setForeground(Color.RED);    
+                        }
+                        if (communicationMOSA.isConnected()){
+                            labelIsConnectedMOSA.setText("Connected MOSA: True");
+                            labelIsConnectedMOSA.setForeground(Color.GREEN);
+                            if (communicationMOSA.isRunningPlanner()){
+                                labelIsRunningPathPlanner.setText("Run Planner: True");
+                                labelIsRunningPathPlanner.setForeground(Color.GREEN);
+                            }else{
+                                labelIsRunningPathPlanner.setText("Run Planner: False");
+                                labelIsRunningPathPlanner.setForeground(Color.RED);
+                            }
+                        }else{
+                            labelIsConnectedMOSA.setText("Connected MOSA: False");
+                            labelIsConnectedMOSA.setForeground(Color.RED);
                         }
                         if (config.hasDB()){
                             if (saveDB.isConnected()){
@@ -373,10 +429,10 @@ public final class GCS2 extends JFrame {
     @Override
     public void setSize(int width, int height) {
         super.setSize(width, height);
-        panelTop.setPreferredSize(new Dimension(width - 30, 90));
-        panelMain.setPreferredSize(new Dimension(width - 30, height - 130));
-        panelLeft.setPreferredSize(new Dimension(200, height - 140));
-        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 140));
+        panelTop.setPreferredSize(new Dimension(width - 30, 70));
+        panelMain.setPreferredSize(new Dimension(width - 30, height - 110));
+        panelLeft.setPreferredSize(new Dimension(200, height - 120));
+        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
     }
 
     public void showAbout(){

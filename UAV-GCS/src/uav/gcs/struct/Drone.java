@@ -1,4 +1,4 @@
-package uav.gcs2.struct;
+package uav.gcs.struct;
 
 import uav.generic.hardware.sensors.Attitude;
 import uav.generic.hardware.sensors.Barometer;

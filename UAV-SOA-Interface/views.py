@@ -200,7 +200,7 @@ def getAllInfoSensors(request):
     print 'dist-to-home: ', dist_to_home
     print 'dist-to-current-wpt (%s): %s' % (next_waypoint, dist_to_current_waypoint)
     return {
-        'all-sensors': [float('%.7g' % gps.lat), float('%.7g' % gps.lon), float('%.2g' % gps.alt), 
+        'all-sensors': [float('%.10g' % gps.lat), float('%.10g' % gps.lon), float('%.2g' % gps.alt), 
         float('%.2g' % alt_abs), float('%.3g' % bat.voltage), float('%.2g' % bat.current), bat.level, 
         float('%.4g' % att.pitch), float('%.4g' % att.yaw), float('%.4g' % att.roll), vehicle.heading, 
         float('%.2g' % vehicle.groundspeed), float('%.2g' % vehicle.airspeed), vehicle.gps_0.fix_type, 

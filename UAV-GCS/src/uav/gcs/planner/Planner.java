@@ -1,16 +1,13 @@
-package uav.mosa.module.path_planner;
+package uav.gcs.planner;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.mission.Mission;
+import uav.gcs.struct.Drone;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
-import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
  * Classe que modela o planejador da missão do drone evitando obstáculos.
@@ -18,27 +15,62 @@ import uav.mosa.struct.ReaderFileConfigMOSA;
  */
 public abstract class Planner {
     
-    final ReaderFileConfigMOSA configLocal;
-    final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone;
     final Mission3D waypointsMission;
-    final Mission3D mission3D;
-    final Mission missionGeo;
+    
+    final String fileWaypointsMission;
+    final String sizeWpt;
+    final String dirFiles;//global
+    final String fileGeoBase;//global
+    final String cmdExecPlanner;//local
+    final String localExec;//global
+    final String altitudeFlight;//local
+    final String time;//local
+    final String delta;//local
+    final String maxVel;//local
+    final String maxCtrl;//local
+    final String speedCruize;//local
+    final String typeAircraft;//local
 
     /**
      * Class constructor
      * @param drone instance of the aircraft
-     * @param waypointsMission waypoints of the mission
+     * @param fileWaypointsMission
+     * @param sizeWpt
+     * @param dirFiles
+     * @param fileGeoBase
+     * @param dirPlanner
+     * @param cmdExecPlanner
+     * @param localExec
+     * @param altitudeFlight
+     * @param time
+     * @param delta
+     * @param maxVel
+     * @param maxCtrl
+     * @param speedCruize
+     * @param typeAircraft
      */
-    public Planner(Drone drone, Mission3D waypointsMission) {
-        this.configLocal = ReaderFileConfigMOSA.getInstance();
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        this.dir = configLocal.getDirPlanner();
-        this.drone = drone;
-        this.waypointsMission = waypointsMission; 
-        this.mission3D = new Mission3D();
-        this.missionGeo = new Mission();
+    public Planner(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles,
+            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
+            String localExec, String altitudeFlight, String time, String delta, 
+            String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
+        this.drone = drone; 
+        this.fileWaypointsMission = fileWaypointsMission;
+        this.sizeWpt = sizeWpt;
+        this.dirFiles = dirFiles;
+        this.fileGeoBase = fileGeoBase;
+        this.dir = dirPlanner;
+        this.cmdExecPlanner = cmdExecPlanner;
+        this.localExec = localExec;
+        this.altitudeFlight = altitudeFlight;
+        this.time = time;
+        this.delta = delta;
+        this.maxVel = maxVel;
+        this.maxCtrl = maxCtrl;
+        this.speedCruize = speedCruize;
+        this.typeAircraft = typeAircraft;       
+        this.waypointsMission = new Mission3D();
     }
             
     public abstract boolean execMission(int i);
@@ -49,26 +81,18 @@ public abstract class Planner {
     
     public abstract void clearLogs();
     
-    public Mission3D getMission3D(){
-        return mission3D;
-    }
-    
-    public Mission getMissionGeo(){
-        return missionGeo;
-    }
-    
     boolean execMethod(){
         try {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = configLocal.getCmdExecPlanner() + " local";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
-                cmd = configLocal.getCmdExecPlanner() + " edison";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = configLocal.getCmdExecPlanner() + " edison";
+            if (localExec.equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = cmdExecPlanner + " local";
+            } else if (localExec.equals(TypeOperationMode.SITL_EDISON)){
+                cmd = cmdExecPlanner + " edison";
+            } else if (localExec.equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = cmdExecPlanner + " edison";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

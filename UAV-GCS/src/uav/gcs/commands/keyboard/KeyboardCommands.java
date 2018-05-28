@@ -1,98 +1,61 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package uav.keyboard.commands;
+package uav.gcs.commands.keyboard;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import uav.gcs.communication.CommunicationIFA;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
-public class UAVKeyboardCommands {
+public class KeyboardCommands {
+    
+    private JFrame frame;
+    private final CommunicationIFA communicationIFA;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        System.out.println("===Keyboard Commands===");
-        System.out.println("Commands: ");
-        System.out.println("    takeoff -> enter\n"
-                         + "    land -> backspace\n"
-                         + "    up -> page up\n"
-                         + "    down -> page down\n"
-                         + "    left -> left arrow\n"
-                         + "    right -> right arrow\n"
-                         + "    forward -> up arrow\n"
-                         + "    back -> down arrow\n"
-                         + "    rotate -> space\n"
-                         + "    quit -> ESC\n");
-        
-        JFrame frame = new JFrame("Read Commands Keyboard");
+    public KeyboardCommands(CommunicationIFA communicationIFA) {
+        this.communicationIFA = communicationIFA;
+    }
+    
+    public void openTheWindow(){
+        frame = new JFrame("CMDs KEYBOARD");
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
-        Keyboard teclado = new Keyboard();
-        frame.addKeyListener(teclado);
-        frame.setSize(300, 80);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        frame.setSize(210, 220);
+        frame.setVisible(true); 
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(166, 207, 255));
+        panel.setPreferredSize(new Dimension(200, 210));
+        
+        JLabel labelCommands = new JLabel("======COMMANDS=====");
+        JLabel labelTakeoff  = new JLabel("takeoff  -> enter");
+        JLabel labelLand     = new JLabel("land       -> backspace");
+        JLabel labelUp       = new JLabel("up          -> page up");
+        JLabel labelDown     = new JLabel("down     -> page down");
+        JLabel labelLeft     = new JLabel("left        -> left arrow");
+        JLabel labelRight    = new JLabel("right      -> right arrow");
+        JLabel labelForward  = new JLabel("forward -> up arrow");
+        JLabel labelBack     = new JLabel("back       -> down arrow");
+        
+        panel.add(labelCommands);
+        panel.add(labelTakeoff);
+        panel.add(labelLand);
+        panel.add(labelUp);
+        panel.add(labelDown);
+        panel.add(labelLeft);
+        panel.add(labelRight);
+        panel.add(labelForward);
+        panel.add(labelBack);
+        frame.add(panel);
+    }
+    
+    public void listenerTheKeyboard(){
+        Keyboard keyboard = new Keyboard(communicationIFA);
+        frame.addKeyListener(keyboard);
     }
 }
-
-class Keyboard implements KeyListener {
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_ENTER:
-                System.out.println("CMD: takeoff");
-                break;
-            case KeyEvent.VK_BACK_SPACE:
-                System.out.println("CMD: land");
-                break;
-            case KeyEvent.VK_PAGE_UP:
-                System.out.println("CMD: up");
-                break;
-            case KeyEvent.VK_PAGE_DOWN:
-                System.out.println("CMD: down");
-                break;
-            case KeyEvent.VK_LEFT:
-                System.out.println("CMD: left");
-                break;
-            case KeyEvent.VK_RIGHT:
-                System.out.println("CMD: right");
-                break;
-            case KeyEvent.VK_UP:
-                System.out.println("CMD: forward");                         
-                break;
-            case KeyEvent.VK_DOWN:
-                System.out.println("CMD: back");
-                break;
-            case KeyEvent.VK_SPACE:
-                System.out.println("CMD: rotate");
-                break;
-            case KeyEvent.VK_ESCAPE:
-                System.out.println("CMD: quit");
-                System.exit(0);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // to do
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // to do
-    }
-}
-

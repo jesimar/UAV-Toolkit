@@ -23,124 +23,87 @@
  *                                                                       *
  ************************************************************************ */
 
-package uav.voice.commands.speech;
-
-import uav.voice.commands.util.Utils;
+package uav.gcs.commands.voice;
 
 public class SpeechInterface {
 
     private static SpeechSynthesizer mSynthesizer = null;
     private static SpeechRecognizer mRecognizer = null;
 
-    /// Initializes Voce.  The 'vocePath' String specifies the path where 
-    /// Voce classes and config file can be found.  'initSynthesis' 
-    /// and 'initRecognition' enable these capabilities; if you don't 
-    /// need one or the other, not initializing it will save load time 
-    /// and memory (though the feature will be disabled, of course).  
-    /// 'grammarPath' is a relative or absolute path to one or more 
-    /// grammar files (all .gram files in 'grammarPath' will automatically 
-    /// be searched).  'grammarName' is the name of a specific grammar 
-    /// within a .gram file in the 'grammarPath'.  If the 'grammarName' 
-    /// is empty, a simple default grammar will be used.
+    // Initializes Voce.  The 'vocePath' String specifies the path where 
+    // Voce classes and config file can be found.  'initSynthesis' 
+    // and 'initRecognition' enable these capabilities; if you don't 
+    // need one or the other, not initializing it will save load time 
+    // and memory (though the feature will be disabled, of course).  
+    // 'grammarPath' is a relative or absolute path to one or more 
+    // grammar files (all .gram files in 'grammarPath' will automatically 
+    // be searched).  'grammarName' is the name of a specific grammar 
+    // within a .gram file in the 'grammarPath'.  If the 'grammarName' 
+    // is empty, a simple default grammar will be used.
     public static void init(String vocePath, boolean initSynthesis,
             boolean initRecognition, String grammarPath, String grammarName) {
-        Utils.setPrintDebug(false);
-        Utils.log("debug", "Beginning initialization");
-
-        if (!initSynthesis && !initRecognition) {
-            Utils.log("warning", "Synthesizer and recognizer are both uninitialized.");
-        }
-
         if (initSynthesis) {
-            // Create a speech synthesizer and give it a name.
-            Utils.log("", "Initializing synthesizer");
             mSynthesizer = new SpeechSynthesizer("Speech");
         }
         if (initRecognition) {
             if (grammarPath.equals("")) {
                 grammarPath = "./";
-            }           
-            // Create the speech recognizer.
-            Utils.log("", "Initializing recognizer. This may take some time...");
-            mRecognizer = new SpeechRecognizer(vocePath + "/config.xml", 
-                    grammarPath, grammarName);
-
+            } 
+            mRecognizer = new SpeechRecognizer(vocePath + "/config.xml", grammarPath, grammarName);
             // Enable the recognizer; this will start the recognition thread.
             setRecognizerEnabled(true);
         }
-
-        Utils.log("", "Initialization complete");
     }
 
     public static void destroy() {
-        Utils.log("debug", "Shutting down...");
-        if (null != mSynthesizer) {
+        if (mSynthesizer != null) {
             mSynthesizer.destroy();
         }
-        if (null != mRecognizer) {
+        if (mRecognizer != null) {
             mRecognizer.destroy();
         }
-        Utils.log("", "Shutdown complete");
     }
 
-    /// Requests that the given string be synthesized as soon as possible.
+    // Requests that the given string be synthesized as soon as possible.
     public static void synthesize(String message) {
-        if (null == mSynthesizer) {
-            Utils.log("warning", "synthesize called before synthesizer was "
-                    + "initialized. Request will be ignored.");
-            return;
+        if (mSynthesizer != null) {
+            mSynthesizer.synthesize(message);
         }
-        mSynthesizer.synthesize(message);
     }
 
     // Tells the speech synthesizer to stop synthesizing. This cancels all pending messages.
     public static void stopSynthesizing() {
-        if (null == mSynthesizer) {
-            Utils.log("warning", "stopSynthesizing called before "
-                    + "synthesizer was initialized. Request will be ignored.");
-            return;
+        if (mSynthesizer != null) {
+            mSynthesizer.stopSynthesizing();
         }
-        mSynthesizer.stopSynthesizing();
     }
 
     // Returns the number of recognized strings currently in the recognizer's queue.
     public static int getRecognizerQueueSize() {
-        if (null == mRecognizer) {
-            Utils.log("warning", "getRecognizerQueueSize called before recognizer "
-                    + "was initialized. Returning 0.");
+        if (mRecognizer == null) {
             return 0;
         }
         return mRecognizer.getQueueSize();
     }
 
-    /// Returns and removes the oldest recognized string from the recognizer's queue.
+    // Returns and removes the oldest recognized string from the recognizer's queue.
     public static String popRecognizedString() {
-        if (null == mRecognizer) {
-            Utils.log("warning", "popRecognizedString called before recognizer was "
-                    + "initialized.  Returning an empty string.");
+        if (mRecognizer == null) {
             return "";
         }
         return mRecognizer.popString();
     }
 
-    /// Enables and disables the speech recognizer.
+    // Enables and disables the speech recognizer.
     public static void setRecognizerEnabled(boolean e) {
-        if (null == mRecognizer) {
-            Utils.log("warning", "setRecognizerEnabled "
-                    + "called before recognizer was initialized.  Request "
-                    + "will be ignored.");
-            return;
+        if (mRecognizer != null) {
+            mRecognizer.setEnabled(e);
         }
-
-        mRecognizer.setEnabled(e);
     }
 
-    /// Returns true if the recognizer is currently enabled.
+    // Returns true if the recognizer is currently enabled.
     public static boolean isRecognizerEnabled() {
-        if (null == mRecognizer) {
-            Utils.log("warning", "isRecognizerEnabled "
-                    + "called before recognizer was initialized.  Returning "
-                    + "false.");
+        if (mRecognizer == null) {
             return false;
         }
         return mRecognizer.isEnabled();

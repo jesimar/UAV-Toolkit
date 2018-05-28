@@ -16,6 +16,7 @@ import uav.generic.struct.mission.Mission;
 import uav.generic.struct.reader.ReaderFileConfigAircraft;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.TypeAircraft;
+import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 import uav.generic.struct.mission.Mission3D;
@@ -25,6 +26,7 @@ import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.struct.reader.ReaderFileMission;
 import uav.generic.util.UtilGeom;
+import uav.mosa.module.communication_control.CommunicationGCS;
 import uav.mosa.module.communication_control.CommunicationIFA;
 import uav.mosa.module.decision_making.DecisionMaking;
 import uav.mosa.struct.ReaderFileConfigMOSA;
@@ -38,6 +40,7 @@ public class MissionManager {
     private final Drone drone;
     private final DataCommunication dataAcquisition;
     private final CommunicationIFA communicationIFA;
+    private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
     
     private final ReaderFileConfigMOSA configLocal;
@@ -115,6 +118,7 @@ public class MissionManager {
         readMission3D();
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition, wptsMission3D); 
         this.communicationIFA = new CommunicationIFA(drone);
+        this.communicationGCS = new CommunicationGCS();
         this.wptsBuzzer = new Mission();
         if (configGlobal.hasBuzzer()){
             readerFileBuzzer();
@@ -132,8 +136,12 @@ public class MissionManager {
         
         dataAcquisition.getParameters();
         
-        communicationIFA.connectClient();       //blocked        
-        communicationIFA.receiveData();         //Thread  
+        communicationIFA.connectServerIFA();    //blocked        
+        communicationIFA.receiveData();         //Thread 
+        
+        communicationGCS.startServerMOSA();     //Thread        
+        communicationGCS.receiveData();         //Thread 
+                
         monitoringAircraft();                   //Thread
         waitingForAnAction();                   //Thread                            
         monitoringStateMachine();               //Thread
@@ -174,7 +182,7 @@ public class MissionManager {
                 ReaderFileMission.mission3D(new File(path), wptsMission3D);
             }
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException] readMission()");
+            StandardPrints.printMsgError2("Error [FileNotFoundException] readMission3D()");
             ex.printStackTrace();            
             System.exit(0);
         }
@@ -219,6 +227,17 @@ public class MissionManager {
                         if (configGlobal.hasBuzzer()){
                             actionTurnOnTheBuzzer();
                         }
+                        if (configGlobal.hasCamera()){
+                            actionTakeAPicture();
+                        }
+                        //Codigo usado no artigo ICAS 2018 para insercao de falha no MOSA
+//                        if (drone.getTime() > 80){//Tempos testados 70, 80, 92, 102, 122.
+//                            communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+//                            stateMOSA = StateSystem.DISABLED;
+//                            System.out.println("MOSA Failure");
+//                            Thread.sleep(100);
+//                            System.exit(0);
+//                        }
                         Thread.sleep(time);                    
                     }
                 } catch (InterruptedException ex) {
@@ -242,7 +261,11 @@ public class MissionManager {
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
                         if (communicationIFA.isStartMission()){
-                            decisonMaking.actionToDoSomething();
+                            if (configLocal.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                                decisonMaking.actionToDoSomething();
+                            }else{
+                                decisonMaking.actionToDoSomethingOffboard(communicationGCS);
+                            }
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);
@@ -299,7 +322,10 @@ public class MissionManager {
      * esse codigo nao funciona muito bem, acionando um após o outro não olhando 
      * questões relacionados a ordem dos fatos. Por exemplo, Case-III do artigo IROS.
      */  
-    private void actionTurnOnTheBuzzer(){       
+    private void actionTurnOnTheBuzzer(){   
+        double lat = drone.getGPS().lat;
+        double lng = drone.getGPS().lng;
+        double alt = drone.getBarometer().alt_rel;
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
@@ -307,9 +333,8 @@ public class MissionManager {
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
             double altDestiny = configGlobal.getAltRelMission();            
-            double distHActual = UtilGeom.distanceEuclidian(
-                drone.getGPS().lat, drone.getGPS().lng, latDestiny, lngDestiny);
-            double distVActual = Math.abs(drone.getBarometer().alt_rel - altDestiny); 
+            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < VERTICAL_ERROR){
                 distH = distHActual;
                 distV = distVActual;
@@ -326,33 +351,18 @@ public class MissionManager {
         }
     }
     
-    private boolean waypointWasReached(double latDestiny, double lngDestiny, 
-            double altDestiny){   
-        double distH = UtilGeom.distanceEuclidian(
-                drone.getGPS().lat, drone.getGPS().lng, latDestiny, lngDestiny);
-        double distV = Math.abs(drone.getBarometer().alt_rel - altDestiny);
-        if (distV < VERTICAL_ERROR && distH < HORIZONTAL_ERROR * Constants.ONE_METER){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
-    //falta terminar
     private void actionTakeAPicture(){
         double lat = drone.getGPS().lat;
-        double lng =  drone.getGPS().lng;
-        double alt =  drone.getBarometer().alt_rel;        
+        double lng = drone.getGPS().lng;
+        double alt = drone.getBarometer().alt_rel;        
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
-        for (int i = 0; i < wptsBuzzer.size(); i++){
-            double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
-            double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
+        for (int i = 0; i < wptsCamera.size(); i++){
+            double latDestiny = wptsCamera.getWaypoint(i).getLat();
+            double lngDestiny = wptsCamera.getWaypoint(i).getLng();
             double altDestiny = configGlobal.getAltRelMission();            
-            double distHActual = Math.sqrt(
-                    (lat - latDestiny) * (lat - latDestiny) + 
-                    (lng - lngDestiny) * (lng - lngDestiny));
+            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < VERTICAL_ERROR){
                 distH = distHActual;
@@ -361,12 +371,23 @@ public class MissionManager {
             }
         }        
         if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
-            if (wptsBuzzer.size() > 0){
-                wptsBuzzer.removeWaypoint(index);
+            if (wptsCamera.size() > 0){
+                wptsCamera.removeWaypoint(index);
             }
-            StandardPrints.printMsgEmph("turn on the buzzer");
+            StandardPrints.printMsgEmph("turn on the camera");
             CameraControl camera = new CameraControl();
             camera.takeAPicture();
+        }
+    }
+    
+    private boolean waypointWasReached(double latDest, double lngDest, double altDest){   
+        double distH = UtilGeom.distanceEuclidian(
+                drone.getGPS().lat, drone.getGPS().lng, latDest, lngDest);
+        double distV = Math.abs(drone.getBarometer().alt_rel - altDest);
+        if (distV < VERTICAL_ERROR && distH < HORIZONTAL_ERROR * Constants.ONE_METER){
+            return true;
+        }else{
+            return false;
         }
     }
     

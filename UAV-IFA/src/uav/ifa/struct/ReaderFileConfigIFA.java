@@ -82,7 +82,8 @@ public class ReaderFileConfigIFA {
     public boolean checkReadFields(){        
         if (systemExec == null || 
                 (!systemExec.equals(TypeSystemExecIFA.REPLANNER) &&
-                 !systemExec.equals(TypeSystemExecIFA.FIXED_ROUTE))){
+                 !systemExec.equals(TypeSystemExecIFA.FIXED_ROUTE) && 
+                 !systemExec.equals(TypeSystemExecIFA.CONTROLLER))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of system exec not valid");
             return false;
         }

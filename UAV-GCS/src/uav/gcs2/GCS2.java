@@ -1,4 +1,4 @@
-package uav.gcs;
+package uav.gcs2;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 /**
  * @author Jesimar S. Arantes
  */
-public final class GCS extends JFrame {
+public final class GCS2 extends JFrame {
 
     private final JPanel panelTop;
     private final JPanel panelMain;
@@ -39,10 +39,10 @@ public final class GCS extends JFrame {
     private final StartModules start;
 
     public static void main(String[] args) {
-        GCS gcs = new GCS();
+        GCS2 gcs = new GCS2();
     }
 
-    public GCS() {
+    public GCS2() {
         start = new StartModules();
         
         this.setTitle("UAV-GCS");

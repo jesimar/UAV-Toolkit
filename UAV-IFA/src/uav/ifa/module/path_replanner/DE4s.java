@@ -42,7 +42,8 @@ public class DE4s extends Replanner{
             double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
             double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
-            int heading = UtilGeo.convertAngleAviationToAngleMath((int)drone.getSensorUAV().heading);
+            int head = (int)drone.getSensorUAV().heading;
+            int heading = UtilGeo.convertAngleAviationToAngleMath(head);
             double angle = Math.toRadians(heading);//Math.atan2(vy, vx);           
             //double vx = drone.getVelocity().vx;
             //double vy = drone.getVelocity().vy;            

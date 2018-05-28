@@ -1,12 +1,12 @@
-package uav.gcs2.conection;
+package uav.gcs.conection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
-import uav.gcs2.communication.CommunicationIFA;
-import uav.gcs2.struct.Drone;
+import uav.gcs.communication.CommunicationIFA;
+import uav.gcs.struct.Drone;
 
 /**
  * @author Jesimar S. Arantes

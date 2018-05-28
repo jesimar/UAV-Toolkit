@@ -63,20 +63,24 @@ public class CommunicationMOSA {
             public void run() {
                 try {
                     while (true) {
-                        String answer = input.readLine();
-                        if (answer != null) {
-                            StandardPrints.printMsgYellow("Data MOSA: " + answer);
-                            if (answer.equals(TypeMsgCommunication.MOSA_IFA_INITIALIZED)){
-                                sendData(TypeMsgCommunication.IFA_MOSA_HOMELOCATION + 
-                                        drone.getHomeLocation().string());
-                                sendData(TypeMsgCommunication.IFA_MOSA_START);
-                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STARTED)){
-                                //Não precisa fazer nada
-                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STOPPED)){
-                                //Não precisa fazer nada
-                            } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_DISABLED)){
-                                mosaDisabled = true;
-                            } 
+                        if (input != null && socket.isConnected()){//conferir linha
+                            String answer = input.readLine();
+                            if (answer != null) {
+                                StandardPrints.printMsgYellow("Data MOSA: " + answer);
+                                if (answer.equals(TypeMsgCommunication.MOSA_IFA_INITIALIZED)){
+                                    sendData(TypeMsgCommunication.IFA_MOSA_HOMELOCATION + 
+                                            drone.getHomeLocation().string());
+                                    sendData(TypeMsgCommunication.IFA_MOSA_START);
+                                } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STARTED)){
+                                    //Não precisa fazer nada
+                                } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STOPPED)){
+                                    //Não precisa fazer nada
+                                } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_DISABLED)){
+                                    mosaDisabled = true;
+                                }
+                            } else {
+                                Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
+                            }
                         } else {
                             Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }

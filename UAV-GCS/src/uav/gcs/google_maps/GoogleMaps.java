@@ -1,4 +1,4 @@
-package uav.gcs2.google_maps;
+package uav.gcs.google_maps;
 
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import uav.gcs2.communication.CommunicationIFA;
+import uav.gcs.communication.CommunicationIFA;
 
 public class GoogleMaps {
 

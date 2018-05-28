@@ -1,4 +1,4 @@
-package uav.gcs2.communication;
+package uav.gcs.communication;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
@@ -9,10 +9,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
-import uav.gcs2.path_replanner.MPGA4s;
-import uav.gcs2.path_replanner.Replanner;
-import uav.gcs2.struct.Drone;
+import uav.gcs.planner.HGA4m;
+import uav.gcs.planner.Planner;
+import uav.gcs.struct.Drone;
 import uav.generic.struct.Waypoint;
+import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.util.UtilString;
@@ -20,7 +21,7 @@ import uav.generic.util.UtilString;
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationIFA {
+public class CommunicationMOSA {
 
     private Socket socket;
     private PrintWriter output;
@@ -31,18 +32,16 @@ public class CommunicationIFA {
     private final int PORT;
     
     private boolean isRunningPlanner;
-    private boolean isRunningReplanner;
 
-    public CommunicationIFA(Drone drone, String host, int port) {
+    public CommunicationMOSA(Drone drone, String host, int port) {
         this.drone = drone;
         this.HOST = host;
         this.PORT = port;
         this.isRunningPlanner = false;
-        this.isRunningReplanner = false;
     }
 
-    public void connectServerIFA() {
-        System.out.println("Trying connect with IFA");
+    public void connectServerMOSA() {
+        System.out.println("Trying connect with MOSA");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -52,7 +51,7 @@ public class CommunicationIFA {
                         socket = new Socket(HOST, PORT);
                         output = new PrintWriter(socket.getOutputStream(), true);
                         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        System.out.println("UAV GCS connected in IFA ...");
+                        System.out.println("UAV GCS connected in MOSA ...");
                         break;
                     } catch (IOException ex) {
 
@@ -65,7 +64,7 @@ public class CommunicationIFA {
     }
 
     public void receiveData() {
-        System.out.println("Trying to listen the connection of UAV-IFA ...");
+        System.out.println("Trying to listen the connection of UAV-MOSA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -74,14 +73,8 @@ public class CommunicationIFA {
                         if (input != null) {
                             String answer = input.readLine();
                             if (answer != null) {
-                                if (answer.contains("IFA->GCS[INFO]")) {
-                                    answer = answer.substring(14);
-                                    readInfoIFA(answer);
-                                } else if (answer.contains("IFA->GCS[REPLANNER]")) {
-                                    answer = answer.substring(19);
-                                    replannerInGCS(answer);
-                                } else if (answer.contains("IFA->GCS[PLANNER]")) {
-                                    answer = answer.substring(19);
+                                if (answer.contains(TypeMsgCommunication.IFA_GCS_PLANER)) {
+                                    answer = answer.substring(17);
                                     plannerInGCS(answer);
                                 }
                             }
@@ -123,73 +116,52 @@ public class CommunicationIFA {
             ex.printStackTrace();
         }
     }
-
-    private void readInfoIFA(String answer) {
+    
+    private void plannerInGCS(String answer) {
+        isRunningPlanner = true;
         String v[] = answer.split(";");
-        drone.date = v[0];
-        drone.hour = v[1];
-        drone.time = Double.parseDouble(v[2]);
-        drone.gps.lat = Double.parseDouble(v[3]);
-        drone.gps.lng = Double.parseDouble(v[4]);
-        drone.barometer.alt_rel = Double.parseDouble(v[5]);
-        drone.barometer.alt_abs = Double.parseDouble(v[6]);
-        drone.battery.voltage = Double.parseDouble(v[7]);
-        drone.battery.current = Double.parseDouble(v[8]);
-        drone.battery.level = Double.parseDouble(v[9]);
-        drone.attitude.pitch = Double.parseDouble(v[10]);
-        drone.attitude.yaw = Double.parseDouble(v[11]);
-        drone.attitude.roll = Double.parseDouble(v[12]);
-        drone.velocity.vx = Double.parseDouble(v[13]);
-        drone.velocity.vy = Double.parseDouble(v[14]);
-        drone.velocity.vz = Double.parseDouble(v[15]);
-        drone.gpsinfo.fixType = Integer.parseInt(v[16]);
-        drone.gpsinfo.satellitesVisible = Integer.parseInt(v[17]);
-        drone.gpsinfo.eph = Integer.parseInt(v[18]);
-        drone.gpsinfo.epv = Integer.parseInt(v[19]);
-        drone.sensorUAV.heading = Double.parseDouble(v[20]);
-        drone.sensorUAV.groundspeed = Double.parseDouble(v[21]);
-        drone.sensorUAV.airspeed = Double.parseDouble(v[22]);
-        drone.nextWaypoint = Integer.parseInt(v[23]);
-        drone.countWaypoint = Integer.parseInt(v[24]);
-        drone.distanceToHome = Double.parseDouble(v[25]);
-        drone.distanceToCurrentWaypoint = Double.parseDouble(v[26]);
-        drone.statusUAV.mode = v[27];
-        drone.statusUAV.systemStatus = v[28];
-        drone.statusUAV.armed = Boolean.parseBoolean(v[29]);
-        drone.statusUAV.isArmable = Boolean.parseBoolean(v[30]);
-        drone.statusUAV.ekfOk = Boolean.parseBoolean(v[31]);
-        drone.typeFailure = v[32];
-    }
-
-    private void replannerInGCS(String answer) {
-        isRunningReplanner = true;
-        String v[] = answer.split(";");
-        Replanner replanner = new MPGA4s(drone, v[0],
-                v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
-        replanner.clearLogs();
-        boolean itIsOkExec = replanner.exec();
-        if (!itIsOkExec) {
-            sendData("failure");
-            return;
-        } 
+        Planner planner = new HGA4m(drone, v[0], v[1], v[2], v[3], v[4], v[5],
+                v[6], v[7], v[8], v[9], v[10], v[11], v[12], v[13]);
+        planner.clearLogs();
+        int size = Integer.parseInt(v[1]);
+        boolean finish = false;
+        int nRoute = 0;
+        while (nRoute < size - 1 && !finish){
+            System.out.println("route: " + nRoute);
+            boolean respMission = planner.execMission(nRoute);
+            if (!respMission){
+                sendData("failure");
+                return;
+            }
+            nRoute++;
+            if (nRoute == size - 1){
+                finish = true;
+            }
+        }
+        
         Mission mission = new Mission();
-        String path = v[2] + "routeGeo.txt";
-        boolean resp = readFileRoute(mission, path, 0);
-        if (!resp) {
-            sendData("failure");
-            return;
+        nRoute = 0;
+        while (nRoute < size - 1){
+            String path = v[4] + "routeGeo" + nRoute + ".txt";                
+            boolean respFile = readFileRoute(mission, path, nRoute, size);
+            if (!respFile){
+                sendData("failure");
+                return;
+            }
+            nRoute++;
         }
         mission.printMission();
         Gson gson = new Gson();
         String jsonMission = gson.toJson(mission);
         sendData(jsonMission);
-        isRunningReplanner = false;
+        isRunningPlanner = false;
     }
     
-    private boolean readFileRoute(Mission wps, String path, int time) {
+    private boolean readFileRoute(Mission wps, String path, int nRoute, int size) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String sCurrentLine;
+            boolean firstTime = true;
             double lat = 0.0;
             double lng = 0.0;
             double alt = 0.0;
@@ -199,13 +171,16 @@ public class CommunicationIFA {
                 lat = Double.parseDouble(s[0]);
                 lng = Double.parseDouble(s[1]);
                 alt = Double.parseDouble(s[2]);
-                if (time > 1) {
-                    wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
+                if (firstTime && (nRoute == 0 || nRoute == -2)){
+                    wps.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, alt));
+                    firstTime = false;
                 }
-                time++;
+                wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
             }
-            if (wps.getMission().size() > 0) {
-                wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
+            if (wps.getMission().size() > 0){
+                if (nRoute == size - 2){
+                    wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
+                }
             }
             return true;
         } catch (FileNotFoundException ex) {
@@ -216,38 +191,9 @@ public class CommunicationIFA {
             return false;
         }
     }
-    
-    private void plannerInGCS(String answer) {
-        isRunningPlanner = true;
-//        String v[] = answer.split(";");
-//        Replanner replanner = new MPGA4s(drone, v[0],
-//                v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
-//        replanner.clearLogs();
-//        boolean itIsOkExec = replanner.exec();
-//        if (!itIsOkExec) {
-//            sendData("failure");
-//            return;
-//        } 
-//        Mission mission = new Mission();
-//        String path = v[2] + "routeGeo.txt";
-//        boolean resp = readFileRoute(mission, path, 0);
-//        if (!resp) {
-//            sendData("failure");
-//            return;
-//        }
-//        mission.printMission();
-//        Gson gson = new Gson();
-//        String jsonMission = gson.toJson(mission);
-//        sendData(jsonMission);
-        isRunningPlanner = false;
-    }
 
     public boolean isRunningPlanner() {
         return isRunningPlanner;
     }
-
-    public boolean isRunningReplanner() {
-        return isRunningReplanner;
-    }
-        
+    
 }

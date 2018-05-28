@@ -1,11 +1,11 @@
 --------------- Incerteza da Posicao da Aeronave (P0) [Asa Fixa 10.0] [Asa Rotativa 0.25]--------------
-0.25
+0.40
 --------------- Constante Baseada na Resistencia do Ar (G) [G = Amax/(Vterm 2)] [Asa Fixa 0.0021421488] [Asa Rotativa 0.04]---------------
 0.04
 --------------- Time Step (dt) ---------------
 1
 --------------- Initial State [Xinit (px, py, vel, ang)] ---------------
-8.472035132762338 29.678733068546723 1.5 2.1642082724729685
+43.01612907871825 26.600350507390267 1.5 0.0
 ------- Maximum Velocity (metro/s) [Terminal] [Asa Fixa 30.5555] [Asa Rotativa 3.0]-------
 3.0
 ------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------
@@ -17,7 +17,7 @@
 ------- Maximum Acceleration (m/(s2)) -------
 0.2
 ----------- Horizonte de Tempo (Horizonte de Planejamento) (K) ---------
-16
+30
 ----------- Dimension Window Plot (Width x Heigth) -----------
 800	700
 ----------- Sistema de Coordenadas [false - Cartesian, true - Geographical] ---------------

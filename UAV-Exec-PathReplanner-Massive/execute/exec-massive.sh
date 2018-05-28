@@ -8,12 +8,12 @@
 echo "=========Path Replanner Massive========="
 
 #Possible values ['MPGA4s', 'GA4s', 'DE4s', 'GH4s']
-REPLANNER='GH4s'
+REPLANNER='MPGA4s'
 
 #Possible values [mpga4s-plot.jar, ga4s-plot.jar, de4s-plot.jar, gh4s-plot.jar]
-JARFILE=gh4s-plot.jar
+JARFILE=mpga4s-plot.jar
 
-for i in {1..43};
+for i in {1..145};
 do
 	echo "Calc Waypoint: " $i
 	java -jar '../dist/UAV-Exec-PathReplanner-Massive.jar' $i $REPLANNER

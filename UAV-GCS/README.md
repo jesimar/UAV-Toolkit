@@ -51,3 +51,9 @@ As seguintes ações são possíveis de serem chamadas a qualquer instante desde
 * EMERGENCY-LANDING -> Simula que a aeronave sofreu uma falha e deve pousar usando o algoritmo (MPGA4s, GA4s, DE4s ou GH4s) especificado na pasta do sistema IFA.
 * LAND -> Simula que a aeronave sofreu uma falha e deve pousar na vertical.
 * RTL -> Simula que a aeronave sofreu uma falha e deve fazer um Return To Launch (RTL).
+
+
+Os seguites métodos podem ser utilizados para controlar o drone:
+
+* **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave (somente SITL).
+* **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave (somente SITL).

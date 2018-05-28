@@ -25,7 +25,6 @@ public class CommunicationIFA {
     private StateCommunication stateCommunication;
     private final Drone drone;
     private final ReaderFileConfigGlobal configGlobal;
-    
     private boolean startMission;
     
     /**
@@ -39,7 +38,7 @@ public class CommunicationIFA {
         configGlobal = ReaderFileConfigGlobal.getInstance();
     }
     
-    public void connectClient(){        
+    public void connectServerIFA(){        
         try{
             StandardPrints.printMsgEmph("connecting in the IFA ...");
             socket = new Socket(configGlobal.getHostIFA(), configGlobal.getPortNetworkIFAandMOSA());
@@ -78,7 +77,7 @@ public class CommunicationIFA {
                                 sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
                                 Thread.sleep(100);
                                 System.exit(0);
-                            } 
+                            }
                         }else{
                             Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                         }                    

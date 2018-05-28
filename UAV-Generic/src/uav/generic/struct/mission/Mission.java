@@ -46,6 +46,7 @@ public class Mission {
     
     public void printMission(){
         StandardPrints.printMsgEmph("Mission");
+        StandardPrints.printMsgEmph("Size: " + mission.size());
         for (Waypoint wpt: mission){
             StandardPrints.printMsgEmph(wpt.toString());
         }

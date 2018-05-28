@@ -1,4 +1,4 @@
-package uav.gcs2.struct;
+package uav.gcs.struct;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,6 +20,9 @@ public class ReaderFileConfig {
     
     private String hostIFA;
     private int portIFA;
+    
+    private String hostMOSA;
+    private int portMOSA;
     
     private String hostOD;
     private String portOD;
@@ -43,7 +46,10 @@ public class ReaderFileConfig {
             
             hostIFA   = prop.getProperty("prop.ifa.host");
             portIFA   = Integer.parseInt(prop.getProperty("prop.ifa.port"));
-                     
+            
+            hostMOSA  = prop.getProperty("prop.mosa.host");
+            portMOSA  = Integer.parseInt(prop.getProperty("prop.mosa.port"));
+            
             hostOD    = prop.getProperty("prop.od.host");
             portOD    = prop.getProperty("prop.od.port");
             userEmail = prop.getProperty("prop.od.user_email");
@@ -77,7 +83,15 @@ public class ReaderFileConfig {
     
     public int getPortIFA() {
         return portIFA;
-    }    
+    }  
+    
+    public String getHostMOSA() {
+        return hostMOSA;
+    }
+    
+    public int getPortMOSA() {
+        return portMOSA;
+    } 
 
     public String getHostOD() {
         return hostOD;

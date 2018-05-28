@@ -1,33 +1,24 @@
 package uav.mosa.module.decision_making;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
-import uav.generic.module.sensors_actuators.BuzzerControl;
-import uav.generic.module.sensors_actuators.CameraControl;
-import uav.generic.module.sensors_actuators.ParachuteControl;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.constants.TypeAngle;
+import uav.generic.hardware.aircraft.FixedWing;
 import uav.generic.struct.constants.TypeWaypoint;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.TypeDirection;
-import uav.generic.struct.Heading;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.LocalCalcMission;
-import uav.generic.struct.constants.TypeActionAfterFinishMission;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypePlanner;
+import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.util.UtilString;
+import uav.mosa.module.communication_control.CommunicationGCS;
 import uav.mosa.module.path_planner.HGA4m;
 import uav.mosa.struct.ReaderFileConfigMOSA;
 import uav.mosa.module.path_planner.Planner;
@@ -41,13 +32,12 @@ public class DecisionMaking {
     private final Drone drone;
     private final DataCommunication dataAcquisition;
     private final ReaderFileConfigMOSA config;
+    private final ReaderFileConfigGlobal configGlobal;
     private final Mission3D wptsMission3D;
     private Planner planner;
     private StatePlanning statePlanning;    
     
     private final int TIME_TO_SLEEP_NEXT_FIXED_ROUTE = 20000;//in milliseconds
-    private final double FACTOR_DESLC = Constants.FACTOR_DESLC_CONTROLLER;
-    private final double ONE_METER = Constants.ONE_METER;
     
     /**
      * Class constructor.
@@ -58,6 +48,7 @@ public class DecisionMaking {
     public DecisionMaking(Drone drone, DataCommunication dataAcquisition, 
             Mission3D wptsMission3D) {
         this.config = ReaderFileConfigMOSA.getInstance();
+        this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;       
         this.wptsMission3D = wptsMission3D;
@@ -92,17 +83,29 @@ public class DecisionMaking {
                 statePlanning = StatePlanning.DISABLED;
                 StandardPrints.printMsgWarning("send fixed mission to drone failure");
             }
-        } else if (config.getSystemExec().equals(TypeSystemExecMOSA.CONTROLLER)){
-            boolean itIsOkController = execController();
-            if (itIsOkController){
+        } 
+    }   
+    
+    public void actionToDoSomethingOffboard(CommunicationGCS communicationGSC){
+        statePlanning = StatePlanning.PLANNING;        
+        if (config.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
+            boolean respM = false;
+            if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND)){
+                respM = sendMissionsToDroneCalcGroundOffboard(communicationGSC);
+            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND_AND_AIR)) {
+                respM = sendMissionsToDroneCalcGroundAndAir();
+            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.AIR)) {
+                respM = sendMissionsToDroneCalcAir();
+            }
+            if (respM){
                 statePlanning = StatePlanning.READY;
-                StandardPrints.printMsgEmph("exec controller with success");
+                StandardPrints.printMsgEmph("send mission to drone with success");
             }else {
                 statePlanning = StatePlanning.DISABLED;
-                StandardPrints.printMsgWarning("exec controller of drone failure");
+                StandardPrints.printMsgWarning("send mission to drone failure");
             }
         }
-    }   
+    }
     
     private boolean sendMissionsToDroneCalcGround() {
         long timeInit1 = System.currentTimeMillis();
@@ -320,13 +323,7 @@ public class DecisionMaking {
             }
             if (wps.getMission().size() > 0){
                 if (nRoute == wptsMission3D.size() - 2){
-                    if (config.getActionAfterFinishMission().equals(
-                            TypeActionAfterFinishMission.CMD_LAND)){
-                        wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
-                    }else if (config.getActionAfterFinishMission().equals(
-                            TypeActionAfterFinishMission.CMD_RTL)){
-                        wps.addWaypoint(new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0));
-                    }
+                    wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
                 }
             }
             return true;
@@ -337,145 +334,36 @@ public class DecisionMaking {
             StandardPrints.printMsgWarning("Warning [IOException]: readFileRoute()");
             return false;
         }
-    }
-    
-    public boolean execController() {
-        try{
-            StandardPrints.printMsgEmph("controller");
-            File f = new File(config.getDirController());
-            final Process comp = Runtime.getRuntime().exec(config.getCmdExecController(), null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());                
-                    while (sc.hasNextLine()) {
-                        String cmd = sc.nextLine();
-                        interpretCommand(cmd);
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    while (sc.hasNextLine()) {
-                        StandardPrints.printMsgError("err:" + sc.nextLine());
-                    }
-                    sc.close();
-                }
-            });        
-            comp.waitFor();
-            return true;
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execController()");
-            return false;
-        } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execController()");
-            return false;
-        }
-    }        
-    
-    private void interpretCommand(String cmd) {
-        if (!cmd.contains("CMD: ")){
-            StandardPrints.printMsgEmph3(cmd);
-        }else if (cmd.contains("CMD: ")){
-            StandardPrints.printMsgEmph4(cmd);
-            if (cmd.contains(TypeInputCommand.CMD_TAKEOFF)){
-                Waypoint wpt = new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_LAND)){               
-                Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_QUIT)){               
-                Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_UP)){
-                double lat = drone.getGPS().lat;
-                double lng = drone.getGPS().lng;
-                double newAltRel = drone.getBarometer().alt_rel + 1;
-                if (newAltRel > Constants.MAX_ALT_CONTROLLER){
-                    newAltRel = Constants.MAX_ALT_CONTROLLER;
-                }
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, lng, newAltRel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_DOWN)){
-                double lat = drone.getGPS().lat;
-                double lng = drone.getGPS().lng;
-                double newAltRel = drone.getBarometer().alt_rel - 1;
-                if (newAltRel < Constants.MIN_ALT_CONTROLLER){
-                    newAltRel = Constants.MIN_ALT_CONTROLLER;
-                }
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, lng, newAltRel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_LEFT)){
-                double lat = drone.getGPS().lat;
-                double newLon = drone.getGPS().lng - FACTOR_DESLC * ONE_METER;
-                double alt_rel = drone.getBarometer().alt_rel;
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, newLon, alt_rel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_RIGHT)){
-                double lat = drone.getGPS().lat;
-                double newLon = drone.getGPS().lng + FACTOR_DESLC * ONE_METER;               
-                double alt_rel = drone.getBarometer().alt_rel;
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, newLon, alt_rel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_FORWARD)){
-                double newLat = drone.getGPS().lat + FACTOR_DESLC * ONE_METER;
-                double lng = drone.getGPS().lng;
-                double alt_rel = drone.getBarometer().alt_rel;
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, newLat, lng, alt_rel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_BACK)){
-                double newLat = drone.getGPS().lat - FACTOR_DESLC * ONE_METER;
-                double lng = drone.getGPS().lng;
-                double alt_rel = drone.getBarometer().alt_rel;
-                Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, newLat, lng, alt_rel);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_ROTATE)){
-                for (int i = 0; i < 4; i++){
-                    Heading heading = new Heading(20, TypeDirection.CW, TypeAngle.RELATIVE);
-                    dataAcquisition.setHeading(heading);
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException ex) {
-                        
-                    }
-                }
-            }
-            if (cmd.contains(TypeInputCommand.CMD_RTL)){
-                Waypoint wpt = new Waypoint(TypeWaypoint.RTL, 0.0, 0.0, 0.0);
-                dataAcquisition.setWaypoint(wpt);
-            }
-            if (cmd.contains(TypeInputCommand.CMD_BUZZER)){
-                BuzzerControl buzzer = new BuzzerControl();
-                buzzer.turnOnBuzzer();
-            }
-            if (cmd.contains(TypeInputCommand.CMD_ALARM)){
-                BuzzerControl buzzer = new BuzzerControl();
-                buzzer.turnOnAlarm();
-            }
-            if (cmd.contains(TypeInputCommand.CMD_PICTURE)){
-                CameraControl camera = new CameraControl();
-                camera.takeAPicture();
-            }
-            if (cmd.contains(TypeInputCommand.CMD_OPEN_PARACHUTE)){
-                ParachuteControl parachute = new ParachuteControl();
-                parachute.open();
-            }
-        }
-    }
+    }     
     
     public StatePlanning getStatePlanning() {
         return statePlanning;
+    }
+    
+    private boolean sendMissionsToDroneCalcGroundOffboard(CommunicationGCS communicationGCS) {
+        String typeAircraft = drone instanceof FixedWing ? "FixedWing" : "RotaryWing";
+        String attributes = config.getFileWaypointsMission()  + ";" + wptsMission3D.size()
+                + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
+                + ";" + config.getDirPlanner() + ";" + config.getCmdExecPlanner() 
+                + ";" + configGlobal.getOperationMode() + ";" + configGlobal.getAltRelMission()
+                + ";" + config.getTimeExec() + ";" + config.getDelta() 
+                + ";" + config.getMaxVelocity() + ";" + config.getMaxControl() 
+                + ";" + drone.getSpeedCruize() + ";" + typeAircraft;
+        communicationGCS.sendDataPlannerInGCS(attributes);
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+
+            }
+        } while (!communicationGCS.hasReceiveRouteGCS());
+        String msgRoute = communicationGCS.getRoutePlannerGCS();
+        if (msgRoute.equals("failure")) {
+            System.out.println("Route GCS [Failure]: " + msgRoute);
+            return false;
+        } else {
+            dataAcquisition.setMission(msgRoute);
+            return true;
+        }
     }
 }

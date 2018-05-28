@@ -1,6 +1,19 @@
 # Changelog
 
-## Version v2.0.0 (10/05/2018)
+## Version v2.1.0 (17/05/2018)
+
+### Features:
+
+* Added resource to controller the drone using keyboard (UAV-GCS).
+* Added resource to controller the drone using voice (UAV-GCS).
+* Added resource to exec path replanner in UAV-GCS (offboard).
+* Added resource to exec path planner in UAV-GCS (offboard).
+* Added resource to take a picture in UAV-MOSA.
+* Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure
+
+### Bug Fixes:
+
+## Version v2.0.0 (17/05/2018)
 
 ### Features:
 

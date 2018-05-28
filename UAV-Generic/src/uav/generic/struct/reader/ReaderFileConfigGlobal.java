@@ -30,6 +30,7 @@ public class ReaderFileConfigGlobal {
     private String hostIFA;
     private int portNetworkIFAandMOSA;
     private int portNetworkIFAandGCS;
+    private int portNetworkMOSAandGCS;
     private String hostSOA;
     private int portNetworkSOA;
         
@@ -92,6 +93,7 @@ public class ReaderFileConfigGlobal {
             hostIFA               = prop.getProperty("prop.global.host_ifa");
             portNetworkIFAandMOSA = Integer.parseInt(prop.getProperty("prop.global.port_network_ifa_mosa"));
             portNetworkIFAandGCS  = Integer.parseInt(prop.getProperty("prop.global.port_network_ifa_gcs"));
+            portNetworkMOSAandGCS = Integer.parseInt(prop.getProperty("prop.global.port_network_mosa_gcs"));
             hostSOA               = prop.getProperty("prop.global.host_soa");
             portNetworkSOA        = Integer.parseInt(prop.getProperty("prop.global.port_network_soa"));
             
@@ -198,6 +200,10 @@ public class ReaderFileConfigGlobal {
     
     public int getPortNetworkIFAandGCS() {
         return portNetworkIFAandGCS;
+    }
+    
+    public int getPortNetworkMOSAandGCS() {
+        return portNetworkMOSAandGCS;
     }
     
     public String getHostSOA() {

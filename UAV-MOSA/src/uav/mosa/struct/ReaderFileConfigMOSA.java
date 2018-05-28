@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import lib.color.StandardPrints;
-import uav.generic.struct.constants.TypeActionAfterFinishMission;
-import uav.generic.struct.constants.TypeController;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
@@ -24,7 +22,6 @@ public class ReaderFileConfigMOSA {
 
     //global
     private String systemExec;
-    private String actionAfterFinishMission;
     
     //planner
     private String localExecPlanner;
@@ -45,11 +42,6 @@ public class ReaderFileConfigMOSA {
     private boolean isDynamicFixedRoute;
     private String fileFixedRouteDyn;
     
-    //controller
-    private String typeController;
-    private String dirController;
-    private String cmdExecController;
-    
     /**
      * Class constructor.
      */
@@ -67,7 +59,6 @@ public class ReaderFileConfigMOSA {
             prop.load(new FileInputStream(nameFile));
             
             systemExec                = prop.getProperty("prop.global.system_exec");
-            actionAfterFinishMission  = prop.getProperty("prop.global.action_after_finish_mission");
             
             localExecPlanner          = prop.getProperty("prop.planner.local_exec");
             methodPlanner             = prop.getProperty("prop.planner.method");
@@ -83,9 +74,6 @@ public class ReaderFileConfigMOSA {
             fileFixedRoute            = prop.getProperty("prop.fixed_route.file_waypoints");
             isDynamicFixedRoute       = Boolean.parseBoolean(prop.getProperty("prop.fixed_route.is_dynamic"));
             fileFixedRouteDyn         = prop.getProperty("prop.fixed_route.file_waypoints_dyn");
-            
-            typeController            = prop.getProperty("prop.controller.type_controller");
-            cmdExecController         = prop.getProperty("prop.controller.cmd_exec");
                                  
             return true;
         } catch (FileNotFoundException ex){     
@@ -100,16 +88,8 @@ public class ReaderFileConfigMOSA {
     public boolean checkReadFields(){        
         if (systemExec == null || 
                 (!systemExec.equals(TypeSystemExecMOSA.FIXED_ROUTE) && 
-                 !systemExec.equals(TypeSystemExecMOSA.PLANNER) && 
-                 !systemExec.equals(TypeSystemExecMOSA.CONTROLLER))){
+                 !systemExec.equals(TypeSystemExecMOSA.PLANNER))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of execution not valid");
-            return false;
-        }
-        if (actionAfterFinishMission == null || 
-                (!actionAfterFinishMission.equals(TypeActionAfterFinishMission.CMD_NONE) && 
-                 !actionAfterFinishMission.equals(TypeActionAfterFinishMission.CMD_LAND) && 
-                 !actionAfterFinishMission.equals(TypeActionAfterFinishMission.CMD_RTL))){
-            StandardPrints.printMsgError2("Error [[file ./config.properties]] action after finish mission not valid");
             return false;
         }
         if (localExecPlanner == null || 
@@ -123,13 +103,7 @@ public class ReaderFileConfigMOSA {
                  !methodPlanner.equals(TypePlanner.CCQSP4M))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of method not valid");
             return false;
-        }
-        if (typeController == null ||
-                (!typeController.equals(TypeController.VOICE) && 
-                 !typeController.equals(TypeController.KEYBOARD))){
-            StandardPrints.printMsgError2("Error [[file ./config.properties]] type controller not valid");
-            return false;
-        }
+        }        
         return true;
     }
     
@@ -142,11 +116,6 @@ public class ReaderFileConfigMOSA {
                 typePlanner = TypePlanner.CCQSP4M;
                 dirPlanner = "../Modules-MOSA/CCQSP4m/";
             }
-            if (typeController.equals(TypeController.VOICE)){
-                dirController = "../Modules-MOSA/Voice-Commands/";
-            } else if (typeController.equals(TypeController.KEYBOARD)){
-                dirController = "../Modules-MOSA/Keyboard-Commands/";
-            } 
             return true;
         }catch (NumberFormatException ex){
             StandardPrints.printMsgError2("Error [NumberFormatException] parseToVariables()");
@@ -156,10 +125,6 @@ public class ReaderFileConfigMOSA {
     
     public String getSystemExec() {
         return systemExec;
-    }
-    
-    public String getActionAfterFinishMission() {
-        return actionAfterFinishMission;
     }
     
     public boolean isDynamicFixedRoute() {
@@ -201,6 +166,10 @@ public class ReaderFileConfigMOSA {
             return v[i];
         }
     }
+    
+    public String getTimeExec(){
+        return timeExec;
+    }
 
     public String getDelta() {
         return delta;
@@ -225,17 +194,4 @@ public class ReaderFileConfigMOSA {
     public String getFileFixedRouteDyn() {
         return fileFixedRouteDyn;
     }
-
-    public String getTypeController() {
-        return typeController;
-    }
-
-    public String getDirController() {
-        return dirController;
-    }
-
-    public String getCmdExecController() {
-        return cmdExecController;
-    }
-    
 }

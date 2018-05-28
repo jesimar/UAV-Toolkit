@@ -1,4 +1,4 @@
-package uav.gcs2.conection;
+package uav.gcs.conection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

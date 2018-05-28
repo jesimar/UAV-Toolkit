@@ -1,98 +1,93 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package uav.keyboard.commands;
+package uav.gcs.commands.voice;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import uav.gcs.communication.CommunicationIFA;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
-public class UAVKeyboardCommands {
+public class VoiceCommands {
+    
+    private JFrame frame;
+    private final CommunicationIFA communicationIFA;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        System.out.println("===Keyboard Commands===");
-        System.out.println("Commands: ");
-        System.out.println("    takeoff -> enter\n"
-                         + "    land -> backspace\n"
-                         + "    up -> page up\n"
-                         + "    down -> page down\n"
-                         + "    left -> left arrow\n"
-                         + "    right -> right arrow\n"
-                         + "    forward -> up arrow\n"
-                         + "    back -> down arrow\n"
-                         + "    rotate -> space\n"
-                         + "    quit -> ESC\n");
-        
-        JFrame frame = new JFrame("Read Commands Keyboard");
+    public VoiceCommands(CommunicationIFA communicationIFA) {
+        this.communicationIFA = communicationIFA;
+    }
+    
+    public void openTheWindow(){
+        frame = new JFrame("CMDs VOICE");
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
-        Keyboard teclado = new Keyboard();
-        frame.addKeyListener(teclado);
-        frame.setSize(300, 80);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                SpeechInterface.destroy();
+            }
+        });
+        frame.setSize(210, 220);
+        frame.setVisible(true); 
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(166, 207, 255));
+        panel.setPreferredSize(new Dimension(200, 210));
+        
+        JLabel labelCommands = new JLabel("======COMMANDS=====");
+        JLabel labelTakeoff  = new JLabel("takeoff                   ");
+        JLabel labelLand     = new JLabel("land                      ");
+        JLabel labelUp       = new JLabel("up                        ");
+        JLabel labelDown     = new JLabel("down                      ");
+        JLabel labelLeft     = new JLabel("left                      ");
+        JLabel labelRight    = new JLabel("right                     ");
+        JLabel labelForward  = new JLabel("forward                   ");
+        JLabel labelBack     = new JLabel("back                      ");
+        
+        panel.add(labelCommands);
+        panel.add(labelTakeoff);
+        panel.add(labelLand);
+        panel.add(labelUp);
+        panel.add(labelDown);
+        panel.add(labelLeft);
+        panel.add(labelRight);
+        panel.add(labelForward);
+        panel.add(labelBack);
+        frame.add(panel);
+    }
+    
+    public void listenerTheSpeech(){
+        SpeechInterface.init("lib", false, true, "./lib", "commands");
+        System.out.println("Speech the Commands: ");
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                boolean quit = false;
+                while (!quit) {
+                    try {
+                        Thread.sleep(200);                
+                    } catch (InterruptedException ex) {
+                        
+                    }
+                    while (SpeechInterface.getRecognizerQueueSize() > 0) {
+                        String str = SpeechInterface.popRecognizedString();
+                        if (str.indexOf("quit") != -1) {
+                            quit = true;
+                        }
+                        communicationIFA.sendData("CMD: " + str);
+                        System.out.println("CMD: " + str);
+                    }
+                }
+                SpeechInterface.destroy();
+            }
+        });
     }
 }
-
-class Keyboard implements KeyListener {
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_ENTER:
-                System.out.println("CMD: takeoff");
-                break;
-            case KeyEvent.VK_BACK_SPACE:
-                System.out.println("CMD: land");
-                break;
-            case KeyEvent.VK_PAGE_UP:
-                System.out.println("CMD: up");
-                break;
-            case KeyEvent.VK_PAGE_DOWN:
-                System.out.println("CMD: down");
-                break;
-            case KeyEvent.VK_LEFT:
-                System.out.println("CMD: left");
-                break;
-            case KeyEvent.VK_RIGHT:
-                System.out.println("CMD: right");
-                break;
-            case KeyEvent.VK_UP:
-                System.out.println("CMD: forward");                         
-                break;
-            case KeyEvent.VK_DOWN:
-                System.out.println("CMD: back");
-                break;
-            case KeyEvent.VK_SPACE:
-                System.out.println("CMD: rotate");
-                break;
-            case KeyEvent.VK_ESCAPE:
-                System.out.println("CMD: quit");
-                System.exit(0);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // to do
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // to do
-    }
-}
-

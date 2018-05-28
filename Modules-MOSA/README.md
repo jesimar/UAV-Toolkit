@@ -10,8 +10,3 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento 
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.
 
 * **Fixed-Route4m** -> *Fixed Route for mission* - Arquivos com missões completas pré-definidas. 
-
-Os seguites métodos podem ser utilizados para controlar o drone:
-
-* **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave (somente SITL).
-* **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave (somente SITL).

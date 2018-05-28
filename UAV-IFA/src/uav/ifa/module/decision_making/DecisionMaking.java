@@ -12,6 +12,7 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Waypoint;
+import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeReplanner;
@@ -44,6 +45,8 @@ public class DecisionMaking {
     private Replanner replanner;
     private StateReplanning stateReplanning;
     private String typeAction = "";
+    private final double FACTOR_DESLC = Constants.FACTOR_DESLC_CONTROLLER;
+    private final double ONE_METER = Constants.ONE_METER;
 
     /**
      * Class constructor.
@@ -58,13 +61,19 @@ public class DecisionMaking {
         this.dataAcquisition = dataAcquisition;
         this.stateReplanning = StateReplanning.WAITING;
     }
-    
-    public void actionToDoSomethingOffboard(Failure failure, CommunicationGCS communicationGCS){
+
+    public void actionToDoSomethingOffboard(Failure failure, CommunicationGCS communicationGCS) {
         stateReplanning = StateReplanning.REPLANNING;
         if (configLocal.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)) {
             if (failure.getTypeFailure() != null) {
                 switch (failure.getTypeFailure()) {
+                    case FAIL_AP_CRITICAL:
+                        execEmergencyLandingOffboard(communicationGCS);
+                        break;
                     case FAIL_LOW_BATTERY:
+                        execEmergencyLandingOffboard(communicationGCS);
+                        break;
+                    case FAIL_BATTERY_OVERHEATING:
                         execEmergencyLandingOffboard(communicationGCS);
                         break;
                     case FAIL_SYSTEM_MOSA:
@@ -73,7 +82,7 @@ public class DecisionMaking {
                     case FAIL_BASED_INSERT_FAILURE:
                         if (typeAction.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)) {
                             execEmergencyLandingOffboard(communicationGCS);
-                        } 
+                        }
                         break;
                     default:
                         break;
@@ -82,7 +91,7 @@ public class DecisionMaking {
         }
         stateReplanning = StateReplanning.READY;
     }
-    
+
     private void execEmergencyLandingOffboard(CommunicationGCS communicationGCS) {
         boolean itIsOkEmergencyLanding = emergenyLandingOffboard(communicationGCS);
         if (!itIsOkEmergencyLanding) {
@@ -93,36 +102,32 @@ public class DecisionMaking {
             }
         }
     }
-    
+
     private boolean emergenyLandingOffboard(CommunicationGCS communicationGCS) {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
-        dataAcquisition.changeNavigationSpeed(navSpeed / 10);
+        dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
-        String attributes = configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase() 
+        String attributes = configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
                 + ";" + configLocal.getDirReplanner() + ";" + configLocal.getCmdExecReplanner()
                 + ";" + configLocal.getTypeAltitudeDecay() + ";" + configLocal.getTimeExec()
                 + ";" + configLocal.getQtdWaypoints() + ";" + configLocal.getDelta();
         communicationGCS.sendDataReplannerInGCS(attributes);
-        
-        boolean hasResult = false;
-        do{
-            hasResult = communicationGCS.hasReceiveRouteGCS();
+        do {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {
-                
+
             }
-        }while(!hasResult);
-        
+        } while (!communicationGCS.hasReceiveRouteGCS());
+
         String msgRoute = communicationGCS.getRouteReplannerGCS();
-        
+
         dataAcquisition.changeNavigationSpeed(navSpeed);
-        
-        if (msgRoute.equals("failure")){
+
+        if (msgRoute.equals("failure")) {
             System.out.println("Route GCS [Failure]: " + msgRoute);
             return false;
-        }else{
-            System.out.println("Route GCS [Sucess]: " + msgRoute);
+        } else {
             dataAcquisition.setMission(msgRoute);
             return true;
         }
@@ -137,7 +142,7 @@ public class DecisionMaking {
                         if (configGlobal.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
@@ -146,7 +151,7 @@ public class DecisionMaking {
                         if (configGlobal.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
@@ -155,28 +160,28 @@ public class DecisionMaking {
                         execEmergencyLanding();
                         break;
                     case FAIL_GPS:
-                        if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                        if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                             landVertical();
                         } else {
                             if (configGlobal.hasParachute()) {
                                 openParachute();
-                            } 
+                            }
                         }
                         break;
                     case FAIL_ENGINE:
                         if (configGlobal.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
                         break;
                     case FAIL_SYSTEM_IFA:
-                        if (configGlobal.hasParachute()){
+                        if (configGlobal.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
@@ -194,7 +199,7 @@ public class DecisionMaking {
                         if (typeAction.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)) {
                             execEmergencyLanding();
                         } else if (typeAction.equals(TypeInputCommand.CMD_LAND)) {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         } else if (typeAction.equals(TypeInputCommand.CMD_RTL)) {
@@ -217,7 +222,7 @@ public class DecisionMaking {
                 StandardPrints.printMsgWarning("send fixed mission to drone failure");
                 return;
             }
-        }
+        } 
         stateReplanning = StateReplanning.READY;
     }
 
@@ -270,7 +275,7 @@ public class DecisionMaking {
         }
 
         dataAcquisition.changeNavigationSpeed(navSpeed);
-        
+
         Mission mission = new Mission();
         String path = configLocal.getDirReplanner() + "routeGeo.txt";
 
@@ -337,13 +342,15 @@ public class DecisionMaking {
      * Este comando é responsável por fazer o disparo do paraquedas. Melhorar no
      * futuro: Deve-se desarmar o motor e entao abrir o paraquedas.
      */
-    private void openParachute() {
+    public void openParachute() {
         StandardPrints.printMsgEmph("decison making -> open parachute");
         ParachuteControl parachute = new ParachuteControl();
         boolean isOpen = parachute.open();
         if (!isOpen) {
             stateReplanning = StateReplanning.DISABLED;
         }
+//        Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
+//        dataAcquisition.setWaypoint(wpt);
     }
 
     /**
@@ -408,6 +415,65 @@ public class DecisionMaking {
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException]: readFileRoute()");
             return false;
+        }
+    }
+
+    public void interpretCommand(String cmd) {
+        if (cmd.contains(TypeInputCommand.CMD_TAKEOFF)) {
+            Waypoint wpt = new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_LAND)) {
+            Waypoint wpt = new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_UP)) {
+            double lat = drone.getGPS().lat;
+            double lng = drone.getGPS().lng;
+            double newAltRel = drone.getBarometer().alt_rel + 1;
+            if (newAltRel > Constants.MAX_ALT_CONTROLLER) {
+                newAltRel = Constants.MAX_ALT_CONTROLLER;
+            }
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, lng, newAltRel);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_DOWN)) {
+            double lat = drone.getGPS().lat;
+            double lng = drone.getGPS().lng;
+            double newAltRel = drone.getBarometer().alt_rel - 1;
+            if (newAltRel < Constants.MIN_ALT_CONTROLLER) {
+                newAltRel = Constants.MIN_ALT_CONTROLLER;
+            }
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, lng, newAltRel);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_LEFT)) {
+            double lat = drone.getGPS().lat;
+            double newLon = drone.getGPS().lng - FACTOR_DESLC * ONE_METER;
+            double alt_rel = drone.getBarometer().alt_rel;
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, newLon, alt_rel);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_RIGHT)) {
+            double lat = drone.getGPS().lat;
+            double newLon = drone.getGPS().lng + FACTOR_DESLC * ONE_METER;
+            double alt_rel = drone.getBarometer().alt_rel;
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, lat, newLon, alt_rel);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_FORWARD)) {
+            double newLat = drone.getGPS().lat + FACTOR_DESLC * ONE_METER;
+            double lng = drone.getGPS().lng;
+            double alt_rel = drone.getBarometer().alt_rel;
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, newLat, lng, alt_rel);
+            dataAcquisition.setWaypoint(wpt);
+        }
+        if (cmd.contains(TypeInputCommand.CMD_BACK)) {
+            double newLat = drone.getGPS().lat - FACTOR_DESLC * ONE_METER;
+            double lng = drone.getGPS().lng;
+            double alt_rel = drone.getBarometer().alt_rel;
+            Waypoint wpt = new Waypoint(TypeWaypoint.GOTO, newLat, lng, alt_rel);
+            dataAcquisition.setWaypoint(wpt);
         }
     }
 

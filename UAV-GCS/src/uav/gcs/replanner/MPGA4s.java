@@ -1,11 +1,11 @@
-package uav.gcs2.path_replanner;
+package uav.gcs.replanner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
-import uav.gcs2.struct.Drone;
+import uav.gcs.struct.Drone;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
@@ -117,6 +117,5 @@ public class MPGA4s extends Replanner{
         UtilIO.deleteFile(new File(dir), ".png");
         new File(dir + "route.txt").delete();
         new File(dir + "routeGeo.txt").delete();
-    } 
-        
+    }         
 }

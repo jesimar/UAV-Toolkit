@@ -22,9 +22,8 @@
  * license-LGPL.txt and license-BSD.txt for more details.                *
  *                                                                       *
  ************************************************************************ */
-package uav.voice.commands.speech;
+package uav.gcs.commands.voice;
 
-import uav.voice.commands.util.Utils;
 import java.util.Locale;
 import javax.speech.EngineList;
 import javax.speech.EngineCreate;
@@ -32,16 +31,16 @@ import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
 import javax.speech.synthesis.Voice;
 import com.sun.speech.freetts.jsapi.FreeTTSEngineCentral;
+import javax.speech.EngineException;
 
-/// Handles all speech synthesis (i.e. text-to-speech) functions.
-public class SpeechSynthesizer {
+// Handles all speech synthesis (i.e. text-to-speech) functions.
+public final class SpeechSynthesizer {
     
     private Synthesizer mSynthesizer = null;
 
     public SpeechSynthesizer(String name) {
         // Create a default voice.
-        Voice theVoice = new Voice(name, Voice.GENDER_DONT_CARE, 
-                Voice.AGE_DONT_CARE, null);
+        Voice theVoice = new Voice(name, Voice.GENDER_DONT_CARE, Voice.AGE_DONT_CARE, null);
 
         try {
             // Create the synthesizer with the general domain voice.
@@ -62,8 +61,7 @@ public class SpeechSynthesizer {
                 mSynthesizer = (Synthesizer) creator.createEngine();
             }
 
-            if (null == mSynthesizer) {
-                Utils.log("ERROR", "Cannot create speech synthesizer");
+            if (mSynthesizer == null) {
                 System.exit(1);
             }
 
@@ -87,22 +85,18 @@ public class SpeechSynthesizer {
         mSynthesizer.cancelAll();
         try {
             mSynthesizer.deallocate();
-        } catch (Exception e) {
+        } catch (EngineException e) {
             e.printStackTrace();
         }
     }
 
-    /// Adds a message to the synthesizer's queue and synthesize it as 
-    /// soon as it reaches the front of the queue.
+    // Adds a message to the synthesizer's queue and synthesize it as soon as it 
+    // reaches the front of the queue.
     public void synthesize(String message) {
-        //Utils.log("debug", "SpeechSynthesizer.speak: Adding message to speech queue: " + message);
-
-        // Note that the Synthesize class maintains its own internal queue.
         mSynthesizer.speakPlainText(message, null);
     }
 
-    // Stops synthesizing the current message and removes all pending messages 
-    // from the queue.
+    // Stops synthesizing the current message and removes all pending messages from the queue.
     public void stopSynthesizing() {
         mSynthesizer.cancelAll();
     }

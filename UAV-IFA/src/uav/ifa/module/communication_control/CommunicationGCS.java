@@ -12,10 +12,13 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.module.sensors_actuators.BuzzerControl;
 import uav.generic.module.sensors_actuators.CameraControl;
 import uav.generic.module.sensors_actuators.LEDControl;
+import uav.generic.module.sensors_actuators.ParachuteControl;
+import uav.generic.module.sensors_actuators.SprayingControl;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.ifa.module.decision_making.DecisionMaking;
 
 /**
  * Classe que faz o controle da comunicação com GCS.
@@ -35,13 +38,16 @@ public class CommunicationGCS {
     private String typeAction;
     private final ReaderFileConfigGlobal configGlobal;
     private final Drone drone;
+    private final DecisionMaking decisonMaking;
 
     /**
      * Class contructor.
      * @param drone instance of the drone
+     * @param decisonMaking instance of the DecisionMaking
      */
-    public CommunicationGCS(Drone drone) {
+    public CommunicationGCS(Drone drone, DecisionMaking decisonMaking) {
         this.drone = drone;
+        this.decisonMaking = decisonMaking;
         configGlobal = ReaderFileConfigGlobal.getInstance();
         hasFailure = false;
         hasFailureBadWeather = false;
@@ -101,12 +107,26 @@ public class CommunicationGCS {
                                 } else if (answer.equals(TypeInputCommand.CMD_PICTURE)){
                                     CameraControl camera = new CameraControl();
                                     camera.takeAPicture();
+                                } else if (answer.equals(TypeInputCommand.CMD_VIDEO)){
+                                    CameraControl camera = new CameraControl();
+                                    camera.makeAVideo();
                                 } else if (answer.equals(TypeInputCommand.CMD_LED)){
                                     LEDControl led = new LEDControl();
+                                    led.turnOnLED();
+                                } else if (answer.equals(TypeInputCommand.CMD_BLINK)){
+                                    LEDControl led = new LEDControl();
                                     led.blinkLED();
+                                } else if (answer.equals(TypeInputCommand.CMD_SPRAYING)){
+                                    SprayingControl spraying = new SprayingControl();
+                                    spraying.openSpraying();
+                                } else if (answer.equals(TypeInputCommand.CMD_OPEN_PARACHUTE)){
+                                    ParachuteControl parachute = new ParachuteControl();
+                                    parachute.open();
                                 } else if (answer.contains("mission")){
                                     hasReceiveRouteGCS = true;
                                     routeReplannerGCS = answer;
+                                } else if (answer.contains("cmd: ")){
+                                    decisonMaking.interpretCommand(answer);
                                 }
                             }
                         }
@@ -121,7 +141,7 @@ public class CommunicationGCS {
         });
     }
     
-    public void sendData() {
+    public void sendDataDrone() {
         StandardPrints.printMsgEmph("sending data to the connection of UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override

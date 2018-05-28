@@ -1,10 +1,10 @@
-package uav.gcs2.path_replanner;
+package uav.gcs.replanner;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
-import uav.gcs2.struct.Drone;
+import uav.gcs.struct.Drone;
 
 /**
  * Classe que modela o replanejador de rota do drone evitando obstáculos.

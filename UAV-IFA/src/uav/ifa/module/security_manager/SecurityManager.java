@@ -21,6 +21,7 @@ import uav.generic.struct.constants.TypeFailure;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
+import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
@@ -52,6 +53,7 @@ public class SecurityManager {
 
     private PrintStream printLogAircraft;
     private PrintStream printLogOverhead;
+    
     private StateSystem stateSystem;
     private StateMonitoring stateMonitoring;
 
@@ -112,10 +114,9 @@ public class SecurityManager {
         this.dataAcquisition = new DataCommunication(
                 drone, "IFA", configGlobal.getHostSOA(),
                 configGlobal.getPortNetworkSOA(), printLogOverhead);
-        this.communicationMOSA = new CommunicationMOSA(drone);
-        this.communicationGCS = new CommunicationGCS(drone);
-
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
+        this.communicationMOSA = new CommunicationMOSA(drone);
+        this.communicationGCS = new CommunicationGCS(drone, decisonMaking);
         stateSystem = StateSystem.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
     }
@@ -132,12 +133,13 @@ public class SecurityManager {
         communicationGCS.startServerIFA();      //Thread
         communicationGCS.receiveData();         //Thread
 
-        communicationMOSA.startServerIFA();     //blocked
-        communicationMOSA.receiveData();        //Thread
-        
+        if (!configLocal.getSystemExec().equals(TypeSystemExecIFA.CONTROLLER)){
+            communicationMOSA.startServerIFA();     //blocked
+            communicationMOSA.receiveData();        //Thread        
+        }
         monitoringAircraft();                   //Thread
         
-        communicationGCS.sendData();            //Thread
+        communicationGCS.sendDataDrone();            //Thread
         
         waitingForAnAction();                   //Thread                
         monitoringStateMachine();               //Thread
@@ -302,6 +304,11 @@ public class SecurityManager {
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_GPS));
             StandardPrints.printMsgError("FAIL GPS -> Time: " + drone.getTime());
         }
+        
+        //insercao de falha no IFA para testes em artigo ICAS 2018
+//        if (drone.getTime() >= 103){//remover isso apos artigo ICAS
+//            stateSystem = StateSystem.DISABLED;
+//        }
         if (stateSystem == StateSystem.DISABLED
                 && !hasFailure(TypeFailure.FAIL_SYSTEM_IFA)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_IFA));
@@ -341,7 +348,6 @@ public class SecurityManager {
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_POWEROFF));
             StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: " + drone.getTime());
         }
-
     }
 
     //melhorar: por enquanto esta tratando apenas a primeira falha.
@@ -362,14 +368,20 @@ public class SecurityManager {
                             if (configLocal.getLocalExecReplanner().equals(TypeLocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionToDoSomethingOnboard(listOfFailure.get(0));
                             }else{
-                                decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), 
-                                        communicationGCS);
+                                decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), communicationGCS);
                             }
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);
                     } catch (InterruptedException ex) {
 
+                    }
+                }
+                if (stateSystem == StateSystem.DISABLED){
+                    if (drone.getStatusUAV().armed && hasFailure()){
+                        if (configGlobal.hasParachute()){
+                            decisonMaking.openParachute();
+                        }
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package uav.mosa.module.path_planner;
+package uav.gcs.planner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,14 +6,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.mission.Mission3D;
+import uav.gcs.struct.Drone;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.Waypoint;
+import uav.generic.struct.reader.ReaderFileMission;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.FixedWing;
 
 /**
  * Classe que modela o planejador de rotas HGA4m. 
@@ -24,11 +21,40 @@ public class HGA4m extends Planner{
     /**
      * Class constructor
      * @param drone instance of the aircraft
-     * @param waypointsMission waypoints of the mission
+     * @param fileWaypointsMission
+     * @param sizeWpt
+     * @param dirFiles
+     * @param fileGeoBase
+     * @param dirPlanner
+     * @param cmdExecPlanner
+     * @param localExec
+     * @param altitudeFlight
+     * @param time
+     * @param delta
+     * @param maxVel
+     * @param maxCtrl
+     * @param cruizeSpeed
+     * @param typeWing
      */
-    public HGA4m(Drone drone, Mission3D waypointsMission) {
-        super(drone, waypointsMission);
+    public HGA4m(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles, 
+            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
+            String localExec, String altitudeFlight, String time, String delta, 
+            String maxVel, String maxCtrl, String cruizeSpeed, String typeWing) {
+        super(drone, fileWaypointsMission, sizeWpt, dirFiles, fileGeoBase, dirPlanner, 
+                cmdExecPlanner, localExec, altitudeFlight, time, delta, maxVel, 
+                maxCtrl, cruizeSpeed, typeWing);
+        readMission3D();
     }   
+    
+    private void readMission3D(){
+        try {
+            String path = dir + fileWaypointsMission;
+            ReaderFileMission.mission3D(new File(path), waypointsMission);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Warning [FileNotFoundException] readMission()");
+            ex.printStackTrace();
+        }
+    }
     
     @Override
     public boolean execMission(int i) {
@@ -51,17 +77,12 @@ public class HGA4m extends Planner{
             double dy = py2 - py1;
             //distancia entre os pontos com uma margem de seguranca
             double dist = Math.sqrt(dx*dx+dy*dy)*2;
-            
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = configLocal.getTimeExec(i);
+            String timeExec = getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
-            //usando metade dos waypoints DeltaT=2
             String qtdWpt = String.format("%d", (int)(dist/2));
-            String delta = configLocal.getDelta();
-            String maxVel = configLocal.getMaxVelocity();
-            String maxCtrl = configLocal.getMaxControl();
-            UtilIO.copyFileMofifMosa(src_ga, dst_ga, time, 207, delta, 304,
+            UtilIO.copyFileMofifMosa(src_ga, dst_ga, timeExec, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
@@ -86,20 +107,20 @@ public class HGA4m extends Planner{
                 double dx = px3 - px1;
                 double dy = py3 - py1;
                 double norm = Math.sqrt(dx*dx+dy*dy);
-                double vc = drone.getSpeedCruize();
+                double vc = Double.parseDouble(speedCruize);
                 vx2 = dx * vc/norm;
                 vy2 = dy * vc/norm;
             }   
             
             PrintStream print = new PrintStream(new File(dir + "mission-config.sgl"));
             print.println("----------- start state (px py vx vy) -----------");
-            if (drone instanceof FixedWing){
+            if (typeAircraft.equals("FixedWing")){
                 print.println(px1 + "," + py1 + "," + vx1 + "," + vy1);
             } else {
                 print.println(px1 + "," + py1 + ",0.0,0.0");
             }
             print.println("--------------- end point (px py)---------------");
-            if (drone instanceof FixedWing){
+            if (typeAircraft.equals("FixedWing")){
                 print.println(px2 + "," + py2 + "," + vx2 + "," + vy2);
             } else {
                 print.println(px2 + "," + py2 + ",0.0,0.0");
@@ -156,8 +177,7 @@ public class HGA4m extends Planner{
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
             String nameFileRouteGeo = "routeGeo" + i + ".txt";
-            PointGeo pGeoBase = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
+            PointGeo pGeoBase = UtilGeo.getPointGeo(dirFiles + fileGeoBase);
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
@@ -167,15 +187,13 @@ public class HGA4m extends Planner{
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
-                double h = configGlobal.getAltRelMission();            
+                double h = Double.parseDouble(altitudeFlight);
                 printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
-                mission3D.addPosition3D(new Position3D(x, y, h));
-                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
                 countLines++;
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
-                if (!drone.getStatusUAV().armed){
+                if (!drone.statusUAV.armed){
                     System.exit(0);
                 }
             }
@@ -193,6 +211,18 @@ public class HGA4m extends Planner{
         UtilIO.deleteFile(new File(dir), ".log");
         UtilIO.deleteFile(new File(dir), ".png");
         new File(dir + "log_error.txt").delete(); 
+    }
+    
+    public String getTimeExec(int i) {
+        if (!time.contains("[")){
+            return time;
+        }else{
+            String str = time.replace("[", "");
+            str = str.replace("]", "");
+            str = str.replace(" ", "");
+            String v[] = str.split(",");
+            return v[i];
+        }
     }
 
 }
