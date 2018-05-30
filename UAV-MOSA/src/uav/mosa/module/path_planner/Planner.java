@@ -65,8 +65,10 @@ public abstract class Planner {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = configLocal.getCmdExecPlanner() + " local";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
                 cmd = configLocal.getCmdExecPlanner() + " edison";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
+                cmd = configLocal.getCmdExecPlanner() + " rpi";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = configLocal.getCmdExecPlanner() + " edison";
             }

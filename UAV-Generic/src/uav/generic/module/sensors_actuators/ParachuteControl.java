@@ -27,7 +27,9 @@ public class ParachuteControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./open-parachute";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python open-parachute.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python open-parachute.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python open-parachute.py";

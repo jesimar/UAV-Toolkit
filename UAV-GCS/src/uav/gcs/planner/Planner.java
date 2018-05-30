@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.constants.TypeOperationMode;
 
 /**
  * Classe que modela o planejador da missão do drone evitando obstáculos.
@@ -86,14 +85,7 @@ public abstract class Planner {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
-            String cmd = "";
-            if (localExec.equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = cmdExecPlanner + " local";
-            } else if (localExec.equals(TypeOperationMode.SITL_EDISON)){
-                cmd = cmdExecPlanner + " edison";
-            } else if (localExec.equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = cmdExecPlanner + " edison";
-            }
+            String cmd = cmdExecPlanner + " local";
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override

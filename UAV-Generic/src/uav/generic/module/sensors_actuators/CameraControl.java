@@ -27,7 +27,9 @@ public class CameraControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./picture";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python picture.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python picture.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python picture.py";
@@ -57,7 +59,9 @@ public class CameraControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./video";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python video.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python video.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python video.py";

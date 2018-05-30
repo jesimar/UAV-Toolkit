@@ -141,7 +141,8 @@ public class ReaderFileConfigGlobal {
     public boolean checkReadFields(){
         if (operationMode == null || 
                 (!operationMode.equals(TypeOperationMode.SITL_LOCAL) &&
-                !operationMode.equals(TypeOperationMode.SITL_EDISON) && 
+                !operationMode.equals(TypeOperationMode.SITL_CC_EDISON) && 
+                !operationMode.equals(TypeOperationMode.SITL_CC_RPI) &&
                 !operationMode.equals(TypeOperationMode.REAL_FLIGHT))){
             StandardPrints.printMsgError2("Error [[file ./config.properties]] type of operation mode not valid");
             return false;

@@ -27,7 +27,9 @@ public class SprayingControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./open-spraying";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python open-spraying.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python open-spraying.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python open-spraying.py";
@@ -57,7 +59,9 @@ public class SprayingControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./close-spraying";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python close-spraying.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python close-spraying.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python close-spraying.py";

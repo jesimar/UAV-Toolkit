@@ -6,8 +6,9 @@ package uav.generic.struct.constants;
  */
 public class TypeOperationMode {
    
-    public static final String SITL_LOCAL  = "SITL_LOCAL";
-    public static final String SITL_EDISON = "SITL_EDISON";
-    public static final String REAL_FLIGHT = "REAL_FLIGHT";
+    public static final String SITL_LOCAL     = "SITL_LOCAL";
+    public static final String SITL_CC_EDISON = "SITL_CC_EDISON";
+    public static final String SITL_CC_RPI    = "SITL_CC_RPI";
+    public static final String REAL_FLIGHT    = "REAL_FLIGHT";
     
 }

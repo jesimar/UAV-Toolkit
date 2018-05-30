@@ -13,8 +13,8 @@ Os scripts mais importantes e utilizados são:
 * **exec-mavproxy-edison-sitl.sh** -> Executa o MAVProxy na Intel Edison para experimentos SITL. Usado em experimentos com o drone real.
 * **exec-soa-interface.sh** -> Executa um serviço para prover informações sobre o drone.
 * **exec-ifa.sh** -> Executa o sistema IFA para gerenciamento da segurança em voo.
-* **exec-insert-failure.sh** -> Executa o sistema UAV-Insert-Failure para inserção de falha na aeronave no momento desejado.
 * **exec-login-edison.sh** -> Efetua o login na Edison de forma automática. Nota: o computador e a Intel Edison devem estar na mesma rede. OBS: deve-se atualizar o IP do script.
+* **exec-login-rpi.sh** -> Efetua o login na Raspberry Pi de forma automática. Nota: o computador e a Raspberry Pi devem estar na mesma rede. OBS: deve-se atualizar o IP do script.
 * **exec-mosa.sh** -> Executa o sistema MOSA para gerenciamento da missão em voo.
 * **exec-swap-mission.sh** -> Faz a troca da missão a ser executada. Copia um conjunto de arquivos de configuração da missão para as pastas dos sistema IFA e MOSA.
 * **exec-tests.sh** -> Executa o sistema UAV-Tests para testar as funcionalidades do UAV-SOA-Interface.

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 23/02/2018
-#Last Update: 23/02/2018
+#Last Update: 29/05/2018
 #Description: Script that shows the version of the Operating System among other information.
 #Descrição: Script que mostra a versão do Sistema Operacional entre outras informações.
 
@@ -14,6 +14,10 @@ cat /etc/*release
 echo "-------------------------uname -a-----------------------"
 
 uname -a
+
+echo "-------------------------uname -m-----------------------"
+
+uname -m
 
 echo "--------------------cat /proc/version-------------------"
 

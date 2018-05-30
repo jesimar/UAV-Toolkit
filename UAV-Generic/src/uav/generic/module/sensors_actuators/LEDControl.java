@@ -27,7 +27,9 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-on-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python turn-on-led.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python turn-on-led.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-on-led.py";
@@ -57,7 +59,9 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-off-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python turn-off-led.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python turn-off-led.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-off-led.py";
@@ -87,7 +91,9 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./blink-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+                cmd = "python blink-led.py";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
                 cmd = "python blink-led.py";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python blink-led.py";
