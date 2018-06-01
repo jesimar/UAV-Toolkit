@@ -12,3 +12,7 @@ Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 * **jdom-2.0.6.jar** -> usada para leitura de arquivo em formato xml [[Link](http://www.jdom.org/)].
 * **gson-2.8.2.jar** -> usada para conversão (Serialização/desserialização) de objetos Java para formato JSON [[Link](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.2)].
 * **cplex.jar** -> usado pelos algoritmos que usam programação matemática (HGA4m e CCQSP4m) (deve ser o arquivo .jar da instalação no próprio computador) [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)].
+* **mysql-connector-java-5.0.8-bin.jar** -> usado pelo UAV-GCS para conexão com o sistema Oracle Drone.
+* **jxbrowser-6.19.1.jar** ->  usado pelo UAV-GCS para plot do Google Maps.
+* **jxbrowser-linux64-6.19.1.jar** -> usado pelo UAV-GCS para plot do Google Maps.
+* **license.jar** -> usado pelo UAV-GCS para plot do Google Maps.

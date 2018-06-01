@@ -13,18 +13,18 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 3. ./exec-soa-interface.sh         (PC)
 4. ./exec-pos-analyser.sh          (PC)
 
-Forma 2 -> Execução em SITL-EDISON:
+Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
-3. ./exec-soa-interface.sh         (EDISON)
-4. ./exec-pos-analyser.sh          (EDISON)
+2. ./exec-mavproxy-cc-sitl.sh      (CC)
+3. ./exec-soa-interface.sh         (CC)
+4. ./exec-pos-analyser.sh          (CC)
 
-Forma 3 -> Execução no Drone na EDISON:
+Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-edison.sh       (EDISON)
-2. ./exec-soa-interface.sh         (EDISON)
-3. ./exec-pos-analyser.sh          (EDISON)
+1. ./exec-mavproxy-cc-real.sh      (CC)
+2. ./exec-soa-interface.sh         (CC)
+3. ./exec-pos-analyser.sh          (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 

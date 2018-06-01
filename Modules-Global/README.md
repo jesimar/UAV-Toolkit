@@ -1,6 +1,6 @@
 # Modules-Global
 
-Este diretório é responsável por agrupar um conjunto de algoritmos e modulos de hardware usados pelo sistema IFA e MOSA. 
+Este diretório é responsável por agrupar um conjunto de algoritmos e módulos de hardware usados pelo sistema IFA e MOSA. 
 
 Os diretórios a seguir contém códigos utilizados pelo sistema IFA.
 
@@ -21,6 +21,11 @@ Os diretórios a seguir contém códigos utilizados pelo sistema MOSA.
 * **LED** -> Código responsável por acionar ou apagar alguns LEDs do drone.
 
 * **Spraying** -> Código responsável por abrir ou fechar o sistema de pulverização do drone.
+
+O diretório Files contém arquivos utilizados pelo sistema MOSA e IFA.
+* **geoBase.txt** -> arquivo com as coordenadas de longitude, latitude e altitude usado na transformação para coordenadas cartesianas.
+* **waypointsBuzzer.txt** -> arquivo que contém as coordenadas de latitude, longitude e altitude, onde deve-se acionar o buzzer.
+* **waypointsCamera.txt** -> arquivo que contém as coordenadas de latitude, longitude e altitude, onde deve-se acionar a câmera.
 
 ## Arquivos de configuração
 

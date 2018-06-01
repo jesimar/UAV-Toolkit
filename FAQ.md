@@ -1,6 +1,6 @@
 # FAQ
 
-A seguir estão listadas algumas respostas para perguntas frequentas.
+A seguir estão listadas algumas respostas para perguntas frequentes.
 
 Perg1: Estou tentando fazer um voo autônomo com meu drone e aparece no momento de armar a mensagem "low batery" no software UAV-SOA-Interface o que devo fazer.
 

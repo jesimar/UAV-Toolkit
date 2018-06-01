@@ -13,18 +13,18 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 3. ./exec-soa-interface.sh         (PC)
 4. ./exec-monitoring.sh            (PC)
 
-Forma 2 -> Execução em SITL-EDISON:
+Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
-3. ./exec-soa-interface.sh         (EDISON)
-4. ./exec-monitoring.sh            (EDISON)
+2. ./exec-mavproxy-cc-sitl.sh      (CC)
+3. ./exec-soa-interface.sh         (CC)
+4. ./exec-monitoring.sh            (CC)
 
-Forma 3 -> Execução no Drone na EDISON:
+Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-edison.sh       (EDISON)
-2. ./exec-soa-interface.sh         (EDISON)
-3. ./exec-monitoring.sh            (EDISON)
+1. ./exec-mavproxy-cc-real.sh      (CC)
+2. ./exec-soa-interface.sh         (CC)
+3. ./exec-monitoring.sh            (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 

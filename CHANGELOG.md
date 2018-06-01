@@ -9,7 +9,8 @@
 * Added resource to exec path replanner in UAV-GCS (offboard).
 * Added resource to exec path planner in UAV-GCS (offboard).
 * Added resource to take a picture in UAV-MOSA.
-* Added new scripts about raspberry pi.
+* Added new features to Raspberry Pi in UAV-IFA e UAV-MOSA.
+* Added new scripts about Raspberry Pi.
 * Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure.
 
 ### Bug Fixes:
