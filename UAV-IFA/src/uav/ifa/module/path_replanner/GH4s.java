@@ -56,7 +56,7 @@ public class GH4s extends Replanner{
             String state = px + " " + py + " " + vel + " " + angle;
             String qtdWpt = configLocal.getQtdWaypoints();
             String delta = configLocal.getDelta();
-            UtilIO.copyFileMofifIfa(src, dst, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileMofifIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             return true;
         } catch (FileNotFoundException ex) {

@@ -31,7 +31,6 @@ public class DataCommunication {
     private final String HOST;  
     private final String PROTOCOL;
     private final int PORT;
-    private final int TIME_OUT = 5;//in secunds
     private final PrintStream printLogOverhead;
     private boolean debug = false; 
 
@@ -230,7 +229,7 @@ public class DataCommunication {
     
     public void getBarometer() {
         String barometer = GET("/get-barometer/");        
-        drone.getGPS().parserInfoGPS(barometer);  
+        drone.getBarometer().parserInfoBarometer(barometer);  
         if (debug){
             StandardPrints.printMsgEmph3(barometer);
         }
@@ -333,9 +332,33 @@ public class DataCommunication {
         }
     }
     
+    public void getNextWaypoint() {
+        String nextWaypoint = GET("/get-next-waypoint/");
+        drone.parserNextWaypoint(nextWaypoint); 
+        if (debug){
+            StandardPrints.printMsgEmph3(nextWaypoint);
+        }
+    }
+    
+    public void getCountWaypoint() {
+        String countWaypoint = GET("/get-count-waypoint/");
+        drone.parserCountWaypoint(countWaypoint); 
+        if (debug){
+            StandardPrints.printMsgEmph3(countWaypoint);
+        }
+    }
+    
+    public void getDistanceToWptCurrent() {
+        String distToWptCur = GET("/get-distance-to-waypoint-current/");
+        drone.parserDistanceToCurrentWaypoint(distToWptCur); 
+        if (debug){
+            StandardPrints.printMsgEmph3(distToWptCur);
+        }
+    }
+    
     public void getDistanceToHome() {
         String distToHome = GET("/get-distance-to-home/");
-        drone.setDistanceToHome2(distToHome);
+        drone.parserDistanceToHome(distToHome);
         if (debug){
             StandardPrints.printMsgEmph3(distToHome);
         }
@@ -360,9 +383,10 @@ public class DataCommunication {
     /**
      * Request for UAV-SOA-Interface of all sensor data.
      * FORMAT:
-     * {"all-sensors": [-22.00597, -47.89869, 0.0, 870.0, 12.6, 0.0, 100, 0.001778, 
-     * 1.919, 0.001383, 109, 0.0, 0.0, 3, 10, 121, 65535, [-0.01, -0.04, 0.0], 0, 
-     * 0, 0.15128897785633125, null, "STABILIZE", "STANDBY", false, true, true]}
+     * {"all-sensors": [-22.0059333, -47.8987082, 0.07, 870.0, 12.6, 0.0, 100, 
+     * 0.009657, 2.025, 0.004823, 116, 0.0, 0.0, 3, 10, 121, 65535, [0.0, 
+     * -0.31, 0.01], 0, 0, 0.16173128321728691, null, "STABILIZE", "STANDBY", 
+     * false, true, true]} 
      */
     public void getAllInfoSensors() {
         String allinfo = GET("/get-all-sensors/");

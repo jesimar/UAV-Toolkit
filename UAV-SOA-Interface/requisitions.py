@@ -24,6 +24,9 @@ GET_URLS = {
     '/get-home-location/': views.getHomeLocation,
     '/get-parameters/': views.getParameters,
     '/get-distance-to-home/': views.getDistanceToHome,
+    '/get-distance-to-waypoint-current/': views.getDistanceToWptCurrent,
+    '/get-next-waypoint/': views.getNextWaypoint,
+    '/get-count-waypoint/': views.getCountWaypoint,
     '/get-all-sensors/': views.getAllInfoSensors
 }
 

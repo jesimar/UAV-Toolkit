@@ -32,7 +32,7 @@ public abstract class Drone {
     int countWaypoint;
     double distanceToHome;//in meters
     double distanceToCurrentWaypoint;//in meters
-    double temperatureBattery;
+    double temperatureBattery;//in celsius
     
     String typeFailure;
     
@@ -123,10 +123,41 @@ public abstract class Drone {
             this.distanceToCurrentWaypoint = -1;
         }
     }
+    
+    /**
+     * Converts line in JSON format to NextWaypoint values.
+     * @param line FORMAT: {"next-waypoint": 5}
+     */
+    public void parserNextWaypoint(String line) {
+        line = line.substring(18, line.length() - 1);
+        this.nextWaypoint = Integer.parseInt(line);
+    }
+    
+    /**
+     * Converts line in JSON format to CountWaypoint values.
+     * @param line FORMAT: {"count-waypoint": 28}
+     */
+    public void parserCountWaypoint(String line) {
+        line = line.substring(19, line.length() - 1);
+        this.countWaypoint = Integer.parseInt(line);
+    }
+    
+    /**
+     * Converts line in JSON format to DistanceToCurrentWaypoint values.
+     * @param line FORMAT: {"distance-to-wpt-current": 4.32}
+     */
+    public void parserDistanceToCurrentWaypoint(String line) {
+        line = line.substring(28, line.length() - 1);
+        this.distanceToCurrentWaypoint = Double.parseDouble(line);
+    }
 
-    public void setDistanceToHome2(String distanceToHome) {
-        distanceToHome = distanceToHome.substring(21, distanceToHome.length() - 1);
-        this.distanceToHome = Double.parseDouble(distanceToHome);
+    /**
+     * Converts line in JSON format to DistanceToHome values.
+     * @param line FORMAT: {"distance-to-home": 20.50}
+     */
+    public void parserDistanceToHome(String line) {
+        line = line.substring(21, line.length() - 1);
+        this.distanceToHome = Double.parseDouble(line);
     }
 
     public void setTypeFailure(String typeFailure) {
@@ -213,10 +244,10 @@ public abstract class Drone {
     }
     
     public String title(){
-        return "date;hour;time;lat;lng;alt_rel;alt_abs;voltage_bat;current_bat;"
-                + "level_bat;pitch;yaw;roll;vx;vy;vz;fixtype;satellitesvisible;"
-                + "eph;epv;heading;groundspeed;airspeed;next_wpt;count_wpt;"
-                + "dist_to_home;dist_to_current_wpt;mode;system-status;armed;"
+        return "date;hour;time;lat;lng;alt-rel;alt-abs;voltage-bat;current-bat;"
+                + "level-bat;pitch;yaw;roll;vel-x;vel-y;vel-z;fix-type;satellites-visible;"
+                + "eph;epv;heading;groundspeed;airspeed;next-wpt;count-wpt;"
+                + "dist-to-home;dist-to-current-wpt;mode;system-status;armed;"
                 + "is-armable;ekf-ok;type-failure";
     }
     

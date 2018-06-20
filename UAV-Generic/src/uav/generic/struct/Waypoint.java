@@ -16,9 +16,9 @@ public class Waypoint {
     /**
      * Class constructor.
      * @param action command of action (TAKEOFF, GOTO, LAND, LAND_VERTICAL, RTL)
-     * @param lat latitude of waypoint.
-     * @param lng longitude of waypoint.
-     * @param alt altitude of waypoint.
+     * @param lat latitude of waypoint in degrees.
+     * @param lng longitude of waypoint in degrees.
+     * @param alt altitude of waypoint in meters.
      */
     public Waypoint(String action, double lat, double lng, double alt){
         this.action = action;
@@ -29,9 +29,9 @@ public class Waypoint {
     
     /**
      * Class constructor.
-     * @param lat latitude of waypoint.
-     * @param lng longitude of waypoint.
-     * @param alt altitude of waypoint.
+     * @param lat latitude of waypoint in degrees.
+     * @param lng longitude of waypoint in degrees.
+     * @param alt altitude of waypoint in meters.
      */
     public Waypoint(double lat, double lng, double alt){
         this.action = "";

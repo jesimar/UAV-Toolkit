@@ -19,6 +19,12 @@ public class ListParameters {
         this.listParameter = new LinkedList<>();        
     }
 
+    /**
+     * Converts parameters in JSON format to ListParameter values.
+     * @param parameters FORMAT: {"parameters": "Key:RC7_REV Value:1.0; ... 
+     * Key:WPNAV_LOIT_SPEED Value:500.0; Key:WPNAV_RADIUS Value:200.0; 
+     * Value:0.699999988079; ... Key:BATT_CURR_PIN Value:12.0; "}
+     */
     public void parseInfoParameters(String parameters) {
         parameters = parameters.substring(16, parameters.length() - 4);       
         parameters = parameters.replace("Key:", "");

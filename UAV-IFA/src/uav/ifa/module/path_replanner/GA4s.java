@@ -56,12 +56,12 @@ public class GA4s extends Replanner{
             String state = px + " " + py + " " + vel + " " + angle;
             String qtdWpt = configLocal.getQtdWaypoints();
             String delta = configLocal.getDelta();
-            UtilIO.copyFileMofifIfa(src, dst, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileMofifIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             File src_ga = new File(dir + "instance-base");
             File dst_ga = new File(dir + "instance");
             String time = configLocal.getTimeExec();
-            UtilIO.copyFileMofifIfa(src_ga, dst_ga, time, 117);
+            UtilIO.copyFileMofifIFA(src_ga, dst_ga, time, 117);
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");

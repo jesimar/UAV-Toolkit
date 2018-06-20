@@ -11,11 +11,15 @@
 * Added resource to take a picture in UAV-MOSA.
 * Added new features to Raspberry Pi in UAV-IFA e UAV-MOSA.
 * Added new scripts about Raspberry Pi.
+* Added new functions in UAV-SOA-Interface (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
+* Added new functions in UAV-Generic (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
 * Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure.
+* Updated the documentation (javadoc).
 
 ### Bug Fixes:
 
-
+* Method getBarometer in UAV-Generic
+* 
 
 ## Version v2.0.0 (17/05/2018)
 

@@ -82,7 +82,7 @@ public class HGA4m extends Planner{
             String timeExec = getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
             String qtdWpt = String.format("%d", (int)(dist/2));
-            UtilIO.copyFileMofifMosa(src_ga, dst_ga, timeExec, 207, delta, 304,
+            UtilIO.copyFileMofifMOSA(src_ga, dst_ga, timeExec, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {

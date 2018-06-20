@@ -8,6 +8,11 @@ public enum StateReplanning {
     
     WAITING, REPLANNING, READY, DISABLED;
     
+    /**
+     * Método que obtem o modo de operação do replanejador.
+     * @param mode - state of replanner {WAITING, REPLANNING, READY, DISABLED}.
+     * @return {0, 1, 2, 3, -1}.
+     */
     public static int getMode(StateReplanning mode){
         switch (mode) {
             case WAITING:

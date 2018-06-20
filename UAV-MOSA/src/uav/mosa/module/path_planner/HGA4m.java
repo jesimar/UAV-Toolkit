@@ -61,7 +61,7 @@ public class HGA4m extends Planner{
             String delta = configLocal.getDelta();
             String maxVel = configLocal.getMaxVelocity();
             String maxCtrl = configLocal.getMaxControl();
-            UtilIO.copyFileMofifMosa(src_ga, dst_ga, time, 207, delta, 304,
+            UtilIO.copyFileMofifMOSA(src_ga, dst_ga, time, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {

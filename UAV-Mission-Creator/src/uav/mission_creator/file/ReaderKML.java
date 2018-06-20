@@ -53,7 +53,7 @@ public class ReaderKML {
                             }
                             listPoint.removeFirst();
                             PolyGeo poly = new PolyGeo(name, listPoint);
-                            mission.addPoly(poly);
+                            mission.addPolyGeo(poly);
                         }
                         Element elemLineString = node.getChild("LineString");
                         if (elemLineString != null){
@@ -71,7 +71,7 @@ public class ReaderKML {
                                 j++;
                             }
                             LineGeo line = new LineGeo(name, px, py, pz);
-                            mission.addLine(line);
+                            mission.addLineGeo(line);
                         }
                         Element elemPoint = node.getChild("Point");
                         if (elemPoint != null){
@@ -81,12 +81,11 @@ public class ReaderKML {
                             double lat = Double.parseDouble(str[1]);
                             double alt = Double.parseDouble(str[2]);                            
                             PointGeo point = new PointGeo(name, lng, lat, alt);
-                            mission.addPoint(point);
+                            mission.addPointGeo(point);
                         }
                     }
                 }
             }
-            mission.pointGeoTo3D();
         } catch (IOException | JDOMException ex) {
             System.err.println("[ERROR] [IOException | JDOMException] reader() " + ex);
         }

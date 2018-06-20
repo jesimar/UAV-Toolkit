@@ -1,2 +1,0 @@
-#longitude latitude altitude
--47.89822986521862 -22.00622093982656 0.0

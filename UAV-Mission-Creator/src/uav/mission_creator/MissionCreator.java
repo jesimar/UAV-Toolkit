@@ -1,14 +1,14 @@
 package uav.mission_creator;
 
-import uav.mission_creator.file.PreProcessorKML;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
+import uav.generic.util.UtilString;
 import uav.mission_creator.struct.Mission;
-import uav.mission_creator.struct.Util;
-import uav.mission_creator.file.LoadConfig;
+import uav.mission_creator.file.PreProcessorKML;
+import uav.mission_creator.file.ReaderFileConfigMission;
 import uav.mission_creator.file.PrinterFrontier;
 import uav.mission_creator.file.PrinterMapSGL_NFZ;
 import uav.mission_creator.file.PrinterMapSGL_IFA;
@@ -19,18 +19,18 @@ import uav.mission_creator.file.ReaderKML;
  *
  * @author Jesimar S. Arantes
  */
-public class ProcessorKML {
+public class MissionCreator {
 
-    private final LoadConfig config;
+    private final ReaderFileConfigMission config;
         
     public static void main(String[] args) throws FileNotFoundException, IOException {        
         Locale.setDefault(Locale.ENGLISH);
-        ProcessorKML main = new ProcessorKML();
+        MissionCreator main = new MissionCreator();
         main.exec();
     }
 
-    public ProcessorKML() throws IOException {
-        config = new LoadConfig();
+    public MissionCreator() throws IOException {
+        config = new ReaderFileConfigMission();
     }
     
     public void exec() throws FileNotFoundException{
@@ -68,8 +68,9 @@ public class ProcessorKML {
     private void readerKML(Mission mission){
         System.out.println("--------Begin ReaderKML--------");
         File newKmlFile = new File(config.getDirRouteKML()+"new"+config.getFileRouteKML());
-        ReaderKML readerKML  = new ReaderKML(newKmlFile, mission);
+        ReaderKML readerKML = new ReaderKML(newKmlFile, mission);
         readerKML.reader();
+        mission.pointGeoTo3D();
         System.out.println("--------End ReaderKML--------");
     }
     
@@ -91,7 +92,7 @@ public class ProcessorKML {
     
     private void createFileGeoBase(Mission mission) throws FileNotFoundException{
         System.out.println("--------Begin GeoBase--------");
-        String sep = Util.defineSeparator(config.getSeparatorGeoBaseOut());
+        String sep = UtilString.defineSeparator(config.getSeparatorGeoBaseOut());
         File fileGeoBase = new File(config.getDirRouteKML() + config.getFileGeoBaseOut());
         PrintStream print = new PrintStream(fileGeoBase);
         print.println("#longitude latitude altitude");
@@ -162,4 +163,5 @@ public class ProcessorKML {
         printerFailure.printer();
         System.out.println("--------End Pontos de Falha--------");
     }
+    
 }

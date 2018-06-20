@@ -12,6 +12,10 @@ import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Waypoint;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.struct.Heading;
+import uav.generic.struct.Parameter;
+import uav.generic.struct.constants.TypeAngle;
+import uav.generic.struct.constants.TypeDirection;
 
 /**
  *
@@ -184,12 +188,71 @@ public class Tests {
                     mission2.addWaypoint(new Waypoint(TypeWaypoint.LAND_VERTICAL, 0.0, 0.0, 0.0));
                     dataAcquisition.appendMission(mission2);
                     break;
-                case 18:
+                case 18: //SET PARAMETER -> SET PARAMETER
+                    Parameter param1 = new Parameter("RTL_ALT", 1200.0);       
+                    dataAcquisition.setParameter(param1);
+                    Parameter param2 = new Parameter("WPNAV_RADIUS", 50.0);
+                    dataAcquisition.setParameter(param2);
                     break;
-                case 19:
+                case 19: //SET MISSION -> Change Modes Autopilot:
+                    mission = new Mission();
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.01587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0));
+                    dataAcquisition.setMission(mission);
+                    Thread.sleep(10000);
+                    dataAcquisition.setMode("GUIDED");
+                    Thread.sleep(4000);
+                    dataAcquisition.setMode("AUTO");
+                    Thread.sleep(4000);
+                    dataAcquisition.setMode("CIRCLE");
+                    Thread.sleep(4000);
+                    dataAcquisition.setMode("LOITER");
                     break;
-                case 20:
+                case 20: //SET MISSION -> CHANGE VELOCITY
+                    mission = new Mission();
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.01587424, -47.89874454, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 5.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00604778, -47.89853005, 2.0));
+                    dataAcquisition.setMission(mission);
+                    Thread.sleep(5000);
+                    dataAcquisition.setVelocity(20);
+                    Thread.sleep(8000);
+                    dataAcquisition.setVelocity(1);
+                    Thread.sleep(8000);
+                    dataAcquisition.setVelocity(10);
+                    Thread.sleep(8000);
+                    dataAcquisition.setVelocity(3);
+                    Thread.sleep(8000);
                     break;
+                case 21: //Teste change mode in Flight //Este teste nao esta legal nao.     
+                    mission = new Mission();
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0));
+                    mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 3.0));
+                    dataAcquisition.setMission(mission);
+                    Thread.sleep(15000);
+                    dataAcquisition.setMode("CIRCLE");
+                    Thread.sleep(35000);
+                    dataAcquisition.setMode("RTL");
+                case 22: //Angulos (Heading)
+                    Waypoint w5 = new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, 3.0);
+                    dataAcquisition.setWaypoint(w5);
+                    Thread.sleep(5000);
+                    wpt = new Waypoint(TypeWaypoint.GOTO, -22.00587325, -47.89854124, 2.0);
+                    dataAcquisition.appendWaypoint(wpt);  
+                    Heading heading = new Heading(80, TypeDirection.CCW, TypeAngle.RELATIVE);
+                    dataAcquisition.setHeading(heading); 
+                    Thread.sleep(1000);
+                    wpt = new Waypoint(TypeWaypoint.GOTO, -22.00587424, -47.89874454, 2.0);
+                    dataAcquisition.appendWaypoint(wpt);
+                    Thread.sleep(2000);
+                    Heading heading1 = new Heading(140, TypeDirection.CCW, TypeAngle.RELATIVE);
+                    dataAcquisition.setHeading(heading1);
+                    Thread.sleep(3000);        
+                    Heading heading2 = new Heading(193, TypeDirection.CCW, TypeAngle.RELATIVE);
+                    dataAcquisition.setHeading(heading2);
                 default:
                     break;
             }                      
@@ -253,7 +316,25 @@ public class Tests {
                         timeActual = System.currentTimeMillis();
                         double timeDiff = (timeActual - timeInit)/1000.0;
                         drone.setTime(timeDiff);
-                        dataAcquisition.getAllInfoSensors();
+//                        dataAcquisition.getAllInfoSensors();
+                        dataAcquisition.getGPS();
+                        dataAcquisition.getBarometer();
+                        dataAcquisition.getBattery();
+                        dataAcquisition.getVelocity();
+                        dataAcquisition.getAttitude();
+                        dataAcquisition.getHeading();
+                        dataAcquisition.getGroundSpeed();
+                        dataAcquisition.getAirSpeed();
+                        dataAcquisition.getGPSInfo();
+                        dataAcquisition.getMode();
+                        dataAcquisition.getSystemStatus();
+                        dataAcquisition.getArmed();
+                        dataAcquisition.getIsArmable();
+                        dataAcquisition.getEkfOk();
+                        dataAcquisition.getNextWaypoint();
+                        dataAcquisition.getCountWaypoint();
+                        dataAcquisition.getDistanceToHome();
+                        dataAcquisition.getDistanceToWptCurrent();
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
                         Thread.sleep(time);
@@ -269,83 +350,6 @@ public class Tests {
             }
         });
     }
-    
-//        WaypointJSON wpt2 = new WaypointJSON(
-//                new Waypoint(Command.CMD_LAND_VERTICAL, 0.0, 0.0, 0.0));
-//        dataAcquisition.appendWaypoint(wpt2);
-        
-//        //Teste 2: Append waypoint Takeoff
-//        WaypointJSON wpt4= new WaypointJSON(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 3.0));
-//        dataAcquisition.appendWaypoint(wpt4);
-
-        //Teste 3: set parameter 
-//        Parameter param1 = new Parameter("RTL_ALT", 1200.0);
-//        ParameterJSON ps1 = new ParameterJSON(param1);        
-//        dataAcquisition.setParameter(ps1);
-//        Parameter param2 = new Parameter("WPNAV_RADIUS", 50.0);
-//        ParameterJSON ps2 = new ParameterJSON(param2);
-//        dataAcquisition.setParameter(ps2);
-        
-        //Teste 6: Angulos (Heading)
-//        Waypoint w5 = new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 3.0);
-//        WaypointJSON wpt5= new WaypointJSON(w5);
-//        dataAcquisition.setWaypoint(wpt5);
-//        Thread.sleep(5000);
-//        Waypoint w6 = new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 2.0);
-//        WaypointJSON wpt6= new WaypointJSON(w6);
-//        dataAcquisition.appendWaypoint(wpt6);  
-//        Heading heading = new Heading(80, Direction.CCW, Angle.RELATIVE);
-//        HeadingJSON hj = new HeadingJSON(heading);
-//        dataAcquisition.setHeading(hj); 
-//        Thread.sleep(1000);
-//        Waypoint w7 = new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 2.0);
-//        WaypointJSON wpt7= new WaypointJSON(w7);
-//        dataAcquisition.appendWaypoint(wpt7);
-//        Thread.sleep(2000);
-//        Heading heading1 = new Heading(140, Direction.CCW, Angle.RELATIVE);
-//        HeadingJSON hj2 = new HeadingJSON(heading1);
-//        dataAcquisition.setHeading(hj2);
-//        Thread.sleep(3000);        
-//        Heading heading2 = new Heading(193, Direction.CCW, Angle.RELATIVE);
-//        HeadingJSON hj3 = new HeadingJSON(heading2);
-//        dataAcquisition.setHeading(hj3);
-        
-        //Teste 8: Velocidade:
-//        Mission mission = new Mission();
-//        mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 3.0));
-//        mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.01587424, -47.89874454, 3.0));
-//        mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 5.0));
-//        mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00604778, -47.89853005, 2.0));
-//        dataAcquisition.setMission(mission);
-//        Thread.sleep(5000);
-//        dataAcquisition.setVelocity(20);
-//        Thread.sleep(8000);
-//        dataAcquisition.setVelocity(1);
-//        Thread.sleep(8000);
-//        dataAcquisition.setVelocity(10);
-//        Thread.sleep(8000);
-//        dataAcquisition.setVelocity(3);
-//        Thread.sleep(8000);
-
-        //Teste 9: Change Modes Autopilot:
-//        dataAcquisition.setMode("GUIDED");
-//        Thread.sleep(4000);
-//        dataAcquisition.setMode("AUTO");
-//        Thread.sleep(4000);
-//        dataAcquisition.setMode("CIRCLE");
-//        Thread.sleep(4000);
-//        dataAcquisition.setMode("LOITER");
-
-
-        //Teste 10: //Teste change mode in Flight //Este teste nao esta legal nao.     
-//        Mission mission = new Mission();
-//        mission.addWaypoint(new Waypoint(Command.CMD_TAKEOFF, 0.0, 0.0, 3.0));
-//        mission.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587424, -47.89874454, 3.0));
-//        dataAcquisition.setMission(mission);
-//        Thread.sleep(15000);
-//        dataAcquisition.setMode("CIRCLE");
-//        Thread.sleep(35000);
-//        dataAcquisition.setMode("RTL");
             
         //Teste 8:         
 //        Mission mission = new Mission();
@@ -375,10 +379,7 @@ public class Tests {
 //                Thread.sleep(1000);
 //            }
 //        }
-        
-//        dataAcquisition.setHeading(45);
-        
-        
+                
 //        WaypointSimple wpt7= new WaypointSimple();
 //        wpt7.addWaypoint(new Waypoint(Command.CMD_WAYPOINT, -22.00587325, -47.89854124, 2.0));
 //        dataAcquisition.setWaypoint(wpt7);

@@ -33,35 +33,24 @@ public class PrinterMapSGL_IFA {
             printMap.println(mission.getSizeBonus());
 
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPoly().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = n>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));
                 }
             }
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPoly().get(i).getName().contains(KeyWords.MAP_PENALTY)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_PENALTY)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = p>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));
                 }
             }
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPoly().get(i).getName().contains(KeyWords.MAP_BONUS)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_BONUS)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = b>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));
-                }
-            }
-            for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPoly().get(i).getName().contains("failure")) {
-                    System.out.println("\t Failure: ");
-                    System.out.println("\t\t 3D: ");
-                    System.out.print("\t\t\t" + mission.getListPoly3D().get(i).getCenterX());
-                    System.out.println("\t\t" + mission.getListPoly3D().get(i).getCenterY());
-                    System.out.println("\t\t Geo: ");
-                    System.out.print("\t\t\t" + mission.getListPoly().get(i).getCenterY());
-                    System.out.println("\t\t" + mission.getListPoly().get(i).getCenterX());
                 }
             }
             printMap.close();

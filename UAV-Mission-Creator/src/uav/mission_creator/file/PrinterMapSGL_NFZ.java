@@ -26,7 +26,7 @@ public class PrinterMapSGL_NFZ {
             printMap.println("<number of polygons>");
             printMap.println(mission.getSizeObstacle());
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPoly().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = n>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));

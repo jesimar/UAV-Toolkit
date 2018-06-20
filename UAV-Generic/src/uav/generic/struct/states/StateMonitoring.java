@@ -8,6 +8,11 @@ public enum StateMonitoring {
     
     WAITING, MONITORING, DISABLED;
     
+    /**
+     * Método que obtem o modo de operação do monitoramento.
+     * @param mode - state of monitoring {WAITING, MONITORING, DISABLED}.
+     * @return {0, 1, 2, -1}.
+     */
     public static int getMode(StateMonitoring mode){
         switch (mode) {
             case WAITING:

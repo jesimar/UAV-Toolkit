@@ -18,8 +18,8 @@ public class GPS {
 
     /**
      * Class constructor.
-     * @param lat latitude coordinete
-     * @param lng longitude coordinete
+     * @param lat latitude coordinete [-90; +90] degrees
+     * @param lng longitude coordinete [-180; +180] degres
      */
     public GPS(double lat, double lng) {
         this.lat = lat;

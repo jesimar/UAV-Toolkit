@@ -17,6 +17,17 @@ import uav.generic.util.UtilString;
  */
 public class ReaderFileMission {
     
+    /**
+     * Read a file in this format (Cartesian coordinates):.
+     * ---------------------------------------
+     * | 8.644050340 29.3082899 0.00         |
+     * | 10.10606405 6.59494416 0.00         |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param mission3D - object to put the waypoints of the mission 3D
+     * @throws FileNotFoundException 
+     */
     public static void mission3D(File file, Mission3D mission3D) 
             throws FileNotFoundException {
         try {
@@ -32,6 +43,19 @@ public class ReaderFileMission {
         }
     }        
     
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | turn-on-the-buzzer_1                |
+     * | -22.00593333;-47.89870833;0.00      |
+     * | turn-on-the-buzzer_2                |
+     * | -22.00613771;-47.89869416;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param wptsBuzzer - object to put the waypoints of the buzzer
+     * @throws FileNotFoundException 
+     */
     public static void missionBuzzer(File file, Mission wptsBuzzer) 
             throws FileNotFoundException {
         try {
@@ -52,6 +76,19 @@ public class ReaderFileMission {
         }
     }
     
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | take-a-picture-1                    |
+     * | -22.00593333;-47.89870833;0.00      |
+     * | take-a-picture-2                    |
+     * | -22.00613771;-47.89869416;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param wptsCamera - object to put the waypoints of the camera
+     * @throws FileNotFoundException 
+     */
     public static void missionCamera(File file, Mission wptsCamera) 
             throws FileNotFoundException {
         try {

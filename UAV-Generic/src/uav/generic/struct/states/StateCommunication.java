@@ -8,6 +8,11 @@ public enum StateCommunication {
     
     WAITING, LISTENING, DISABLED;
     
+    /**
+     * Método que obtem o modo de operação do sistema de comunicação.
+     * @param mode - state of communication {WAITING, LISTENING, DISABLED}.
+     * @return {0, 1, 2, -1}.
+     */
     public static int getMode(StateCommunication mode){
         switch (mode) {
             case WAITING:

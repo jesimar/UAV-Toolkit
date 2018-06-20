@@ -53,31 +53,31 @@ public class Mission {
         }
     }
     
-    public void addPoint(PointGeo point){
+    public void addPointGeo(PointGeo point){
         listPointGeo.add(point);
     }
     
-    public void addFirstPoint(PointGeo point){
+    public void addFirstPointGeo(PointGeo point){
         listPointGeo.add(0, point);
     }
     
-    public void addLine(LineGeo line){
+    public void addLineGeo(LineGeo line){
         listLineGeo.add(line);
     }
     
-    public void addFirstLine(LineGeo line){
+    public void addFirstLineGeo(LineGeo line){
         listLineGeo.add(0, line);
     }
     
-    public void addPoly(PolyGeo poly){
+    public void addPolyGeo(PolyGeo poly){
         listPolyGeo.add(poly);
     }
     
-    public void addFirstPoly(PolyGeo poly){
+    public void addFirstPolyGeo(PolyGeo poly){
         listPolyGeo.add(0, poly);
     }
     
-    public List<PointGeo> getListPoint() {
+    public List<PointGeo> getListPointGeo() {
         return listPointGeo;
     }
     
@@ -85,7 +85,7 @@ public class Mission {
         return listPoint3D;
     }
 
-    public List<LineGeo> getListLine() {
+    public List<LineGeo> getListLineGeo() {
         return listLineGeo;
     }
     
@@ -93,7 +93,7 @@ public class Mission {
         return listLine3D;
     }
 
-    public List<PolyGeo> getListPoly() {
+    public List<PolyGeo> getListPolyGeo() {
         return listPolyGeo;
     }   
     
@@ -266,7 +266,7 @@ public class Mission {
     
     public double getHeightFly() {
         double heightFly = 0;
-        for (PolyGeo poly : getListPoly()) {
+        for (PolyGeo poly : getListPolyGeo()) {
             if (poly.getName().contains("fly")) {
                 heightFly = poly.getVetz()[0];
             }

@@ -18,16 +18,12 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **Scripts** -> Agrupa um conjunto de scripts utilizados para facilitar a execução de experimentos.
 * **UAV-Generic** -> Projeto em Java que contém estruturas genéricas ao sistema MOSA e IFA.
 * **UAV-IFA** -> Projeto em Java para gerenciamento da segurança em voo.
-* **UAV-Keyboard-Commands** -> Projeto em Java para controlar o drone utilizando comandos de teclado.
 * **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo.
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth.
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave.
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave.
-* **UAV-Routes-Standard** -> Código em C que gera um conjunto de rotas com formato padrão (círculo, triângulo e retângulo).
 * **UAV-SOA-Interface** -> Código em python que provê serviços de acesso a informações do drone através do dronekit.
 * **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-SOA-Interface.
-* **UAV-Toolkit-C** -> Conjunto de códigos em C para gerenciamento do drone.
-* **UAV-Voice-Commands** -> Projeto em Java para controlar o drone utilizando comandos de voz.
 
 ## Instalação
 

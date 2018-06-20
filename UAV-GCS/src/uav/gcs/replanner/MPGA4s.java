@@ -62,11 +62,11 @@ public class MPGA4s extends Replanner{
             File src = new File(dir + "config-base.sgl");
             File dst = new File(dir + "config.sgl");
             String state = px + " " + py + " " + vel + " " + angle;
-            UtilIO.copyFileMofifIfa(src, dst, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileMofifIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             File src_mpga = new File(dir + "instance-base");
             File dst_mpga = new File(dir + "instance");
-            UtilIO.copyFileMofifIfa(src_mpga, dst_mpga, time, 117);
+            UtilIO.copyFileMofifIFA(src_mpga, dst_mpga, time, 117);
             return true;
         } catch (FileNotFoundException ex) {
             System.out.println("Warning [FileNotFoundException]: updateFileConfig()");

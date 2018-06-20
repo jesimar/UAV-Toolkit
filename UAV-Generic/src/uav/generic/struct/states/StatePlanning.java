@@ -8,6 +8,11 @@ public enum StatePlanning {
     
     WAITING, PLANNING, READY, DISABLED;
     
+    /**
+     * Método que obtem o modo de operação do planejador.
+     * @param mode - state of planner {WAITING, PLANNING, READY, DISABLED}.
+     * @return {0, 1, 2, 3, -1}.
+     */
     public static int getMode(StatePlanning mode){
         switch (mode) {
             case WAITING:

@@ -46,7 +46,7 @@ public class UtilIO {
        return size;
     }
     
-    public static void copyFileMofifIfa(File src, File dst, String content, int line) 
+    public static void copyFileMofifIFA(File src, File dst, String content, int line) 
             throws FileNotFoundException {
         Scanner sc = new Scanner(src);
         PrintStream print = new PrintStream(dst);
@@ -64,9 +64,9 @@ public class UtilIO {
         print.close();
     }
     
-    public static void copyFileMofifIfa(File src, File dst,
-            String delta, int lineDelta, String wp, int lineWp, 
-            String timeH, int lineTimeH) throws FileNotFoundException {
+    public static void copyFileMofifIFA(File src, File dst, String delta, 
+            int lineDelta, String wp, int lineWp, String timeH, 
+            int lineTimeH) throws FileNotFoundException {
         Scanner sc = new Scanner(src);
         PrintStream print = new PrintStream(dst);
         int i = 1;
@@ -89,8 +89,8 @@ public class UtilIO {
         print.close();
     }
     
-    public static void copyFileMofifMosa(File src, File dst, String time, int lineTime,
-            String delta, int lineDelta, String wp, int lineWp, 
+    public static void copyFileMofifMOSA(File src, File dst, String time, 
+            int lineTime, String delta, int lineDelta, String wp, int lineWp, 
             String timeH, int lineTimeH, String maxVel, int lineMaxVel, 
             String maxCtrl, int lineMaxCtrl) throws FileNotFoundException {
         Scanner sc = new Scanner(src);

@@ -37,7 +37,17 @@ public class KeyWords {
     public static String VIDEO_END = "video_end";
     
     /**
-     * Define um ponto de termino da filmagem
+     * Define um ponto a partir do qual se iniciara a pulverizacao da regiao
+     */
+    public static String SPRAYING_BEGIN = "spraying_begin";
+    
+    /**
+     * Define um ponto de termino da pulverizacao
+     */
+    public static String SPRAYING_END = "spraying_end";
+    
+    /**
+     * Define um ponto de falha na aeronave
      */
     public static String POINT_FAILURE = "point_failure";
     

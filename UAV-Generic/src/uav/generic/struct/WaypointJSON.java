@@ -21,9 +21,9 @@ public class WaypointJSON {
     /**
      * Class constructor.
      * @param action command of action (TAKEOFF, GOTO, LAND, LAND_VERTICAL, RTL)
-     * @param lat latitude of waypoint.
-     * @param lng longitude of waypoint.
-     * @param alt altitude of waypoint.
+     * @param lat latitude of waypoint in degrees.
+     * @param lng longitude of waypoint in degrees.
+     * @param alt altitude of waypoint in meters.
      */
     public WaypointJSON(String action, double lat, double lng, double alt){
         this.waypoint = new Waypoint(action, lat, lng, alt);        

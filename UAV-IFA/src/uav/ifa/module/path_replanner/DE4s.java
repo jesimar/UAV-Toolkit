@@ -56,12 +56,12 @@ public class DE4s extends Replanner{
             String state = px + " " + py + " " + vel + " " + angle;
             String qtdWpt = configLocal.getQtdWaypoints();
             String delta = configLocal.getDelta();
-            UtilIO.copyFileMofifIfa(src, dst, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileMofifIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             File src_de = new File(dir + "instance-base");
             File dst_de = new File(dir + "instance");
             String time = configLocal.getTimeExec();
-            UtilIO.copyFileMofifIfa(src_de, dst_de, time, 192);
+            UtilIO.copyFileMofifIFA(src_de, dst_de, time, 192);
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");

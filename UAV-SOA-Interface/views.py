@@ -146,6 +146,24 @@ def getEkfOk(request):
     }
 
 '''
+Comando que obtem informacoes do proximo waypoint a ser seguido pelo drone.
+'''
+def getNextWaypoint(request):
+    vehicle = request['vehicle']
+    return {
+        'next-waypoint': vehicle.commands.next
+    }
+
+'''
+Comando que obtem informacoes da quantidade total de waypoints carregados no AP.
+'''
+def getCountWaypoint(request):
+    vehicle = request['vehicle']
+    return {
+        'count-waypoint': vehicle.commands.count
+    }
+
+'''
 Comando que obtem a localizacao do home (home-location).
 Nota: O download do home-location eh necessario porque o ArduPilot 
 implementa/armazena o home-location como um waypoint em vez de envia-lo como mensagens.
@@ -181,6 +199,15 @@ def getDistanceToHome(request):
     posAtual = vehicle.location.global_relative_frame
     return {
         'distance-to-home': commands.getDistanceMeters(posAtual, vehicle.home_location)
+    }
+
+'''
+Comando que obtem a distancia do drone para o waypoint a ser buscado (atual).
+'''
+def getDistanceToWptCurrent(request):
+    vehicle = request['vehicle']
+    return {
+        'distance-to-wpt-current': commands.getDistanceToCurrentWaypoint(vehicle)
     }
 
 '''
@@ -381,13 +408,13 @@ def setHeading(request):
     heading = request['body']['heading']
     vehicle = request['vehicle']
     angle = heading['value']
-    if heading['direction'] == 'ccw': #valores direction: ccw = -1, cw = 1
+    if heading['typeDirection'] == 'ccw': #valores direction: ccw = -1, cw = 1
         direction = -1
-    elif heading['direction'] == 'cw':
+    elif heading['typeDirection'] == 'cw':
         direction = 1
-    if heading['angle'] == 'absolute': #valores is_relative: relative = 1, absolute = 0
+    if heading['typeAngle'] == 'absolute': #valores is_relative: relative = 1, absolute = 0
         is_relative = 0
-    elif heading['angle'] == 'relative':
+    elif heading['typeAngle'] == 'relative':
         is_relative = 1
     commands.defineHeading(vehicle, angle, direction, is_relative)
     return {
