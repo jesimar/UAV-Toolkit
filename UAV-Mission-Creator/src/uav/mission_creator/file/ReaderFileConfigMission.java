@@ -21,8 +21,7 @@ public class ReaderFileConfigMission {
     private final String fileWaypointsMission;
     private final String fileWaypointsMissionGeo;
     private final String fileWaypointsMissionGeoLabel;
-    private final String fileWaypointsBuzzer;
-    private final String fileWaypointsCamera;
+    private final String fileFeatureMission;
     
     private final Properties prop = new Properties();
     private final InputStream input = new FileInputStream("./config-mission.properties");
@@ -38,8 +37,7 @@ public class ReaderFileConfigMission {
         fileWaypointsMission = prop.getProperty("prop.mission_creator.file_out_waypoints_mission");
         fileWaypointsMissionGeo = prop.getProperty("prop.mission_creator.file_out_waypoints_mission_geo");
         fileWaypointsMissionGeoLabel = prop.getProperty("prop.mission_creator.file_out_waypoints_mission_geo_label");
-        fileWaypointsBuzzer = prop.getProperty("prop.mission_creator.file_out_waypoints_buzzer");    
-        fileWaypointsCamera = prop.getProperty("prop.mission_creator.file_out_waypoints_camera");                    
+        fileFeatureMission = prop.getProperty("prop.mission_creator.file_out_feature_mission");            
     }
     
     public String getDirRouteKML() {
@@ -78,12 +76,8 @@ public class ReaderFileConfigMission {
         return fileWaypointsMissionGeoLabel;
     } 
     
-    public String getFileWaypointsBuzzer() {
-        return fileWaypointsBuzzer;
+    public String getFileFeatureMission() {
+        return fileFeatureMission;
     } 
-    
-    public String getFileWaypointsCamera() {
-        return fileWaypointsCamera;
-    }
 
 }

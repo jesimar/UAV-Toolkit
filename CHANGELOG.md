@@ -1,6 +1,6 @@
 # Changelog
 
-## Version v2.1.0 (17/05/2018)
+## Version v2.1.0 (28/06/2018)
 
 ### Features:
 
@@ -13,8 +13,11 @@
 * Added new scripts about Raspberry Pi.
 * Added new functions in UAV-SOA-Interface (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
 * Added new functions in UAV-Generic (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
+* Updated UAV-Generic to support the Raspberry Pi.
 * Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure.
 * Updated the documentation (javadoc).
+* Separation between projects UAV-Mission-Creator and UAV-Route3DToGeo.
+* Updated UAV-Mission-Creator (created file featuremission.txt)
 
 ### Bug Fixes:
 

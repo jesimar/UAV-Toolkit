@@ -12,44 +12,52 @@ public class KeyWords {
     public static String GEO_BASE = "geo_base";
     
     /**
-     * Define a fronteira da missao
-     */
-    public static String FRONTIER = "frontier";
-    
-    /**
      * Define um ponto de passagem da aeronave durante a missao
      */
     public static String WAYPOINT = "waypoint";
     
     /**
-     * Define um ponto onde devera ocorrer a retirada de uma fotografia 
+     * Define a fronteira da missao
      */
-    public static String PHOTO = "photo";        
-    
-    /**
-     * Define um ponto a partir do qual se iniciara a filmagem da regiao
-     */
-    public static String VIDEO_BEGIN = "video_begin";
-    
-    /**
-     * Define um ponto de termino da filmagem
-     */
-    public static String VIDEO_END = "video_end";
-    
-    /**
-     * Define um ponto a partir do qual se iniciara a pulverizacao da regiao
-     */
-    public static String SPRAYING_BEGIN = "spraying_begin";
-    
-    /**
-     * Define um ponto de termino da pulverizacao
-     */
-    public static String SPRAYING_END = "spraying_end";
+    public static String FRONTIER = "frontier";
     
     /**
      * Define um ponto de falha na aeronave
      */
     public static String POINT_FAILURE = "point_failure";
+    
+    /**
+     * Comandos que definem comandos a serem executados sao iniciados com keyword "cmd".
+     */
+    
+    /**
+     * Define um ponto onde devera ocorrer a retirada de uma fotografia 
+     */
+    public static String CMD_PHOTO = "cmd_photo";        
+    
+    /**
+     * Define um ponto a partir do qual se iniciara a filmagem da regiao
+     */
+    public static String CMD_VIDEO_BEGIN = "cmd_video_begin";
+    
+    /**
+     * Define um ponto de termino da filmagem
+     */
+    public static String CMD_VIDEO_END = "cmd_video_end";
+    
+    /**
+     * Define um ponto a partir do qual se iniciara a pulverizacao da regiao
+     */
+    public static String CMD_SPRAYING_BEGIN = "cmd_spraying_begin";
+    
+    /**
+     * Define um ponto de termino da pulverizacao
+     */
+    public static String CMD_SPRAYING_END = "cmd_spraying_end";
+    
+    /**
+     * Comandos que definem regioes em um mapa sao iniciados com keyword "map".
+     */
     
     /**
      * Define uma regiao que representa um obstaculo

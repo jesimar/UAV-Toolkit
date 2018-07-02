@@ -27,13 +27,10 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-on-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-on-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python turn-on-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python turn-on-led.py";
-            }
+            } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -59,11 +56,8 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-off-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
-                cmd = "python turn-off-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python turn-off-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-off-led.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
@@ -91,13 +85,10 @@ public class LEDControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./blink-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python blink-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python blink-led.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python blink-led.py";
-            }
+            } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override

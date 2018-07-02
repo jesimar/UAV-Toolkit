@@ -41,13 +41,7 @@ public class MissionCreator {
         createFileSGL_Full(mission);        
         createFileGeoBase(mission);      
         createFileWaypoints3D(mission);
-        createFileWaypointsGeo(mission);
-        createFileWaypointsGeoLabel(mission);
-        createFileWaypointsBuzzer(mission);
-        
-        if (mission.hasCameraPhoto()){
-            createFileWaypointsCamera(mission);
-        }
+        createFileFeaturesMission(mission);
         if (mission.hasFrontier()){
             createFileWaypointsFrontier(mission);
         }
@@ -112,40 +106,28 @@ public class MissionCreator {
         System.out.println("--------End WaypointsMission3D--------");
     }
     
-    private void createFileWaypointsGeo(Mission mission) throws FileNotFoundException{
-        System.out.println("--------Begin WaypointsMissionGeo--------");
-        File fileGeo = new File(config.getDirRouteKML() + config.getFileWaypointsMissionGeo());
-        PrintStream printWptsMissionGeo = new PrintStream(fileGeo);
-        printWptsMissionGeo.print(mission.getWaypointsGeo());
-        printWptsMissionGeo.close();
-        System.out.println("--------End WaypointsMissionGeo--------");
-    }
-    
-    private void createFileWaypointsGeoLabel(Mission mission) throws FileNotFoundException{
-        System.out.println("--------Begin WaypointsMissionGeoLabel--------");
-        File fileGeoLabel = new File(config.getDirRouteKML() + config.getFileWaypointsMissionGeoLabel());
-        PrintStream printMissionGeoLabel = new PrintStream(fileGeoLabel);
-        printMissionGeoLabel.print(mission.getWaypointsGeoLabel());
-        printMissionGeoLabel.close();
-        System.out.println("--------End WaypointsMissionGeoLabel--------");
-    }
-    
-    private void createFileWaypointsBuzzer(Mission mission) throws FileNotFoundException{
-        System.out.println("--------Begin WaypointsBuzzer--------");
-        File fileBuzzer = new File(config.getDirRouteKML() + config.getFileWaypointsBuzzer());
-        PrintStream printWaypointsBuzzer = new PrintStream(fileBuzzer);
-        printWaypointsBuzzer.print(mission.getWaypointsBuzzer());
-        printWaypointsBuzzer.close();
-        System.out.println("--------End WaypointsBuzzer--------");
-    }
-    
-    private void createFileWaypointsCamera(Mission mission) throws FileNotFoundException{
-        System.out.println("--------Begin WaypointsCamera--------");
-        File fileCamera = new File(config.getDirRouteKML() + config.getFileWaypointsCamera());
-        PrintStream printWptsCamera = new PrintStream(fileCamera);
-        printWptsCamera.print(mission.getWaypointsCameraPhoto());
-        printWptsCamera.close();
-        System.out.println("--------End WaypointsCamera--------");
+    private void createFileFeaturesMission(Mission mission) throws FileNotFoundException{
+        System.out.println("--------Begin FeaturesMission--------");
+        File fileFeatures = new File(config.getDirRouteKML() + config.getFileFeatureMission());
+        PrintStream printFeaturesMission = new PrintStream(fileFeatures);
+        
+        printFeaturesMission.print("Waypoints Mission\n");
+        printFeaturesMission.print(mission.getWaypointsMissionGeo());
+        
+        printFeaturesMission.print("Waypoints Buzzer\n");
+        printFeaturesMission.print(mission.getWaypointsBuzzer());
+        
+        printFeaturesMission.print("Waypoints Camera Photo\n");
+        printFeaturesMission.print(mission.getWaypointsCameraPhoto());
+        
+        printFeaturesMission.print("Waypoints Camera Video\n");
+        printFeaturesMission.print(mission.getWaypointsCameraVideo());
+        
+        printFeaturesMission.print("Waypoints Spraying\n");
+        printFeaturesMission.print(mission.getWaypointsSpraying());
+        
+        printFeaturesMission.close();
+        System.out.println("--------End FeaturesMission--------");
     }
     
     private void createFileWaypointsFrontier(Mission mission){

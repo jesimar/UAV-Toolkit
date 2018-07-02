@@ -46,10 +46,11 @@ public class ReaderFileMission {
     /**
      * Read a file in this format (geographical coordinates [lat, lng]):.
      * ---------------------------------------
-     * | turn-on-the-buzzer_1                |
+     * | Waypoints Buzzer                    |
+     * | 3                                   |
      * | -22.00593333;-47.89870833;0.00      |
-     * | turn-on-the-buzzer_2                |
      * | -22.00613771;-47.89869416;0.00      |
+     * | -22.00204909;-47.93333564;0.00      |
      * | ...                                 |
      * ---------------------------------------
      * @param file - File to read
@@ -61,14 +62,19 @@ public class ReaderFileMission {
         try {
             Scanner sc = new Scanner(file);
             while(sc.hasNextLine()){
-                sc.nextLine();//read line of commentary
-                String line = sc.nextLine();
-                String v[] = line.split(";");
-                double lat = Double.parseDouble(v[0]);
-                double lng = Double.parseDouble(v[1]);
-                double alt = Double.parseDouble(v[2]);
-                Waypoint wpt = new Waypoint(lat, lng, alt);
-                wptsBuzzer.addWaypoint(wpt);
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Buzzer")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsBuzzer.addWaypoint(wpt);
+                    }
+                }
             }
             sc.close();
         } catch (NoSuchElementException ex) {
@@ -79,29 +85,125 @@ public class ReaderFileMission {
     /**
      * Read a file in this format (geographical coordinates [lat, lng]):.
      * ---------------------------------------
-     * | take-a-picture-1                    |
+     * | ...                                 |
+     * | Waypoints Camera Photo              |
+     * | 2                                   |
      * | -22.00593333;-47.89870833;0.00      |
-     * | take-a-picture-2                    |
      * | -22.00613771;-47.89869416;0.00      |
      * | ...                                 |
      * ---------------------------------------
      * @param file - File to read
-     * @param wptsCamera - object to put the waypoints of the camera
+     * @param wptsPhoto - object to put the waypoints of the camera to photo
      * @throws FileNotFoundException 
      */
-    public static void missionCamera(File file, Mission wptsCamera) 
+    public static void missionCameraPhoto(File file, Mission wptsPhoto) 
             throws FileNotFoundException {
         try {
             Scanner sc = new Scanner(file);
             while(sc.hasNextLine()){
-                sc.nextLine();//read line of commentary
-                String line = sc.nextLine();
-                String v[] = line.split(";");
-                double lat = Double.parseDouble(v[0]);
-                double lng = Double.parseDouble(v[1]);
-                double alt = Double.parseDouble(v[2]);
-                Waypoint wpt = new Waypoint(lat, lng, alt);
-                wptsCamera.addWaypoint(wpt);
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Camera Photo")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsPhoto.addWaypoint(wpt);
+                    }
+                }else{
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        sc.nextLine();
+                    }
+                }
+            }
+            sc.close();
+        } catch (NoSuchElementException ex) {
+            
+        }
+    }
+    
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | ...                                 |
+     * | Waypoints Camera Video              |
+     * | 2                                   |
+     * | -22.00593333;-47.89870833;0.00      |
+     * | -22.00613771;-47.89869416;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param wptsVideo - object to put the waypoints of the camera to video
+     * @throws FileNotFoundException 
+     */
+    public static void missionCameraVideo(File file, Mission wptsVideo) 
+            throws FileNotFoundException {
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Camera Video")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsVideo.addWaypoint(wpt);
+                    }
+                }else{
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        sc.nextLine();
+                    }
+                }
+            }
+            sc.close();
+        } catch (NoSuchElementException ex) {
+            
+        }
+    }
+    
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | ...                                 |
+     * | Waypoints Spraying                  |
+     * | 2                                   |
+     * | -22.00203126;-47.93308617;0.00      |
+     * | -22.00207005;-47.93320877;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param wptsSpraying - object to put the waypoints of the camera to spraying
+     * @throws FileNotFoundException 
+     */
+    public static void missionSpraying(File file, Mission wptsSpraying) 
+            throws FileNotFoundException {
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Spraying")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsSpraying.addWaypoint(wpt);
+                    }
+                }else{
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        sc.nextLine();
+                    }
+                }
             }
             sc.close();
         } catch (NoSuchElementException ex) {

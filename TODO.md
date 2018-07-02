@@ -4,27 +4,35 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Drone - iDroneAlpha:
 
+* Incorporar hardware da câmera no drone.
 * Incorporar hardware de leds no drone.
 * Incorporar hardware de sonar no drone apontado para baixo.
-* Incorporar hardware de sonar no drone apontado para frente.
-* Incorporar hardware da câmera no drone.
-* Incorporar hardware de disparo de paraquedas.
 * Trocar o hardware do piloto automático APM para Pixhawk.
 * Trocar o hardware da Intel Edison pela Raspberry Pi 2 Modelo B.
-* Desenvolver aplicação básica na Edison para acender os leds.
-* Desenvolver aplicação básica na Edison para bater fotos e fazer filmagem com a câmera.
-* Desenvolver aplicação básica na Edison para ler informações do sonar.
-* Desenvolver aplicação básica na Edison para efetuar o disparo do paraquedas.
+* Desenvolver aplicação básica na Edison e Raspberry Pi para acender os leds.
+* Desenvolver aplicação básica na Edison e Raspberry Pi para bater fotos e fazer filmagem com a câmera.
+* Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
 
 ## Sistem IFA:
 
-* Colocar no MOSA e IFA um objeto com todos os waypoints da rota.
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
 * Adicionar campos no arquivo de log como altitude do sonar, ligou led, bateu foto, etc.
+* IFA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
+* IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
+* IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja.
+* Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
+* IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
+1. Verificar bateria, GPS
+2. Verificar missão antes de enviar ao AP, caso seja inviável não enviá-la.
+3. Executa a missão.
 
 ## Sistema MOSA:
 
 * Incorporar planejador de missão CCQSP4m no MOSA.
+* MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
+* MOSA deve tomar cuidado com o Exit(0), pois ele precisa avisar ao IFA antes de sair.
+* MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
+* MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
 
 ## Sistema UAV-GCS
 
@@ -32,6 +40,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 	+ Comandos possíveis: HOVER, STOP_MISSION
 * Melhorar os aspectos da interface gráfica do UAV-GCS.
 * Fazer planejamento de caminho na GCS (GROUND_AIR e apenas AIR).
+* Só habilitar recurso se tiver sensor (atuador) no arquivo de config-global.properties.
+* Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
+
 
 ## Sistema UAV-SOA-Interface:
 
@@ -48,11 +59,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## UAV-Mission-Creator:
 
-* Definir no Google Earth um waypoint específico para TAKEOFF.
-* Definir no Google Earth um waypoint específico para LAND_VERTICAL.
-* Definir no Google Earth um padrão para missão com foto.
-* Definir no Google Earth um padrão para missão com vídeo.
-* Definir no Google Earth um padrão para missão com pulverização.
+## UAV-Standard:
+
+* Rota em coordenadas geográficas também. Colocar a lat, lng em um arquivo de entrada.
 
 ## GitHub e Documentação UAV-Toolkit
 
@@ -99,7 +108,6 @@ Sistema SOA:
 QGroundControl:
 * Corrigir problema na mensagem no início do programa, quando começo uma missão e fala que PreArm 3D Fix.
 * Tentar descobrir como limpar a antiga missão do qgroundcontrol.
-
 
 ## Documentação Formal das Falhas no Sistema
 
@@ -150,21 +158,50 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
-* UAV-MOSA: Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
 * Hardware: Melhorar forma de alimentação da Intel Edison, ao invés de ligar os pinos do ESC (pinos de alimentação positivo e GND) na edison. Ligar os pinos Positivo e GND em um conector padrão de alimentação do Breakeout da Edison.
-* Experimento: Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
-* Experimento: Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
+* Hardware: Incorporar hardware de disparo de paraquedas.
+* Hardware: Incorporar hardware de sonar no drone apontado para frente.
 * UAV-IFA: Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
 * UAV-IFA: Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
-* Fazer experimentos em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
+* UAV-IFA deve verificar a rota antes de enviar para o PA. Verificar se existe mais de um comando de TAKEOFF. Só pode haver um comando desse tipo.
+* UAV-IFA deve verificar se existe mais de um comando do tipo LAND, LAND_VERTICAL ou RTL. Só pode haver um comando desse tipo.
+* UAV-IFA deve ter um objeto com todos os waypoints da rota.
+* UAV-MOSA: Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
+* UAV-MOSA deve ter um objeto com todos os waypoints da rota.
+* UAV-MOSA deve aguardar até que o modo seja STANDBY, antes disso nao adianta calcular nada.
 * UAV-GCS: Executar scripts automaticamente
 * UAV-GCS: Colocar recurso para plotar a rota do drone em tempo real
 * UAV-GCS: Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
 * UAV-GCS: Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
+* Experimento: Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
+* Experimento: Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
+* Experimento: em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
+* Aplicação: aplicação básica na Edison e Raspberry Pi para efetuar o disparo do paraquedas.
+* Aplicação: que captura os comandos digitados no controle de vídeo game B-MAX para controlar o drone.
+* Aplicação: em que tenho além do iDroneAlpha, em solo um computador com GPS, a cada segundo eu passo para a aeronave as minhas coordenadas GPS e a aeronave me segue, Follow-me. (Drone Seguindo Notebook)
+* Aplicação: em que o meu drone segue não o meu notebook, mas outro drone em que um drone passa para o outro as coordenadas GPS, Follow-Drone. (Drone Seguindo drone)
+* MOSA - Path Planner:
+1. Integrar o módulo do HISA4m (Márcio).
+2. Integrar o módulo do CSA4m (Márcio).
+3. Baseado em Campos Potenciais.
+4. Baseado em A*.
 
-MOSA:
-* Path Planner:
-	* Integrar o módulo do HISA4m (Márcio).
-	* Integrar o módulo do CSA4m (Márcio).
-	* Baseado em Campos Potenciais.
-	* Baseado em A*.
+* Criar um UAV-Text-Commands: Colocar em um arquivo de texto uma lista de comandos e mandar o drone seguir a missão.
+
+-----Exemplo 1 (primeiro tipo de arquivo )------
+| takeoff                                      |
+| forward                                      |
+| forward                                      |
+| right                                        |
+| back                                         |
+| land                                         |
+------------------------------------------------
+
+------Exemplo 2 (segundo tipo de arquivo):------
+| takeoff                                      |
+| forward 10                                   |   (metros)
+| rigth 4                                      |   (metros)
+| forward                                      |   (se não escrito a metragem o drone move-se 3 metros)
+| left 5                                       |
+| land                                         |
+------------------------------------------------

@@ -27,13 +27,10 @@ public class CameraControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./picture";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python picture.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python picture.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python picture.py";
-            }
+            } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
@@ -59,13 +56,10 @@ public class CameraControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./video";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python video.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python video.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python video.py";
-            }
+            } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override

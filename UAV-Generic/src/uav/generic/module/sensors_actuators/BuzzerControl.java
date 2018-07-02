@@ -27,11 +27,8 @@ public class BuzzerControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./buzzer";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
-                cmd = "python buzzer.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python buzzer.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python buzzer.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
@@ -59,11 +56,8 @@ public class BuzzerControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./alarm";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
-                cmd = "python alarm.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python alarm.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python alarm.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

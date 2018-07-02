@@ -1,8 +1,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 15/03/2018
 #Last Update: 15/03/2018
-#Description: Code that turns on the alarm when the buzzer is turned on several times.
-#Descricao: Codigo que liga soa um alarme ao ligar o buzzer diversas vezes.
+#Description: Code that turns on the alarm when the buzzer is turned on several times on the Intel Edison.
+#Descricao: Codigo que liga soa um alarme ao ligar o buzzer diversas vezes na Intel Edison.
 
 import mraa
 import time

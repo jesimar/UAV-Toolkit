@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeAP;
 import uav.generic.struct.constants.TypeAircraft;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
 
 /**
@@ -20,12 +22,15 @@ public class ReaderFileConfigGlobal {
     private Properties prop;
 
     //global
+    private String typeCC;
+    private String typeAP;
     private String operationMode;
     private String typeAircraft;
     private double freqUpdateDataAP;
     private double altRelMission;
     private String dirFiles;
     private String fileGeoBase;
+    private String fileFeatureMission;
     
     private String hostIFA;
     private int portNetworkIFAandMOSA;
@@ -37,7 +42,6 @@ public class ReaderFileConfigGlobal {
     //sensor camera
     private boolean hasCamera;
     private String dirCamera;
-    private String fileWaypointsCamera;
     
     //sensor sonar
     private boolean hasSonar;
@@ -46,7 +50,6 @@ public class ReaderFileConfigGlobal {
     //atuactor buzzer
     private boolean hasBuzzer;
     private String dirBuzzer;
-    private String fileWaypointsBuzzer;
     
     //atuactor open-parachute
     private boolean hasParachute;
@@ -84,11 +87,14 @@ public class ReaderFileConfigGlobal {
             prop = new Properties();
             prop.load(new FileInputStream(nameFile));
             
+            typeCC                = prop.getProperty("prop.global.type_cc");
+            typeAP                = prop.getProperty("prop.global.type_ap");
             operationMode         = prop.getProperty("prop.global.operation_mode");
             typeAircraft          = prop.getProperty("prop.global.type_aircraft");
             freqUpdateDataAP      = Double.parseDouble(prop.getProperty("prop.global.freq_update_data_ap"));
             altRelMission         = Double.parseDouble(prop.getProperty("prop.global.altitude_relative_mission"));
             dirFiles              = prop.getProperty("prop.global.dir_files");
+            fileFeatureMission    = prop.getProperty("prop.global.file_feature_mission");
             fileGeoBase           = prop.getProperty("prop.global.file_geo_base");
             hostIFA               = prop.getProperty("prop.global.host_ifa");
             portNetworkIFAandMOSA = Integer.parseInt(prop.getProperty("prop.global.port_network_ifa_mosa"));
@@ -107,12 +113,10 @@ public class ReaderFileConfigGlobal {
             hasTemperatureSensor  = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_temperature_sensor"));
                     
             dirCamera             = prop.getProperty("prop.camera.dir");
-            fileWaypointsCamera   = prop.getProperty("prop.camera.file_waypoints_camera");
                                     
             dirSonar              = prop.getProperty("prop.sonar.dir");
             
             dirBuzzer             = prop.getProperty("prop.buzzer.dir");
-            fileWaypointsBuzzer   = prop.getProperty("prop.buzzer.file_waypoints_buzzer");
             
             dirParachute          = prop.getProperty("prop.parachute.dir");
             
@@ -139,18 +143,29 @@ public class ReaderFileConfigGlobal {
     }
     
     public boolean checkReadFields(){
+        if (typeCC == null || 
+                (!typeCC.equals(TypeCC.EDISON) && 
+                !typeCC.equals(TypeCC.RASPBERRY))){
+            StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of companion computer not valid");
+            return false;
+        }
+        if (typeAP == null || 
+                (!typeAP.equals(TypeAP.APM) && 
+                !typeAP.equals(TypeAP.PIXHAWK))){
+            StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of autopilot not valid");
+            return false;
+        }
         if (operationMode == null || 
                 (!operationMode.equals(TypeOperationMode.SITL_LOCAL) &&
-                !operationMode.equals(TypeOperationMode.SITL_CC_EDISON) && 
-                !operationMode.equals(TypeOperationMode.SITL_CC_RPI) &&
+                !operationMode.equals(TypeOperationMode.SITL_CC) &&
                 !operationMode.equals(TypeOperationMode.REAL_FLIGHT))){
-            StandardPrints.printMsgError2("Error [[file ./config.properties]] type of operation mode not valid");
+            StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of operation mode not valid");
             return false;
         }
         if (typeAircraft == null || 
                 (!typeAircraft.equals(TypeAircraft.FIXED_WING) && 
                 !typeAircraft.equals(TypeAircraft.ROTARY_WING))){
-            StandardPrints.printMsgError2("Error [[file ./config.properties]] type of aircraft not valid");
+            StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of aircraft not valid");
             return false;
         }
         return true;
@@ -165,6 +180,14 @@ public class ReaderFileConfigGlobal {
             ex.printStackTrace();
             return false;
         }
+    }
+    
+    public String getTypeCC() {
+        return typeCC;
+    }
+    
+    public String getTypeAP() {
+        return typeAP;
     }
     
     public String getOperationMode() {
@@ -250,10 +273,6 @@ public class ReaderFileConfigGlobal {
     public String getDirCamera() {
         return dirCamera;
     }
-    
-    public String getFileWaypointsCamera() {
-        return fileWaypointsCamera;
-    }
 
     public String getDirSonar() {
         return dirSonar;
@@ -263,8 +282,8 @@ public class ReaderFileConfigGlobal {
         return dirBuzzer;
     }
     
-    public String getFileWaypointsBuzzer() {
-        return fileWaypointsBuzzer;
+    public String getFileFeatureMission() {
+        return fileFeatureMission;
     }    
     
     public String getDirParachute() {

@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.constants.TypeOperationMode;
@@ -65,12 +66,13 @@ public abstract class Planner {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = configLocal.getCmdExecPlanner() + " local";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
-                cmd = configLocal.getCmdExecPlanner() + " edison";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = configLocal.getCmdExecPlanner() + " rpi";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = configLocal.getCmdExecPlanner() + " edison";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (configGlobal.getTypeCC().equals(TypeCC.EDISON)){
+                    cmd = configLocal.getCmdExecPlanner() + " edison";
+                }else if (configGlobal.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = configLocal.getCmdExecPlanner() + " rpi";
+                }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

@@ -27,13 +27,10 @@ public class ParachuteControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./open-parachute";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python open-parachute.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python open-parachute.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python open-parachute.py";
-            }
+            } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override

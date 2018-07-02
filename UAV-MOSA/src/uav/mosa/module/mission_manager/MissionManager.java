@@ -48,8 +48,10 @@ public class MissionManager {
     private final ReaderFileConfigAircraft configAircraft;
     
     private final Mission3D wptsMission3D;
-    private final Mission wptsBuzzer;
-    private final Mission wptsCamera;
+    private Mission wptsBuzzer;
+    private Mission wptsCameraPhoto;
+    private Mission wptsCameraVideo;
+    private Mission wptsSpraying;
     private PrintStream printLogOverhead;     
     
     private StateSystem stateMOSA;
@@ -119,13 +121,20 @@ public class MissionManager {
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition, wptsMission3D); 
         this.communicationIFA = new CommunicationIFA(drone);
         this.communicationGCS = new CommunicationGCS();
-        this.wptsBuzzer = new Mission();
+        
         if (configGlobal.hasBuzzer()){
+            this.wptsBuzzer = new Mission();
             readerFileBuzzer();
         }
-        this.wptsCamera = new Mission(); 
         if (configGlobal.hasCamera()){
-            readerFileCamera();
+            this.wptsCameraPhoto = new Mission(); 
+            this.wptsCameraVideo = new Mission();
+            readerFileCameraPhoto();
+            readerFileCameraVideo();
+        }
+        if (configGlobal.hasSpraying()){
+            this.wptsSpraying = new Mission(); 
+            readerFileSpraying();
         }
         stateMOSA = StateSystem.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
@@ -190,7 +199,7 @@ public class MissionManager {
     
     private void readerFileBuzzer(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileWaypointsBuzzer();
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
             ReaderFileMission.missionBuzzer(new File(path), wptsBuzzer);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileBuzzer()");
@@ -199,12 +208,34 @@ public class MissionManager {
         }
     }
     
-    private void readerFileCamera(){
+    private void readerFileCameraPhoto(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileWaypointsCamera();
-            ReaderFileMission.missionCamera(new File(path), wptsCamera);
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            ReaderFileMission.missionCameraPhoto(new File(path), wptsCameraPhoto);
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCamera()");
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraPhoto()");
+            ex.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    private void readerFileCameraVideo(){
+        try {
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            ReaderFileMission.missionCameraVideo(new File(path), wptsCameraVideo);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraVideo()");
+            ex.printStackTrace();
+            System.exit(0);
+        }
+    }
+    
+    private void readerFileSpraying(){
+        try {
+            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            ReaderFileMission.missionSpraying(new File(path), wptsSpraying);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileSpraying()");
             ex.printStackTrace();
             System.exit(0);
         }
@@ -358,9 +389,9 @@ public class MissionManager {
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
-        for (int i = 0; i < wptsCamera.size(); i++){
-            double latDestiny = wptsCamera.getWaypoint(i).getLat();
-            double lngDestiny = wptsCamera.getWaypoint(i).getLng();
+        for (int i = 0; i < wptsCameraPhoto.size(); i++){
+            double latDestiny = wptsCameraPhoto.getWaypoint(i).getLat();
+            double lngDestiny = wptsCameraPhoto.getWaypoint(i).getLng();
             double altDestiny = configGlobal.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
@@ -371,8 +402,8 @@ public class MissionManager {
             }
         }        
         if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
-            if (wptsCamera.size() > 0){
-                wptsCamera.removeWaypoint(index);
+            if (wptsCameraPhoto.size() > 0){
+                wptsCameraPhoto.removeWaypoint(index);
             }
             StandardPrints.printMsgEmph("turn on the camera");
             CameraControl camera = new CameraControl();

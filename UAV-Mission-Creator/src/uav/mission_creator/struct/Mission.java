@@ -210,16 +210,6 @@ public class Mission {
         return size;
     }
     
-    public String getWaypointsGeo(){
-        String str = "";
-        for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.WAYPOINT)){
-                str += point.toString();
-            }
-        }
-        return str;
-    }
-    
     public String getWaypoints3D(){
         String str = "";
         for (Point3D point : listPoint3D){
@@ -230,35 +220,92 @@ public class Mission {
         return str;
     }
     
-    public String getWaypointsGeoLabel(){
-        String str = "";
+    public String getWaypointsMissionGeo(){
+        int i = 0;
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.WAYPOINT)){                
-                str += point.getName() + "\n" + point.toString2();
+            if (point.getName().contains(KeyWords.WAYPOINT)){               
+                i++;
+            }
+        }
+        String str = i + "\n";
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.WAYPOINT)){
+                str += point.toString2();
             }
         }
         return str;
     }
     
     public String getWaypointsBuzzer(){
-        String str = "";
-        int i = 1;
+        int i = 0;
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.WAYPOINT)){               
+                i++;
+            }
+        }
+        String str = i + "\n";
         for (PointGeo point : listPointGeo){
             if (point.getName().contains(KeyWords.WAYPOINT)){
-                str += "turn-on-the-buzzer_" + i + "\n" + point.toString2();
-                i++;
+                str += point.toString2();
             }
         }
         return str;
     } 
     
     public String getWaypointsCameraPhoto(){
-        String str = "";
-        int i = 1;
+        int i = 0;
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.PHOTO)){
-                str += "take-a-picture_" + i + "\n" + point.toString2();
+            if (point.getName().contains(KeyWords.CMD_PHOTO)){               
                 i++;
+            }
+        }
+        String str = i + "\n";
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_PHOTO)){
+                str += point.toString2();
+            }
+        }
+        return str;
+    }
+    
+    public String getWaypointsCameraVideo(){
+        String str = "";
+        if (hasCameraVideo()){
+            str = "2\n";
+        }else{
+            str = "0\n";
+            return str;
+        }
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_VIDEO_BEGIN)){
+                str += point.toString2();
+            }
+        }
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_VIDEO_END)){
+                str += point.toString2();
+            }
+        }
+        return str;
+    }
+    
+    
+    public String getWaypointsSpraying(){
+        String str = "";
+        if (hasSpraying()){
+            str = "2\n";
+        }else{
+            str = "0\n";
+            return str;
+        }
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_SPRAYING_BEGIN)){
+                str += point.toString2();
+            }
+        }
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_SPRAYING_END)){
+                str += point.toString2();
             }
         }
         return str;
@@ -276,9 +323,41 @@ public class Mission {
     
     public boolean hasCameraPhoto(){
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.PHOTO)){
+            if (point.getName().contains(KeyWords.CMD_PHOTO)){
                 return true;
             }
+        }
+        return false;
+    }
+    
+    public boolean hasCameraVideo(){
+        int i = 0;
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_VIDEO_BEGIN)){
+                i++;
+            }
+            if (point.getName().contains(KeyWords.CMD_VIDEO_END)){
+                i++;
+            }
+        }
+        if (i == 2){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean hasSpraying(){
+        int i = 0;
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_SPRAYING_BEGIN)){
+                i++;
+            }
+            if (point.getName().contains(KeyWords.CMD_SPRAYING_END)){
+                i++;
+            }
+        }
+        if (i == 2){
+            return true;
         }
         return false;
     }

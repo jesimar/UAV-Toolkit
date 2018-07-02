@@ -27,11 +27,8 @@ public class SonarControl {
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./sonar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_EDISON)){
-                cmd = "python sonar.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC_RPI)){
-                cmd = "python sonar.py";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python sonar.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

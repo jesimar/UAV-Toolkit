@@ -1,8 +1,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 15/03/2018
 #Last Update: 15/03/2018
-#Description: Code that turns on the buzzer for one second and then turns off.
-#Descricao: Codigo que liga o buzzer por um segundo e entao o desliga.
+#Description: Code that turns on the buzzer for one second and then turns off the buzzer on the Intel Edison.
+#Descricao: Codigo que liga o buzzer por um segundo e entao o desliga na Intel Edison.
 
 import mraa
 import time
