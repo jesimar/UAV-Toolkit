@@ -8,9 +8,9 @@
 echo "=======================List IPs in Use======================="
 
 #IP_INIT=192.168.43     #redeDroneC     192.168.43.*
-IP_INIT=192.168.205    #LCR            192.168.205.*
+#IP_INIT=192.168.205    #LCR            192.168.205.*
 #IP_INIT=172.28.107     #Eduroam        172.28.107.*
-#IP_INIT=192.168.0      #JeitoCaetano    192.168.0.*
+IP_INIT=192.168.0      #JeitoCaetano    192.168.0.*
 
 for ip in $IP_INIT.{1..254}; do
   ping -c 1 -W 1 $ip | grep "64 bytes" &
