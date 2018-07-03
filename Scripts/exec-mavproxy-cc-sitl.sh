@@ -1,12 +1,16 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 21/02/2018
-#Last Update: 29/05/2018
+#Last Update: 03/07/2018
 #Description: Script that runs MAVProxy software on CC for SITL tests.
 #Descrição: Script que executa o software MAVProxy no CC para testes SITL.
 
-#IP_GCS=192.168.43.124
-IP_GCS=192.168.205.231
+if [ -z $1 ]
+then
+	IP_GCS=192.168.205.231
+else
+	IP_GCS=$1
+fi
 
 IP_CC=127.0.0.1
 

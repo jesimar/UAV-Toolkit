@@ -1,12 +1,16 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 16/11/2017
-#Last Update: 16/11/2017
+#Last Update: 03/07/2018
 #Description: Script that runs MAVProxy software on CC for real in-flight drone testing.
 #Descrição: Script que executa o software MAVProxy no CC para testes reais em voo no drone.
 
-IP_GCS=192.168.43.124
-#IP_GCS=192.168.205.231
+if [ -z $1 ]
+then
+	IP_GCS=192.168.43.124
+else
+	IP_GCS=$1
+fi
 
 IP_CC=127.0.0.1
 
