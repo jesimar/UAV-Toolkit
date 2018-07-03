@@ -21,6 +21,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
 * IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja.
 * Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
+* Definir melhor o home da missão e o launch da missão.
 * IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
 1. Verificar bateria, GPS
 2. Verificar missão antes de enviar ao AP, caso seja inviável não enviá-la.
@@ -33,6 +34,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * MOSA deve tomar cuidado com o Exit(0), pois ele precisa avisar ao IFA antes de sair.
 * MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
 * MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
+* Definir melhor o home da missão e o launch da missão.
 
 ## Sistema UAV-GCS
 

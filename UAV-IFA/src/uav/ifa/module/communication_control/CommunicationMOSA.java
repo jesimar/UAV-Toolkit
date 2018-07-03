@@ -68,8 +68,8 @@ public class CommunicationMOSA {
                             if (answer != null) {
                                 StandardPrints.printMsgYellow("Data MOSA: " + answer);
                                 if (answer.equals(TypeMsgCommunication.MOSA_IFA_INITIALIZED)){
-                                    sendData(TypeMsgCommunication.IFA_MOSA_HOMELOCATION + 
-                                            drone.getHomeLocation().string());
+//                                    sendData(TypeMsgCommunication.IFA_MOSA_HOMELOCATION + 
+//                                            drone.getHomeLocation().string());
                                     sendData(TypeMsgCommunication.IFA_MOSA_START);
                                 } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STARTED)){
                                     //Não precisa fazer nada

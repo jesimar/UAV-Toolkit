@@ -52,7 +52,7 @@ public class Tests {
         createFileLogAircraft();
         waitingForTheServer();        
         dataAcquisition.getParameters();
-        dataAcquisition.getHomeLocation();        
+//        dataAcquisition.getHomeLocation();        
         monitoringAircraft();                
         sendCommandsToTest();        
     }

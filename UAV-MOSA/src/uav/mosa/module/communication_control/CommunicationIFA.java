@@ -63,14 +63,15 @@ public class CommunicationIFA {
                         String answer = input.readLine();
                         if (answer != null){
                             StandardPrints.printMsgYellow("Data IFA: " + answer);
-                            if (answer.contains(TypeMsgCommunication.IFA_MOSA_HOMELOCATION)){
-                                String home = answer.substring(23);                               
-                                String h[] = home.split(", ");
-                                double lat = Double.parseDouble(h[0]);
-                                double lng = Double.parseDouble(h[1]);
-                                double alt = Double.parseDouble(h[2]);
-                                drone.defineHomeLocation(lat, lng, alt);
-                            } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_START)){
+//                            if (answer.contains(TypeMsgCommunication.IFA_MOSA_HOMELOCATION)){
+//                                String home = answer.substring(23);                               
+//                                String h[] = home.split(", ");
+//                                double lat = Double.parseDouble(h[0]);
+//                                double lng = Double.parseDouble(h[1]);
+//                                double alt = Double.parseDouble(h[2]);
+//                                drone.defineHomeLocation(lat, lng, alt);
+//                            } else 
+                            if (answer.equals(TypeMsgCommunication.IFA_MOSA_START)){
                                 startMission = true;
                                 sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
                             } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){

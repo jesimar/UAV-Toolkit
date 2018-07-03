@@ -128,7 +128,7 @@ public class SecurityManager {
         configParametersToFlight();             //blocked
 
         dataAcquisition.getParameters();
-        dataAcquisition.getHomeLocation();
+//        dataAcquisition.getHomeLocation();
 
         communicationGCS.startServerIFA();      //Thread
         communicationGCS.receiveData();         //Thread
