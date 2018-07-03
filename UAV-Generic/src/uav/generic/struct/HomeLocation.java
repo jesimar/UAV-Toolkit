@@ -1,5 +1,7 @@
 package uav.generic.struct;
 
+import lib.color.StandardPrints;
+
 /**
  * Classe que modela a localização do home do drone.
  * @author Jesimar S. Arantes
@@ -38,6 +40,10 @@ public class HomeLocation {
             this.alt = Double.parseDouble(v[2]);            
         }catch (NumberFormatException ex){
             
+        }catch (StringIndexOutOfBoundsException ex){
+            StandardPrints.printMsgError("Error [StringIndexOutOfBoundsException]: parserInfoHomeLocation()");
+            ex.printStackTrace();
+            System.exit(0);
         }
     }
     

@@ -175,6 +175,13 @@ def getHomeLocation(request):
     cmds = vehicle.commands
     cmds.download()
     cmds.wait_ready()
+    #lat = 0.0
+    #lon = 0.0
+    #alt = 0.0
+    #if vehicle.home_location is not None:
+    #    lat = 0.0
+    #    lon = 0.0
+    #    alt = 0.0
     return {
         'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
     }
