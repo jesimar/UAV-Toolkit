@@ -18,6 +18,7 @@
 * Updated the documentation (javadoc).
 * Separation between projects UAV-Mission-Creator and UAV-Route3DToGeo.
 * Updated UAV-Mission-Creator (created file featuremission.txt)
+* Updated code update data battery generalization.
 
 ### Bug Fixes:
 

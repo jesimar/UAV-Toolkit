@@ -255,6 +255,9 @@ public class MissionManager {
                         double timeDiff = (timeActual - timeInit)/1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
+                        if (configGlobal.hasPowerModule()){
+                            dataAcquisition.getBattery();
+                        }
                         if (configGlobal.hasBuzzer()){
                             actionTurnOnTheBuzzer();
                         }

@@ -235,7 +235,6 @@ public class DataCommunication {
         }
     }
     
-    //Necessita de Power Module equipado no drone.
     public void getBattery() {
         String battery = GET("/get-battery/");          
         drone.getBattery().parserInfoBattery(battery);
@@ -383,10 +382,9 @@ public class DataCommunication {
     /**
      * Request for UAV-SOA-Interface of all sensor data.
      * FORMAT:
-     * {"all-sensors": [-22.0059333, -47.8987082, 0.07, 870.0, 12.6, 0.0, 100, 
-     * 0.009657, 2.025, 0.004823, 116, 0.0, 0.0, 3, 10, 121, 65535, [0.0, 
-     * -0.31, 0.01], 0, 0, 0.16173128321728691, null, "STABILIZE", "STANDBY", 
-     * false, true, true]} 
+     * {"all-sensors": [-22.0059333, -47.8987082, 0.07, 870.0, 0.009657, 2.025, 
+     * 0.004823, 116, 0.0, 0.0, 3, 10, 121, 65535, [0.0, -0.31, 0.01], 0, 0, 
+     * 0.16173128321728691, null, "STABILIZE", "STANDBY", false, true, true]} 
      */
     public void getAllInfoSensors() {
         String allinfo = GET("/get-all-sensors/");
@@ -397,25 +395,24 @@ public class DataCommunication {
         String v[] = allinfo.split(", ");
         drone.getGPS().updateGPS(v[0], v[1]);
         drone.getBarometer().updateBarometer(v[2], v[3]);
-        drone.getBattery().updateBattery(v[4], v[5], v[6]);
-        drone.getAttitude().updateAttitude(v[7], v[8], v[9]);
-        drone.getSensorUAV().setHeading(v[10]);
-        drone.getSensorUAV().setGroundspeed(v[11]);
-        drone.getSensorUAV().setAirspeed(v[12]);
-        drone.getGPSInfo().setFixType(v[13]);
-        drone.getGPSInfo().setSatellitesVisible(v[14]);
-        drone.getGPSInfo().setEPH(v[15]);
-        drone.getGPSInfo().setEPV(v[16]);
-        drone.getVelocity().updateVelocity(v[17], v[18], v[19]);
-        drone.setNextWaypoint(v[20]);
-        drone.setCountWaypoint(v[21]);
-        drone.setDistanceToHome(v[22]);
-        drone.setDistanceToCurrentWaypoint(v[23]);
-        drone.getStatusUAV().setMode(v[24]);
-        drone.getStatusUAV().setSystemStatus(v[25]);
-        drone.getStatusUAV().setArmed(v[26]);
-        drone.getStatusUAV().setIsArmable(v[27]);
-        drone.getStatusUAV().setEkfOk(v[28]);
+        drone.getAttitude().updateAttitude(v[4], v[5], v[6]);
+        drone.getSensorUAV().setHeading(v[7]);
+        drone.getSensorUAV().setGroundspeed(v[8]);
+        drone.getSensorUAV().setAirspeed(v[9]);
+        drone.getGPSInfo().setFixType(v[10]);
+        drone.getGPSInfo().setSatellitesVisible(v[11]);
+        drone.getGPSInfo().setEPH(v[12]);
+        drone.getGPSInfo().setEPV(v[13]);
+        drone.getVelocity().updateVelocity(v[14], v[15], v[16]);
+        drone.setNextWaypoint(v[17]);
+        drone.setCountWaypoint(v[18]);
+        drone.setDistanceToHome(v[19]);
+        drone.setDistanceToCurrentWaypoint(v[20]);
+        drone.getStatusUAV().setMode(v[21]);
+        drone.getStatusUAV().setSystemStatus(v[22]);
+        drone.getStatusUAV().setArmed(v[23]);
+        drone.getStatusUAV().setIsArmable(v[24]);
+        drone.getStatusUAV().setEkfOk(v[25]);
     } 
     
     /**
