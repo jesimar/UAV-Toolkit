@@ -45,11 +45,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Só habilitar recurso se tiver sensor (atuador) no arquivo de config-global.properties.
 * Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
 
-
 ## Sistema UAV-SOA-Interface:
 
 * Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar.
     + Observar: O porque o drone esta pousando no final da missão.
+* Trabalhar melhor no getHomeLocation esta função está dando problemas na pixhawk.
 * Verificar se a função que verifica overhead está correta. O ideal é medir o overhead apenas do AP, pois talvez o gargalo seja a comunicação entre a minha aplicação em java e a aplicação em python o que eu dúvido que seja isso, mas é bom testar. Dessa forma, é interessante capturar os instantes de tempo inicial e final dentro do código em python.
 * Diagramar as dependências entre os arquivos .py do sistema UAV-SOA-Interface com suas respectivas funções.
 * UAV-SOA-Interface: Criar comando para desarmar o motor (mesmo que a aeronave esteja no ar). Usado para abrir paraquedas.
@@ -152,7 +152,10 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Trabalhar com sistema de paraquedas
 * Trabalhar com sistema de câmera
 * Trabalhar com sistema sonar + edison
+* Trabalhar com sistema sonar + raspberry pi
 * Fazer tradução de código para linguagem C
+* Fazer programa inicilizar junto com o sistema operacional (ubuntu, raspbian, yocto linux)
+* Aprender a trabalhar com xterminal usando a raspberry pi (terminal para acessar raspberry via ambiente grafico)
 
 ## Trabalhos Futuros ou Não Fazer Mais
 

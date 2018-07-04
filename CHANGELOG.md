@@ -19,6 +19,8 @@
 * Separation between projects UAV-Mission-Creator and UAV-Route3DToGeo.
 * Updated UAV-Mission-Creator (created file featuremission.txt)
 * Updated code update data battery generalization.
+* Updated code get home location.
+* Updated scripts to support args using terminal.
 
 ### Bug Fixes:
 
