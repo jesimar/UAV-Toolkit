@@ -22,7 +22,7 @@ Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-cc-real.sh      (CC)
+1. ./exec-mavproxy-cc-real-*.sh    (CC)
 2. ./exec-soa-interface.sh         (CC)
 3. ./exec-pos-analyser.sh          (CC)
 

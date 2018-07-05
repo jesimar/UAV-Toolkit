@@ -21,6 +21,7 @@ import uav.generic.struct.constants.TypeFailure;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
+import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
@@ -247,7 +248,9 @@ public class SecurityManager {
                         double timeDiff = (timeActual - timeInit) / 1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        if (configGlobal.hasPowerModule()){
+                        if (configGlobal.hasPowerModule() || 
+                                !configGlobal.getOperationMode()
+                                .equals(TypeOperationMode.REAL_FLIGHT)){
                             dataAcquisition.getBattery();
                         }
                         checkStatusSystem();

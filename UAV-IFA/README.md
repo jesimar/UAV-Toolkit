@@ -13,29 +13,30 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 3. ./exec-soa-interface.sh         (PC)
 4. ./exec-ifa.sh                   (PC)
 
-Forma 2 -> Execução em SITL-EDISON:
+Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
-3. ./exec-soa-interface.sh         (EDISON)
-4. ./exec-ifa.sh                   (EDISON)
+2. ./exec-mavproxy-cc-sitl.sh      (CC)
+3. ./exec-soa-interface.sh         (CC)
+4. ./exec-ifa.sh                   (CC)
 
-Forma 3 -> Execução no Drone na EDISON:
+Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-edison.sh       (EDISON)
-2. ./exec-soa-interface.sh         (EDISON)
-3. ./exec-ifa.sh                   (EDISON)
+1. ./exec-mavproxy-cc-real-*.sh    (CC)
+2. ./exec-soa-interface.sh         (CC)
+3. ./exec-ifa.sh                   (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
+
 OBS: Para que a aeronave faça algo efetivamente deve-se executar também o sistema MOSA.
+
+OBS: Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
 
 ![](./Figures/exec-ifa.png)
 
 ## Arquivos de Entrada
 
-No diretório raiz tem-se um arquivo de propriedades (config.properties), onde se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
-
-Um outro arquivo de configuração existente é o config-param.txt, em que se define um conjunto de parâmetros do piloto automático e seus valores.
+No diretório raiz tem-se um arquivo de propriedades (config-ifa.properties), em que se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
 
 ## Arquivos de Saída
 

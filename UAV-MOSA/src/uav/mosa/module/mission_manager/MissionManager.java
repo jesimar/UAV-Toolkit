@@ -18,6 +18,7 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.states.StateCommunication;
@@ -255,7 +256,9 @@ public class MissionManager {
                         double timeDiff = (timeActual - timeInit)/1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        if (configGlobal.hasPowerModule()){
+                        if (configGlobal.hasPowerModule() || 
+                                !configGlobal.getOperationMode()
+                                .equals(TypeOperationMode.REAL_FLIGHT)){
                             dataAcquisition.getBattery();
                         }
                         if (configGlobal.hasBuzzer()){

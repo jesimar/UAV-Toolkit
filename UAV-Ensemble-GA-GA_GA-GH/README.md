@@ -8,7 +8,7 @@ O algoritmo GA-GA-4s usa duas instâncias do algoritmo GA4s. Já o algoritmo GA-
 
 Síntese dos Algoritmos Gerados:
 
-* **GA-GA-4s** -> *Two Genetic Algorithms for security executed in parallel* [[Link]()]
+* **GA-GA-4s** -> *Two Genetic Algorithms for security executed in parallel* [[Link](https://ieeexplore.ieee.org/document/8372047/)]
 
-* **GA-GH-4s** -> *One Genetic Algorithm and one Greedy Heuristic for security executed in parallel* [[Link]()]
+* **GA-GH-4s** -> *One Genetic Algorithm and one Greedy Heuristic for security executed in parallel* [[Link](https://ieeexplore.ieee.org/document/8372047/)]
 

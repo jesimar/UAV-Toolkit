@@ -10,12 +10,18 @@ Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[L
 Nesse projeto podemos encontrar os seguintes diretórios:
 
 * **Docs** -> Documentação escrita sobre esse projeto. Dissertação, Qualificação e Tutorial.
+* **Instances** -> Conjunto de arquivos de instâncias de mapas artificiais e reais utilizados nos experimentos.
 * **Libs** -> Bibliotecas utilizadas nos projetos aqui descritos.
 * **Missions-Ardupilot-SITL** -> Agrupa um conjunto de missões para serem simuladas no ardupilot SITL.
 * **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth.
+* **Modules-Global** -> Agrupa um conjunto de código para acionar os sensores e atuadores.
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA.
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA.
 * **Scripts** -> Agrupa um conjunto de scripts utilizados para facilitar a execução de experimentos.
+* **UAV-Ensemble-GA-GA_GA-GH** -> Implementação em Java dos algoritmos de comitê GA-GA e GA-GH executados em paralelo (usado pelo IFA).
+* **UAV-Exec-PathReplanner-Massive** -> Implementação em Java de execuções massivas de replanejamento de rota (usado pelo UAV-Fixed-Route4s).
+* **UAV-Fixed-Route4s** -> Implementação em Java para definição da melhor rota de pouso emergencial em um conjunto de rotas (usado pelo IFA).
+* **UAV-GCS** -> Projeto em Java que gerenciamento/controle/acompanhamento do voo autonomo usando o MOSA e IFA.
 * **UAV-Generic** -> Projeto em Java que contém estruturas genéricas ao sistema MOSA e IFA.
 * **UAV-IFA** -> Projeto em Java para gerenciamento da segurança em voo.
 * **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo.
@@ -64,30 +70,6 @@ Logo em seguida, você deverá fazer o download do último release do nosso proj
 Uma vez terminado, navegue até o diretório RAIZ. Neste caso você estará em ./UAV-Toolkit:
 
 Pronto, o projeto já está pronto para o uso.
-
-## Arquitetura de Hardware
-
-![](./Figures/config-inteledison-usb.png)
-
-![](./Figures/config-inteledison-wifi.png)
-
-![](./Figures/connections-autopilot-motors.png)
-
-![](./Figures/connections-apm-radioreceiver.png)
-
-![](./Figures/connections-inteledison-autopilot.png)
-
-![](./Figures/integration-systems.png)
-
-![](./Figures/iDroneAlpha.png)
-
-![](./Figures/communication-system.png)
-
-![](./Figures/communication-inteledison-ap-gcs.png)
-
-![](./Figures/uav-soa-interface.png)
-
-![](./Figures/architecture-mosa-ifa-system.png)
 
 ## Características do Sistema
 
@@ -142,3 +124,29 @@ UAV-Toolkit está disponível sobre código aberto com permissões [GNU General 
 ------
 
 Copyright 2018 - Jesimar da Silva Arantes.
+
+
+
+[//]: # ## Arquitetura de Hardware
+
+[//]: # ![](./Figures/config-inteledison-usb.png)
+
+[//]: # ![](./Figures/config-inteledison-wifi.png)
+
+[//]: # ![](./Figures/connections-autopilot-motors.png)
+
+[//]: # ![](./Figures/connections-apm-radioreceiver.png)
+
+[//]: # ![](./Figures/connections-inteledison-autopilot.png)
+
+[//]: # ![](./Figures/integration-systems.png)
+
+[//]: # ![](./Figures/iDroneAlpha.png)
+
+[//]: # ![](./Figures/communication-system.png)
+
+[//]: # ![](./Figures/communication-inteledison-ap-gcs.png)
+
+[//]: # ![](./Figures/uav-soa-interface.png)
+
+[//]: # ![](./Figures/architecture-mosa-ifa-system.png)

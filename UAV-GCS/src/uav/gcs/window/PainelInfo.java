@@ -117,17 +117,17 @@ public class PainelInfo {
         labelRoll.setForeground(Color.BLACK);
         panel.add(labelRoll);
         
-        this.labelVx = new JLabel("Vx: ");
+        this.labelVx = new JLabel("Vel x: ");
         labelVx.setPreferredSize(new Dimension(160, 20));
         labelVx.setForeground(Color.BLACK);
         panel.add(labelVx);
         
-        this.labelVy = new JLabel("Vy: ");
+        this.labelVy = new JLabel("Vel y: ");
         labelVy.setPreferredSize(new Dimension(160, 20));
         labelVy.setForeground(Color.BLACK);
         panel.add(labelVy);
         
-        this.labelVz = new JLabel("Vz: ");
+        this.labelVz = new JLabel("Vel z: ");
         labelVz.setPreferredSize(new Dimension(160, 20));
         labelVz.setForeground(Color.BLACK);
         panel.add(labelVz);

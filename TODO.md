@@ -149,6 +149,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Fazer planejador baseado em Campos Potenciais
 * Fazer planejador baseado em AG Puro
 * Fazer simplificador de rotas baseado em derivadas
+* Sistema de voz da Google
 * Trabalhar com sistema de paraquedas
 * Trabalhar com sistema de câmera
 * Trabalhar com sistema sonar + edison
@@ -156,6 +157,9 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Fazer tradução de código para linguagem C
 * Fazer programa inicilizar junto com o sistema operacional (ubuntu, raspbian, yocto linux)
 * Aprender a trabalhar com xterminal usando a raspberry pi (terminal para acessar raspberry via ambiente grafico)
+* Sistema de comunicação entre telemetria (air <-> ground).
+* Sistema de comunicação entre rádio controle (rádio controle -> receptor de rádio controle)
+* UAV-Tests colocar ele para trabalhar e validar o sistema.
 
 ## Trabalhos Futuros ou Não Fazer Mais
 

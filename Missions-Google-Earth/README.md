@@ -8,11 +8,11 @@ Para que essas missões sejam usadas pelos planejadores dos sistemas MOSA e IFA.
 
 Os seguintes artigos utilizaram os arquivos disponíveis neste diretório para fazer os experimentos.
 
+ICTAI 2017: [[Link](https://ieeexplore.ieee.org/document/8372047/)]
+* Arquivos (ICTAI-2017*.kml)
+
 ICAS 2018: [[Link Wait]()]
 * Arquivos (ICAS-2018*.kml)
 
 IROS 2018: [[Link Wait]()]
 * Arquivos (IROS-2018*.kml)
-
-ICTAI 2017: [[Link Wait]()]
-* Arquivos (ICTAI-2017*.kml)

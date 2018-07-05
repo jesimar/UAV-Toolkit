@@ -14,28 +14,30 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 4. ./exec-ifa.sh                   (PC)
 5. ./exec-mosa.sh                  (PC)
 
-Forma 2 -> Execução em SITL-EDISON:
+Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-edison-sitl.sh  (EDISON)
-3. ./exec-soa-interface.sh         (EDISON)
-4. ./exec-ifa.sh                   (EDISON)
-5. ./exec-mosa.sh                  (EDISON)
+2. ./exec-mavproxy-cc-sitl.sh      (CC)
+3. ./exec-soa-interface.sh         (CC)
+4. ./exec-ifa.sh                   (CC)
+5. ./exec-mosa.sh                  (CC)
 
-Forma 3 -> Execução no Drone na EDISON:
+Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-edison.sh       (EDISON)
-2. ./exec-soa-interface.sh         (EDISON)
-3. ./exec-ifa.sh                   (EDISON)
-4. ./exec-mosa.sh                  (EDISON)
+1. ./exec-mavproxy-cc-real-*.sh    (CC)
+2. ./exec-soa-interface.sh         (CC)
+3. ./exec-ifa.sh                   (CC)
+4. ./exec-mosa.sh                  (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
+
+OBS: Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
 
 ![](./Figures/exec-mosa.png)
 
 ## Arquivos de Entrada
 
-No diretório raiz tem-se um arquivo de entrada (config.properties), onde se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar entre outras configurações do sistema MOSA.
+No diretório raiz tem-se um arquivo de entrada (config-mosa.properties), em que se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar entre outras configurações do sistema MOSA.
 
 ## Arquivos de Saída
 

@@ -2,10 +2,12 @@
 
 Este diretório agrupa um conjunto de arquivos de instâncias Artificiais e Reais utilizadas nos planejadores e replanejadores.
 
-*Instancias Artificiais: Foram geradas de forma automática por algum algoritmo.
-*Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software UAV-Mission-Creator.
+* Instancias Artificiais: Foram geradas de forma automática por algum algoritmo.
+
+* Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software UAV-Mission-Creator.
 
 Arquivo de Instância do Path Planner (HGA4m):
+OBS: As coordenadas utilizadas são cartesianas.
 
 ```
 <number of polygons>
@@ -31,6 +33,7 @@ Arquivo de Instância do Path Planner (HGA4m):
 ```
 
 Arquivo de Instância do Path Replanner (MPGA4s, GA4s, GH4s, DE4s, ...):
+OBS: As coordenadas utilizadas são cartesianas.
 
 ```
 <number of polygons>

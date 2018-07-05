@@ -35,6 +35,7 @@ public final class GCS extends JFrame {
     private final JPanel panelMain;
     private final JPanel panelLeft;
     private final JPanel panelRight;   
+    private JPanel panelRightInfo;  
     
     private final JButton btnBadWeather;
     private final JButton btnPathReplanningEmergency;
@@ -312,20 +313,25 @@ public final class GCS extends JFrame {
             panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
             panelRight.setBackground(new Color(95, 161, 255));
             panelRight.setVisible(true);
+            
+            panelRightInfo = new JPanel();
+            panelRightInfo.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelRightInfo.setBackground(new Color(85, 141, 255));
+            panelRightInfo.setVisible(true);
         }
 
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
-        labelIsConnectedIFA.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
         panelRight.add(labelIsConnectedIFA);
         
         labelIsConnectedMOSA = new JLabel("Connected MOSA: False");
-        labelIsConnectedMOSA.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedMOSA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedMOSA.setForeground(Color.RED);
         panelRight.add(labelIsConnectedMOSA);
         
         labelIsConnectedDB = new JLabel("Connected DB: False");
-        labelIsConnectedDB.setPreferredSize(new Dimension(160, 20));
+        labelIsConnectedDB.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedDB.setForeground(Color.RED);
         panelRight.add(labelIsConnectedDB);
               
@@ -339,10 +345,14 @@ public final class GCS extends JFrame {
         labelIsRunningPathReplanner.setForeground(Color.RED);
         panelRight.add(labelIsRunningPathReplanner);
         
-        painelInfo = new PainelInfo(panelRight);
+        panelRightInfo.add(panelRight);
+        
+        painelInfo = new PainelInfo(panelRightInfo);
         this.add(panelTop);
         this.add(panelMain);
-        panelMain.add(panelRight);
+//        panelMain.add(panelRight);
+        
+        panelMain.add(panelRightInfo);
 
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -432,14 +442,15 @@ public final class GCS extends JFrame {
         panelTop.setPreferredSize(new Dimension(width - 30, 70));
         panelMain.setPreferredSize(new Dimension(width - 30, height - 110));
         panelLeft.setPreferredSize(new Dimension(200, height - 120));
-        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
+        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20 - 20, 50));
+        panelRightInfo.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
     }
 
     public void showAbout(){
         String msgAbout   = "Program: UAV-GCS\n" + 
                             "Author: Jesimar da Silva Arantes\n" + 
                             "Version: 1.0.0\n" + 
-                            "Date: 16/05/2018";
+                            "Date: 05/07/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }

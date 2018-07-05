@@ -12,27 +12,32 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 2. ./exec-mavproxy-local.sh          (PC)
 3. ./exec-soa-interface.sh           (PC)
 
-Forma 2 -> Execução em SITL-EDISON:
+Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                    (PC)
-2. ./exec-mavproxy-edison-sitl.sh    (EDISON)
-3. ./exec-soa-interface.sh           (EDISON)
+2. ./exec-mavproxy-cc-sitl.sh        (CC)
+3. ./exec-soa-interface.sh           (CC)
 
-Forma 3 -> Execução no Drone na EDISON:
+Forma 3 -> Execução no Drone no CC:
 
-1. ./exec-mavproxy-edison.sh         (EDISON)
-2. ./exec-soa-interface.sh           (EDISON)
+1. ./exec-mavproxy-cc-real-*.sh      (CC)
+2. ./exec-soa-interface.sh           (CC)
 
 Em seguida é necessário executar mais alguma aplicação que faça as requisições ao UAV-SOA-Interface, como exemplo, de aplicações tem-se: 
 UAV-IFA, UAV-MOSA, UAV-Tests, UAV-Monitoring, UAV-PosAnalyser e UAV-Toolkit-C.
 
 ![](../Figures/exec-soa-interface.png)
 
+## Arquivo de Entrada
+
+No diretório raiz tem-se um arquivo de propriedades (config-soa.properties), em que se define que IPs e porta usada na comunicação entre os sistemas. 
+
 ## Requisições:
 
 Métodos GET: 
 
 * '/get-gps/'
+* '/get-barometer/'
 * '/get-battery/'
 * '/get-attitude/'
 * '/get-velocity/'
@@ -48,6 +53,9 @@ Métodos GET:
 * '/get-home-location/'
 * '/get-parameters/'
 * '/get-distance-to-home/'
+* '/get-distance-to-waypoint-current/'
+* '/get-next-waypoint/'
+* '/get-count-waypoint/'
 * '/get-all-sensors/'
 
 Métodos POST:
@@ -83,6 +91,9 @@ http://localhost:50000/get-ekf-ok/
 http://localhost:50000/get-home-location/
 http://localhost:50000/get-parameters/
 http://localhost:50000/get-distance-to-home/
+http://localhost:50000/get-distance-to-waypoint-current/
+http://localhost:50000/get-next-waypoint/
+http://localhost:50000/get-count-waypoint/
 http://localhost:50000/get-all-sensors/
 ```
 
