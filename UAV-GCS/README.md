@@ -82,6 +82,4 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 * **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave. Veja imagem abaixo.
 * **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave. Veja imagem abaixo.
 
-![](../Figures/keyboard-commands.png)
-
-![](../Figures/voice-commands.png)
+![](../Figures/keyboard-commands.png) ![](../Figures/voice-commands.png)
