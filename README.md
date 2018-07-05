@@ -127,6 +127,7 @@ Copyright 2018 - Jesimar da Silva Arantes.
 
 
 
+<!--
 [//]: # ## Arquitetura de Hardware
 
 [//]: # ![](./Figures/config-inteledison-usb.png)
@@ -150,3 +151,5 @@ Copyright 2018 - Jesimar da Silva Arantes.
 [//]: # ![](./Figures/uav-soa-interface.png)
 
 [//]: # ![](./Figures/architecture-mosa-ifa-system.png)
+
+-->
