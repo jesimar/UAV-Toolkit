@@ -38,7 +38,7 @@ OBS: Você pode abrir/executar também uma estação de controle de solo para ac
 
 Abaixo encontra-se uma tela do sistema em execução.
 
-![](./Figures/uav-gcs.png)
+![](../Figures/uav-gcs.png)
 
 ## Arquivos de Entrada
 
@@ -82,6 +82,6 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 * **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave. Veja imagem abaixo.
 * **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave. Veja imagem abaixo.
 
-![](./Figures/keyboard-commands.png)
+![](../Figures/keyboard-commands.png)
 
-![](./Figures/voice-commands.png)
+![](../Figures/voice-commands.png)

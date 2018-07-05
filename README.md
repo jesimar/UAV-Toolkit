@@ -126,30 +126,28 @@ UAV-Toolkit está disponível sobre código aberto com permissões [GNU General 
 Copyright 2018 - Jesimar da Silva Arantes.
 
 
-
 <!--
-[//]: # ## Arquitetura de Hardware
+## Arquitetura de Hardware
 
-[//]: # ![](./Figures/config-inteledison-usb.png)
+![](./Figures/config-inteledison-usb.png)
 
-[//]: # ![](./Figures/config-inteledison-wifi.png)
+![](./Figures/config-inteledison-wifi.png)
 
-[//]: # ![](./Figures/connections-autopilot-motors.png)
+![](./Figures/connections-autopilot-motors.png)
 
-[//]: # ![](./Figures/connections-apm-radioreceiver.png)
+![](./Figures/connections-apm-radioreceiver.png)
 
-[//]: # ![](./Figures/connections-inteledison-autopilot.png)
+![](./Figures/connections-inteledison-autopilot.png)
 
-[//]: # ![](./Figures/integration-systems.png)
+![](./Figures/integration-systems.png)
 
-[//]: # ![](./Figures/iDroneAlpha.png)
+![](./Figures/iDroneAlpha.png)
 
-[//]: # ![](./Figures/communication-system.png)
+![](./Figures/communication-system.png)
 
-[//]: # ![](./Figures/communication-inteledison-ap-gcs.png)
+![](./Figures/communication-inteledison-ap-gcs.png)
 
-[//]: # ![](./Figures/uav-soa-interface.png)
+![](./Figures/uav-soa-interface.png)
 
-[//]: # ![](./Figures/architecture-mosa-ifa-system.png)
-
+![](./Figures/architecture-mosa-ifa-system.png)
 -->

@@ -10,7 +10,7 @@ Este sistema é o responsável por a partir de um arquivo de mapa geográfico (k
 
 A ideia geral do sistema pode ser vista na figura abaixo.
 
-![](./Figures/sw-mission-creator.png)
+![](../Figures/sw-mission-creator.png)
 
 Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/kml/
 
