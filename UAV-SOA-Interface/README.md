@@ -30,7 +30,14 @@ UAV-IFA, UAV-MOSA, UAV-Tests, UAV-Monitoring, UAV-PosAnalyser e UAV-Toolkit-C.
 
 ## Arquivo de Entrada
 
-No diretório raiz tem-se um arquivo de propriedades (config-soa.properties), em que se define que IPs e porta usada na comunicação entre os sistemas. 
+No diretório raiz tem-se um arquivo de propriedades (config-soa.properties), em que se define que os IPs e as portas usada na comunicação entre os sistemas. 
+
+```
+prop.global.host_mavproxy=127.0.0.1
+prop.global.port_mavproxy=14551
+prop.global.host_http=localhost
+prop.global.port_http=50000
+```
 
 ## Requisições:
 
@@ -69,9 +76,9 @@ Métodos POST:
 * '/set-heading/'
 * '/set-mode/'
 
-## Como Fazer Requisições usando o Navegador:
+## Como Fazer Requisições usando o Navegador (Browser):
 
-Para fazer as requisições do tipo GET basta digitar algumas dos comandos abaixo na barra de endereços:
+Para fazer as requisições do tipo GET basta digitar algumas dos comandos abaixo na barra de endereços do Browser:
 
 ```
 http://localhost:50000/get-gps/
@@ -109,3 +116,9 @@ http://localhost:50000/set-parameter/
 http://localhost:50000/set-heading/
 http://localhost:50000/set-mode/
 ```
+
+## Diagrama de Classe
+
+Abaixo encontra-se o diagrama de classe e dependência do UAV-SOA-Interface
+
+![](../Figures/diagrama-uav-soa.png)

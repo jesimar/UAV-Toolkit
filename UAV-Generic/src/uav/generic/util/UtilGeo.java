@@ -19,52 +19,52 @@ public class UtilGeo {
     public final static double CIRC_MERIDIONAL = 40007860.0;//40000000.0;            
     
     public static String parseToGeo(PointGeo base, double x, double y, double h, String separator){
-        double lat = converteYtoLatitude(base.getLat(), y);
-        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);        
+        double lat = convertYtoLatitude(base.getLat(), y);
+        double lon = convertXtoLongitude(base.getLng(), base.getLat(), x);        
         double alt = base.getAlt() + h;
         return lat + separator + lon + separator + alt;
     }
     
     public static PointGeo parseToGeo(PointGeo base, Point3D point){
         return new PointGeo(
-            converteXtoLongitude(base.getLng(), base.getLat(), point.getX()), 
-            converteYtoLatitude(base.getLat(), point.getY()), 
+            convertXtoLongitude(base.getLng(), base.getLat(), point.getX()), 
+            convertYtoLatitude(base.getLat(), point.getY()), 
             base.getAlt() + point.getZ()
         );
     }
     
     public static PointGeo parseToGeo1(PointGeo base, double x, double y, double h){
         return new PointGeo(
-            converteXtoLongitude(base.getLng(), base.getLat(), x), 
-            converteYtoLatitude(base.getLat(), y), 
+            convertXtoLongitude(base.getLng(), base.getLat(), x), 
+            convertYtoLatitude(base.getLat(), y), 
             base.getAlt() + h
         );
     }
     
     public static String parseToGeo2(PointGeo base, double x, double y, double h){
-        double lat = converteYtoLatitude(base.getLat(), y);
-        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);        
+        double lat = convertYtoLatitude(base.getLat(), y);
+        double lon = convertXtoLongitude(base.getLng(), base.getLat(), x);        
         double alt = base.getAlt() + h;
         return lat + "\t" + lon + "\t" + alt;
     }
     
     public static String parseToGeo3(PointGeo base, double x, double y){
-        double lat = converteYtoLatitude(base.getLat(), y);
-        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);
+        double lat = convertYtoLatitude(base.getLat(), y);
+        double lon = convertXtoLongitude(base.getLng(), base.getLat(), x);
         return lon + "," + lat + ",0 ";
     }
     
     public static String parseToGeoRelativeGround2(PointGeo base, double x, double y, double h){
-        double lat = converteYtoLatitude(base.getLat(), y);
-        double lon = converteXtoLongitude(base.getLng(), base.getLat(), x);
+        double lat = convertYtoLatitude(base.getLat(), y);
+        double lon = convertXtoLongitude(base.getLng(), base.getLat(), x);
         return lat + "\t" + lon + "\t" + h;
     }
     
-    public static double converteYtoLatitude(double latBase, double y){
+    public static double convertYtoLatitude(double latBase, double y){
         return latBase + y*360/CIRC_MERIDIONAL;
     }
     
-    public static double converteXtoLongitude(double lonBase, double latBase, double x){
+    public static double convertXtoLongitude(double lonBase, double latBase, double x){
         return lonBase+ x*360/(CIRC_EQUATORIAL*Math.cos(latBase*Math.PI/180));
     }
     

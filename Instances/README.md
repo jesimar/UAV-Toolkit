@@ -6,8 +6,12 @@ Este diretório agrupa um conjunto de arquivos de instâncias Artificiais e Reai
 
 * Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software UAV-Mission-Creator.
 
-Arquivo de Instância do Path Planner (HGA4m):
-OBS: As coordenadas utilizadas são cartesianas.
+![](../Figures/instances.png)
+
+## Arquivo de Instância do Path Planner:
+
+Os valores das coordenadas utilizadas são cartesianas.
+Utilizado no planejador de rotas: HGA4m.
 
 ```
 <number of polygons>
@@ -32,8 +36,10 @@ OBS: As coordenadas utilizadas são cartesianas.
 -9.790579190714476,-6.290114975736857,-6.290060849773693,-9.790524335512249
 ```
 
-Arquivo de Instância do Path Replanner (MPGA4s, GA4s, GH4s, DE4s, ...):
-OBS: As coordenadas utilizadas são cartesianas.
+## Arquivo de Instância do Path Replanner:
+
+Os valores das coordenadas utilizadas são cartesianas.
+Utilizado no replanejador de rotas: MPGA4s, GA4s, GH4s, DE4s, etc.
 
 ```
 <number of polygons>

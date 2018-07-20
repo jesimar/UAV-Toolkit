@@ -13,6 +13,7 @@
 * Added new scripts about Raspberry Pi.
 * Added new functions in UAV-SOA-Interface (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
 * Added new functions in UAV-Generic (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
+* Added resource in UAV-Route-Standard (routes in geographical coordenates)
 * Updated UAV-Generic to support the Raspberry Pi.
 * Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure.
 * Updated the documentation (javadoc).
