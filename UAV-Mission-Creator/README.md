@@ -32,4 +32,4 @@ Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/
 
 Abaixo encontra-se um vídeo explicando um pouco como projetar os mapas usando o Google Earth.
 
-[![Alt text](https://img.youtube.com/vi/VID/0.jpg)](https://www.youtube.com/watch?v=UpTqucMuJt8)
+[![](https://img.youtube.com/vi/UpTqucMuJt8/0.jpg)](https://www.youtube.com/watch?v=UpTqucMuJt8 "Criando Missões com Google Earth")
