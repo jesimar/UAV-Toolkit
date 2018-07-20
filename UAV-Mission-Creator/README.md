@@ -27,3 +27,9 @@ Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/
 * geoBase.txt
 * wpts.txt
 * featureMission.txt
+
+## Como Usar
+
+Abaixo encontra-se um vídeo explicando um pouco como projetar os mapas usando o Google Earth.
+
+[![Alt text](https://img.youtube.com/vi/VID/0.jpg)](https://www.youtube.com/watch?v=UpTqucMuJt8)
