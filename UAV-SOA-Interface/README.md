@@ -117,8 +117,10 @@ http://localhost:50000/set-heading/
 http://localhost:50000/set-mode/
 ```
 
-## Diagrama de Classe
+## Diagrama de Dependência
 
-Abaixo encontra-se o diagrama de classe e dependência do UAV-SOA-Interface
+Abaixo encontra-se um diagrama de dependência do software UAV-SOA-Interface.
 
 ![](../Figures/diagrama-uav-soa.png)
+
+Neste diagrama de dependêdia podemos perceber claramente o funcionamento do sistema. Lembre-se que as setas tracejadas (dependências) apontam para o arquivo dependente. Foram incorporados nesse diagrama o VANT com o seu piloto automático (AP) que são os elementos mais importantes para esta aplicação. A API do Dronekit conecta-se ao piloto automático. O arquivo init.py, inicialmente, manda fazer a leitura de um arquivo de configurações [descrito aqui](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-SOA-Interface#arquivo-de-entrada) e feito no arquivo readfile.py. Em seguida, se conecta ao veículo (AP), então e retornado todos os principais status do veículo (feito no arquivo status.py). Posteriormente, inicia-se a parte mais importante que é a execução de um servidor HTTP que atende a requisições do tipo GET e POST (feita no arquivo server.py). Os nomes dos métodos GET e POST foram mapeados em uma estrutura de dicionário no arquivo requisitions.py. As funções dos métodos GET e POST estão definidas em views.py, por sua vez quando tem que enviar algum comando mavlink para o drone é feito através do arquivo commands.py.

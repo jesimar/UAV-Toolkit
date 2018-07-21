@@ -114,6 +114,10 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
 } 
 ```
 
+## Contributors
+
+Os principais contribuidores desse projeto podem ser encontrados [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/AUTHORS)
+
 ## Changelog
 
 A versão do ChangeLog pode ser acessado [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/CHANGELOG.md). 

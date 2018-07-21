@@ -50,18 +50,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema UAV-SOA-Interface:
 
-* Verificar se a função que verifica overhead está correta. O ideal é medir o overhead apenas do AP, pois talvez o gargalo seja a comunicação entre a minha aplicação em java e a aplicação em python o que eu dúvido que seja isso, mas é bom testar. Dessa forma, é interessante capturar os instantes de tempo inicial e final dentro do código em python.
+* Corrigir problema na função setHomeLocation(). Problema no cmds.download() e cmds.wait_ready().
+* Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
+* OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
 
 ## UAV-Mission-Creator:
-
-## GitHub e Documentação UAV-Toolkit
-
-* Melhorar a descrição do projeto no github.
-* Traduzir a descrição do projeto no github para o Inglês.
-* Melhorar as descrições através de links, figuras, diagramas e vídeos.
-* Colocar informações sobre como configurar os arquivos de properties.
-* Futuro: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
-* Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
 
 ## Legislação
 
@@ -70,23 +63,15 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Geral
 
+* Documentação: Melhorar a descrição do projeto no github.
+* Documentação: Traduzir a descrição do projeto no github para o Inglês.
+* Documentação: Melhorar as descrições do github através de links, figuras, diagramas e vídeos.
+* Documentação: Colocar informações sobre como configurar os arquivos de properties no github.
+* Documentação: Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
 * Documentar todos os códigos em java usando javadoc.
 * Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
 * Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
-
-## Problemas:
-
-Drone:
-* Melhorar a calibração do sensor de alarme de bateria, pois ele está apintando apenas quando a bateria está terminando.
-* Melhorar a calibração do power module.
-* Calibrar o meu drone melhor (PIDs), segundo o Onofre eles estão descalibrados.
-* Corrigir problema em que o AP mostra status informando CRITICAL, acredito que tenha algum problema de hardware.
-
-Sistema UAV-SOA-Interface:
-* Corrigir problema na função setHomeLocation(). Problema no cmds.download() e cmds.wait_ready().
-* Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
-* OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
 
 ## Documentação Formal das Falhas no Sistema
 
@@ -148,6 +133,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
 * Trabalhar melhor no getHomeLocation esta função está dando problemas com a placa Pixhawk (com a APM funciona perfeitamente).
+* Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 
 * QGroundControl: Tentar descobrir como limpar a antiga missão do QGroundControl.
 * QGroundControl: Corrigir problema na mensagem no início do programa, quando começo uma missão e fala que PreArm 3D Fix.
@@ -156,6 +142,12 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Hardware: Incorporar hardware/software de disparo de paraquedas.
 * Hardware: Incorporar hardware/software de sonar no drone apontado para frente.
 * Hardware: Incorporar hardware/software de pulverização de plantações.
+
+
+* Drone: Melhorar a calibração do sensor de alarme de bateria, pois ele está apintando apenas quando a bateria está terminando.
+* Drone: Melhorar a calibração do power module no piloto automático.
+* Drone: Calibrar o meu drone melhor (PIDs), segundo o Onofre eles estão descalibrados.
+* Drone: Corrigir problema em que o AP mostra status informando CRITICAL, acredito que tenha algum problema de hardware.
 
 * UAV-IFA: Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
 * UAV-IFA: Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
@@ -178,6 +170,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-SOA-Interface: Observar o porquê o drone esta pousando no final da missão.
 * UAV-SOA-Interface: Corrigir problema do drone em que fica informando mensagem na momento de armar (low battery). Verificar se é algo com power module. Nem sempre é necessário armar de forma manual.
 * UAV-SOA-Interface: Criar comando para desarmar o motor (mesmo que a aeronave esteja no ar). Usado para abrir paraquedas.
+* UAV-SOA-Interface: Verificar se a função que verifica overhead está correta. O ideal é medir o overhead apenas do AP, pois talvez o gargalo seja a comunicação entre a minha aplicação em java e a aplicação em python o que eu dúvido que seja isso, mas é bom testar. Dessa forma, é interessante capturar os instantes de tempo inicial e final dentro do código em python.
 
 * Experimento: Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
 * Experimento: Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 

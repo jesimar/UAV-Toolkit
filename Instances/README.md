@@ -2,9 +2,11 @@
 
 Este diretório agrupa um conjunto de arquivos de instâncias Artificiais e Reais utilizadas nos planejadores e replanejadores.
 
-* Instancias Artificiais: Foram geradas de forma automática por algum algoritmo.
+* Instancias Artificiais: Foram geradas de forma automática por algum algoritmo (programa localizado [aqui](https://github.com/jesimar/UAV-Tools/tree/master/CreateMapArtificial)).
 
-* Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software UAV-Mission-Creator.
+* Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software [UAV-Mission-Creator](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Mission-Creator).
+
+A Figura abaixo dá uma visão geral dos arquivos de instâncias disponibilizados nesse diretório.
 
 ![](../Figures/instances.png)
 
