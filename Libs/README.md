@@ -16,3 +16,8 @@ Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 * **jxbrowser-6.19.1.jar** ->  usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
 * **jxbrowser-linux64-6.19.1.jar** -> usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
 * **license.jar** -> usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
+
+OBS: Para utilização dos recursos do IBM ILOG CPLEX Optimization Studio (https://www.ibm.com/), você:
+Você primeiramente deverá instalar o CPLEX. Em seguida, troque (copiar) o arquivo cplex.jar de .../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/ para todos 
+os planejadores de rota que utilizam pragramação matemática como em: .../UAV-Toolkit/Modules-MOSA/HGA4m/lib/, .../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/
+

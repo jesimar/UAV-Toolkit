@@ -13,16 +13,12 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistem IFA:
 
-* Incluir MultiStart no IFA
 * Incluir MILP4s no IFA
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
 * Adicionar campos no arquivo de log como altitude do sonar, ligou led, bateu foto, etc.
-* IFA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
-* IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja.
+* IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja. criar uma função chamada checagem inicial onde verifica, uma serie de arquivos de configuração se estão nos locais esperados.
 * Adicionar simplificador de rotas.
-* Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
-* Definir melhor o home da missão e o launch da missão.
 * IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
 1. Verificar bateria, GPS
 2. Verificar missão antes de enviar ao AP, caso seja inviável não enviá-la.
@@ -31,11 +27,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Sistema MOSA:
 
 * Incorporar planejador de missão CCQSP4m no MOSA.
-* MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * MOSA deve tomar cuidado com o Exit(0), pois ele precisa avisar ao IFA antes de sair.
 * MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
 * MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
-* Definir melhor o home da missão e o launch da missão.
 * Adicionar simplificador de rotas.
 
 ## Sistema UAV-GCS
@@ -54,13 +48,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
 * OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
 
-## UAV-Mission-Creator:
-
-## Legislação
-
-* Ler documentação e leis sobre voos de drone na ANAC e ANATEL. 
-* Fazer seguro de voo quando for voar.
-
 ## Geral
 
 * Documentação: Melhorar a descrição do projeto no github.
@@ -71,7 +58,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Documentar todos os códigos em java usando javadoc.
 * Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
-* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 ## Documentação Formal das Falhas no Sistema
 
@@ -155,11 +141,19 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-IFA deve verificar se existe mais de um comando do tipo LAND, LAND_VERTICAL ou RTL. Só pode haver um comando desse tipo.
 * UAV-IFA deve ter um objeto com todos os waypoints da rota.
 * UAV-IFA discutir uma forma fácil de fazer a projeção da aeronave no futuro após ocorrer a falha crítica.
+* UAV-IFA incluir o algoritmo MultiStart
+* UAV-IFA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
+* UAV-IFA Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
+* UAV-IFA definir melhor o home da missão e o launch da missão.
+* UAV-IFA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 * UAV-MOSA: Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
+* UAV-MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * UAV-MOSA deve ter um objeto com todos os waypoints da rota.
 * UAV-MOSA deve aguardar até que o modo seja STANDBY, antes disso nao adianta calcular nada.
 * UAV-MOSA deve chamar as rotas standard a partir do ponto onde o drone está localizado.
+* UAV-MOSA definir melhor o home da missão e o launch da missão.
+* UAV-MOSA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 * UAV-GCS: Executar scripts automaticamente
 * UAV-GCS: Colocar recurso para plotar a rota do drone em tempo real
@@ -175,10 +169,15 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Experimento: Medir usando o software Wicd a porcentagem de alcance das redes do Notebook, Celular e Roteador Wifi.
 * Experimento: Fazer experimento de payload do drone tentando levantar: 200g, 400g, 600g, 800g e 1000g. Para descobrir 
 * Experimento: em que o IFA tomar o controle humano caso o mesmo coloque a aeronave em risco, por exemplo, ser humano aproxime demais o VANT de uma NFZ.
+
 * Aplicação: aplicação básica na Edison e Raspberry Pi para efetuar o disparo do paraquedas.
 * Aplicação: que captura os comandos digitados no controle de vídeo game B-MAX para controlar o drone.
 * Aplicação: em que tenho além do iDroneAlpha, em solo um computador com GPS, a cada segundo eu passo para a aeronave as minhas coordenadas GPS e a aeronave me segue, Follow-me. (Drone Seguindo Notebook)
 * Aplicação: em que o meu drone segue não o meu notebook, mas outro drone em que um drone passa para o outro as coordenadas GPS, Follow-Drone. (Drone Seguindo drone)
+
+* Legislação: Ler documentação e leis sobre voos de drone na ANAC e ANATEL. 
+* Legislação: Fazer seguro de voo quando for voar.
+
 * MOSA - Path Planner:
 1. Integrar o módulo do HISA4m (Márcio).
 2. Integrar o módulo do CSA4m (Márcio).

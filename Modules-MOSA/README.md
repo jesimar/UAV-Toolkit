@@ -4,9 +4,9 @@ Este diretório é responsável por agrupar um conjunto de algoritmos usados pel
 
 Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento de rotas pelo MOSA.
 
-* **HGA4m** ->  *Hybrid Genetic Algorithm for mission* - Utiliza um algoritmo genético híbrido com grafo de visibilidade e resolução de modelo de Programação Linear Inteira-Mista (PLIM) para encontrar a rota. (Artigo GECCO 2016) [[Link](https://dl.acm.org/citation.cfm?id=2908919)]
+* **HGA4m** ->  *Hybrid Genetic Algorithm for mission* - Utiliza um algoritmo genético híbrido com grafo de visibilidade e resolução de modelo de Programação Linear Inteira-Mista (PLIM) para encontrar a rota. Necessita do IBM CPLEX instalado para utilizá-lo. (Artigo GECCO 2016) [[Link](https://dl.acm.org/citation.cfm?id=2908919)]
 
-* **CCQSP4m** -> *Chance Constraint Qualitative State Plan for mission* - Utiliza um algoritmo baseado em Programação Linear Inteira-Mista (PLIM) para encontrar a rota. [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-05122017-083420/pt-br.php)]
+* **CCQSP4m** -> *Chance Constraint Qualitative State Plan for mission* - Utiliza um algoritmo baseado em Programação Linear Inteira-Mista (PLIM) para encontrar a rota. Necessita do IBM CPLEX instalado para utilizá-lo. [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-05122017-083420/pt-br.php)]
 
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.
 

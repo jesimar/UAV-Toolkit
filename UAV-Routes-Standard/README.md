@@ -91,3 +91,9 @@ void createRouteRectangleGeo(int discretization, char name[]);
 
 As três primeiras funções criam as rotas em coordenadas cartesianas. 
 Já as funções com "Geo" no nome criam as rotas em coordenadas geográficas.
+
+## Rotas Geradas
+
+Abaixo encontra-se algumas rotas gerados por esse software. As imagens (a), (b) e (c) foram geradas com 8 waypoints já as imagens (d), (e) e (f) foram geradas usando 16 waypoints.
+
+![](../Figures/routes-simples.png)
