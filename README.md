@@ -10,15 +10,6 @@
   <a href="https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-MOSA">
     <img src="https://img.shields.io/badge/UAV-MOSA-orange.svg" alt="UAV-MOSA">
   </a>
-  <a href="https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE" target="_blank">
-    <img src="https://img.shields.io/aur/license/yaourt.svg" alt="License">
-  </a>
-  <a href="https://github.com/jesimar/UAV-Toolkit/graphs/contributors" target="_blank">
-    <img src="https://img.shields.io/github/contributors/jesimar/UAV-Toolkit.svg" alt="Contributors">
-  </a>
-  <a href="https://github.com/jesimar/UAV-Toolkit/pulse" target="_blank">
-    <img src="https://img.shields.io/github/downloads/jesimar/UAV-Toolkit/total.svg" alt="Downloads">
-  </a>
   <a href="https://github.com/jesimar/UAV-Toolkit/graphs/commit-activity" target="_blank">
     <img src="https://img.shields.io/github/commits-since/jesimar/UAV-Toolkit/v1.0.0.svg" alt="Commits Since">
   </a>
