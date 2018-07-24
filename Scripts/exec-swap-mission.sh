@@ -9,8 +9,8 @@
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
 #DIR_FILES=UAV-Mission-Creator/mission/kml/pos-iros1
-#DIR_FILES=UAV-Mission-Creator/mission/kml/icas
-DIR_FILES=UAV-Mission-Creator/mission/kml/campus2
+DIR_FILES=UAV-Mission-Creator/mission/kml/icas
+#DIR_FILES=UAV-Mission-Creator/mission/kml/campus2
 
 echo "=============swap file mission============="
 

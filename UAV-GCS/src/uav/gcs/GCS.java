@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import uav.gcs.struct.Drone;
 import uav.gcs.struct.ReaderFileConfig;
 import uav.gcs.communication.CommunicationIFA;
@@ -23,7 +26,8 @@ import uav.gcs.google_maps.GoogleMaps;
 import uav.gcs.commands.keyboard.KeyboardCommands;
 import uav.gcs.commands.voice.VoiceCommands;
 import uav.gcs.communication.CommunicationMOSA;
-import uav.gcs.window.PainelInfo;
+import uav.gcs.map.PanelPlotMission;
+import uav.gcs.window.LabelsInfo;
 import uav.generic.struct.constants.TypeInputCommand;
 
 /**
@@ -34,8 +38,11 @@ public final class GCS extends JFrame {
     private final JPanel panelTop;
     private final JPanel panelMain;
     private final JPanel panelLeft;
-    private final JPanel panelRight;   
-    private JPanel panelRightInfo;  
+    private final JPanel panelRightStatus;   
+    private JPanel panelRight;  
+    private PanelPlotMission panelPlotMission;
+    private final LabelsInfo labelsInfo;
+    private final JTabbedPane tab;
     
     private final JButton btnBadWeather;
     private final JButton btnPathReplanningEmergency;
@@ -65,7 +72,7 @@ public final class GCS extends JFrame {
     private final ReaderFileConfig config;
     private final CommunicationIFA communicationIFA;
     private final CommunicationMOSA communicationMOSA;
-    private final PainelInfo painelInfo;
+    
     private SaveDB saveDB;
     private GoogleMaps googleMaps;
     private final KeyboardCommands keyboard;
@@ -303,60 +310,69 @@ public final class GCS extends JFrame {
         
         if (config.hasGoogleMaps()){
             //Painel com google maps
-            panelRight = new JPanel(new BorderLayout());
-            panelRight.setVisible(true);
-            googleMaps = new GoogleMaps(this, panelRight, communicationIFA);
+            panelRightStatus = new JPanel(new BorderLayout());
+            panelRightStatus.setVisible(true);
+            googleMaps = new GoogleMaps(this, panelRightStatus, communicationIFA);
             googleMaps.plot();
+            tab = null;
         }else{
             //Painel sem google maps
+            panelRightStatus = new JPanel();
+            panelRightStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelRightStatus.setBackground(new Color(95, 161, 255));
+            panelRightStatus.setVisible(true);
+            
+            tab = new JTabbedPane();
+            
             panelRight = new JPanel();
             panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-            panelRight.setBackground(new Color(95, 161, 255));
+            panelRight.setBackground(new Color(85, 141, 255));
             panelRight.setVisible(true);
             
-            panelRightInfo = new JPanel();
-            panelRightInfo.setLayout(new FlowLayout(FlowLayout.CENTER));
-            panelRightInfo.setBackground(new Color(85, 141, 255));
-            panelRightInfo.setVisible(true);
+            panelPlotMission = new PanelPlotMission();
+
+            tab.add("Data", panelRight);
+            tab.add("Plot", panelPlotMission);
+            
         }
 
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
-        panelRight.add(labelIsConnectedIFA);
+        panelRightStatus.add(labelIsConnectedIFA);
         
         labelIsConnectedMOSA = new JLabel("Connected MOSA: False");
         labelIsConnectedMOSA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedMOSA.setForeground(Color.RED);
-        panelRight.add(labelIsConnectedMOSA);
+        panelRightStatus.add(labelIsConnectedMOSA);
         
         labelIsConnectedDB = new JLabel("Connected DB: False");
         labelIsConnectedDB.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedDB.setForeground(Color.RED);
-        panelRight.add(labelIsConnectedDB);
+        panelRightStatus.add(labelIsConnectedDB);
               
         labelIsRunningPathPlanner = new JLabel("Run Planner: False");
         labelIsRunningPathPlanner.setPreferredSize(new Dimension(160, 20));
         labelIsRunningPathPlanner.setForeground(Color.RED);
-        panelRight.add(labelIsRunningPathPlanner);                
+        panelRightStatus.add(labelIsRunningPathPlanner);                
                 
         labelIsRunningPathReplanner = new JLabel("Run Replanner: False");
         labelIsRunningPathReplanner.setPreferredSize(new Dimension(160, 20));
         labelIsRunningPathReplanner.setForeground(Color.RED);
-        panelRight.add(labelIsRunningPathReplanner);
+        panelRightStatus.add(labelIsRunningPathReplanner);
         
-        panelRightInfo.add(panelRight);
+        panelRight.add(panelRightStatus);
         
-        painelInfo = new PainelInfo(panelRightInfo);
+        labelsInfo = new LabelsInfo(panelRight);
         this.add(panelTop);
         this.add(panelMain);
-//        panelMain.add(panelRight);
         
-        panelMain.add(panelRightInfo);
+        panelMain.add(panelPlotMission);
+//        panelMain.add(tab);
 
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.addWindowStateListener(new WindowStateListener() {
             @Override
             public void windowStateChanged(WindowEvent e) {
@@ -397,7 +413,7 @@ public final class GCS extends JFrame {
                                 labelIsRunningPathReplanner.setText("Run Replanner: False");
                                 labelIsRunningPathReplanner.setForeground(Color.RED);
                             }
-                            painelInfo.updateInfo(drone);
+                            labelsInfo.updateInfo(drone);
                         }else{
                             labelIsConnectedIFA.setText("Connected IFA: False");
                             labelIsConnectedIFA.setForeground(Color.RED);    
@@ -442,8 +458,9 @@ public final class GCS extends JFrame {
         panelTop.setPreferredSize(new Dimension(width - 30, 70));
         panelMain.setPreferredSize(new Dimension(width - 30, height - 110));
         panelLeft.setPreferredSize(new Dimension(200, height - 120));
-        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20 - 20, 50));
-        panelRightInfo.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
+        panelRightStatus.setPreferredSize(new Dimension(width - 30 - 200 - 20 - 20, 50));
+        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
+        panelPlotMission.setNewDimensions(width - 30 - 200 - 20, height - 120);
     }
 
     public void showAbout(){

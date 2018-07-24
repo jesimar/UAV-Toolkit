@@ -39,8 +39,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Fazer planejamento de caminho na GCS (GROUND_AIR e apenas AIR).
 * Só habilitar recurso se tiver sensor (atuador) no arquivo de config-global.properties.
 * Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
-* Fazer programa em Java que plot mapa e rota somente (coordenadas cartesianas) (passar esse código para Rafael Doutorando).
-* Usar o programa acima dentro do UAV-GCS.
+* Colocar dentro do UAV-GCS o plot do mapa e da rota em coordenadas cartesianas.
 
 ## Sistema UAV-SOA-Interface:
 
@@ -128,7 +127,6 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Hardware: Incorporar hardware/software de disparo de paraquedas.
 * Hardware: Incorporar hardware/software de sonar no drone apontado para frente.
 * Hardware: Incorporar hardware/software de pulverização de plantações.
-
 
 * Drone: Melhorar a calibração do sensor de alarme de bateria, pois ele está apintando apenas quando a bateria está terminando.
 * Drone: Melhorar a calibração do power module no piloto automático.

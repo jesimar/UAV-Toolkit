@@ -32,19 +32,15 @@ public class StartModules {
                 public void run() {
                     System.out.println("open sitl");
                     Scanner sc = new Scanner(comp.getInputStream());
-                    while(true){
-                        try{
-                            try {
-                                System.out.println("sc next line");
-                                String str = sc.nextLine();
-                                textArea.append(str + "\n");
-                                System.out.println("str: " + str);    
-                                Thread.sleep(200);
-                            } catch (NoSuchElementException ex) {
-                                Thread.sleep(200);
-                            }
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(StartModules.class.getName()).log(Level.SEVERE, null, ex);
+                    while (sc.hasNextLine()) {
+                        try {
+                            System.out.println("sc next line");
+                            String str = sc.nextLine();
+                            textArea.append(str + "\n");
+                            System.out.println("str: " + str);    
+                            Thread.sleep(200);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                             break;
                         }
                     }
@@ -52,8 +48,32 @@ public class StartModules {
                     System.out.println("close sitl");                    
                 }
             });
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.err.println("open sitl err");
+                    Scanner sc = new Scanner(comp.getErrorStream());
+                    while (sc.hasNextLine()) {
+                        try {
+                            System.err.println("sc next line");
+                            String str = sc.nextLine();
+                            textArea.append(str + "\n");
+                            System.err.println("str: " + str);    
+                            Thread.sleep(200);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            break;
+                        }
+                    }
+                    sc.close();
+                    System.err.println("close sitl err");                    
+                }
+            });
+            comp.waitFor();
         } catch (IOException ex) {
             System.err.println("ERROR: " + ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(StartModules.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,9 +112,7 @@ public class StartModules {
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
                         System.out.println("aqui soa");
-                        String str = sc.nextLine();
-                        str = str.replace("[", "");
-                        str = str.replaceAll("[0-9]+m", "");                        
+                        String str = sc.nextLine();                     
                         textArea.append(str + "\n");
                         System.out.println("str: " + str);
                     }

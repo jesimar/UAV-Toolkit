@@ -1,5 +1,29 @@
 # UAV-Toolkit
 
+<p align="center">
+  <a href="#">
+    <img src="https://img.shields.io/badge/UAV-TOOLKIT-brightgreen.svg" alt="UAV-Tookit">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-IFA">
+    <img src="https://img.shields.io/badge/UAV-IFA-blue.svg" alt="UAV-IFA">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-MOSA">
+    <img src="https://img.shields.io/badge/UAV-MOSA-orange.svg" alt="UAV-MOSA">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE" target="_blank">
+    <img src="https://img.shields.io/aur/license/yaourt.svg" alt="License">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/graphs/contributors" target="_blank">
+    <img src="https://img.shields.io/github/contributors/jesimar/UAV-Toolkit.svg" alt="Contributors">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/pulse" target="_blank">
+    <img src="https://img.shields.io/github/downloads/jesimar/UAV-Toolkit/total.svg" alt="Downloads">
+  </a>
+  <a href="https://github.com/jesimar/UAV-Toolkit/graphs/commit-activity" target="_blank">
+    <img src="https://img.shields.io/github/commits-since/jesimar/UAV-Toolkit/v1.0.0.svg" alt="Commits Since">
+  </a>
+</p>
+
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
 Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
 

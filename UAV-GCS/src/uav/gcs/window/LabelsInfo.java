@@ -15,7 +15,7 @@ import uav.gcs.struct.Drone;
  *
  * @author jesimar
  */
-public class PainelInfo {
+public class LabelsInfo {
     
     private final JLabel labelDate;
     private final JLabel labelHour;
@@ -51,7 +51,7 @@ public class PainelInfo {
     private final JLabel labelDistToCurrWpt;
     private final JLabel labelTypeFailure;
 
-    public PainelInfo(JPanel panel) {
+    public LabelsInfo(JPanel panel) {
         this.labelDate = new JLabel("Date: ");
         labelDate.setPreferredSize(new Dimension(160, 20));
         labelDate.setForeground(Color.BLACK);

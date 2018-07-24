@@ -94,6 +94,15 @@ Já as funções com "Geo" no nome criam as rotas em coordenadas geográficas.
 
 ## Rotas Geradas
 
-Abaixo encontra-se algumas rotas gerados por esse software. As imagens (a), (b) e (c) foram geradas com 8 waypoints já as imagens (d), (e) e (f) foram geradas usando 16 waypoints.
+Abaixo encontra-se algumas rotas gerados por esse software. As imagens (a), (b) e (c) foram geradas com discretização de 8 waypoints, já as imagens (d), (e) e (f) foram geradas usando uma discretização de 16 waypoints.
 
 ![](../Figures/routes-simples.png)
+
+## TO DO
+
+Falta adicionar mais formatos padrões como, por exemplo: 
+
+* Rota com formato de onda senoidal
+* Rota com formato de onda triangular
+* Rota com formato de onda quadrada
+* Rota com formato de infinito
