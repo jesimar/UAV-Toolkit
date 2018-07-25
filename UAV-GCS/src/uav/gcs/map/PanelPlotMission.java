@@ -3,7 +3,6 @@ package uav.gcs.map;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Arrays;
-import javax.swing.SwingUtilities;
 import marte.swing.graphics.pkg2d.navigation.sPanelDraw;
 
 /**

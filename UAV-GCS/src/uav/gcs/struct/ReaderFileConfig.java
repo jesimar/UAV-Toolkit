@@ -16,7 +16,6 @@ public class ReaderFileConfig {
     private Properties prop;
     
     private boolean hasDB;
-    private boolean hasGoogleMaps;
     
     private String hostIFA;
     private int portIFA;
@@ -42,7 +41,6 @@ public class ReaderFileConfig {
             prop.load(new FileInputStream(nameFile));
                     
             hasDB = Boolean.parseBoolean(prop.getProperty("prop.general.hasDB"));
-            hasGoogleMaps = Boolean.parseBoolean(prop.getProperty("prop.general.hasGoogleMaps"));
             
             hostIFA   = prop.getProperty("prop.ifa.host");
             portIFA   = Integer.parseInt(prop.getProperty("prop.ifa.port"));
@@ -67,10 +65,6 @@ public class ReaderFileConfig {
             ex.printStackTrace();
             return false;
         }
-    }
-
-    public boolean hasGoogleMaps() {
-        return hasGoogleMaps;
     }
 
     public boolean hasDB() {

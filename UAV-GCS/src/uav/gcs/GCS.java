@@ -1,6 +1,5 @@
 package uav.gcs;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,13 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import uav.gcs.struct.Drone;
 import uav.gcs.struct.ReaderFileConfig;
 import uav.gcs.communication.CommunicationIFA;
 import uav.gcs.conection.SaveDB;
-import uav.gcs.google_maps.GoogleMaps;
 import uav.gcs.commands.keyboard.KeyboardCommands;
 import uav.gcs.commands.voice.VoiceCommands;
 import uav.gcs.communication.CommunicationMOSA;
@@ -39,8 +35,8 @@ public final class GCS extends JFrame {
     private final JPanel panelMain;
     private final JPanel panelLeft;
     private final JPanel panelRightStatus;   
-    private JPanel panelRight;  
-    private PanelPlotMission panelPlotMission;
+    private final JPanel panelRight;  
+    private final PanelPlotMission panelPlotMission;
     private final LabelsInfo labelsInfo;
     private final JTabbedPane tab;
     
@@ -74,7 +70,6 @@ public final class GCS extends JFrame {
     private final CommunicationMOSA communicationMOSA;
     
     private SaveDB saveDB;
-    private GoogleMaps googleMaps;
     private final KeyboardCommands keyboard;
     private final VoiceCommands voice;
     
@@ -308,33 +303,22 @@ public final class GCS extends JFrame {
         
         enableComponentsInterface();
         
-        if (config.hasGoogleMaps()){
-            //Painel com google maps
-            panelRightStatus = new JPanel(new BorderLayout());
-            panelRightStatus.setVisible(true);
-            googleMaps = new GoogleMaps(this, panelRightStatus, communicationIFA);
-            googleMaps.plot();
-            tab = null;
-        }else{
-            //Painel sem google maps
-            panelRightStatus = new JPanel();
-            panelRightStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
-            panelRightStatus.setBackground(new Color(95, 161, 255));
-            panelRightStatus.setVisible(true);
-            
-            tab = new JTabbedPane();
-            
-            panelRight = new JPanel();
-            panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-            panelRight.setBackground(new Color(85, 141, 255));
-            panelRight.setVisible(true);
-            
-            panelPlotMission = new PanelPlotMission();
+        panelRightStatus = new JPanel();
+        panelRightStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelRightStatus.setBackground(new Color(95, 161, 255));
+        panelRightStatus.setVisible(true);
 
-            tab.add("Data", panelRight);
-            tab.add("Plot", panelPlotMission);
-            
-        }
+        tab = new JTabbedPane();
+
+        panelRight = new JPanel();
+        panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelRight.setBackground(new Color(85, 141, 255));
+        panelRight.setVisible(true);
+
+        panelPlotMission = new PanelPlotMission();
+
+        tab.add("Data", panelRight);
+        tab.add("Plot", panelPlotMission);
 
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));

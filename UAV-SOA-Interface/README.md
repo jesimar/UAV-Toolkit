@@ -6,30 +6,34 @@ Aplicação em Python que disponibiliza através do protocolo HTTP com métodos 
 
 Esta aplicação possui algumas dependências de outros pacotes em Python. Dessa forma, é necessário fazer a instalação de alguns desses pacotes antes de executar a aplicação.
 
-OBS: Deve-se ter instalado em seu computador o Python 2.7, o PIP, o dronekit e o dronekit-sitl.
+OBS: Deve-se ter instalado em seu computador o Python 2.7, o PIP, o dronekit, o dronekit-sitl e o MAVProxy.
+
+Local para baixar o Python [[Link](https://www.python.org/downloads/)]
 
 Comandos para instalar o PIP:
-```
-$ sudo apt-get install python-pip python-dev
-```
+Linux: `$ sudo apt-get install python-pip python-dev`
+Windows: `> python -m pip install -U pip`
 
 Comando para instalar o Dronekit:
-```
-$ sudo pip install dronekit
-```
+Linux: `$ sudo pip install dronekit`
+Windows: `> python -m pip install dronekit`
 
 Comando para instalar o Dronekit-SILT:
-```
-$ sudo pip install dronekit-sitl
-```
+Linux: `$ sudo pip install dronekit-sitl`
+Windows: `> python -m pip install dronekit-sitl`
 
-Para instalar as depedências do UAV-SOA-Interface digite no terminal o seguinte: 
+Comando para instalar o MAVProxy:
+Linux: `pip install MAVProxy`
+Windows: `> python -m pip install MAVProxy`
 
-```
-$ sudo pip install -r requirements.txt
-```
+Uma outra forma alternativa de fazer a instalação de todas as dependências do UAV-SOA-Interface é usando o arquivo de requirements.txt. Dessa forma, digite no terminal o seguinte: 
+
+`$ sudo pip install -r requirements.txt`
 
 Dica: Caso conheça o ambiente do virtualenv, faça a instação dentro desse ambiente (isto que irá facilitar a sua vida).
+
+Comando para descobrir se o pip está instalado
+`$ python -m pip --version`
 
 ## Como Executar
 
@@ -60,9 +64,14 @@ UAV-IFA, UAV-MOSA, UAV-Tests, UAV-Monitoring, UAV-PosAnalyser e UAV-Toolkit-C.
 OBS: Caso dê algum problema verifique qual versão do python está configurada como default. A biblioteca do Dronekit, atualmente, dá suporta apenas ao Python 2.7. A versão do Dronekit para Python 3 está em desenvolvimento.
 
 Comando para verificar qual a versão do python está em uso: 
-```
-python --version
-```
+
+`$ python --version`
+
+Comando para verificar qual a versão do dronekit-sitl está em uso:
+`$ dronekit-sitl --version`
+
+Comando para verificar qual a versão do MavProxy está em uso:
+`$ mavproxy.py --version`
 
 ## Arquivo de Entrada
 
@@ -139,6 +148,8 @@ http://localhost:50000/get-next-waypoint/
 http://localhost:50000/get-count-waypoint/
 http://localhost:50000/get-all-sensors/
 ```
+
+Uma ferramenta que pode-se ser utilizada é o Postman [[Link](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en)] que pode ser adicionada como uma extensão do seu navegador (Chrome). Esta ferramenta permite testar os métodos GET e POST.
 
 Para fazer as requisições do tipo POST apenas digitar os comandos abaixo na barra de endereços não é o suficiente, pois é necessário enviar o arquivo da mensagem junto:
 

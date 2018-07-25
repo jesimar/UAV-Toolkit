@@ -11,12 +11,9 @@ Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 
 * **jdom-2.0.6.jar** -> usada para leitura de arquivo em formato xml [[Link](http://www.jdom.org/)].
 * **gson-2.8.2.jar** -> usada para conversão (Serialização/desserialização) de objetos Java para formato JSON [[Link](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.2)].
-* **cplex.jar** -> usado pelos algoritmos que usam programação matemática (HGA4m e CCQSP4m) (deve ser o arquivo .jar da instalação no próprio computador) [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)].
 * **mysql-connector-java-5.0.8-bin.jar** -> usado pelo UAV-GCS para conexão com o sistema Oracle Drone [[Link](http://www.java2s.com/Code/Jar/m/Downloadmysqlconnectorjava508bingjar.htm)].
 * **java-swing-graphics-2d-navigation.jar** -> usado pelo programa UAV-Plot-Mission [[Link](https://github.com/marcio-da-silva-arantes/java-swing-graphics-2d-navigation)].
-* **jxbrowser-6.19.1.jar** ->  usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
-* **jxbrowser-linux64-6.19.1.jar** -> usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
-* **license.jar** -> usado pelo UAV-GCS para plot do Google Maps [[Link](https://jxbrowser.support.teamdev.com/support/solutions/articles/9000012874-google-maps)].
+* **cplex.jar** -> usado pelos algoritmos que usam programação matemática (HGA4m e CCQSP4m) (deve ser o arquivo .jar da instalação no próprio computador) [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)].
 
 OBS: Para utilização dos recursos do IBM ILOG CPLEX Optimization Studio (https://www.ibm.com/), você deverá: Primeiramente, instalar o CPLEX. Em seguida, troque (copiar) o arquivo cplex.jar de .../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/ para todos 
 os planejadores de rota que utilizam pragramação matemática como em: .../UAV-Toolkit/Modules-MOSA/HGA4m/lib/, .../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/

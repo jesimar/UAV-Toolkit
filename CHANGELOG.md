@@ -1,9 +1,14 @@
 # Changelog
 
-## Version v2.1.0 (28/06/2018)
+## Version v2.1.0 (25/07/2018)
 
 ### Features:
 
+* Updated the documentation
+* Removed directory Missions-Ardupilot-SITL
+* Removed Code UAV-Ensemble-GA-GA_GA-GH
+* Removed Code UAV-Exec-PathReplanner-Massive
+* Removed Code UAV-Fixed-Route4s
 * Added resource in UAV-GCS to plot the mission (map and route).
 * Added resource to controller the drone using keyboard (UAV-GCS).
 * Added resource to controller the drone using voice (UAV-GCS).

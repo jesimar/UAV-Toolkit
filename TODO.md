@@ -47,6 +47,10 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
 * OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
 
+## UAV-Manager: 
+
+* Colocar para adicionar no PATH o diretório onde foi instalado o dronekit-sitl
+
 ## Geral
 
 * Documentação: Melhorar a descrição do projeto no github.
