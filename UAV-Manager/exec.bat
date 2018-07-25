@@ -1,2 +1,0 @@
-mavproxy.py --version
-pause
