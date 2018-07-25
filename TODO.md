@@ -40,6 +40,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Só habilitar recurso se tiver sensor (atuador) no arquivo de config-global.properties.
 * Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
 * Colocar dentro do UAV-GCS o plot do mapa e da rota em coordenadas cartesianas.
+* UAV-GCS: Colocar recurso para plotar a rota do drone em tempo real
+* UAV-GCS: Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
 
 ## Sistema UAV-SOA-Interface:
 
@@ -49,7 +51,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## UAV-Manager: 
 
-* Colocar para adicionar no PATH o diretório onde foi instalado o dronekit-sitl
+* Colocar para adicionar no PATH o diretório em que foi instalado o dronekit-sitl
 
 ## Geral
 
@@ -137,8 +139,8 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Drone: Calibrar o meu drone melhor (PIDs), segundo o Onofre eles estão descalibrados.
 * Drone: Corrigir problema em que o AP mostra status informando CRITICAL, acredito que tenha algum problema de hardware.
 
-* UAV-IFA: Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
-* UAV-IFA: Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
+* UAV-IFA Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
+* UAV-IFA Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
 * UAV-IFA deve verificar a rota antes de enviar para o PA. Verificar se existe mais de um comando de TAKEOFF. Só pode haver um comando desse tipo.
 * UAV-IFA deve verificar se existe mais de um comando do tipo LAND, LAND_VERTICAL ou RTL. Só pode haver um comando desse tipo.
 * UAV-IFA deve ter um objeto com todos os waypoints da rota.
@@ -149,7 +151,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-IFA definir melhor o home da missão e o launch da missão.
 * UAV-IFA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
-* UAV-MOSA: Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
+* UAV-MOSA Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
 * UAV-MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * UAV-MOSA deve ter um objeto com todos os waypoints da rota.
 * UAV-MOSA deve aguardar até que o modo seja STANDBY, antes disso nao adianta calcular nada.
@@ -158,8 +160,6 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-MOSA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 * UAV-GCS: Executar scripts automaticamente
-* UAV-GCS: Colocar recurso para plotar a rota do drone em tempo real
-* UAV-GCS: Colocar recurso para plotar a rota calculada pelo drone HGA4m e MPGA4s (no google maps).
 * UAV-GCS: Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
 
 * UAV-SOA-Interface: Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar. 

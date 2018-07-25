@@ -16,7 +16,7 @@
 </p>
 
 Conjunto de ferramentas desenvolvidas para automatização de voos de Veículos Aéreos Não-Tripulados (VANTs) ou *Unmanned Aerial Vehicles* (UAVs).
-Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
+Entre os principais sistemas aqui desenvolvidos podemos citar o sistema MOSA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-12072016-102631/pt-br.php)] e o sistema IFA [[Link da Tese](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)]. O sistema desenvolvido dá suporte aos sistemas operacionais Linux, Mac OS X e Windows.
 
 ![](./Figures/logo-uav-toolkit.png)
 
@@ -46,55 +46,86 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 ## Instalação
 
-### Pré-Requisitos de Instação:
+### Pré-Requisitos de Instalação:
+
+Arquiteturas suportadas: 
+* x86 (32 bits) (ainda não testado)
+* x86 (64 bits) (Testado com Intel i3, i7 (Notebook), Intel Atom (Intel Edison))
+* ARM (32 bits) (ainda não testado)
+* ARM (64 bits) (Testado com ARMv7 (Raspberry Pi 2))
+
+OBS: A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Apenas os módulos que irão ser executados em voo podem ser instalados. Os planejadores que utilizam a biblioteca CPLEX não são suportados.
 
 Sistemas operacionais suportados: 
-* Linux (Os sistemas Ubuntu e Manjaro foram testados)
-* Mac OS
-* Windows
+* Linux (Testado com o Ubuntu e o Manjaro)
+* Windows (Testado com o Windows 10)
+* Mac OS X (ainda não testado)
+
+Companion Computers suportados: 
+* Intel Edison (Testado com Sistema Operacional Yocto Linux)
+* Raspberry Pi (Testado com Sistema Operacional Raspbian)
+* Odroid (ainda não testado)
+* BeagleBoneBlack (ainda não testado)
+
+Pilotos automáticos suportados: 
+* APM (Testado)
+* Pixhawk (Testado)
+
+VANTs suportados: 
+* Quadricóptero (Testado com iDroneAlpha)
+* Hexacóptero (ainda não testado)
+* Asa Fixa (Ararinha) (ainda não testado)
 
 Softwares básicos necessários para execução:
-* Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)]
-* Python 2.7.* [[Link](https://www.python.org/)]
-* Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)]
-* Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)]
-* Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] 
+* Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)] (Instalar no PC e no CC)
+* Python 2.7.* [[Link](https://www.python.org/)] (Instalar no PC e no CC)
+* Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)] (Instalar no PC e no CC)
+* Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)] ((Instalar somente no PC)
+* Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] (Instalar no PC e no CC)
 
 Softwares necessários para acomponhar a execução da missão:
-* QGroundControl [[Link](http://qgroundcontrol.com/)] 
+* QGroundControl [[Link](http://qgroundcontrol.com/)] (Instalar somente no PC)
 ou 
-* APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] 
+* APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] (Instalar somente no PC)
 ou 
-* Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)] (Somente em Windows)
+* Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)] (Funciona somente em Windows) (Instalar somente no PC)
+ou 
+* Qualquer outra Ground Control Station (GCS) do seu interesse (Instalar somente no PC)
 
 Software necessário para execução de alguns planejadores de rotas:
-* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)]. 
+* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC)
+
 OBS: Após instalar deve-se, copiar o arquivo cplex.jar do diretório .../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/ para todos os planejadores de rota que utilizam pragramação matemática como em: .../UAV-Toolkit/Modules-MOSA/HGA4m/lib/ e .../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/
 
 Software necessário para criar uma nova missão para o Drone:
-* Google-Earth [[Link](https://www.google.com/earth/index.html)]
+* Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC)
 
 Software necessário para fazer atualizações no projeto (incluindo melhorias):
-* IDE Netbeans [[Link](https://netbeans.org/downloads/)]
+* IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC)
 ou 
-* Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto).
+* Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto) (Instalar somente no PC)
 
-### Comandos Para Verificar Versões dos Programas:
+### Versões dos Programas Instalados:
 
-`java --version`
-`python --version`
-``
-``
-``
-``
+Abaixo encontra-se alguns comandos para verificar as versões de alguns dos programas instalados.
+
+`$ java --version`
+
+`$ python --version`
+
+`$ dronekit-sitl --version`
+
+`$ mavproxy.py --version`
 
 ### Instalação:
 
-Uma das formas de instalar o ambiente UAV-Toolkit é clonando o nosso repositório:
+Existem basicamente duas formas de instalar o nosso ambiente (UAV-Toolkit):
+
+1. Uma das formas de instalar o ambiente UAV-Toolkit é clonando o nosso repositório:
 
 `git clone https://github.com/jesimar/UAV-Toolkit.git`
 
-Uma outra forma é fazendo o download do último release do nosso projeto:
+2. Uma outra forma é fazendo o download do último release do nosso projeto:
 
 `https://github.com/jesimar/UAV-Toolkit/releases`
 
@@ -124,15 +155,16 @@ Existem alguns outros arquivos de configuração que devem ser modificados apena
 ## Como Executar
 
 Existem basicamente três formas de executar o nosso ambiente que são: 
-* Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
-* Forma 2 -> Execução em SITL-CC (CC - Companion Computer): 
-* Forma 3 -> Execução no Drone no CC:
+1. Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
+2. Forma 2 -> Execução em SITL-CC (CC - Companion Computer): 
+3. Forma 3 -> Execução no Drone no CC:
 
 Para executar qualquer uma das três formas acima execute os seguintes scripts em um terminal diferente (localizados na pasta Scripts):
 
 Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 
 ```
+Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-sitl.sh                  (PC)
 3. UAV-Toolkit/Scripts$ ./exec-mavproxy-local.sh        (PC)
@@ -144,6 +176,7 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 ```
+Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-sitl.sh                  (PC)
 3. UAV-Toolkit/Scripts$ ./exec-mavproxy-cc-sitl.sh      (CC)
@@ -155,6 +188,7 @@ Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 Forma 3 -> Execução no Drone no CC:
 
 ```
+Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-mavproxy-cc-real-*.sh    (CC)
 3. UAV-Toolkit/Scripts$ ./exec-soa-interface.sh         (CC)
