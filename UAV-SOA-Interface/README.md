@@ -2,6 +2,35 @@
 
 Aplicação em Python que disponibiliza através do protocolo HTTP com métodos GET e POST um conjunto serviços sobre a biblioteca Dronekit. Estes serviços são providos através de uma Interface de Arquitetura Orientada a Serviços (SOA) do drone.
 
+## Como Instalar
+
+Esta aplicação possui algumas dependências de outros pacotes em Python. Dessa forma, é necessário fazer a instalação de alguns desses pacotes antes de executar a aplicação.
+
+OBS: Deve-se ter instalado em seu computador o Python 2.7, o PIP, o dronekit e o dronekit-sitl.
+
+Comandos para instalar o PIP:
+```
+$ sudo apt-get install python-pip python-dev
+```
+
+Comando para instalar o Dronekit:
+```
+$ sudo pip install dronekit
+```
+
+Comando para instalar o Dronekit-SILT:
+```
+$ sudo pip install dronekit-sitl
+```
+
+Para instalar as depedências do UAV-SOA-Interface digite no terminal o seguinte: 
+
+```
+$ sudo pip install -r requirements.txt
+```
+
+Dica: Caso conheça o ambiente do virtualenv, faça a instação dentro desse ambiente (isto que irá facilitar a sua vida).
+
 ## Como Executar
 
 Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta Scripts): 
@@ -27,6 +56,13 @@ Em seguida é necessário executar mais alguma aplicação que faça as requisi�
 UAV-IFA, UAV-MOSA, UAV-Tests, UAV-Monitoring, UAV-PosAnalyser e UAV-Toolkit-C.
 
 ![](../Figures/exec-soa-interface.png)
+
+OBS: Caso dê algum problema verifique qual versão do python está configurada como default. A biblioteca do Dronekit, atualmente, dá suporta apenas ao Python 2.7. A versão do Dronekit para Python 3 está em desenvolvimento.
+
+Comando para verificar qual a versão do python está em uso: 
+```
+python --version
+```
 
 ## Arquivo de Entrada
 

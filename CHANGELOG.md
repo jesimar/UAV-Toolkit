@@ -4,6 +4,7 @@
 
 ### Features:
 
+* Added resource in UAV-GCS to plot the mission (map and route).
 * Added resource to controller the drone using keyboard (UAV-GCS).
 * Added resource to controller the drone using voice (UAV-GCS).
 * Added resource to exec path replanner in UAV-GCS (offboard).
@@ -26,7 +27,6 @@
 ### Bug Fixes:
 
 * Method getBarometer in UAV-Generic
-* 
 
 ## Version v2.0.0 (17/05/2018)
 

@@ -62,6 +62,7 @@ ou
 * APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] 
 ou 
 * Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)]
+* Google-Earth [[Link](https://www.google.com/earth/index.html)]
 
 ### Instalação Caso I:
 

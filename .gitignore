@@ -3,6 +3,7 @@
 nbproject/private/
 build/
 test/
+venv/
 
 #ignorar todos os arquivos por extensao
 
@@ -25,5 +26,3 @@ mav.tlog.raw
 
 ideias-todo.txt
 dicas-voo.txt
-/UAV-Route3DToGeo/nbproject/private/
-/UAV-Route3DToGeo/dist/
