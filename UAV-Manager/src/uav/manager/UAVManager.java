@@ -25,6 +25,11 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import marte.swing.graphics.pkg2d.navigation.sFrame;
@@ -33,6 +38,7 @@ import static marte.swing.graphics.pkg2d.navigation.sPanel.HGAP;
 import static marte.swing.graphics.pkg2d.navigation.sPanel.WGAP;
 import uav.manager.check.Check;
 import uav.manager.check.CheckOutputPattern;
+import uav.manager.check.ExecCommand;
 
 /**
  *
@@ -47,6 +53,7 @@ public class UAVManager {
     };
     
     //private final Color BACKGROUND = new Color(194, 211, 241);
+    private final Font FONT_AREA = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 20);
     private final Font FONT_TITLE = new Font(Font.DIALOG_INPUT, Font.BOLD, 32);
 
@@ -67,6 +74,10 @@ public class UAVManager {
     private final ImageIcon iconNext;
     private final ImageIcon iconBack;
     
+    private final ImageIcon iconCmd;
+    private final ImageIcon iconStop;
+    private final ImageIcon iconSave;
+    
     private final Properties properties;
     private int selected = 0;
         
@@ -80,6 +91,9 @@ public class UAVManager {
         iconInstall = new ImageIcon(new ImageIcon("./resources/install.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconNext = new ImageIcon(new ImageIcon("./resources/rigth.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconBack = new ImageIcon(new ImageIcon("./resources/left.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
+        iconCmd = new ImageIcon(new ImageIcon("./resources/run.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
+        iconStop = new ImageIcon(new ImageIcon("./resources/stop.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
+        iconSave = new ImageIcon(new ImageIcon("./resources/save_icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         
         panels = new sPanel[]{
             new InstallPanel(iconLogo, properties_file, BACKGROUNDS[0]),
@@ -150,34 +164,109 @@ public class UAVManager {
     private class SITLPanel extends sPanel{
         private final LogoPanel panelLogo;
         private final JLabel labelTitle;
-        private final sPanel panelChecks;
+        private final JTextArea taCommand;
+        private final JTextArea taOutput;
+        private final JScrollPane scrollCommand;
+        private final JScrollPane scrollOutput;
         
-        
+        private final sPanel panelBtms;
+        private final ExecCommand exec;
         public SITLPanel(final ImageIcon logo, String properties_file, Color background) {
             super(background);
+            
+            this.exec = new ExecCommand();
             this.panelLogo = new LogoPanel(logo, background);
-            this.labelTitle = new JLabel("Software-In-The-Loop");
+            this.labelTitle = new JLabel("Software-In-The-Loop", SwingConstants.CENTER);
             this.labelTitle.setFont(FONT_TITLE);
             
-
-            this.panelChecks = new sPanel(background){
-                @Override
-                public void Config(int w, int h) {
-                    setPreferredSize(new Dimension(w, h));
-                    
+            
+            this.taCommand = new JTextArea(properties.getProperty("SITL_COMMAND"));
+            this.taCommand.setFont(FONT_AREA);
+            this.scrollCommand = new JScrollPane();
+            this.scrollCommand.setViewportView(taCommand);
+            
+            this.taOutput = new JTextArea("");
+            this.taOutput.setFont(FONT_AREA);
+            this.taOutput.setEditable(false);
+            this.scrollOutput = new JScrollPane();
+            this.scrollOutput.setViewportView(taOutput);
+            
+            this.panelBtms = new sPanel(background);
+            JButton btmCmd = new JButton("run",iconCmd);
+            JButton btmStop = new JButton("stop",iconStop);
+            btmStop.setEnabled(false);
+            btmCmd.addActionListener((e)->{
+                btmStop.setEnabled(true);
+                btmCmd.setEnabled(false);
+                String cmd = this.taCommand.getText().replaceAll("\n", " ");
+                System.out.println("["+cmd+"]");
+                taOutput.append("---------------------------[ run-start ]---------------------------\n");
+                exec.execute(
+                    cmd,
+                    (line)->{   //standard oupput
+                        SwingUtilities.invokeLater(()->{
+                            taOutput.append(line+"\n");
+                        });
+                    }, 
+                    (line)->{   //standard erro
+                        SwingUtilities.invokeLater(()->{
+                            taOutput.append("err: "+line+"\n");
+                        });
+                    },
+                    (sucess)->{  //finish status
+                        SwingUtilities.invokeLater(()->{
+                            taOutput.append("---------------------------[ run="+sucess+" ]---------------------------\n");
+                            if(sucess){
+                                btmCmd.setEnabled(true);
+                                btmStop.setEnabled(false);
+                            }
+                        });
+                    }
+                );
+            });
+            btmStop.addActionListener((e)->{
+                taOutput.append("---------------------------[ stop-start ]----------------------------\n");
+                exec.stop("Taskkill /IM apm.exe /F", (sucess) -> {
+                    SwingUtilities.invokeLater(() -> {
+                        taOutput.append("---------------------------[ stop="+sucess+" ]---------------------------\n");
+                        if (sucess) {
+                            btmCmd.setEnabled(true);
+                            btmStop.setEnabled(false);
+                        }
+                    });
+                });
+            });
+            JButton btmSave = new JButton("save",iconSave);
+            btmSave.addActionListener((e)->{
+                String cmd = this.taCommand.getText().replaceAll("\n", " ");
+                System.out.println("["+cmd+"]");
+                properties.setProperty("SITL_COMMAND", cmd);
+                try {
+                    properties.store(new FileOutputStream(properties_file), "comments");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            };
-
+            });
+            panelBtms.add(btmCmd);
+            panelBtms.add(btmStop);
+            panelBtms.add(btmSave);
+            
             this.add(panelLogo);
             this.add(labelTitle);
-            this.add(panelChecks);
+            this.add(scrollCommand);
+            this.add(scrollOutput);
+            this.add(panelBtms);
         }
+        
         
         @Override
         public void Config(int w, int h) {
             setPreferredSize(new Dimension(w, h));
             panelLogo.Config(w-16, h/2-40);
-            panelChecks.Config(w-16, h/2);
+            labelTitle.setPreferredSize(new Dimension(w-16, 40));
+            scrollCommand.setPreferredSize(new Dimension(w/2-14, h/2-74));
+            scrollOutput.setPreferredSize(new Dimension(w/2-14, h/2-74));
+            panelBtms.Config(w-16, 60);
         }
     }
     
@@ -192,7 +281,7 @@ public class UAVManager {
             this(description, checker, null, "Please install "+description+" first and add to path system");
         }
         public CheckPanel(String description, Check<Boolean> checker, CheckOutputPattern installer) {
-            this(description, checker, installer, "Click to install: "+installer.comand);
+            this(description, checker, installer, "Click to install: "+installer.command);
         }
         public CheckPanel(String description, Check<Boolean> checker, Check<Boolean> installer, String toolTipText) {
             super(BACKGROUNDS[0]);
@@ -285,7 +374,7 @@ public class UAVManager {
         public InstallPanel(final ImageIcon logo, String properties_file, Color background) {
             super(background);
             this.panelLogo = new LogoPanel(logo, background);
-            this.labelTitle = new JLabel("Installations");
+            this.labelTitle = new JLabel("Installations", SwingConstants.CENTER);
             this.labelTitle.setFont(FONT_TITLE);
             this.checkers = new CheckPanel[]{
                 new CheckPanel("Python 2.7.*", 
@@ -365,6 +454,7 @@ public class UAVManager {
         public void Config(int w, int h) {
             setPreferredSize(new Dimension(w, h));
             panelLogo.Config(w-16, h/2-40);
+            labelTitle.setPreferredSize(new Dimension(w-16, 40));
             panelChecks.Config(w-16, h/2);
         }
     }

@@ -20,13 +20,13 @@ import java.util.logging.Logger;
  * @author Marcio
  */
 public abstract class CheckCommand implements Check<Boolean>{
-    public final String comand;
-    public final File dir;
-    public final long timeout;
-    public final int exitOk;
+    public final String command;
+    private final File dir;
+    private final long timeout;
+    private final int exitOk;
 
     public CheckCommand(String comand, File dir, long timeout, int exitOk) {
-        this.comand = comand;
+        this.command = comand;
         this.dir = dir;
         this.timeout = timeout;
         this.exitOk = exitOk;
@@ -36,7 +36,7 @@ public abstract class CheckCommand implements Check<Boolean>{
     public void check(Consumer<Boolean> consumer) {
         Executors.newSingleThreadExecutor().execute(()->{
             try {
-                Process process = Runtime.getRuntime().exec(comand, null, new File(dir.getCanonicalPath()));
+                Process process = Runtime.getRuntime().exec(command, null, new File(dir.getCanonicalPath()));
                 //checkOutput(process, consumer);
                 //Thread.sleep(1000);
                 ArrayBlockingQueue<Boolean> matches = new ArrayBlockingQueue(5);
@@ -64,22 +64,22 @@ public abstract class CheckCommand implements Check<Boolean>{
                                 }
                             }
                             if(hasOne){
-                                System.out.println("Match for command: "+comand);
+                                System.out.println("Match for command: "+command);
                                 consumer.accept(Boolean.TRUE);
                             }else{
-                                System.err.println("Dont hasOne for command: "+comand);
+                                System.err.println("Dont hasOne for command: "+command);
                                 consumer.accept(Boolean.FALSE);
                             }
                         }else{
-                            System.err.println("Stream="+matches+" has not two elements for command: "+comand);
+                            System.err.println("Stream="+matches+" has not two elements for command: "+command);
                             consumer.accept(Boolean.FALSE);
                         }
                     }else{
-                        System.err.println("Exit="+process.exitValue()+" for command: "+comand);
+                        System.err.println("Exit="+process.exitValue()+" for command: "+command);
                         consumer.accept(Boolean.FALSE);
                     }
                 }else{
-                    System.err.println("TimeOut for command: "+comand);
+                    System.err.println("TimeOut for command: "+command);
                     consumer.accept(Boolean.FALSE);
                 }
             } catch (Throwable ex) {
