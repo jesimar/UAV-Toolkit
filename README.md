@@ -79,29 +79,29 @@ VANTs suportados:
 Softwares básicos necessários para execução:
 * Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)] (Instalar no PC e no CC)
 * Python 2.7.* [[Link](https://www.python.org/)] (Instalar no PC e no CC)
-* Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)] (Instalar no PC e no CC)
-* Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)] ((Instalar somente no PC)
-* Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] (Instalar no PC e no CC)
+* Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)] (Instalar no PC e no CC) (Licença Apache 2.0)
+* Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)] ((Instalar somente no PC) (Licença MIT, Apache 2.0 e GPL 3.0)
+* Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] (Instalar no PC e no CC) (Licença GPL 3.0)
 
 Softwares necessários para acomponhar a execução da missão:
-* QGroundControl [[Link](http://qgroundcontrol.com/)] (Instalar somente no PC)
+* QGroundControl [[Link](http://qgroundcontrol.com/)] (Instalar somente no PC) (Licença dupla Apache 2.0 e GPL 3.0)
 ou 
-* APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] (Instalar somente no PC)
+* APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] (Instalar somente no PC) (Licença GPL 3.0)
 ou 
-* Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)] (Funciona somente em Windows) (Instalar somente no PC)
+* Mission Planner [[Link](http://ardupilot.org/planner/docs/mission-planner-overview.html)] (Funciona somente em Windows) (Instalar somente no PC) (Licença GPL 3.0)
 ou 
 * Qualquer outra Ground Control Station (GCS) do seu interesse (Instalar somente no PC)
 
 Software necessário para execução de alguns planejadores de rotas:
-* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC)
+* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC) (Licença Proprietária)
 
-OBS: Após instalar deve-se, copiar o arquivo cplex.jar do diretório .../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/ para todos os planejadores de rota que utilizam pragramação matemática como em: .../UAV-Toolkit/Modules-MOSA/HGA4m/lib/ e .../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/
+OBS: Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
 
 Software necessário para criar uma nova missão para o Drone:
-* Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC)
+* Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC) (Licença Apache 2.0)
 
 Software necessário para fazer atualizações no projeto (incluindo melhorias):
-* IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC)
+* IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC) (Licença dupla CDDL 1.0 e GPL 2.0)
 ou 
 * Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto) (Instalar somente no PC)
 
@@ -133,6 +133,10 @@ Uma vez terminado, navegue até o diretório RAIZ. Neste caso você estará em .
 
 Pronto, o projeto já está pronto para o uso.
 
+A imagem abaixo sintetiza todos os softwares que devem ser instalados na plataforma.
+
+![](./Figures/apps-installs-uav-toolkit.png)
+
 ## Configurações Antes da Execução
 
 Existem alguns arquivos que devem ser sempre conferidos antes de executar o ambinente que são: 
@@ -157,7 +161,7 @@ Existem alguns outros arquivos de configuração que devem ser modificados apena
 Existem basicamente três formas de executar o nosso ambiente que são: 
 1. Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 2. Forma 2 -> Execução em SITL-CC (CC - Companion Computer): 
-3. Forma 3 -> Execução no Drone no CC:
+3. Forma 3 -> Execução em REAL FLIGHT-CC (CC - Companion Computer):
 
 Para executar qualquer uma das três formas acima execute os seguintes scripts em um terminal diferente (localizados na pasta Scripts):
 
@@ -185,7 +189,7 @@ Ordem                    Software                       (Local de Execução)
 6. UAV-Toolkit/Scripts$ ./exec-mosa.sh                  (CC)
 ```
 
-Forma 3 -> Execução no Drone no CC:
+Forma 3 -> Execução em REAL FLIGHT-CC (CC - Companion Computer):
 
 ```
 Ordem                    Software                       (Local de Execução)
@@ -195,6 +199,10 @@ Ordem                    Software                       (Local de Execução)
 4. UAV-Toolkit/Scripts$ ./exec-ifa.sh                   (CC)
 5. UAV-Toolkit/Scripts$ ./exec-mosa.sh                  (CC)
 ```
+
+A imagem abaixo sintetiza as três formas possíveis de execução dos softwares.
+
+![](./Figures/forms-run-uav-toolkit.png)
 
 ## Citação
 
