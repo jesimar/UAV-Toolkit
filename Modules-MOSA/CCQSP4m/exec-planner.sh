@@ -3,7 +3,7 @@
 #Date: 15/03/2018
 #Last Update: 26/07/2018
 #Description: Script that runs the path planner CCQSP4m on PC or CC.
-#Descrição: Script que executa o planejador de missões HGA4m no PC ou no CC.
+#Descrição: Script que executa o planejador de missões CCQSP4m no PC ou no CC.
 
 if [ "$1" = "local" ];
 then

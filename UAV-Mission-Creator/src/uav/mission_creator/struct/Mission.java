@@ -220,6 +220,19 @@ public class Mission {
         return str;
     }
     
+    public String getWaypoints3D(int i){
+        int j = 0;
+        for (Point3D point : listPoint3D){
+            if (point.getName().contains(KeyWords.WAYPOINT)){
+                if (j == i){
+                    return point.getX() + " " + point.getY();
+                }
+                j++;
+            }
+        }
+        return "";
+    }
+    
     public String getWaypointsMissionGeo(){
         int i = 0;
         for (PointGeo point : listPointGeo){

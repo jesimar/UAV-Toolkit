@@ -12,6 +12,7 @@ import uav.mission_creator.file.ReaderFileConfigMission;
 import uav.mission_creator.file.PrinterFrontier;
 import uav.mission_creator.file.PrinterMapSGL_NFZ;
 import uav.mission_creator.file.PrinterMapSGL_IFA;
+import uav.mission_creator.file.PrinterMissionSGL_CCQSP;
 import uav.mission_creator.file.PrinterPointsFailure;
 import uav.mission_creator.file.ReaderKML;
 
@@ -38,7 +39,8 @@ public class MissionCreator {
         createFilePreProcessor();
         readerKML(mission);
         createFileSGL_NFZ(mission);        
-        createFileSGL_Full(mission);        
+        createFileSGL_Full(mission);
+        createFileMissionCCQSP4m(mission);
         createFileGeoBase(mission);      
         createFileWaypoints3D(mission);
         createFileFeaturesMission(mission);
@@ -82,6 +84,15 @@ public class MissionCreator {
         PrinterMapSGL_IFA mapFull = new PrinterMapSGL_IFA(fileMapFull, mission);
         mapFull.printer();
         System.out.println("--------End PrinterMapSGL Full--------");
+    }
+    
+    private void createFileMissionCCQSP4m(Mission mission){
+        System.out.println("--------Begin Printer MissionCCQSP4m--------");
+        File fileMissionCCQSP = new File(config.getDirRouteKML() + config.getFileMissionCCQSP());
+        PrinterMissionSGL_CCQSP missionCCQSP = new PrinterMissionSGL_CCQSP(
+                fileMissionCCQSP, mission);
+        missionCCQSP.printer();
+        System.out.println("--------End Printer MissionCCQSP4m--------");
     }
     
     private void createFileGeoBase(Mission mission) throws FileNotFoundException{

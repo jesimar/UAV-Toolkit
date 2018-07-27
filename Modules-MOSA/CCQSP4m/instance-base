@@ -197,8 +197,8 @@ Ono Plot
 ProOF.apl.UAV.mission.Ono.OnoPlot
 <parameters number>
 4
-1
-1
+0
+0
 0
 2.5
 <node id>
@@ -243,7 +243,7 @@ Instance 2D
 ProOF.apl.UAV.mission.Ono.fOnoInstance$Instance2D
 <parameters number>
 1
-mission-iros-case1.sgl
+mission_ccqsp.sgl
 <node id>
 569
 <node type>

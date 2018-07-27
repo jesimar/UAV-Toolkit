@@ -11,6 +11,10 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para bater fotos e fazer filmagem com a câmera.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
 
+
+* Criar programa em Java para converter todos os nossos mapas .sgl para .json.
+* Criar programa em Java para converter todos os nossos mapas .sgl para .xml.
+
 ## Sistem IFA:
 
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).

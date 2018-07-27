@@ -18,6 +18,7 @@ public class ReaderFileConfigMission {
     private final String separatorGeoBaseOut;
     private final String fileMapNFZ;
     private final String fileMapFull;
+    private final String fileMissionCCQSP;
     private final String fileWaypointsMission;
     private final String fileWaypointsMissionGeo;
     private final String fileWaypointsMissionGeoLabel;
@@ -34,6 +35,7 @@ public class ReaderFileConfigMission {
         separatorGeoBaseOut = prop.getProperty("prop.mission_creator.separator_out_geobase");   
         fileMapNFZ = prop.getProperty("prop.mission_creator.file_out_map_nfz"); 
         fileMapFull = prop.getProperty("prop.mission_creator.file_out_map_full");
+        fileMissionCCQSP = prop.getProperty("prop.mission_creator.file_out_mission_ccqsp");
         fileWaypointsMission = prop.getProperty("prop.mission_creator.file_out_waypoints_mission");
         fileWaypointsMissionGeo = prop.getProperty("prop.mission_creator.file_out_waypoints_mission_geo");
         fileWaypointsMissionGeoLabel = prop.getProperty("prop.mission_creator.file_out_waypoints_mission_geo_label");
@@ -63,6 +65,10 @@ public class ReaderFileConfigMission {
     public String getFileMapFull() {
         return fileMapFull;
     }   
+    
+    public String getFileMissionCCQSP() {
+        return fileMissionCCQSP;
+    }
 
     public String getFileWaypointsMission() {
         return fileWaypointsMission;
