@@ -19,6 +19,8 @@ venv/
 
 #ignorar todos os arquivos por nome e extensao
 
+UAV-Manager/manager.properties
+
 cplex.jar
 mav.parm
 mav.tlog
@@ -26,5 +28,3 @@ mav.tlog.raw
 
 ideias-todo.txt
 dicas-voo.txt
-/UAV-Manager/nbproject/private/
-/UAV-Manager/dist/
