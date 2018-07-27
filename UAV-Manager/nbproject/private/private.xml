@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/jesimar/Workspace/Work/UAV/UAV-Mission-Creator/src/uav/mission_creator/MissionCreator.java</file>
-            <file>file:/media/jesimar/Workspace/Work/UAV/UAV-Mission-Creator/src/uav/mission_creator/struct/Mission.java</file>
+            <file>file:/media/jesimar/Workspace/Work/UAV/UAV-Manager/src/uav/manager/UAVManager.java</file>
+            <file>file:/media/jesimar/Workspace/Work/UAV/UAV-Manager/src/uav/manager/check/ExecCommand.java</file>
+            <file>file:/media/jesimar/Workspace/Work/UAV/UAV-Manager/src/uav/manager/check/CheckCommand.java</file>
         </group>
     </open-files>
 </project-private>

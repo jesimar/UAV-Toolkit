@@ -20,21 +20,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -45,12 +40,13 @@ import marte.swing.graphics.pkg2d.navigation.sPanel;
 import static marte.swing.graphics.pkg2d.navigation.sPanel.HGAP;
 import static marte.swing.graphics.pkg2d.navigation.sPanel.WGAP;
 import uav.manager.check.Check;
-import uav.manager.check.CheckApp;
 import uav.manager.check.CheckFindApp;
 import uav.manager.check.CheckOutputPattern;
 import uav.manager.check.ExecCommand;
 import uav.manager.check.Find;
 import uav.manager.check.TriConsumer;
+import uav.manager.os.DetectOS;
+import uav.manager.os.ServicesOS;
 
 /**
  *
@@ -102,8 +98,10 @@ public class UAVManager {
     
     private final Find<File> finder;
     private final TriConsumer<File,String,String> saver;
+    private final ServicesOS os;
         
-    public UAVManager(String properties_file) throws FileNotFoundException, IOException {
+    public UAVManager(String properties_file, ServicesOS os) throws FileNotFoundException, IOException {
+        this.os = os;
         properties = new Properties();
         properties.load(new FileInputStream(properties_file)); 
         
@@ -136,13 +134,13 @@ public class UAVManager {
             public void Config(int w, int h) {
                 setSize(w, h);
                 for(sPanel panel : panels){
-                    panel.Config(w, h-120);
+                    panel.Config(w, h-80);
                 }
-                panelBtms.Config(w-50, 60);
+                panelBtms.Config(w-50, 48);
             }
         };
-        this.windows.tryLookAndFeel("Nimbus");
-        SwingUtilities.updateComponentTreeUI(this.windows);
+        
+        
         this.fileChooser = new JFileChooser();
         this.fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         this.fileChooser.setMultiSelectionEnabled(false);
@@ -199,14 +197,17 @@ public class UAVManager {
         }
         this.windows.add(panelBtms);
         
-        this.windows.Config(1300, 900);
+        this.windows.Config(1300, 700);
         this.windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.windows.setVisible(true);
         
         
-        
-        
         ((InstallPanel)panels[0]).check();
+        
+        SwingUtilities.invokeLater(()->{
+            this.windows.tryLookAndFeel("Nimbus");
+            SwingUtilities.updateComponentTreeUI(this.windows);
+        });
     }
     
     private class PanelCommand extends sPanel{
@@ -220,23 +221,37 @@ public class UAVManager {
         private void execute(String name_bat, String propert_dir){
             try {
                 String cmd = this.command.getText().replaceAll("\n", " ");
-                PrintStream out = new PrintStream("./resources/scripts/"+name_bat);
+                File file = new File("./resources/scripts/"+name_bat+os.getBatchExtension());
+                PrintStream out = new PrintStream(file);
                 if(cmd.endsWith(".jar")){
+                    out.println("java -version");
                     if(propert_dir!=null){
                         String dir = properties.getProperty(propert_dir);
                         out.println("cd "+dir.substring(0, dir.length()-5));
                     }
                     out.println("java -jar dist/"+cmd);
-                }else{
+                } else if (cmd.endsWith(".py")){
+                    if(propert_dir!=null){
+                        String dir = properties.getProperty(propert_dir);
+                        out.println("cd " + dir);
+                    }
+                    out.println("python " + cmd);
+                } else {
                     if(propert_dir!=null){
                         out.println("cd "+properties.getProperty(propert_dir));
+                        out.println(os.cmdToExecOnDir(cmd));
+                    }else{
+                        out.println(cmd);
                     }
-                    out.println(cmd);
                 }
+                out.println("echo Please, close the terminal");
+                out.println("sleep 60");
                 out.close();
+                file.setExecutable(true);
                 //System.out.println(cmd);
                 //Thread.sleep(1000);
-                terminal.println("start "+name_bat);
+                //terminal.println(cmd);
+                terminal.println(os.startExternalTerminalScript(name_bat+os.getBatchExtension()));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -318,13 +333,13 @@ public class UAVManager {
             //this.add(panelBtms);
             
             commands = new PanelCommand[]{
-                new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl.bat"),
-                new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy.bat"),
-                new PanelCommand("UAV-SOA >>",  properties_file, background, "SOA_INTERFACE_COMMAND", "exec-soa.bat", "SOA_INTERFACE_DIR"),
-                new PanelCommand("GCS >>",      properties_file, background, "GROUND_STATION_APP", "exec-gcs.bat", "GROUND_STATION_DIR"),
-                new PanelCommand("UAV-GCS >>",  properties_file, background, "UAV_GCS_APP", "exec-uav-gcs.bat", "UAV_GCS_DIR"),
-                new PanelCommand("IFA >>",      properties_file, background, "UAV_IFA_APP", "exec-uav-ifa.bat", "UAV_IFA_DIR"),
-                new PanelCommand("MOSA >>",     properties_file, background, "UAV_MOSA_APP", "exec-uav-mosa.bat", "UAV_MOSA_DIR")
+                new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl"),
+                new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy"),
+                new PanelCommand("UAV-SOA >>",  properties_file, background, "SOA_INTERFACE_APP", "exec-soa", "SOA_INTERFACE_DIR"),
+                new PanelCommand("GCS >>",      properties_file, background, "GROUND_STATION_APP", "exec-gcs", "GROUND_STATION_DIR"),
+                new PanelCommand("UAV-GCS >>",  properties_file, background, "UAV_GCS_APP", "exec-uav-gcs", "UAV_GCS_DIR"),
+                new PanelCommand("IFA >>",      properties_file, background, "UAV_IFA_APP", "exec-uav-ifa", "UAV_IFA_DIR"),
+                new PanelCommand("MOSA >>",     properties_file, background, "UAV_MOSA_APP", "exec-uav-mosa", "UAV_MOSA_DIR")
             };
             
             this.panelLogo = new LogoPanel(logo, background);
@@ -340,7 +355,7 @@ public class UAVManager {
             this.add(scrollOutput);
             
             exec.execute(
-                "cmd.exe",
+                os.startInternalTerminalCmd(),
                 (line)->{   //standard oupput
                     SwingUtilities.invokeLater(()->{
                         taOutput.append(line+"\n");
@@ -361,6 +376,8 @@ public class UAVManager {
                     });
                 },
                 (terminal)->{
+                    terminal.println("echo Please, check the your environment variables PATH");
+                    terminal.println(os.cmdPrintPath());
                     for(PanelCommand cmd : commands){
                         cmd.addTerminal(terminal);
                     }
@@ -375,11 +392,11 @@ public class UAVManager {
             setPreferredSize(new Dimension(w, h));
             labelTitle.setPreferredSize(new Dimension(w-24, 40));
             for(PanelCommand cmd : commands){
-                cmd.Config(w-16, 60);
+                cmd.Config(w-16, 48);
             }
-            panelLogo.Config(w/3-24, h-46-commands.length*66);
-            scrollOutput.setPreferredSize(new Dimension(w*2/3-24, h-46-commands.length*66));
-            panelBtms.Config(w-16, 60);
+            panelLogo.Config(w/3-24, h-46-commands.length*56);
+            scrollOutput.setPreferredSize(new Dimension(w*2/3-24, h-46-commands.length*56));
+            panelBtms.Config(w-16, 30);
         }
     }
     
@@ -410,7 +427,6 @@ public class UAVManager {
             this.icon.setBackground(background);
             this.repaint();
             //this.icon.repaint();
-            System.out.println("Aqui");
         }
         public void check() {
             checker.check((result)->{
@@ -444,7 +460,6 @@ public class UAVManager {
             //description.setPreferredSize(new Dimension(w-12, 32));
         }
     }
-    
     private class CheckPanel extends sPanel{
         private final boolean module_sitl_pc;
         private final boolean module_sitl_cc;
@@ -490,7 +505,6 @@ public class UAVManager {
         public void check(Consumer<Boolean> valid) {
             checker.check((result)->{
                 SwingUtilities.invokeLater(()->{
-                    System.out.println("result = "+result);
                     this.validate.setText(null);
                     if(result){
                         this.validate.setIcon(iconOk);
@@ -542,8 +556,6 @@ public class UAVManager {
             return validate.getIcon()==iconOk;
         }
     }
-
-    
     private class LogoPanel extends sPanel{
         private final ImageIcon logo;
         public LogoPanel(ImageIcon logo, Color background) {
@@ -561,10 +573,7 @@ public class UAVManager {
 
             g.drawImage(logo.getImage(), (int)(diffW/2), (int)(diffH/2), (int)(logo.getIconWidth()*factor), (int)(logo.getIconHeight()*factor), null);
         }
-    };
-    
-    
-    
+    };   
     private class InstallPanel extends sPanel{
         
         private final LogoPanel panelLogo;
@@ -586,49 +595,53 @@ public class UAVManager {
             this.labelIntalations.setFont(FONT_TITLE);
             this.checkers = new CheckPanel[]{
                 new CheckPanel(true, true, true, "Python 2.7.*", 
-                    new CheckOutputPattern("python --version", "(.)* 2\\.7\\.(.)*")
+                    new CheckOutputPattern(os.cmdTestInstallationPython(), 
+                            os.patternTestInstallationPython())
                 ),
                 new CheckPanel(false, false, false, "Pip 9.*.*", 
-                    new CheckOutputPattern("python -m pip --version", "pip (.)*\\.(.)*\\.(.)*"),
+                    new CheckOutputPattern(os.cmdTestInstallationPip(), 
+                            os.patternTestInstallationPip(), 20000),
                     new CheckOutputPattern("python -m pip install pip==9.0.1", "(.)*", 300000)
                 ),
                 new CheckPanel(true, false, false, "DroneKit 2.9.*", 
-                    new CheckOutputPattern("python dronekit-test.py", "(.)*dronekit-ok(.)*"), 
+                    new CheckOutputPattern(os.cmdTestInstallationDronekit(),
+                            os.patternTestInstallationDronekit()), 
                     new CheckOutputPattern("python -m pip install dronekit", "(.)*", 180000)
                 ),
                 new CheckPanel(true, true, false, "DroneKit-SITL 3.2.*", 
-                    new CheckOutputPattern("dronekit-sitl --version", "(.)*3\\.(.)*\\.(.)*"), 
+                    new CheckOutputPattern(os.cmdTestInstallationDronekitSITL(), 
+                            os.patternTestInstallationDronekitSITL()), 
                     new CheckOutputPattern("python -m pip install dronekit-sitl", "(.)*", 300000)
                 ),
                 new CheckPanel(true, false, false, "Mavproxy 1.6.*", 
-                    //new CheckOutputPattern("python C:/Python27/Scripts/mavproxy.py --version", "(.)*", 10000, 1), 
-                    new CheckOutputPattern("python mavproxy-test.py", "(.)*mavproxy-ok(.)*", 10000), 
+                    new CheckOutputPattern(os.cmdTestInstallationMAVProxy(), 
+                            os.patternTestInstallationMAVProxy(), 10000), 
                     new CheckOutputPattern("python -m pip install MAVProxy==1.6.1", "(.)*", 300000)
                 ),
                 new CheckPanel(true, true, true, "Ground Station", 
                     (r) -> r.accept(new File(properties.getProperty("GROUND_STATION_DIR"), properties.getProperty("GROUND_STATION_APP")).exists()),
                     new CheckFindApp(finder, saver, "GROUND_STATION_DIR", "GROUND_STATION_APP"),
-                    "Please install manually and click here to select the the Ground Station aplication"
+                    "Please install manually and click here to select one Ground Control Station aplication"
                 ),
                 new CheckPanel(true, false, false, "SOA Interface", 
                     (r) -> r.accept(new File(properties.getProperty("SOA_INTERFACE_DIR"), properties.getProperty("SOA_INTERFACE_APP")).exists()),
                     new CheckFindApp(finder, saver, "SOA_INTERFACE_DIR", "SOA_INTERFACE_APP"),
-                    "Please select the the SOA Interface aplication on UAV-ToolKit directory"
+                    "Please select the file init.py from UAV-Toolkit/UAV-SOA-Interface/ directory"
                 ),
                 new CheckPanel(true, true, true, "UAV-GCS", 
                     (r) -> r.accept(new File(properties.getProperty("UAV_GCS_DIR"), properties.getProperty("UAV_GCS_APP")).exists()),
                     new CheckFindApp(finder, saver, "UAV_GCS_DIR", "UAV_GCS_APP"),
-                    "Please select the the UAV-GCS aplication on UAV-ToolKit directory"
+                    "Please select the UAV-GCS.jar from UAV-Toolkit/UAV-GCS/dist/ directory"
                 ),
                 new CheckPanel(true, true, true, "UAV-IFA", 
                     (r) -> r.accept(new File(properties.getProperty("UAV_IFA_DIR"), properties.getProperty("UAV_IFA_APP")).exists()),
                     new CheckFindApp(finder, saver, "UAV_IFA_DIR", "UAV_IFA_APP"),
-                    "Please select the the UAV-IFA aplication on UAV-ToolKit directory"
+                    "Please select the UAV-IFA.jar from UAV-Toolkit/UAV-IFA/dist/ directory"
                 ),
                 new CheckPanel(true, true, true, "UAV-MOSA", 
                     (r) -> r.accept(new File(properties.getProperty("UAV_MOSA_DIR"), properties.getProperty("UAV_MOSA_APP")).exists()),
                     new CheckFindApp(finder, saver, "UAV_MOSA_DIR", "UAV_MOSA_APP"),
-                    "Please select the the UAV-MOSA aplication on UAV-ToolKit directory"
+                    "Please select the UAV-MOSA.jar from UAV-Toolkit/UAV-MOSA/dist/ directory"
                 )
             };
             
@@ -656,7 +669,8 @@ public class UAVManager {
                 public void Config(int w, int h) {
                     setPreferredSize(new Dimension(w, h));
                     for(int i=0; i<modules.length; i++){
-                        modules[i].Config(w/3-8, w/3);
+                        int min = Math.min(w/3-24, h-12);
+                        modules[i].Config(min, min);
                     }
                 }
             };
@@ -669,6 +683,13 @@ public class UAVManager {
             }
             
             this.panelRigth = new sPanel(background){
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+                    g.drawRect(0, 0, getPreferredSize().width-1, getPreferredSize().height-1);
+                }
+                
+                
                 @Override
                 public void Config(int w, int h) {
                     setPreferredSize(new Dimension(w, h));
@@ -728,9 +749,9 @@ public class UAVManager {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         // TODO code application logic here
         
+        ServicesOS os = DetectOS.detect();
         
-        
-        UAVManager manager = new UAVManager("./manager.properties"); 
+        UAVManager manager = new UAVManager("./manager.properties", os); 
 
         /*CheckOutputPattern python = new CheckOutputPattern("python --version", "(.)* 2\\.7\\.(.)*");
         //CheckOutputPattern python = new CheckOutputPattern("gcc --version", "(.)* 5\\.2\\.(.)*");

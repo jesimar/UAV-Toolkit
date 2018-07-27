@@ -8,7 +8,6 @@ package uav.manager.check;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 /**
  *

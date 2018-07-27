@@ -7,13 +7,10 @@ package uav.manager.check;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,6 +33,7 @@ public abstract class CheckCommand implements Check<Boolean>{
     public void check(Consumer<Boolean> consumer) {
         Executors.newSingleThreadExecutor().execute(()->{
             try {
+                System.out.println("cmd: " + command);
                 Process process = Runtime.getRuntime().exec(command, null, new File(dir.getCanonicalPath()));
                 //checkOutput(process, consumer);
                 //Thread.sleep(1000);
@@ -54,25 +52,22 @@ public abstract class CheckCommand implements Check<Boolean>{
                         ex.printStackTrace();
                     }
                 });
+                
                 if(process.waitFor(timeout, TimeUnit.MILLISECONDS)){
                     if(process.exitValue()==exitOk){
-                        if(matches.size()==2){
-                            boolean hasOne = false;
-                            for(Boolean b : matches){
-                                if(b){
-                                    hasOne = true;
-                                }
-                            }
-                            if(hasOne){
+                        Boolean ok = matches.poll(5, TimeUnit.SECONDS);
+                        if (ok != null && ok){
+                            System.out.println("Match for command: "+command);
+                            consumer.accept(Boolean.TRUE);
+                        }else{
+                            ok = matches.poll(5, TimeUnit.SECONDS);
+                            if (ok != null && ok){
                                 System.out.println("Match for command: "+command);
                                 consumer.accept(Boolean.TRUE);
-                            }else{
-                                System.err.println("Dont hasOne for command: "+command);
+                            } else {
+                                System.err.println("Not ok for command: "+command);
                                 consumer.accept(Boolean.FALSE);
                             }
-                        }else{
-                            System.err.println("Stream="+matches+" has not two elements for command: "+command);
-                            consumer.accept(Boolean.FALSE);
                         }
                     }else{
                         System.err.println("Exit="+process.exitValue()+" for command: "+command);

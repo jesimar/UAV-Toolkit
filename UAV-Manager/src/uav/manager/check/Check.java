@@ -12,5 +12,7 @@ import java.util.function.Consumer;
  * @author Marcio
  */
 public interface Check<T> {
+    
     public void check(Consumer<T> consumer);
+    
 }
