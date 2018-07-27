@@ -6,6 +6,9 @@
 package uav.manager.check;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
@@ -26,7 +29,7 @@ public class ExecCommand {
     private Process process;
 
     public ExecCommand() {
-        this(new File("./"), 0);
+        this(new File("./resources/scripts/"), 0);
     }
     public ExecCommand(File dir, int exitOk) {
         this.dir = dir;
@@ -39,14 +42,22 @@ public class ExecCommand {
 
         }
     }
-    
+    private void close() throws IOException{
+        process.getInputStream().close();
+        process.getErrorStream().close();
+        process.getOutputStream().close();
+        process.destroy();
+        process.destroyForcibly();
+    }
     public void stop(String force, Consumer<Boolean> check){
         if(process!=null && process.isAlive()){
             try {
                 destroy(force);
                 if(process.waitFor(10, TimeUnit.SECONDS)){
+                    close();
                     check.accept(Boolean.TRUE);
                 }else{
+                    close();
                     check.accept(Boolean.FALSE);
                 }
             } catch (Throwable ex) {
@@ -57,13 +68,12 @@ public class ExecCommand {
             check.accept(Boolean.TRUE);
         }
     }
-    public void execute(String command, Consumer<String> output, Consumer<String> error, Consumer<Boolean> check) {
+    public void execute(String command, Consumer<String> output, Consumer<String> error, Consumer<Boolean> check, Consumer<PrintStream> terminal) {
         if(process==null || !process.isAlive()){
             Executors.newSingleThreadExecutor().execute(()->{
                 try {
-                    System.out.println(command);
                     process = Runtime.getRuntime().exec(command, null, new File(dir.getCanonicalPath()));
-
+                    
                     Executors.newSingleThreadExecutor().execute(()->{
                         Scanner sc = new Scanner(process.getInputStream());
                         while(sc.hasNextLine()){
@@ -76,9 +86,13 @@ public class ExecCommand {
                             error.accept(sc.nextLine());
                         }
                     });
+                    terminal.accept(new PrintStream(process.getOutputStream(), true));
+                        
                     if(process.waitFor()==exitOk){
+                        close();
                         check.accept(Boolean.TRUE);
                     }else{
+                        close();
                         check.accept(Boolean.FALSE);
                     }
                 } catch (Throwable ex) {

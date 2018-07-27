@@ -19,7 +19,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -37,8 +45,12 @@ import marte.swing.graphics.pkg2d.navigation.sPanel;
 import static marte.swing.graphics.pkg2d.navigation.sPanel.HGAP;
 import static marte.swing.graphics.pkg2d.navigation.sPanel.WGAP;
 import uav.manager.check.Check;
+import uav.manager.check.CheckApp;
+import uav.manager.check.CheckFindApp;
 import uav.manager.check.CheckOutputPattern;
 import uav.manager.check.ExecCommand;
+import uav.manager.check.Find;
+import uav.manager.check.TriConsumer;
 
 /**
  *
@@ -56,6 +68,7 @@ public class UAVManager {
     private final Font FONT_AREA = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 20);
     private final Font FONT_TITLE = new Font(Font.DIALOG_INPUT, Font.BOLD, 32);
+    private final Font FONT_SUB = new Font(Font.DIALOG_INPUT, Font.BOLD, 20);
 
     private final JFileChooser fileChooser;
     private final sFrame windows;
@@ -67,6 +80,11 @@ public class UAVManager {
     //private final JLabel labelPython;
     //private final JLabel labelOk;
     private final ImageIcon iconLogo;
+    private final ImageIcon iconSITL_PC;
+    private final ImageIcon iconSITL_CC;
+    private final ImageIcon iconReal_Fligth;
+    
+    
     private final ImageIcon iconOk;
     private final ImageIcon iconFail;
     private final ImageIcon iconInstall;
@@ -80,12 +98,29 @@ public class UAVManager {
     
     private final Properties properties;
     private int selected = 0;
+    
+    
+    private final Find<File> finder;
+    private final TriConsumer<File,String,String> saver;
         
     public UAVManager(String properties_file) throws FileNotFoundException, IOException {
         properties = new Properties();
         properties.load(new FileInputStream(properties_file)); 
+        
+        this.saver = (file, propert_dir, propert_app) -> {
+            properties.setProperty(propert_dir, file.getParent());
+            properties.setProperty(propert_app, file.getName());
+            try {
+                properties.store(new FileOutputStream(properties_file), "comments");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        };
     
         iconLogo = new ImageIcon("./resources/logo-uav-toolkit.png");
+        iconSITL_PC = new ImageIcon("./resources/SITL_PC.png");
+        iconSITL_CC = new ImageIcon("./resources/SITL_CC.png");
+        iconReal_Fligth = new ImageIcon("./resources/RealFlight_CC.png");
         iconOk = new ImageIcon(new ImageIcon("./resources/ok.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconFail = new ImageIcon(new ImageIcon("./resources/fail.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconInstall = new ImageIcon(new ImageIcon("./resources/install.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
@@ -95,14 +130,6 @@ public class UAVManager {
         iconStop = new ImageIcon(new ImageIcon("./resources/stop.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconSave = new ImageIcon(new ImageIcon("./resources/save_icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         
-        panels = new sPanel[]{
-            new InstallPanel(iconLogo, properties_file, BACKGROUNDS[0]),
-            new SITLPanel(iconLogo, properties_file, BACKGROUNDS[1]),
-        };
-        for(sPanel panel : panels){
-            panel.setVisible(false);
-        }
-        panels[0].setVisible(true);
         
         this.windows = new sFrame("UAV Manager"){
             @Override
@@ -114,17 +141,35 @@ public class UAVManager {
                 panelBtms.Config(w-50, 60);
             }
         };
-        
-        
         this.windows.tryLookAndFeel("Nimbus");
         SwingUtilities.updateComponentTreeUI(this.windows);
         this.fileChooser = new JFileChooser();
         this.fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         this.fileChooser.setMultiSelectionEnabled(false);
-        this.fileChooser.setFileFilter(new FileNameExtensionFilter("File extencion '.exe' or '.AppImage'", "exe", "AppImage"));
+        this.fileChooser.setFileFilter(new FileNameExtensionFilter("File extencion '.exe' or '.AppImage' or '.py' or '.jar'", "exe", "AppImage", "py",  "jar"));
         this.fileChooser.updateUI();
-        
         this.windows.getContentPane().setBackground(BACKGROUNDS[0]);
+        
+        this.finder = () -> {
+            int flag = fileChooser.showOpenDialog(windows);
+            if(flag == JFileChooser.APPROVE_OPTION){
+                return fileChooser.getSelectedFile();
+            }else{
+                return null;
+            }
+        };
+        
+        panels = new sPanel[]{
+            new InstallPanel(iconLogo, properties_file, BACKGROUNDS[0]),
+            new SITLPanel(iconLogo, properties_file, BACKGROUNDS[1]),
+        };
+        for(sPanel panel : panels){
+            panel.setVisible(false);
+        }
+        panels[0].setVisible(true);
+        
+        
+        
         
         panelBtms = new sPanel(new FlowLayout(FlowLayout.RIGHT, WGAP, HGAP), new Color(0, 0, 0, 0));
         JButton btmBack = new JButton(iconBack);
@@ -154,137 +199,275 @@ public class UAVManager {
         }
         this.windows.add(panelBtms);
         
-        this.windows.Config(1300, 720);
+        this.windows.Config(1300, 900);
         this.windows.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.windows.setVisible(true);
+        
+        
+        
         
         ((InstallPanel)panels[0]).check();
     }
     
+    private class PanelCommand extends sPanel{
+        private final JLabel label;
+        private final JTextField command;
+        private final JButton btmCmd;
+        private final JButton btmSave;
+        
+        private PrintStream terminal;
+        
+        private void execute(String name_bat, String propert_dir){
+            try {
+                String cmd = this.command.getText().replaceAll("\n", " ");
+                PrintStream out = new PrintStream("./resources/scripts/"+name_bat);
+                if(cmd.endsWith(".jar")){
+                    if(propert_dir!=null){
+                        String dir = properties.getProperty(propert_dir);
+                        out.println("cd "+dir.substring(0, dir.length()-5));
+                    }
+                    out.println("java -jar dist/"+cmd);
+                }else{
+                    if(propert_dir!=null){
+                        out.println("cd "+properties.getProperty(propert_dir));
+                    }
+                    out.println(cmd);
+                }
+                out.close();
+                //System.out.println(cmd);
+                //Thread.sleep(1000);
+                terminal.println("start "+name_bat);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        private void save(String properties_file, String propert){
+            try {
+                String cmd = this.command.getText().replaceAll("\n", " ");
+                properties.setProperty(propert, cmd);
+                properties.store(new FileOutputStream(properties_file), "comments");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } 
+        public PanelCommand(String label, String properties_file,  Color background, String propert_command, String name_bat) {
+            this(label, properties_file, background, propert_command, name_bat, null);
+        }
+        public PanelCommand(String label, String properties_file,  Color background, String propert_command, String name_bat, String propert_dir) {
+            super(background);
+            
+            this.label = new JLabel(label);
+            this.label.setFont(FONT_SUB);
+            this.command = new JTextField(properties.getProperty(propert_command));
+            this.command.setFont(FONT_AREA);
+            this.command.setForeground(Color.GREEN);
+            this.command.setBackground(Color.BLACK);
+            
+            this.btmCmd = new JButton("run",iconCmd);
+            this.btmSave = new JButton("save",iconSave);
+            
+            btmCmd.addActionListener((e)->{
+                execute(name_bat, propert_dir);
+            });
+            btmSave.addActionListener((e)->{
+                save(properties_file, propert_command);
+            });
+            
+            add(this.label);
+            add(this.command);
+            add(this.btmCmd);
+            add(this.btmSave);
+        }
+
+        private void addTerminal(PrintStream terminal) {
+            this.terminal = terminal;
+        }
+
+        @Override
+        public void Config(int w, int h) {
+            this.setPreferredSize(new Dimension(w, h));
+            label.setPreferredSize(new Dimension(150, 30));
+            command.setPreferredSize(new Dimension(w-165-30-btmCmd.getPreferredSize().width-btmSave.getPreferredSize().width, 40));
+        }
+        
+        
+    }
     private class SITLPanel extends sPanel{
         private final LogoPanel panelLogo;
         private final JLabel labelTitle;
-        private final JTextArea taCommand;
-        private final JTextArea taOutput;
-        private final JScrollPane scrollCommand;
         private final JScrollPane scrollOutput;
         
-        private final sPanel panelBtms;
+        //private final sPanel panelBtms;
         private final ExecCommand exec;
+        private PanelCommand commands[];
+        
         public SITLPanel(final ImageIcon logo, String properties_file, Color background) {
             super(background);
-            
             this.exec = new ExecCommand();
+            
+            JTextArea taOutput = new JTextArea("");
+            taOutput.setForeground(Color.GREEN);
+            taOutput.setBackground(Color.BLACK);
+            taOutput.setFont(FONT_AREA);
+            taOutput.setEditable(false);
+            
+            this.scrollOutput = new JScrollPane();
+            this.scrollOutput.setViewportView(taOutput);
+            
+            //this.panelBtms = new sPanel(background);
+            //this.add(panelBtms);
+            
+            commands = new PanelCommand[]{
+                new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl.bat"),
+                new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy.bat"),
+                new PanelCommand("UAV-SOA >>",  properties_file, background, "SOA_INTERFACE_COMMAND", "exec-soa.bat", "SOA_INTERFACE_DIR"),
+                new PanelCommand("GCS >>",      properties_file, background, "GROUND_STATION_APP", "exec-gcs.bat", "GROUND_STATION_DIR"),
+                new PanelCommand("UAV-GCS >>",  properties_file, background, "UAV_GCS_APP", "exec-uav-gcs.bat", "UAV_GCS_DIR"),
+                new PanelCommand("IFA >>",      properties_file, background, "UAV_IFA_APP", "exec-uav-ifa.bat", "UAV_IFA_DIR"),
+                new PanelCommand("MOSA >>",     properties_file, background, "UAV_MOSA_APP", "exec-uav-mosa.bat", "UAV_MOSA_DIR")
+            };
+            
             this.panelLogo = new LogoPanel(logo, background);
             this.labelTitle = new JLabel("Software-In-The-Loop", SwingConstants.CENTER);
             this.labelTitle.setFont(FONT_TITLE);
             
             
-            this.taCommand = new JTextArea(properties.getProperty("SITL_COMMAND"));
-            this.taCommand.setFont(FONT_AREA);
-            this.scrollCommand = new JScrollPane();
-            this.scrollCommand.setViewportView(taCommand);
+            this.add(labelTitle);
+            for(PanelCommand cmd : commands){
+                this.add(cmd);
+            }
+            this.add(panelLogo);
+            this.add(scrollOutput);
             
-            this.taOutput = new JTextArea("");
-            this.taOutput.setFont(FONT_AREA);
-            this.taOutput.setEditable(false);
-            this.scrollOutput = new JScrollPane();
-            this.scrollOutput.setViewportView(taOutput);
-            
-            this.panelBtms = new sPanel(background);
-            JButton btmCmd = new JButton("run",iconCmd);
-            JButton btmStop = new JButton("stop",iconStop);
-            btmStop.setEnabled(false);
-            btmCmd.addActionListener((e)->{
-                btmStop.setEnabled(true);
-                btmCmd.setEnabled(false);
-                String cmd = this.taCommand.getText().replaceAll("\n", " ");
-                System.out.println("["+cmd+"]");
-                taOutput.append("---------------------------[ run-start ]---------------------------\n");
-                exec.execute(
-                    cmd,
-                    (line)->{   //standard oupput
-                        SwingUtilities.invokeLater(()->{
-                            taOutput.append(line+"\n");
-                        });
-                    }, 
-                    (line)->{   //standard erro
-                        SwingUtilities.invokeLater(()->{
-                            taOutput.append("err: "+line+"\n");
-                        });
-                    },
-                    (sucess)->{  //finish status
-                        SwingUtilities.invokeLater(()->{
-                            taOutput.append("---------------------------[ run="+sucess+" ]---------------------------\n");
-                            if(sucess){
-                                btmCmd.setEnabled(true);
-                                btmStop.setEnabled(false);
-                            }
-                        });
-                    }
-                );
-            });
-            btmStop.addActionListener((e)->{
-                taOutput.append("---------------------------[ stop-start ]----------------------------\n");
-                exec.stop("Taskkill /IM apm.exe /F", (sucess) -> {
-                    SwingUtilities.invokeLater(() -> {
-                        taOutput.append("---------------------------[ stop="+sucess+" ]---------------------------\n");
-                        if (sucess) {
-                            btmCmd.setEnabled(true);
-                            btmStop.setEnabled(false);
+            exec.execute(
+                "cmd.exe",
+                (line)->{   //standard oupput
+                    SwingUtilities.invokeLater(()->{
+                        taOutput.append(line+"\n");
+                    });
+                }, 
+                (line)->{   //standard erro
+                    SwingUtilities.invokeLater(()->{
+                        taOutput.append("err: "+line+"\n");
+                    });
+                },
+                (sucess)->{  //finish status
+                    SwingUtilities.invokeLater(()->{
+                        taOutput.append("---------------------------[ run="+sucess+" ]---------------------------\n");
+                        if(sucess){
+                            //btmCmd.setEnabled(true);
+                            //btmStop.setEnabled(false);
                         }
                     });
-                });
-            });
-            JButton btmSave = new JButton("save",iconSave);
-            btmSave.addActionListener((e)->{
-                String cmd = this.taCommand.getText().replaceAll("\n", " ");
-                System.out.println("["+cmd+"]");
-                properties.setProperty("SITL_COMMAND", cmd);
-                try {
-                    properties.store(new FileOutputStream(properties_file), "comments");
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                },
+                (terminal)->{
+                    for(PanelCommand cmd : commands){
+                        cmd.addTerminal(terminal);
+                    }
                 }
-            });
-            panelBtms.add(btmCmd);
-            panelBtms.add(btmStop);
-            panelBtms.add(btmSave);
+            );
             
-            this.add(panelLogo);
-            this.add(labelTitle);
-            this.add(scrollCommand);
-            this.add(scrollOutput);
-            this.add(panelBtms);
         }
         
         
         @Override
         public void Config(int w, int h) {
             setPreferredSize(new Dimension(w, h));
-            panelLogo.Config(w-16, h/2-40);
-            labelTitle.setPreferredSize(new Dimension(w-16, 40));
-            scrollCommand.setPreferredSize(new Dimension(w/2-14, h/2-74));
-            scrollOutput.setPreferredSize(new Dimension(w/2-14, h/2-74));
+            labelTitle.setPreferredSize(new Dimension(w-24, 40));
+            for(PanelCommand cmd : commands){
+                cmd.Config(w-16, 60);
+            }
+            panelLogo.Config(w/3-24, h-46-commands.length*66);
+            scrollOutput.setPreferredSize(new Dimension(w*2/3-24, h-46-commands.length*66));
             panelBtms.Config(w-16, 60);
         }
     }
     
+    private class ModulePanel extends sPanel{
+        private final Check<Boolean> checker;
+        private final LogoPanel icon;
+        //private final JLabel validate;
+        private final JLabel description;
+        private final Color backgound;
+        private final Color fail = new Color(255, 128, 128);
+        private final Color ok = new Color(181, 230, 29);
+        
+        public ModulePanel(ImageIcon icon, String description, Color background, Check<Boolean> checker) {
+            super(background);
+            this.backgound = background;
+            this.checker = checker;
+            this.icon = new LogoPanel(icon, background);
+            //this.validate = new JLabel("...");
+            this.description = new JLabel(description);
+            //this.validate.setFont(FONT);
+            this.description.setFont(FONT_SUB);
+            this.add(this.icon);
+            //this.add(this.validate);
+            this.add(this.description);
+        }
+        public void changeBackground(Color background){
+            this.setBackground(background);
+            this.icon.setBackground(background);
+            this.repaint();
+            //this.icon.repaint();
+            System.out.println("Aqui");
+        }
+        public void check() {
+            checker.check((result)->{
+                SwingUtilities.invokeLater(()->{
+                    //this.validate.setText(null);
+                    if(result){
+                        changeBackground(ok);
+                    }else{
+                        changeBackground(fail);
+                    }
+                });
+            });
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+            
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawRect(0, 0, getPreferredSize().width-1, getPreferredSize().height-1);
+            g.setColor(Color.GRAY);
+            g.drawRect(1, 1, getPreferredSize().width-3, getPreferredSize().height-3);
+            g.setColor(Color.LIGHT_GRAY);
+            g.drawRect(2, 2, getPreferredSize().width-5, getPreferredSize().height-5);
+        }
+        
+        @Override
+        public void Config(int w, int h) {
+            setPreferredSize(new Dimension(w, h));
+            icon.setPreferredSize(new Dimension(w-48, w-48)); 
+            //description.setPreferredSize(new Dimension(w-12, 32));
+        }
+    }
+    
     private class CheckPanel extends sPanel{
+        private final boolean module_sitl_pc;
+        private final boolean module_sitl_cc;
+        private final boolean module_real_flight_cc;
+        
         private final Check<Boolean> checker;
         private final Check<Boolean> installer;
         
         private final JLabel validate;
         private final JLabel description;    
         private final String toolTipText;
-        public CheckPanel(String description, Check<Boolean> checker) {
-            this(description, checker, null, "Please install "+description+" first and add to path system");
+        public CheckPanel(boolean sitl_pc, boolean sitl_cc, boolean real_flight_cc, String description, Check<Boolean> checker) {
+            this(sitl_pc, sitl_cc, real_flight_cc, description, checker, null, "Please install "+description+" first and add to path system");
         }
-        public CheckPanel(String description, Check<Boolean> checker, CheckOutputPattern installer) {
-            this(description, checker, installer, "Click to install: "+installer.command);
+        public CheckPanel(boolean sitl_pc, boolean sitl_cc, boolean real_flight_cc, String description, Check<Boolean> checker, CheckOutputPattern installer) {
+            this(sitl_pc, sitl_cc, real_flight_cc, description, checker, installer, "Click to install: "+installer.command);
         }
-        public CheckPanel(String description, Check<Boolean> checker, Check<Boolean> installer, String toolTipText) {
+        public CheckPanel(boolean sitl_pc, boolean sitl_cc, boolean real_flight_cc, String description, Check<Boolean> checker, Check<Boolean> installer, String toolTipText) {
             super(BACKGROUNDS[0]);
+            this.module_sitl_pc = sitl_pc;
+            this.module_sitl_cc = sitl_cc;
+            this.module_real_flight_cc = real_flight_cc;
+            
             this.checker = checker;
             this.installer = installer;
             this.toolTipText = toolTipText;
@@ -295,23 +478,35 @@ public class UAVManager {
             this.add(this.validate);
             this.add(this.description);
         }
-        public void check() {
+        public boolean needSITL_PC(){
+            return module_sitl_pc;
+        }
+        public boolean needSITL_CC(){
+            return module_sitl_cc;
+        }
+        public boolean needRealFlight_CC(){
+            return module_real_flight_cc;
+        }
+        public void check(Consumer<Boolean> valid) {
             checker.check((result)->{
                 SwingUtilities.invokeLater(()->{
+                    System.out.println("result = "+result);
                     this.validate.setText(null);
                     if(result){
                         this.validate.setIcon(iconOk);
+                        valid.accept(true);
                     }else{
                         this.validate.setIcon(iconFail);
                         this.validate.setToolTipText(toolTipText);
                         if(installer!=null){
-                            enableInstall();
+                            enableInstall(valid);
                         }
+                        valid.accept(false);
                     }
                 });
             });
         }
-        public void enableInstall(){
+        public void enableInstall(Consumer<Boolean> valid){
             this.validate.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -321,7 +516,7 @@ public class UAVManager {
                     validate.setToolTipText(null);
                     setCursor(Cursor.getDefaultCursor());
                     installer.check((instaled)->{
-                        check();
+                        check(valid);
                     });
                 }
                 @Override
@@ -341,6 +536,10 @@ public class UAVManager {
             setPreferredSize(new Dimension(w, h));
             validate.setPreferredSize(new Dimension(48, 32));
             description.setPreferredSize(new Dimension(w-120, 32));
+        }
+
+        public boolean isOk() {
+            return validate.getIcon()==iconOk;
         }
     }
 
@@ -364,65 +563,82 @@ public class UAVManager {
         }
     };
     
+    
+    
     private class InstallPanel extends sPanel{
         
         private final LogoPanel panelLogo;
-        private final JLabel labelTitle;
+        private final JLabel labelIntalations;
+        private final JLabel labelModules;
         private final sPanel panelChecks;
+        private final sPanel panelModules;
+        
+        private final sPanel panelRigth;
+        private final sPanel panelLeft;
+        
+        private final ModulePanel modules[];
         private final CheckPanel checkers[];
         
         public InstallPanel(final ImageIcon logo, String properties_file, Color background) {
             super(background);
             this.panelLogo = new LogoPanel(logo, background);
-            this.labelTitle = new JLabel("Installations", SwingConstants.CENTER);
-            this.labelTitle.setFont(FONT_TITLE);
+            this.labelIntalations = new JLabel("Installations", SwingConstants.CENTER);
+            this.labelIntalations.setFont(FONT_TITLE);
             this.checkers = new CheckPanel[]{
-                new CheckPanel("Python 2.7.*", 
+                new CheckPanel(true, true, true, "Python 2.7.*", 
                     new CheckOutputPattern("python --version", "(.)* 2\\.7\\.(.)*")
                 ),
-                new CheckPanel("Pip 9.*.*", 
+                new CheckPanel(false, false, false, "Pip 9.*.*", 
                     new CheckOutputPattern("python -m pip --version", "pip (.)*\\.(.)*\\.(.)*"),
                     new CheckOutputPattern("python -m pip install pip==9.0.1", "(.)*", 300000)
                 ),
-                new CheckPanel("DroneKit 2.9.*", 
+                new CheckPanel(true, false, false, "DroneKit 2.9.*", 
                     new CheckOutputPattern("python dronekit-test.py", "(.)*dronekit-ok(.)*"), 
                     new CheckOutputPattern("python -m pip install dronekit", "(.)*", 180000)
                 ),
-                new CheckPanel("DroneKit-SITL 3.2.*", 
+                new CheckPanel(true, true, false, "DroneKit-SITL 3.2.*", 
                     new CheckOutputPattern("dronekit-sitl --version", "(.)*3\\.(.)*\\.(.)*"), 
                     new CheckOutputPattern("python -m pip install dronekit-sitl", "(.)*", 300000)
                 ),
-                new CheckPanel("Mavproxy 1.6.*", 
+                new CheckPanel(true, false, false, "Mavproxy 1.6.*", 
                     //new CheckOutputPattern("python C:/Python27/Scripts/mavproxy.py --version", "(.)*", 10000, 1), 
                     new CheckOutputPattern("python mavproxy-test.py", "(.)*mavproxy-ok(.)*", 10000), 
                     new CheckOutputPattern("python -m pip install MAVProxy==1.6.1", "(.)*", 300000)
                 ),
-                new CheckPanel("Ground Station", 
-                    //new CheckOutputPattern("python C:/Python27/Scripts/mavproxy.py --version", "(.)*", 10000, 1), 
-                   (r)-> r.accept(new File(properties.getProperty("GROUND_STATION_DIR"), properties.getProperty("GROUND_STATION_APP")).exists()), 
-                   (r)-> {
-                        int flag = fileChooser.showOpenDialog(windows);
-                        if(flag == JFileChooser.APPROVE_OPTION){
-                            File file= fileChooser.getSelectedFile();
-                            if(file.exists() && file.isFile()){
-                                properties.setProperty("GROUND_STATION_DIR", file.getParent());
-                                properties.setProperty("GROUND_STATION_APP", file.getName());
-                                try {
-                                    properties.store(new FileOutputStream(properties_file), "comments");
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                                r.accept(true);
-                            }else{
-                                r.accept(false);
-                            }
-                        }else{
-                            r.accept(false);
-                        }
-                    },
+                new CheckPanel(true, true, true, "Ground Station", 
+                    (r) -> r.accept(new File(properties.getProperty("GROUND_STATION_DIR"), properties.getProperty("GROUND_STATION_APP")).exists()),
+                    new CheckFindApp(finder, saver, "GROUND_STATION_DIR", "GROUND_STATION_APP"),
                     "Please install manually and click here to select the the Ground Station aplication"
+                ),
+                new CheckPanel(true, false, false, "SOA Interface", 
+                    (r) -> r.accept(new File(properties.getProperty("SOA_INTERFACE_DIR"), properties.getProperty("SOA_INTERFACE_APP")).exists()),
+                    new CheckFindApp(finder, saver, "SOA_INTERFACE_DIR", "SOA_INTERFACE_APP"),
+                    "Please select the the SOA Interface aplication on UAV-ToolKit directory"
+                ),
+                new CheckPanel(true, true, true, "UAV-GCS", 
+                    (r) -> r.accept(new File(properties.getProperty("UAV_GCS_DIR"), properties.getProperty("UAV_GCS_APP")).exists()),
+                    new CheckFindApp(finder, saver, "UAV_GCS_DIR", "UAV_GCS_APP"),
+                    "Please select the the UAV-GCS aplication on UAV-ToolKit directory"
+                ),
+                new CheckPanel(true, true, true, "UAV-IFA", 
+                    (r) -> r.accept(new File(properties.getProperty("UAV_IFA_DIR"), properties.getProperty("UAV_IFA_APP")).exists()),
+                    new CheckFindApp(finder, saver, "UAV_IFA_DIR", "UAV_IFA_APP"),
+                    "Please select the the UAV-IFA aplication on UAV-ToolKit directory"
+                ),
+                new CheckPanel(true, true, true, "UAV-MOSA", 
+                    (r) -> r.accept(new File(properties.getProperty("UAV_MOSA_DIR"), properties.getProperty("UAV_MOSA_APP")).exists()),
+                    new CheckFindApp(finder, saver, "UAV_MOSA_DIR", "UAV_MOSA_APP"),
+                    "Please select the the UAV-MOSA aplication on UAV-ToolKit directory"
                 )
-
+            };
+            
+            
+            this.labelModules = new JLabel("Modules", SwingConstants.CENTER);
+            this.labelModules.setFont(FONT_TITLE);
+            this.modules = new ModulePanel[]{
+                new ModulePanel(iconSITL_PC, "SITL - PC", background, (r)-> r.accept(verifiy(CheckPanel::needSITL_PC))),
+                new ModulePanel(iconSITL_CC, "SITL - CC", background, (r)-> r.accept(verifiy(CheckPanel::needSITL_CC))),
+                new ModulePanel(iconReal_Fligth, "Real Flight - CC", background,      (r)-> r.accept(verifiy(CheckPanel::needRealFlight_CC)))
             };
 
             this.panelChecks = new sPanel(background){
@@ -434,18 +650,66 @@ public class UAVManager {
                     }
                 }
             };
+            
+            this.panelModules = new sPanel(background){
+                @Override
+                public void Config(int w, int h) {
+                    setPreferredSize(new Dimension(w, h));
+                    for(int i=0; i<modules.length; i++){
+                        modules[i].Config(w/3-8, w/3);
+                    }
+                }
+            };
 
             for(int i=0; i<checkers.length; i++){
                 this.panelChecks.add(checkers[i]);
             }
+            for(int i=0; i<modules.length; i++){
+                this.panelModules.add(modules[i]);
+            }
+            
+            this.panelRigth = new sPanel(background){
+                @Override
+                public void Config(int w, int h) {
+                    setPreferredSize(new Dimension(w, h));
+                    panelLogo.Config(w-12, h/2-58);
+                    labelModules.setPreferredSize(new Dimension(w-12, 40));
+                    panelModules.Config(w-12, h/2);
+                }
+            };
+            
+            this.panelLeft = new sPanel(background){
+                @Override
+                public void Config(int w, int h) {
+                    setPreferredSize(new Dimension(w, h));
+                    labelIntalations.setPreferredSize(new Dimension(w-12, 40));
+                    panelChecks.Config(w-12, h-58);
+                }
+            };
 
-            this.add(panelLogo);
-            this.add(labelTitle);
-            this.add(panelChecks);
+            this.panelRigth.add(panelLogo);
+            this.panelRigth.add(labelModules);
+            this.panelRigth.add(panelModules);
+            
+            this.panelLeft.add(labelIntalations);
+            this.panelLeft.add(panelChecks);
+            
+            this.add(panelLeft);
+            this.add(panelRigth);
+            
+            
+        }
+        public boolean verifiy(Predicate<CheckPanel> predicate){
+            return Arrays.stream(checkers).filter(predicate).allMatch((p)->p.isOk());
         }
         
         public void check(){
             for (CheckPanel checker : checkers) {
+                checker.check((r)->check_modules());
+            }
+        }
+        public void check_modules(){
+            for (ModulePanel checker : modules) {
                 checker.check();
             }
         }
@@ -453,9 +717,8 @@ public class UAVManager {
         @Override
         public void Config(int w, int h) {
             setPreferredSize(new Dimension(w, h));
-            panelLogo.Config(w-16, h/2-40);
-            labelTitle.setPreferredSize(new Dimension(w-16, 40));
-            panelChecks.Config(w-16, h/2);
+            panelLeft.Config(w/3-18, h-58);
+            panelRigth.Config((w*2)/3-18, h-58);
         }
     }
 
