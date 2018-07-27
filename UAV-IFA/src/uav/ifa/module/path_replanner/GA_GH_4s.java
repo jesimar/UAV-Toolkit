@@ -59,16 +59,16 @@ public class GA_GH_4s extends Replanner{
             String state = px + " " + py + " " + vel + " " + angle;
             String qtdWpt = configLocal.getQtdWaypoints();
             String delta = configLocal.getDelta();
-            UtilIO.copyFileMofifIFA(srcGA, dstGA, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileModifiedIFA(srcGA, dstGA, state, 8, qtdWpt, 20, delta, 26);
             
             File src_ga = new File(dirGA + "instance-base");
             File dst_ga = new File(dirGA + "instance");
             String time = configLocal.getTimeExec();
-            UtilIO.copyFileMofifIFA(src_ga, dst_ga, time, 117);
+            UtilIO.copyFileModifiedIFA(src_ga, dst_ga, time, 117);
             
             File srcGH = new File(dirGH + "config-base.sgl");
             File dstGH = new File(dirGH + "config.sgl");
-            UtilIO.copyFileMofifIFA(srcGH, dstGH, state, 8, qtdWpt, 20, delta, 26);
+            UtilIO.copyFileModifiedIFA(srcGH, dstGH, state, 8, qtdWpt, 20, delta, 26);
             
             return true;
         } catch (FileNotFoundException ex) {

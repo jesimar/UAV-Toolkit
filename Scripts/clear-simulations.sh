@@ -26,6 +26,14 @@ sudo rm ../Modules-MOSA/HGA4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/routeGeo* 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/log_error.txt 2>/dev/null
 
+echo "Clear files in CCQSP4m [*.png *.log route3D* routeGeo* output.txt]"
+sudo rm ../Modules-MOSA/CCQSP4m/*.png 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/*.log 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/route3D* 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/routeGeo* 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/log_error.txt 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/output.txt 2>/dev/null
+
 echo "Clear files in MPGA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 sudo rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/MPGA4s/route.txt 2>/dev/null
@@ -53,6 +61,20 @@ sudo rm ../Modules-IFA/DE4s/route.txt 2>/dev/null
 sudo rm ../Modules-IFA/DE4s/routeGeo.txt 2>/dev/null
 sudo rm ../Modules-IFA/DE4s/*.png 2>/dev/null
 sudo rm ../Modules-IFA/DE4s/log_error.txt 2>/dev/null
+
+echo "Clear files in MS4s [output-simulation.log route.txt routeGeo.txt *.png]"
+sudo rm ../Modules-IFA/MS4s/output-simulation.log 2>/dev/null
+sudo rm ../Modules-IFA/MS4s/route.txt 2>/dev/null
+sudo rm ../Modules-IFA/MS4s/routeGeo.txt 2>/dev/null
+sudo rm ../Modules-IFA/MS4s/*.png 2>/dev/null
+sudo rm ../Modules-IFA/MS4s/log_error.txt 2>/dev/null
+
+echo "Clear files in MILP4s [output-simulation.log route.txt routeGeo.txt *.png]"
+sudo rm ../Modules-IFA/MILP4s/output-simulation.log 2>/dev/null
+sudo rm ../Modules-IFA/MILP4s/route.txt 2>/dev/null
+sudo rm ../Modules-IFA/MILP4s/routeGeo.txt 2>/dev/null
+sudo rm ../Modules-IFA/MILP4s/*.png 2>/dev/null
+sudo rm ../Modules-IFA/MILP4s/log_error.txt 2>/dev/null
 
 echo "Clear files in GA-GA-4s [output-simulation.log]"
 sudo rm ../Modules-IFA/GA-GA-4s/output-simulation.log 2>/dev/null

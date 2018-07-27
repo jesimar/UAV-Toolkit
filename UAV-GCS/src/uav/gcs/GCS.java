@@ -351,8 +351,7 @@ public final class GCS extends JFrame {
         this.add(panelTop);
         this.add(panelMain);
         
-        panelMain.add(panelPlotMission);
-//        panelMain.add(tab);
+        panelMain.add(tab);
 
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -29,12 +29,16 @@ public class ReaderFileConfigMOSA {
     private String methodPlanner;
     private String cmdExecPlanner;
     private String dirPlanner;
-    private String missionProcessingLocation;
-    private String fileWaypointsMission;
-    private String timeExec;
-    private String delta;
-    private String maxVelocity;
-    private String maxControl;
+    
+    private String missionProcessingLocationHGA4m;
+    private String fileWaypointsMissionHGA4m;
+    private String timeExecHGA4m;
+    private String deltaHGA4m;
+    private String maxVelocityHGA4m;
+    private String maxControlHGA4m;
+    
+    private String waypointsCCQSP4m;
+    private String deltaCCQSP4m;
     
     //fixed route    
     private String dirFixedRoute;
@@ -63,12 +67,16 @@ public class ReaderFileConfigMOSA {
             localExecPlanner          = prop.getProperty("prop.planner.local_exec");
             methodPlanner             = prop.getProperty("prop.planner.method");
             cmdExecPlanner            = prop.getProperty("prop.planner.cmd_exec");
-            missionProcessingLocation = prop.getProperty("prop.planner.mission_processing_location");
-            fileWaypointsMission      = prop.getProperty("prop.planner.file_waypoints_mission");         
-            timeExec                  = prop.getProperty("prop.planner.time_exec");
-            delta                     = prop.getProperty("prop.planner.delta");
-            maxVelocity               = prop.getProperty("prop.planner.max_velocity");
-            maxControl                = prop.getProperty("prop.planner.max_control");                        
+            
+            missionProcessingLocationHGA4m = prop.getProperty("prop.planner.hga4m.mission_processing_location");
+            fileWaypointsMissionHGA4m = prop.getProperty("prop.planner.hga4m.file_waypoints_mission");         
+            timeExecHGA4m             = prop.getProperty("prop.planner.hga4m.time_exec");
+            deltaHGA4m                = prop.getProperty("prop.planner.hga4m.delta");
+            maxVelocityHGA4m          = prop.getProperty("prop.planner.hga4m.max_velocity");
+            maxControlHGA4m           = prop.getProperty("prop.planner.hga4m.max_control");                        
+            
+            waypointsCCQSP4m          = prop.getProperty("prop.planner.ccqsp4m.waypoints");
+            deltaCCQSP4m              = prop.getProperty("prop.planner.ccqsp4m.delta");
             
             dirFixedRoute             = prop.getProperty("prop.fixed_route.dir");
             fileFixedRoute            = prop.getProperty("prop.fixed_route.file_waypoints");
@@ -147,19 +155,19 @@ public class ReaderFileConfigMOSA {
         return dirPlanner;
     }
     
-    public String getMissionProcessingLocation() {
-        return missionProcessingLocation;
+    public String getMissionProcessingLocationHGA4m() {
+        return missionProcessingLocationHGA4m;
     }
 
-    public String getFileWaypointsMission() {
-        return fileWaypointsMission;
+    public String getFileWaypointsMissionHGA4m() {
+        return fileWaypointsMissionHGA4m;
     }
 
-    public String getTimeExec(int i) {
-        if (!timeExec.contains("[")){
-            return timeExec;
+    public String getTimeExecHGA4m(int i) {
+        if (!timeExecHGA4m.contains("[")){
+            return timeExecHGA4m;
         }else{
-            String str = timeExec.replace("[", "");
+            String str = timeExecHGA4m.replace("[", "");
             str = str.replace("]", "");
             str = str.replace(" ", "");
             String v[] = str.split(",");
@@ -167,20 +175,28 @@ public class ReaderFileConfigMOSA {
         }
     }
     
-    public String getTimeExec(){
-        return timeExec;
+    public String getTimeExecHGA4m(){
+        return timeExecHGA4m;
     }
 
-    public String getDelta() {
-        return delta;
+    public String getDeltaHGA4m() {
+        return deltaHGA4m;
     }
 
-    public String getMaxVelocity() {
-        return maxVelocity;
+    public String getMaxVelocityHGA4m() {
+        return maxVelocityHGA4m;
     }
 
-    public String getMaxControl() {
-        return maxControl;
+    public String getMaxControlHGA4m() {
+        return maxControlHGA4m;
+    }
+    
+    public String getWaypointsCCQSP4m() {
+        return waypointsCCQSP4m;
+    }
+    
+    public String getDeltaCCQSP4m() {
+        return deltaCCQSP4m;
     }
     
     public String getDirFixedRoute() {

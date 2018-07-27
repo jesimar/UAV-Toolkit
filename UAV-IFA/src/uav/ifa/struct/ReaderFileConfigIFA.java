@@ -97,6 +97,7 @@ public class ReaderFileConfigIFA {
                (!methodReplanner.equals(TypeReplanner.GH4S) &&
                 !methodReplanner.equals(TypeReplanner.GA4S) &&
                 !methodReplanner.equals(TypeReplanner.MPGA4S) && 
+                !methodReplanner.equals(TypeReplanner.MS4S) &&
                 !methodReplanner.equals(TypeReplanner.DE4S) &&
                 !methodReplanner.equals(TypeReplanner.GA_GA_4S) && 
                 !methodReplanner.equals(TypeReplanner.GA_GH_4S) && 
@@ -127,6 +128,9 @@ public class ReaderFileConfigIFA {
             }else if (methodReplanner.equals(TypeReplanner.MPGA4S)){
                 typeReplanner = TypeReplanner.MPGA4S;
                 dirReplanner = "../Modules-IFA/MPGA4s/";
+            }else if (methodReplanner.equals(TypeReplanner.MS4S)){
+                typeReplanner = TypeReplanner.MS4S;
+                dirReplanner = "../Modules-IFA/MS4S/";
             }else if (methodReplanner.equals(TypeReplanner.GA_GA_4S)){
                 typeReplanner = TypeReplanner.GA_GA_4S;
                 dirReplanner = "../Modules-IFA/GA-GA-4s/";

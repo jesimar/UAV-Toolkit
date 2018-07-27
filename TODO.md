@@ -13,10 +13,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistem IFA:
 
-* Incluir MILP4s no IFA
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
 * Adicionar campos no arquivo de log como altitude do sonar, ligou led, bateu foto, etc.
-* IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
 * IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja. criar uma função chamada checagem inicial onde verifica, uma serie de arquivos de configuração se estão nos locais esperados.
 * Adicionar simplificador de rotas.
 * IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
@@ -26,7 +24,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema MOSA:
 
-* Incorporar planejador de missão CCQSP4m no MOSA.
+* Exec CCQSP4m no PC e HGA4m no PC. Verificar se todos os planejadores executam OFFBOARD.
 * MOSA deve tomar cuidado com o Exit(0), pois ele precisa avisar ao IFA antes de sair.
 * MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
 * MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
@@ -91,9 +89,6 @@ Traceback (most recent call last):
 AttributeError: 'NoneType' object has no attribute 'lat'
 ```
 
-## Alguns Dilemas
-
-
 ## Trabalho Alunos de IC:
 
 * Instalar/Configurar SO Yocto na Intel Galileo (Feito)
@@ -139,8 +134,9 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Drone: Calibrar o meu drone melhor (PIDs), segundo o Onofre eles estão descalibrados.
 * Drone: Corrigir problema em que o AP mostra status informando CRITICAL, acredito que tenha algum problema de hardware.
 
-* UAV-IFA Incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
-* UAV-IFA Abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
+* UAV-IFA incluir o método MILP4s
+* UAV-IFA incluir verificação de aeronaves intrusas incluindo informações como número de aeronaves intrusas, rotas percorridas por tais aeronaves, distância da aeronave intrusa mais próxima, projeção futura da aeroanve para verificar chance de colisão, conforme descrito em Mattei 2015.
+* UAV-IFA abrir o paraquedas somente se der 2Dfix ou 1Dfix ou 0Dfix, por mais de 2 segundos.
 * UAV-IFA deve verificar a rota antes de enviar para o PA. Verificar se existe mais de um comando de TAKEOFF. Só pode haver um comando desse tipo.
 * UAV-IFA deve verificar se existe mais de um comando do tipo LAND, LAND_VERTICAL ou RTL. Só pode haver um comando desse tipo.
 * UAV-IFA deve ter um objeto com todos os waypoints da rota.
@@ -150,8 +146,9 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-IFA Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
 * UAV-IFA definir melhor o home da missão e o launch da missão.
 * UAV-IFA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
+* UAV-IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
 
-* UAV-MOSA Incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
+* UAV-MOSA incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
 * UAV-MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * UAV-MOSA deve ter um objeto com todos os waypoints da rota.
 * UAV-MOSA deve aguardar até que o modo seja STANDBY, antes disso nao adianta calcular nada.

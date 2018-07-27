@@ -27,6 +27,7 @@ import uav.ifa.module.path_replanner.GA_GA_4s;
 import uav.ifa.module.path_replanner.GA_GH_4s;
 import uav.ifa.module.path_replanner.GH4s;
 import uav.ifa.module.path_replanner.MPGA4s;
+import uav.ifa.module.path_replanner.MS4s;
 import uav.ifa.module.path_replanner.Replanner;
 import uav.ifa.struct.Failure;
 import uav.ifa.struct.ReaderFileConfigIFA;
@@ -259,6 +260,8 @@ public class DecisionMaking {
             replanner = new GA4s(drone);
         } else if (configLocal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
             replanner = new MPGA4s(drone);
+        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.MS4S)) {
+            replanner = new MS4s(drone);
         } else if (configLocal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
             replanner = new DE4s(drone);
         } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {

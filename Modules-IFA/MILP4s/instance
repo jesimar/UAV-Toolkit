@@ -1,0 +1,324 @@
+<factorys number>
+11
+<node id>
+0
+<node type>
+2
+<node name>
+Run
+<node class name>
+ProOF.apl.factorys.fRun
+<chooses>
+4
+<node id>
+108
+<node type>
+2
+<node name>
+Models
+<node class name>
+ProOF.apl.factorys.fCplexFull
+<chooses>
+4
+<node id>
+138
+<node type>
+2
+<node name>
+UAV-Approach
+<node class name>
+ProOF.apl.UAV.fUAVApproach
+<chooses>
+1
+<node id>
+386
+<node type>
+2
+<node name>
+Vehicle
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.fLinearVehicle
+<chooses>
+0
+<node id>
+389
+<node type>
+2
+<node name>
+Mission
+<node class name>
+ProOF.apl.UAV.gen.linear.mission.fLinearMission
+<chooses>
+2
+<node id>
+402
+<node type>
+2
+<node name>
+Instance Reader
+<node class name>
+ProOF.apl.UAV.PPCCS.fPPCCSInstance
+<chooses>
+3
+<node id>
+407
+<node type>
+2
+<node name>
+State Bound
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearStateBound
+<chooses>
+0
+<node id>
+410
+<node type>
+2
+<node name>
+Control Bound
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearControlBound
+<chooses>
+0
+<node id>
+413
+<node type>
+2
+<node name>
+Dynamic
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic
+<chooses>
+0
+<node id>
+422
+<node type>
+2
+<node name>
+Specific
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearSpecific
+<chooses>
+0
+<node id>
+400
+<node type>
+2
+<node name>
+PPCCS Operators
+<node class name>
+ProOF.apl.UAV.PPCCS.fPPCCSOperator
+<chooses>
+0
+<nodes number>
+15
+<node id>
+5
+<node type>
+1
+<node name>
+Cplex Model
+<node class name>
+ProOF.CplexOpt.CplexModel
+<parameters number>
+0
+<node id>
+113
+<node type>
+0
+<node name>
+UAVfull
+<node class name>
+ProOF.apl.UAV.UAVfull
+<parameters number>
+11
+1
+3600.0
+0
+1000000000
+1.0E-4
+128.0
+2
+0
+0
+0
+1
+<node id>
+140
+<node type>
+0
+<node name>
+PPCCS
+<node class name>
+ProOF.apl.UAV.PPCCS.PPCCSApproach
+<parameters number>
+1
+12
+<node id>
+141
+<node type>
+0
+<node name>
+Linear Delta
+<node class name>
+ProOF.apl.UAV.abst.uncertainty.Delta
+<parameters number>
+1
+0.1
+<node id>
+144
+<node type>
+0
+<node name>
+PPCCS State Unc.
+<node class name>
+ProOF.apl.UAV.PPCCS.PPCCSStateUncertainty
+<parameters number>
+3
+0.01
+0.0
+0.0
+<node id>
+145
+<node type>
+0
+<node name>
+PPCCS Plot
+<node class name>
+ProOF.apl.UAV.PPCCS.PPCCSPlot
+<parameters number>
+2
+0
+2.5
+<node id>
+387
+<node type>
+0
+<node name>
+Parts
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.fLinearVehicle$PartsVehicle
+<parameters number>
+0
+<node id>
+392
+<node type>
+0
+<node name>
+PPCCS
+<node class name>
+ProOF.apl.UAV.PPCCS.PPCCSMission
+<parameters number>
+0
+<node id>
+406
+<node type>
+0
+<node name>
+Instance 3D PPCCS
+<node class name>
+ProOF.apl.UAV.PPCCS.fPPCCSInstance$Instance3DPPCCS
+<parameters number>
+2
+config.sgl
+map.sgl
+<node id>
+408
+<node type>
+0
+<node name>
+DetNorm1(Vt)
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearStateBound$DetNorm1VtUB
+<parameters number>
+0
+<node id>
+411
+<node type>
+0
+<node name>
+DetNorm1(Ut)
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearControlBound$DetNorm1UtUB
+<parameters number>
+0
+<node id>
+414
+<node type>
+0
+<node name>
+Air-Free
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirFree
+<parameters number>
+0
+<node id>
+418
+<node type>
+0
+<node name>
+Dynamic dt
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$DynamicDt
+<parameters number>
+4
+24
+24.0
+30
+2
+<node id>
+423
+<node type>
+0
+<node name>
+Empty
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearSpecific$Empty
+<parameters number>
+0
+<node id>
+401
+<node type>
+0
+<node name>
+Full
+<node class name>
+ProOF.apl.UAV.PPCCS.fPPCCSOperator$Full
+<parameters number>
+0
+---------- summarizing ----------
+Run;Cplex Model
+Models;UAVfull
+UAV-Approach;PPCCS
+Vehicle;Parts
+Mission;PPCCS
+Instance Reader;Instance 3D PPCCS
+State Bound;DetNorm1(Vt)
+Control Bound;DetNorm1(Ut)
+Dynamic;Air-Free
+Specific;Empty
+PPCCS Operators;Full
+Threads;1
+TiLim;3600.0
+HistoryTime;0
+ItLim;1000000000
+EpGap;1.0E-4
+WorkMem(MB);128.0
+NodeSel;BestEst
+RootAlg;AutoAlg
+MIPEmphasis;Balanced
+warning;false
+output;true
+Avoid-N-risk;12
+Delta;0.001
+std-position-xy;2.0
+std-height-z;1.0
+inc-factor;0.1
+Enable plot;true
+resolution;2.5
+Configuration for PPCCS 3D;PPCCSConfig3D.sgl
+Map for PPCCS 3D half;PPCCSmap.sgl
+Waypoints;30
+time horizon;30.0
+Max-velocity;30.0
+Max-control;2.0

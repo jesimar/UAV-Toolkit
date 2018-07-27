@@ -41,12 +41,6 @@ public abstract class Planner {
         this.mission3D = new Mission3D();
         this.missionGeo = new Mission();
     }
-            
-    public abstract boolean execMission(int i);
-    
-    public abstract boolean updateFileConfig(int i);
-    
-    public abstract boolean parseRoute3DtoGeo(int i);
     
     public abstract void clearLogs();
     

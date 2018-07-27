@@ -188,7 +188,7 @@ public class MissionManager {
     private void readMission3D(){
         try {
             if (configLocal.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
-                String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMission();
+                String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMissionHGA4m();
                 ReaderFileMission.mission3D(new File(path), wptsMission3D);
             }
         } catch (FileNotFoundException ex) {

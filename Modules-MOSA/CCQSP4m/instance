@@ -295,8 +295,8 @@ Power dt
 ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirDt
 <parameters number>
 4
-14
-14.0
+30
+30
 4.0
 2.0
 <node id>

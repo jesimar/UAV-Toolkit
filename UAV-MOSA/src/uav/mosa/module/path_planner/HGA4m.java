@@ -30,7 +30,6 @@ public class HGA4m extends Planner{
         super(drone, waypointsMission);
     }   
     
-    @Override
     public boolean execMission(int i) {
         boolean itIsOkUpdate = updateFileConfig(i);
         boolean itIsOkpathAB = definePathAB(i);        
@@ -40,7 +39,6 @@ public class HGA4m extends Planner{
         return itIsOkUpdate && itIsOkpathAB && itIsOkExec && itIsOkRoute && itIsOkParse;
     }
     
-    @Override
     public boolean updateFileConfig(int i) {
         try {
             double px1 = waypointsMission.getPosition3D(i).getX();
@@ -54,14 +52,14 @@ public class HGA4m extends Planner{
             
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = configLocal.getTimeExec(i);
+            String time = configLocal.getTimeExecHGA4m(i);
             String timeH = String.format("%d", (int)(dist));
             //usando metade dos waypoints DeltaT=2
             String qtdWpt = String.format("%d", (int)(dist/2));
-            String delta = configLocal.getDelta();
-            String maxVel = configLocal.getMaxVelocity();
-            String maxCtrl = configLocal.getMaxControl();
-            UtilIO.copyFileMofifMOSA(src_ga, dst_ga, time, 207, delta, 304,
+            String delta = configLocal.getDeltaHGA4m();
+            String maxVel = configLocal.getMaxVelocityHGA4m();
+            String maxCtrl = configLocal.getMaxControlHGA4m();
+            UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, time, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
@@ -151,7 +149,6 @@ public class HGA4m extends Planner{
         }
     }
     
-    @Override
     public boolean parseRoute3DtoGeo(int i){
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";

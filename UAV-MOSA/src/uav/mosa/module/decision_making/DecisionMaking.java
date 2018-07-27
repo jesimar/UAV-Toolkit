@@ -19,6 +19,7 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.util.UtilString;
 import uav.mosa.module.communication_control.CommunicationGCS;
+import uav.mosa.module.path_planner.CCQSP4m;
 import uav.mosa.module.path_planner.HGA4m;
 import uav.mosa.struct.ReaderFileConfigMOSA;
 import uav.mosa.module.path_planner.Planner;
@@ -59,20 +60,31 @@ public class DecisionMaking {
         statePlanning = StatePlanning.PLANNING;
         
         if (config.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
-            boolean respM = false;
-            if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND)){
-                respM = sendMissionsToDroneCalcGround();
-            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND_AND_AIR)) {
-                respM = sendMissionsToDroneCalcGroundAndAir();
-            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.AIR)) {
-                respM = sendMissionsToDroneCalcAir();
-            }
-            if (respM){
-                statePlanning = StatePlanning.READY;
-                StandardPrints.printMsgEmph("send mission to drone with success");
-            }else {
-                statePlanning = StatePlanning.DISABLED;
-                StandardPrints.printMsgWarning("send mission to drone failure");
+            if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
+                boolean respM = false;
+                if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND)){
+                    respM = sendMissionsToDroneCalcGround();
+                }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
+                    respM = sendMissionsToDroneCalcGroundAndAir();
+                }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.AIR)) {
+                    respM = sendMissionsToDroneCalcAir();
+                }
+                if (respM){
+                    statePlanning = StatePlanning.READY;
+                    StandardPrints.printMsgEmph("send mission to drone with success");
+                }else {
+                    statePlanning = StatePlanning.DISABLED;
+                    StandardPrints.printMsgWarning("send mission to drone failure");
+                }
+            }else if (config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
+                boolean respM = sendMissionsToDroneCalcGroundCCQSP4m();
+                if (respM){
+                    statePlanning = StatePlanning.READY;
+                    StandardPrints.printMsgEmph("send mission to drone with success");
+                }else {
+                    statePlanning = StatePlanning.DISABLED;
+                    StandardPrints.printMsgWarning("send mission to drone failure");
+                }
             }
         } else if (config.getSystemExec().equals(TypeSystemExecMOSA.FIXED_ROUTE)){
             boolean respF = sendFixedMissionToDrone();
@@ -90,11 +102,11 @@ public class DecisionMaking {
         statePlanning = StatePlanning.PLANNING;        
         if (config.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
             boolean respM = false;
-            if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND)){
+            if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND)){
                 respM = sendMissionsToDroneCalcGroundOffboard(communicationGSC);
-            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.GROUND_AND_AIR)) {
+            }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
                 respM = sendMissionsToDroneCalcGroundAndAir();
-            }else if (config.getMissionProcessingLocation().equals(LocalCalcMission.AIR)) {
+            }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.AIR)) {
                 respM = sendMissionsToDroneCalcAir();
             }
             if (respM){
@@ -121,7 +133,7 @@ public class DecisionMaking {
             long timeInit2 = System.currentTimeMillis();
             StandardPrints.printMsgEmph("route: " + nRoute);
             statePlanning = StatePlanning.PLANNING;
-            boolean respMission = planner.execMission(nRoute);
+            boolean respMission = ((HGA4m)(planner)).execMission(nRoute);
             if (!respMission){
                 return false;
             }
@@ -156,7 +168,6 @@ public class DecisionMaking {
         return true;
     }
     
-        
     private boolean sendMissionsToDroneCalcAir() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc air");
@@ -171,7 +182,7 @@ public class DecisionMaking {
             long timeInit2 = System.currentTimeMillis();
             StandardPrints.printMsgEmph("route: " + nRoute);
             statePlanning = StatePlanning.PLANNING;
-            boolean respMission = planner.execMission(nRoute);
+            boolean respMission = ((HGA4m)(planner)).execMission(nRoute);
             if (!respMission){
                 return false;
             }
@@ -220,7 +231,7 @@ public class DecisionMaking {
             long timeInit2 = System.currentTimeMillis();
             StandardPrints.printMsgEmph("route: " + nRoute);
             statePlanning = StatePlanning.PLANNING;
-            boolean respMission = planner.execMission(nRoute);
+            boolean respMission = ((HGA4m)(planner)).execMission(nRoute);
             if (!respMission){
                 return false;
             }
@@ -266,6 +277,36 @@ public class DecisionMaking {
         long timeFinal1 = System.currentTimeMillis();
         long time1 = timeFinal1 - timeInit1;
         StandardPrints.printMsgEmph("Time in Missions (ms): " + time1);
+        return true;
+    }
+    
+    private boolean sendMissionsToDroneCalcGroundCCQSP4m() {
+        long timeInit = System.currentTimeMillis();
+        StandardPrints.printMsgEmph("send missions to drone calc ground ccqsp4m");
+        planner = new CCQSP4m(drone, wptsMission3D);
+        planner.clearLogs();
+        statePlanning = StatePlanning.WAITING;
+        
+        statePlanning = StatePlanning.PLANNING;
+        boolean respMission = ((CCQSP4m)(planner)).execMission();
+        if (!respMission){
+            return false;
+        }
+        statePlanning = StatePlanning.READY;
+        
+        Mission mission = new Mission();
+        String path = config.getDirPlanner() + "routeGeo.txt";                
+        boolean respFile = readFileRoute(mission, path);
+        if (!respFile){
+            return false;
+        }
+        mission.printMission();
+        if (mission.getMission().size() > 0){
+            dataAcquisition.setMission(mission);
+        }
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time);
         return true;
     }
     
@@ -336,18 +377,51 @@ public class DecisionMaking {
         }
     }     
     
+    private boolean readFileRoute(Mission wps, String path){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String sCurrentLine;
+            boolean firstTime = true;
+            double lat = 0.0;
+            double lng = 0.0;
+            double alt = 0.0;
+            while ((sCurrentLine = br.readLine()) != null) {
+                sCurrentLine = UtilString.changeValueSeparator(sCurrentLine);
+                String s[] = sCurrentLine.split(";");
+                lat = Double.parseDouble(s[0]);
+                lng = Double.parseDouble(s[1]);
+                alt = Double.parseDouble(s[2]);
+                if (firstTime){
+                    wps.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, alt));
+                    firstTime = false;
+                }
+                wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
+            }
+            if (wps.getMission().size() > 0){
+                wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
+            }
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: readFileRoute()");
+            return false;
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException]: readFileRoute()");
+            return false;
+        }
+    }
+    
     public StatePlanning getStatePlanning() {
         return statePlanning;
     }
     
     private boolean sendMissionsToDroneCalcGroundOffboard(CommunicationGCS communicationGCS) {
         String typeAircraft = drone instanceof FixedWing ? "FixedWing" : "RotaryWing";
-        String attributes = config.getFileWaypointsMission()  + ";" + wptsMission3D.size()
+        String attributes = config.getFileWaypointsMissionHGA4m()  + ";" + wptsMission3D.size()
                 + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
                 + ";" + config.getDirPlanner() + ";" + config.getCmdExecPlanner() 
                 + ";" + configGlobal.getOperationMode() + ";" + configGlobal.getAltRelMission()
-                + ";" + config.getTimeExec() + ";" + config.getDelta() 
-                + ";" + config.getMaxVelocity() + ";" + config.getMaxControl() 
+                + ";" + config.getTimeExecHGA4m() + ";" + config.getDeltaHGA4m() 
+                + ";" + config.getMaxVelocityHGA4m() + ";" + config.getMaxControlHGA4m() 
                 + ";" + drone.getSpeedCruize() + ";" + typeAircraft;
         communicationGCS.sendDataPlannerInGCS(attributes);
         do {

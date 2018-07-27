@@ -4,6 +4,8 @@
 
 ### Features:
 
+* Added support to the MS4m path replanner
+* Added support to the CCQSP4m path planner
 * Updated the documentation
 * Removed directory Missions-Ardupilot-SITL
 * Removed Code UAV-Ensemble-GA-GA_GA-GH

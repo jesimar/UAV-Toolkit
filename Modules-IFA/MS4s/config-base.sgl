@@ -1,0 +1,30 @@
+# Uncertainty of the position of the aircraft (P0) [Fixed Wing 10.0] [Multirotor 0.25]
+0.40
+# Air resistance constant (G) [G = Amax/(Vterm 2)] [Fixed Wing 0.0021421488] [Multirotor 0.04]
+0.04
+# Time Step (dt) 
+1
+# Initial State (px, py, vel, ang) 
+43.01612907871825 26.600350507390267 1.5 0.0
+# Maximum Velocity (m/s) [Terminal] [Fixed Wing 30.55] [Multirotor 3.0]
+3.0
+# Minimum Velocity (m/s) [Lift] [Fixed Wing 11.11] [Multirotor 1.0]
+1.0
+# Rudder Maximum - Turn on Maximum (Radians) (+30) [Fixed Wing +0.2617] [Multirotor +3.1415]
+3.1415
+# Rudder Minimum - Turn on Minimum (Radians) (-30) [Fixed Wing -0.2617] [Multirotor -3.1415] 
+-3.1415
+# Maximum Acceleration (m/(s*s))
+0.2
+# Time Horizon (Planning Horizon) (K) 
+30
+# Dimension window plot (Width x Heigth)
+800	700
+# Coordinate system [false - Cartesian, true - Geographical]
+false
+# Risk allocated in the flight (Delta) 
+0.01
+# Type of failure [0 - Without failure, 1 - Motor, 2 - Battery, 3 - Turn on only to the right, 4 - Turn on only to the left]
+2
+# Online [Integrated with Player Stage - Using Socket]
+false

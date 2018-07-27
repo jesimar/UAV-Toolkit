@@ -11,7 +11,4 @@ then
 elif [ "$1" = "edison" ]; 
 then
 	java -jar -Djava.library.path="/media/sdcard/installs/cplex/bin/x86_linux/" hga4m.jar > output-simulation.log
-elif [ "$1" = "rpi" ]; 
-then #alterar caminho
-	java -jar -Djava.library.path="/media/sdcard/installs/cplex/bin/x86_linux/" hga4m.jar > output-simulation.log
 fi
