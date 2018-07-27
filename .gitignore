@@ -19,7 +19,7 @@ venv/
 
 #ignorar todos os arquivos por nome e extensao
 
-/UAV-Manager/manager.properties
+*manager.properties
 
 cplex.jar
 mav.parm
