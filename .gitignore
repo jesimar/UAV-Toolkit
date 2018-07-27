@@ -5,6 +5,7 @@ build/
 test/
 venv/
 
+
 #ignorar todos os arquivos por extensao
 
 *~
@@ -16,7 +17,7 @@ venv/
 *.err
 *.rar
 *.zip
-
+*gcs.bat
 #ignorar todos os arquivos por nome e extensao
 
 *manager.properties
