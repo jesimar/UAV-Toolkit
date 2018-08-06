@@ -50,10 +50,11 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 **Arquiteturas suportadas:**
 
-* x86 (32 bits) (ainda não testado)
-* x86 (64 bits) (Testado com Intel i3, i7 (Notebook), Intel Atom (Intel Edison))
-* ARM (32 bits) (ainda não testado)
-* ARM (64 bits) (Testado com ARMv7 (Raspberry Pi 2))
+| Arquitetura x86                                                     | Arquitetura ARM                                         |
+|---------------------------------------------------------------------|---------------------------------------------------------|
+| ![](./Figures/logo-architecture-x86.png)                            | ![](./Figures/logo-architecture-arm.png)                |
+| Testado com 64 bits no Intel i3, i7 (PC), Intel Atom (Intel Edison) | Testado com 64 bits no ARMv7 (Raspberry Pi 2)           |
+| Ainda não testado em x86 32 bits                                    | Ainda não testado em ARM 32 bits                        |
 
 OBS: A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Apenas os módulos que irão ser executados em voo podem ser instalados. Os planejadores que utilizam a biblioteca CPLEX não são suportados.
 
