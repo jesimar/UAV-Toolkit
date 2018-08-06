@@ -48,15 +48,17 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 ### Pré-Requisitos de Instalação:
 
-**Arquiteturas suportadas: **
+**Arquiteturas suportadas:**
+
 * x86 (32 bits) (ainda não testado)
 * x86 (64 bits) (Testado com Intel i3, i7 (Notebook), Intel Atom (Intel Edison))
 * ARM (32 bits) (ainda não testado)
 * ARM (64 bits) (Testado com ARMv7 (Raspberry Pi 2))
 
-**OBS: ** A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Apenas os módulos que irão ser executados em voo podem ser instalados. Os planejadores que utilizam a biblioteca CPLEX não são suportados.
+OBS: A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Apenas os módulos que irão ser executados em voo podem ser instalados. Os planejadores que utilizam a biblioteca CPLEX não são suportados.
 
-**Sistemas operacionais suportados: **
+**Sistemas operacionais suportados:**
+
 * Linux (Testado com o Ubuntu e o Manjaro)
 * Windows (Testado com o Windows 10)
 * Mac OS X (ainda não testado)
@@ -100,7 +102,7 @@ ou
 **Software necessário para execução de alguns planejadores de rotas: **
 * IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC) (Licença Proprietária)
 
-**OBS: ** Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
+OBS: Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
 
 Software necessário para criar uma nova missão para o Drone:
 * Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC) (Licença Apache 2.0)
