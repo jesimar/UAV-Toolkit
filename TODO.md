@@ -11,25 +11,24 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para bater fotos e fazer filmagem com a câmera.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
 
-## Sistem IFA:
+## Sistema IFA:
 
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
 * Adicionar campos no arquivo de log como altitude do sonar, ligou led, bateu foto, etc.
 * IFA deve verificar se o arquivo geobase.txt encontra-se no diretório, pois irei abortar a missão caso não esteja. criar uma função chamada checagem inicial onde verifica, uma serie de arquivos de configuração se estão nos locais esperados.
 * Adicionar simplificador de rotas.
-* IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
-1. Verificar bateria, GPS
-2. Verificar missão antes de enviar ao AP, caso seja inviável não enviá-la.
-3. Executa a missão.
+* Remover prints coloridos aplicação.
 
 ## Sistema MOSA:
 
+* Verificar funcionamento completo do CCQSP4m.
 * Exec CCQSP4m no PC e HGA4m no PC. Verificar se todos os planejadores executam OFFBOARD.
 * MOSA deve tomar cuidado com o Exit(0), pois ele precisa avisar ao IFA antes de sair.
 * MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
 * MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
 * Adicionar simplificador de rotas.
 * Adicionar sreenshot-pc, video-pc, buzzer-pc, alarm-pc.
+* Remover prints coloridos aplicação (Remover também do UAV-Generic).
 
 ## Sistema UAV-GCS
 
@@ -143,12 +142,15 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-IFA deve verificar se existe mais de um comando do tipo LAND, LAND_VERTICAL ou RTL. Só pode haver um comando desse tipo.
 * UAV-IFA deve ter um objeto com todos os waypoints da rota.
 * UAV-IFA discutir uma forma fácil de fazer a projeção da aeronave no futuro após ocorrer a falha crítica.
-* UAV-IFA incluir o algoritmo MultiStart
 * UAV-IFA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
 * UAV-IFA Fazer rota fixa para testar o IFA. Estressar o IFA para verificar reações.
 * UAV-IFA definir melhor o home da missão e o launch da missão.
 * UAV-IFA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 * UAV-IFA recebe a missão via socket e retorna uma mensagem se aceitou ou não a rota (motivo)
+* UAV-IFA deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
+1. Verificar bateria, GPS
+2. Verificar missão antes de enviar ao AP, caso seja inviável não enviá-la.
+3. Executa a missão.
 
 * UAV-MOSA incorporar funcionalidade de recalculo de rota após atingir um determinado waypoint.
 * UAV-MOSA deve encerrar sua execução quando o drone levantar o voo e depois pousar.
@@ -158,9 +160,9 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * UAV-MOSA definir melhor o home da missão e o launch da missão.
 * UAV-MOSA melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
-* UAV-GCS: Executar scripts automaticamente
 * UAV-GCS: Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
 * UAV-GCS: Desenvolver as seguintes funcionalidades: HOVER, STOP_MISSION
+* UAV-GCS: Melhorar formato JSON da comunicação entre UAV-IFA e UAV-MOSA.
 
 * UAV-SOA-Interface: Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar. 
 * UAV-SOA-Interface: Observar o porquê o drone esta pousando no final da missão.

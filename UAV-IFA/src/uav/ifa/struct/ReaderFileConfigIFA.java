@@ -130,7 +130,7 @@ public class ReaderFileConfigIFA {
                 dirReplanner = "../Modules-IFA/MPGA4s/";
             }else if (methodReplanner.equals(TypeReplanner.MS4S)){
                 typeReplanner = TypeReplanner.MS4S;
-                dirReplanner = "../Modules-IFA/MS4S/";
+                dirReplanner = "../Modules-IFA/MS4s/";
             }else if (methodReplanner.equals(TypeReplanner.GA_GA_4S)){
                 typeReplanner = TypeReplanner.GA_GA_4S;
                 dirReplanner = "../Modules-IFA/GA-GA-4s/";

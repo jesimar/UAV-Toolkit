@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
-import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileMission;
@@ -51,7 +50,7 @@ public class HGA4m extends Planner{
             String path = dir + fileWaypointsMission;
             ReaderFileMission.mission3D(new File(path), waypointsMission);
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Warning [FileNotFoundException] readMission()");
+            System.err.println("Warning [FileNotFoundException] readMission()");
             ex.printStackTrace();
         }
     }
@@ -86,7 +85,7 @@ public class HGA4m extends Planner{
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            System.out.println("Warning [FileNotFoundException]: updateFileConfig()");
             return false;
         }
     }
@@ -133,7 +132,7 @@ public class HGA4m extends Planner{
             vy1 = vy2;
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: definePathAB()");
+            System.out.println("Warning [FileNotFoundException]: definePathAB()");
             return false;
         } 
     }  
@@ -167,7 +166,7 @@ public class HGA4m extends Planner{
             print.close();
             return true;
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException]: createFileFinalRoute()");
+            System.out.println("Warning [IOException]: createFileFinalRoute()");
             return false;
         }
     }
@@ -192,7 +191,7 @@ public class HGA4m extends Planner{
                 countLines++;
             }
             if (countLines == 0){
-                StandardPrints.printMsgWarning("Route-Empty");
+                System.out.println("Route-Empty");
                 if (!drone.statusUAV.armed){
                     System.exit(0);
                 }
@@ -201,7 +200,7 @@ public class HGA4m extends Planner{
             printGeo.close();
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException] parseRoute3DtoGeo()");
+            System.out.println("Warning [FileNotFoundException] parseRoute3DtoGeo()");
             return false;
         } 
     }

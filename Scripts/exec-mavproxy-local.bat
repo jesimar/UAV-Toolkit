@@ -1,9 +1,8 @@
-#!/bin/bash
-#Author: Jesimar da Silva Arantes
-#Date: 19/10/2017
-#Last Update: 19/10/2017
-#Description: Script that runs the MAVProxy software on the local computer for SITL tests on the PC.
-#Descrição: Script que executa o software MAVProxy no computador local para testes SITL no PC.
+REM #Author: Jesimar da Silva Arantes
+REM #Date: 19/10/2017
+REM #Last Update: 19/10/2017
+REM #Description: Script that runs the MAVProxy software on the local computer for SITL tests on the PC.
+REM #Descrição: Script que executa o software MAVProxy no computador local para testes SITL no PC.
 
 IP=127.0.0.1
 PORT_IN_1=5760

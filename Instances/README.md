@@ -2,19 +2,22 @@
 
 Este diretório agrupa um conjunto de arquivos de instâncias Artificiais e Reais utilizadas nos planejadores e replanejadores.
 
-* Instancias Artificiais: Foram geradas de forma automática por algum algoritmo (programa localizado [aqui](https://github.com/jesimar/UAV-Tools/tree/master/CreateMapArtificial)).
+* **Instancias Artificiais:** Foram geradas de forma automática por algum algoritmo (programa localizado [aqui](https://github.com/jesimar/UAV-Tools/tree/master/CreateMapArtificial)).
 
-* Instancias Reais: Foram geradas de forma manual, em geral, usando o Google Earth e usando o software [UAV-Mission-Creator](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Mission-Creator).
+* **Instancias Reais:** Foram geradas de forma manual, em geral, usando o Google Earth e usando o software [UAV-Mission-Creator](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Mission-Creator).
 
 A Figura abaixo dá uma visão geral dos arquivos de instâncias disponibilizados nesse diretório.
 
 ![](../Figures/instances.png)
 
-## Formatos de Saídas: 
+## Formato de Entrada: 
 
-* SGL -> formato próprio de mapa - utilizado pelo ProOF. Padrão, mais leve, porém também mais difícil de entender e de ler.
-* JSON -> formato padrão de mapa fácil de entender e ler. Padrão, mais pesado que o SGL, ocupa o quádruplo do SGL em disco (HD).
-* XML -> formato padrão de mapa fácil de ler. Padrão mais pesado, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
+* **SGL** -> formato de entrada próprio do mapa, utilizado pelo Framework ProOF. Este padrão é mais leve, porém também mais difícil de entender e de ler.
+
+## Formato de Saída: 
+
+* **JSON** -> formato de saída do mapa é, em geral, fácil de entender e ler. Este padrão é mais pesado que o SGL, ocupa em média o quádruplo do SGL em disco (HD).
+* **XML** -> formato de saída do mapa é, em geral, fácil de ler. Este padrão é mais pesado que o SGL e JSON, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
 
 ## Arquivo de Instância do Path Planner:
 

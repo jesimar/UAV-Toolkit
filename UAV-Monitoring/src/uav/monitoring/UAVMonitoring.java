@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
-import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.hardware.aircraft.RotaryWing;
@@ -46,7 +45,7 @@ public final class UAVMonitoring {
             }while(file.exists());
             printLogAircraft = new PrintStream(file);
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogAircraft()");
+            System.err.println("Error [FileNotFoundException]: createFileLogAircraft()");
             ex.printStackTrace();
             System.exit(0);
         } 

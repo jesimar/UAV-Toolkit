@@ -8,7 +8,7 @@ import uav.generic.hardware.aircraft.Drone;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public final class UAVPosAnalyser {        
        

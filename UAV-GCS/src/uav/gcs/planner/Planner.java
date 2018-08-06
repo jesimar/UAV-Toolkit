@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
-import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.mission.Mission3D;
 
@@ -114,10 +113,10 @@ public abstract class Planner {
             comp.waitFor();
             return true;
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execMethod()");
+            System.out.println("Warning [IOException] execMethod()");
             return false;
         } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execMethod()");
+            System.out.println("Warning [InterruptedException] execMethod()");
             return false;
         }
     }
