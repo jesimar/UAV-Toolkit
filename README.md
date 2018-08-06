@@ -59,38 +59,46 @@ OBS: A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas li
 
 **Sistemas operacionais suportados:**
 
-* Linux (Testado com o Ubuntu e o Manjaro)
-* Windows (Testado com o Windows 10)
-* Mac OS X (ainda não testado)
-
-| Linux                    | Windows                    | macOS                   |
-|--------------------------|----------------------------|-------------------------|
+| Linux                            | Windows                            | Mac OS                         |
+|----------------------------------|------------------------------------|--------------------------------|
 | ![](./Figures/logo-os-linux.png) | ![](./Figures/logo-os-windows.png) | ![](./Figures/logo-os-mac.png) |
-| Testado com Ubuntu e Manjaro | Testado com Windows 10 | Ainda não testado |
+| Testado com Ubuntu e Manjaro     | Testado com Windows 10             | Ainda não testado              |
 
-**Companion Computers suportados: **
-* Intel Edison (Testado com Sistema Operacional Yocto Linux)
-* Raspberry Pi (Testado com Sistema Operacional Raspbian)
-* Odroid (ainda não testado)
-* BeagleBoneBlack (ainda não testado)
+**Companion Computers suportados:**
 
-**Pilotos automáticos suportados: **
-* APM (Testado)
-* Pixhawk (Testado)
+| Intel Edison                      | Raspberry Pi                    | BeagleBone Green                    | Odroid 
+|-----------------------------------|---------------------------------|-------------------------------------|-----------------------------------|
+| ![](./Figures/logo-cc-edison.png) | ![](./Figures/logo-cc-rpi.png)  | ![](./Figures/logo-cc-bb-green.png) | ![](./Figures/logo-cc-odroid.png) |
+| Testado com SO Yocto Linux        | Testado com SO Raspbian e RPi 2 | Ainda não testado                   | Ainda não testado                 |
 
-**VANTs suportados: **
+Outros CC suportados:
+
+* Intel Galileo (ainda não testado)
+* BeagleBone Black (ainda não testado)
+
+**Pilotos automáticos suportados:**
+
+| APM                            | Pixhawk                            |
+|--------------------------------|------------------------------------|
+| ![](./Figures/logo-ap-apm.png) | ![](./Figures/logo-ap-pixhawk.png) |
+| Testado com APM v2.8           | Testado com Pixhawk v1.0           |
+
+**VANTs suportados:**
+
 * Quadricóptero (Testado com iDroneAlpha)
 * Hexacóptero (ainda não testado)
 * Asa Fixa (Ararinha) (ainda não testado)
 
-**Softwares básicos necessários para execução: **
+**Softwares básicos necessários para execução:**
+
 * Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)] (Instalar no PC e no CC)
 * Python 2.7.* [[Link](https://www.python.org/)] (Instalar no PC e no CC)
 * Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)] (Instalar no PC e no CC) (Licença Apache 2.0)
 * Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)] ((Instalar somente no PC) (Licença MIT, Apache 2.0 e GPL 3.0)
 * Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] (Instalar no PC e no CC) (Licença GPL 3.0)
 
-**Softwares necessários para acomponhar a execução da missão: **
+**Softwares necessários para acomponhar a execução da missão:**
+
 * QGroundControl [[Link](http://qgroundcontrol.com/)] (Instalar somente no PC) (Licença dupla Apache 2.0 e GPL 3.0)
 ou 
 * APM Planner 2.0 [[Link](http://ardupilot.org/planner2/index.html)] (Instalar somente no PC) (Licença GPL 3.0)
@@ -99,15 +107,18 @@ ou
 ou 
 * Qualquer outra Ground Control Station (GCS) do seu interesse (Instalar somente no PC)
 
-**Software necessário para execução de alguns planejadores de rotas: **
+**Software necessário para execução de alguns planejadores de rotas:**
+
 * IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC) (Licença Proprietária)
 
 OBS: Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
 
-Software necessário para criar uma nova missão para o Drone:
+**Software necessário para criar uma nova missão para o Drone:**
+
 * Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC) (Licença Apache 2.0)
 
-** Software necessário para fazer atualizações no projeto (incluindo melhorias): **
+** Software necessário para fazer atualizações no projeto (incluindo melhorias):**
+
 * IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC) (Licença dupla CDDL 1.0 e GPL 2.0)
 ou 
 * Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto) (Instalar somente no PC)
