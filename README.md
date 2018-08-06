@@ -86,9 +86,10 @@ Outros CC suportados:
 
 **VANTs suportados:**
 
-* Quadricóptero (Testado com iDroneAlpha)
-* Hexacóptero (ainda não testado)
-* Asa Fixa (Ararinha) (ainda não testado)
+| Quadricóptero                            | Hexacóptero                              | Asa Fixa                                |
+|------------------------------------------|------------------------------------------|-----------------------------------------|
+| ![](./Figures/logo-drone-quadcopter.png) | ![](./Figures/logo-drone-hexacopter.png) | ![](./Figures/logo-drone-fixedwing.png) |
+| Testado com iDroneAlpha                  | Ainda não testado                        | Ainda não testado (Ararinha)            |
 
 **Softwares básicos necessários para execução:**
 
