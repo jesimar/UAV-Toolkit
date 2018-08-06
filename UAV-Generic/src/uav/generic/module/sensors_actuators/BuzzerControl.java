@@ -26,7 +26,7 @@ public class BuzzerControl {
             File f = new File(configGlobal.getDirBuzzer());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "./buzzer";
+                cmd = "java -jar buzzer.jar";//"./buzzer";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python buzzer.py";
@@ -55,7 +55,7 @@ public class BuzzerControl {
             File f = new File(configGlobal.getDirBuzzer());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "./alarm";
+                cmd = "java -jar alarm.jar";//"./alarm";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python alarm.py";

@@ -25,6 +25,7 @@ sudo rm ../Modules-MOSA/HGA4m/*.log 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/routeGeo* 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/log_error.txt 2>/dev/null
+sudo rm ../Modules-MOSA/HGA4m/instance.err 2>/dev/null
 
 echo "Clear files in CCQSP4m [*.png *.log route3D* routeGeo* output.txt]"
 sudo rm ../Modules-MOSA/CCQSP4m/*.png 2>/dev/null
@@ -33,6 +34,7 @@ sudo rm ../Modules-MOSA/CCQSP4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/routeGeo* 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/log_error.txt 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/output.txt 2>/dev/null
+sudo rm ../Modules-MOSA/CCQSP4m/instance.err 2>/dev/null
 
 echo "Clear files in MPGA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 sudo rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null

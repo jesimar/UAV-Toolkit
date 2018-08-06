@@ -17,11 +17,6 @@ public class KeyWords {
     public static String WAYPOINT = "waypoint";
     
     /**
-     * Define a fronteira da missao
-     */
-    public static String FRONTIER = "frontier";
-    
-    /**
      * Define um ponto de falha na aeronave
      */
     public static String POINT_FAILURE = "point_failure";
@@ -65,6 +60,11 @@ public class KeyWords {
     public static String MAP_OBSTACLE = "map_obstacle";
     
     /**
+     * Define uma regiao que representa um obstaculo, mais especificamente um objeto
+     */
+    public static String MAP_OBSTACLE_OBJ = "map_obstacle_obj";
+    
+    /**
      * Define uma regiao que representa uma area penalizadora
      */
     public static String MAP_PENALTY = "map_penalty";
@@ -73,5 +73,10 @@ public class KeyWords {
      * Define uma regiao que representa uma area bonificadora
      */
     public static String MAP_BONUS = "map_bonus";
+    
+    /**
+     * Define a fronteira da missao
+     */
+    public static String MAP_FRONTIER = "map_frontier";
     
 }

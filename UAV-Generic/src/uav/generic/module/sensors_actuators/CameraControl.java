@@ -26,7 +26,7 @@ public class CameraControl {
             File f = new File(configGlobal.getDirCamera());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "./picture";
+                cmd = "java -jar picture.jar";//"./picture";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python picture.py";
@@ -55,7 +55,7 @@ public class CameraControl {
             File f = new File(configGlobal.getDirCamera());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "./video";
+                cmd = "java -jar video.jar";//"./video";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python video.py";

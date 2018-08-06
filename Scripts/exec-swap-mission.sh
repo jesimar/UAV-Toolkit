@@ -5,10 +5,10 @@
 #Description: Script that does the swap mission files to be executed automatically.
 #Descrição: Script que troca os arquivos da missão a ser executada de forma automática.
 
-DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
+#DIR_FILES=UAV-Mission-Creator/mission/kml/iros1
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros2
 #DIR_FILES=UAV-Mission-Creator/mission/kml/iros3
-#DIR_FILES=UAV-Mission-Creator/mission/kml/pos-iros1
+DIR_FILES=UAV-Mission-Creator/mission/kml/pos-iros1
 #DIR_FILES=UAV-Mission-Creator/mission/kml/icas
 #DIR_FILES=UAV-Mission-Creator/mission/kml/campus2
 
@@ -30,6 +30,9 @@ cp ../$DIR_FILES/map-nfz.sgl ../Modules-MOSA/HGA4m/. 2>/dev/null
 
 echo "copy file waypointsMission.txt to MOSA"
 cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/. 2>/dev/null
+
+echo "copy file mission_ccqsp.sgl to MOSA"
+cp ../$DIR_FILES/mission_ccqsp.sgl ../Modules-MOSA/CCQSP4m/. 2>/dev/null
 
 echo "copy file featureMission.txt to files"
 cp ../$DIR_FILES/featureMission.txt ../Modules-Global/Files/. 2>/dev/null

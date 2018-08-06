@@ -10,6 +10,12 @@ A Figura abaixo dá uma visão geral dos arquivos de instâncias disponibilizado
 
 ![](../Figures/instances.png)
 
+## Formatos de Saídas: 
+
+* SGL -> formato próprio de mapa - utilizado pelo ProOF. Padrão, mais leve, porém também mais difícil de entender e de ler.
+* JSON -> formato padrão de mapa fácil de entender e ler. Padrão, mais pesado que o SGL, ocupa o quádruplo do SGL em disco (HD).
+* XML -> formato padrão de mapa fácil de ler. Padrão mais pesado, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
+
 ## Arquivo de Instância do Path Planner:
 
 Os valores das coordenadas utilizadas são cartesianas.

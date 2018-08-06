@@ -88,4 +88,8 @@ public class PolyGeo {
         return String.format("%.16g %.16g %.16g\n", getCenterX(), getCenterY(), height);
     }  
     
+    public String toString2() {
+        return String.format("%s %.16g %.16g %.16g\n", name, getCenterX(), getCenterY(), vetz[0]);
+    }
+    
 }

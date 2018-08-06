@@ -11,10 +11,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para bater fotos e fazer filmagem com a câmera.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
 
-
-* Criar programa em Java para converter todos os nossos mapas .sgl para .json.
-* Criar programa em Java para converter todos os nossos mapas .sgl para .xml.
-
 ## Sistem IFA:
 
 * Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
@@ -33,11 +29,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * MOSA deve atua direto na câmera (sem perguntar nada ao IFA)
 * MOSA não atua direto com a missão (todas as informações devem ser passadas ao IFA)
 * Adicionar simplificador de rotas.
+* Adicionar sreenshot-pc, video-pc, buzzer-pc, alarm-pc.
 
 ## Sistema UAV-GCS
 
-* Desenvolver no UAV-GCS as seguintes funcionalidades: HOVER, STOP_MISSION
-* Melhorar os aspectos da interface gráfica do UAV-GCS.
+* Melhorar os aspectos da interface gráfica do UAV-GCS. Talvez juntar com UAV-Manager.
 * Fazer planejamento de caminho na GCS (GROUND_AIR e apenas AIR).
 * Só habilitar recurso se tiver sensor (atuador) no arquivo de config-global.properties.
 * Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
@@ -53,6 +49,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## UAV-Manager: 
 
+* Arrumar interface (windows)
+* QGroundControl.AppImage (windows)
 * Colocar para adicionar no PATH o diretório em que foi instalado o dronekit-sitl
 
 ## Geral
@@ -162,6 +160,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 
 * UAV-GCS: Executar scripts automaticamente
 * UAV-GCS: Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz).
+* UAV-GCS: Desenvolver as seguintes funcionalidades: HOVER, STOP_MISSION
 
 * UAV-SOA-Interface: Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar. 
 * UAV-SOA-Interface: Observar o porquê o drone esta pousando no final da missão.

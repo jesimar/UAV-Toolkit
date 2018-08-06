@@ -123,6 +123,16 @@ public class Mission {
         return size;
     } 
     
+    public int getSizeObstacleObject() {
+        int size = 0;
+        for (PolyGeo p : listPolyGeo){
+            if (p.getName().contains(KeyWords.MAP_OBSTACLE_OBJ)){
+                size++;
+            }
+        }
+        return size;
+    } 
+    
     public int getSizeBonus() {
         int size = 0;
         for (PolyGeo p : listPolyGeo){
@@ -231,6 +241,45 @@ public class Mission {
             }
         }
         return "";
+    }
+    
+    public Point3D getPointWaypoints3D(int i){
+        int j = 0;
+        for (Point3D point : listPoint3D){
+            if (point.getName().contains(KeyWords.WAYPOINT)){
+                if (j == i){
+                    return point;
+                }
+                j++;
+            }
+        }
+        return null;
+    }
+    
+    public Point3D getPointObstacleObject3D(int i){
+        int j = 0;
+        for (Point3D point : listPoint3D){
+            if (point.getName().contains(KeyWords.MAP_OBSTACLE_OBJ)){
+                if (j == i){
+                    return point;
+                }
+                j++;
+            }
+        }
+        return null;
+    }
+    
+    public Point3D getPointFrontier3D(int i){
+        int j = 0;
+        for (Point3D point : listPoint3D){
+            if (point.getName().contains(KeyWords.MAP_FRONTIER)){
+                if (j == i){
+                    return point;
+                }
+                j++;
+            }
+        }
+        return null;
     }
     
     public String getWaypointsMissionGeo(){
@@ -376,8 +425,8 @@ public class Mission {
     }
     
     public boolean hasFrontier(){
-        for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.FRONTIER)) {
+        for (PolyGeo poly : listPolyGeo){
+            if (poly.getName().contains(KeyWords.MAP_FRONTIER)) {
                 return true;
             }
         }

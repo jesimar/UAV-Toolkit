@@ -57,4 +57,8 @@ public class PointGeo {
     public String toString2() {
         return String.format("%.16g;%.16g;%.16g\n", lat, lng, alt);
     }
+    
+    public String toString3() {
+        return String.format("%s %.16g %.16g %.16g\n", name, lng, lat, alt);
+    }
 }

@@ -23,12 +23,24 @@ public class PrinterFrontier {
     public void printer() {
         try {
             PrintStream printMap = new PrintStream(fileMap);
-            for (int i = 0; i < mission.getSizeListLineGeo(); i++) {
-                System.out.println(mission.getListLine3D().get(i).getName());
-                if (mission.getListLine3D().get(i).getName().contains(KeyWords.FRONTIER)) {
+            for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_FRONTIER)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = frontier>");
-                    printMap.println(mission.getListLine3D().get(i).toStringVetX());
-                    printMap.println(mission.getListLine3D().get(i).toStringVetY());
+//                    printMap.println(mission.getListPoly3D().get(i).getVetx());
+//                    printMap.println(mission.getListPoly3D().get(i).getVety());
+                    int n = mission.getListPoly3D().get(i).getNpoints();
+                    String str = "";
+                    for (int j = 0; j < n-1; j++){
+                        str += mission.getListPoly3D().get(i).getVetx()[j] + ",";
+                    }
+                    str += mission.getListPoly3D().get(i).getVetx()[n-1];
+                    printMap.println(str);
+                    String str2 = "";
+                    for (int j = 0; j < n-1; j++){
+                        str2 += mission.getListPoly3D().get(i).getVety()[j] + ",";
+                    }
+                    str2 += mission.getListPoly3D().get(i).getVety()[n-1];
+                    printMap.println(str2);
                 }
             }
             printMap.close();

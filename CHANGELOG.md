@@ -1,16 +1,19 @@
 # Changelog
 
-## Version v2.1.0 (25/07/2018)
+## Version v2.1.0 (02/08/2018)
 
 ### Features:
 
-* Added support to the MS4m path replanner
-* Added support to the CCQSP4m path planner
-* Updated the documentation
-* Removed directory Missions-Ardupilot-SITL
-* Removed Code UAV-Ensemble-GA-GA_GA-GH
-* Removed Code UAV-Exec-PathReplanner-Massive
-* Removed Code UAV-Fixed-Route4s
+* Directory Instances with new formats JSON and XML for the maps.
+* Updated UAV-Mission-Manager to support missions with CCQSP4m path planner.
+* Added code UAV-Manager.
+* Added support to the MS4m path replanner.
+* Added support to the CCQSP4m path planner.
+* Updated the documentation.
+* Removed directory Missions-Ardupilot-SITL.
+* Removed Code UAV-Ensemble-GA-GA_GA-GH.
+* Removed Code UAV-Exec-PathReplanner-Massive.
+* Removed Code UAV-Fixed-Route4s.
 * Added resource in UAV-GCS to plot the mission (map and route).
 * Added resource to controller the drone using keyboard (UAV-GCS).
 * Added resource to controller the drone using voice (UAV-GCS).
@@ -21,12 +24,12 @@
 * Added new scripts about Raspberry Pi.
 * Added new functions in UAV-SOA-Interface (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
 * Added new functions in UAV-Generic (getNextWaypoint, getCountWaypoint, getDistanceToWptCurrent).
-* Added resource in UAV-Route-Standard (routes in geographical coordenates)
+* Added resource in UAV-Route-Standard (routes in geographical coordenates).
 * Updated UAV-Generic to support the Raspberry Pi.
 * Removed Keyboard-Commands, Voice-Commands, UAV-Keyboard-Commands, UAV-Voice-Commands, UAV-Insert-Failure.
 * Updated the documentation (javadoc).
 * Separation between projects UAV-Mission-Creator and UAV-Route3DToGeo.
-* Updated UAV-Mission-Creator (created file featuremission.txt)
+* Updated UAV-Mission-Creator (created file featuremission.txt).
 * Updated code update data battery generalization.
 * Updated code get home location.
 * Updated scripts to support args using terminal.

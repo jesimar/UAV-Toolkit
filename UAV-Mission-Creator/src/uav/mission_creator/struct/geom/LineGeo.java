@@ -75,4 +75,8 @@ public class LineGeo {
     public String toString(int i, double inch) {
         return String.format("%.16g %.16g %.16g\n", vetx[i], vety[i], vetz[i]+ inch);
     }  
+    
+    public String toString2(int i) {
+        return String.format("%s %.16g %.16g %.16g\n", name, vetx[i], vety[i], vetz[i]);
+    }
 }
