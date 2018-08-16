@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import uav.gcs.struct.Drone;
+import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 
 /**
@@ -16,23 +17,25 @@ public abstract class Planner {
     final String dir;
     final Drone drone;
     final Mission3D waypointsMission;
+    final Mission3D mission3D;
+    final Mission missionGeo;
     
-    final String fileWaypointsMission;
-    final String sizeWpt;
+    String fileWaypointsMission;//used in planner hga4m
+    String sizeWpt;//used in planner hga4m
     final String dirFiles;//global
     final String fileGeoBase;//global
     final String cmdExecPlanner;//local
-    final String localExec;//global
     final String altitudeFlight;//local
-    final String time;//local
+    String time;//local - used in planner hga4m
+    String waypoint;//local - used in planner ccqsp4m
     final String delta;//local
-    final String maxVel;//local
-    final String maxCtrl;//local
-    final String speedCruize;//local
-    final String typeAircraft;//local
+    String maxVel;//local - used in planner hga4m
+    String maxCtrl;//local - used in planner hga4m
+    String speedCruize;//local - used in planner hga4m
+    String typeAircraft;//local - used in planner hga4m
 
     /**
-     * Class constructor
+     * Class constructor - Used in HGA4m
      * @param drone instance of the aircraft
      * @param fileWaypointsMission
      * @param sizeWpt
@@ -40,7 +43,6 @@ public abstract class Planner {
      * @param fileGeoBase
      * @param dirPlanner
      * @param cmdExecPlanner
-     * @param localExec
      * @param altitudeFlight
      * @param time
      * @param delta
@@ -51,7 +53,7 @@ public abstract class Planner {
      */
     public Planner(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles,
             String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
-            String localExec, String altitudeFlight, String time, String delta, 
+            String altitudeFlight, String time, String delta, 
             String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
         this.drone = drone; 
         this.fileWaypointsMission = fileWaypointsMission;
@@ -60,7 +62,6 @@ public abstract class Planner {
         this.fileGeoBase = fileGeoBase;
         this.dir = dirPlanner;
         this.cmdExecPlanner = cmdExecPlanner;
-        this.localExec = localExec;
         this.altitudeFlight = altitudeFlight;
         this.time = time;
         this.delta = delta;
@@ -69,15 +70,46 @@ public abstract class Planner {
         this.speedCruize = speedCruize;
         this.typeAircraft = typeAircraft;       
         this.waypointsMission = new Mission3D();
+        this.mission3D = new Mission3D();
+        this.missionGeo = new Mission();
     }
-            
-    public abstract boolean execMission(int i);
     
-    public abstract boolean updateFileConfig(int i);
-    
-    public abstract boolean parseRoute3DtoGeo(int i);
+    /**
+     * Class constructor - Used in CCQSP4m
+     * @param drone instance of the aircraft
+     * @param dirFiles
+     * @param fileGeoBase
+     * @param dirPlanner
+     * @param cmdExecPlanner
+     * @param altitudeFlight
+     * @param waypoint
+     * @param delta
+     */
+    public Planner(Drone drone, String dirFiles,
+            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
+            String altitudeFlight, String waypoint, String delta) {
+        this.drone = drone;
+        this.dirFiles = dirFiles;
+        this.fileGeoBase = fileGeoBase;
+        this.dir = dirPlanner;
+        this.cmdExecPlanner = cmdExecPlanner;
+        this.altitudeFlight = altitudeFlight;
+        this.waypoint = waypoint;
+        this.delta = delta;      
+        this.waypointsMission = new Mission3D();
+        this.mission3D = new Mission3D();
+        this.missionGeo = new Mission();
+    }
     
     public abstract void clearLogs();
+    
+    public Mission3D getMission3D(){
+        return mission3D;
+    }
+    
+    public Mission getMissionGeo(){
+        return missionGeo;
+    }
     
     boolean execMethod(){
         try {

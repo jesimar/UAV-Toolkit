@@ -9,11 +9,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
+import uav.gcs.replanner.DE4s;
+import uav.gcs.replanner.GA4s;
+import uav.gcs.replanner.GH4s;
 import uav.gcs.replanner.MPGA4s;
+import uav.gcs.replanner.MS4s;
 import uav.gcs.replanner.Replanner;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.TypeMsgCommunication;
+import uav.generic.struct.constants.TypeReplanner;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.util.UtilString;
@@ -76,7 +81,7 @@ public class CommunicationIFA {
                                 if (answer.contains(TypeMsgCommunication.IFA_GCS_INFO)) {
                                     answer = answer.substring(14);
                                     readInfoIFA(answer);
-                                } else if (answer.contains(TypeMsgCommunication.IFA_GCS_REPLANER)) {
+                                } else if (answer.contains(TypeMsgCommunication.IFA_GCS_REPLANNER)) {
                                     answer = answer.substring(19);
                                     replannerInGCS(answer);
                                 } 
@@ -155,13 +160,30 @@ public class CommunicationIFA {
         drone.statusUAV.isArmable = Boolean.parseBoolean(v[30]);
         drone.statusUAV.ekfOk = Boolean.parseBoolean(v[31]);
         drone.typeFailure = v[32];
+        drone.sonar.distance = v[33].equals("NONE") ? -1.0 : Double.parseDouble(v[33]);
+        drone.temperature.temperature = v[34].equals("NONE") ? -1.0 : Double.parseDouble(v[34]);
     }
 
     private void replannerInGCS(String answer) {
         isRunningReplanner = true;
         String v[] = answer.split(";");
-        Replanner replanner = new MPGA4s(drone, v[0],
-                v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+        Replanner replanner = null;
+        
+        if (v[0].equals(TypeReplanner.GH4S)) {
+            replanner =   new GH4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        } else if (v[0].equals(TypeReplanner.GA4S)) {
+            replanner =   new GA4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        } else if (v[0].equals(TypeReplanner.MPGA4S)) {
+            replanner = new MPGA4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        } else if (v[0].equals(TypeReplanner.MS4S)) {
+            replanner =   new MS4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        } else if (v[0].equals(TypeReplanner.DE4S)) {
+            replanner =   new DE4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        }else{
+            System.out.println("Error: " + v[0]);
+            System.out.println("Error: " + answer);
+        }
+        
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();
         if (!itIsOkExec) {
@@ -169,7 +191,7 @@ public class CommunicationIFA {
             return;
         } 
         Mission mission = new Mission();
-        String path = v[2] + "routeGeo.txt";
+        String path = v[3] + "routeGeo.txt";
         boolean resp = readFileRoute(mission, path, 0);
         if (!resp) {
             sendData("failure");

@@ -101,20 +101,31 @@ public class DecisionMaking {
     public void actionToDoSomethingOffboard(CommunicationGCS communicationGSC){
         statePlanning = StatePlanning.PLANNING;        
         if (config.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
-            boolean respM = false;
-            if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND)){
-                respM = sendMissionsToDroneCalcGroundOffboard(communicationGSC);
-            }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
-                respM = sendMissionsToDroneCalcGroundAndAir();
-            }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.AIR)) {
-                respM = sendMissionsToDroneCalcAir();
-            }
-            if (respM){
-                statePlanning = StatePlanning.READY;
-                StandardPrints.printMsgEmph("send mission to drone with success");
-            }else {
-                statePlanning = StatePlanning.DISABLED;
-                StandardPrints.printMsgWarning("send mission to drone failure");
+            if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
+                boolean respM = false;
+                if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND)){
+                    respM = sendMissionsToDroneCalcGroundOffboard(communicationGSC);
+                }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
+                    respM = sendMissionsToDroneCalcGroundAndAir();
+                }else if (config.getMissionProcessingLocationHGA4m().equals(LocalCalcMission.AIR)) {
+                    respM = sendMissionsToDroneCalcAir();
+                }
+                if (respM){
+                    statePlanning = StatePlanning.READY;
+                    StandardPrints.printMsgEmph("send mission to drone with success");
+                }else {
+                    statePlanning = StatePlanning.DISABLED;
+                    StandardPrints.printMsgWarning("send mission to drone failure");
+                }
+            } else if (config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
+                boolean respM = sendMissionsToDroneCalcGroundOffboardCCQSP4m(communicationGSC);
+                if (respM){
+                    statePlanning = StatePlanning.READY;
+                    StandardPrints.printMsgEmph("send mission to drone with success");
+                }else {
+                    statePlanning = StatePlanning.DISABLED;
+                    StandardPrints.printMsgWarning("send mission to drone failure");
+                }
             }
         }
     }
@@ -310,6 +321,30 @@ public class DecisionMaking {
         return true;
     }
     
+    private boolean sendMissionsToDroneCalcGroundOffboardCCQSP4m(CommunicationGCS communicationGCS) {
+        String attributes = config.getTypePlanner() 
+                + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
+                + ";" + config.getDirPlanner() + ";" + config.getCmdExecPlanner() 
+                + ";" + configGlobal.getAltRelMission() + ";" + config.getWaypointsCCQSP4m()
+                + ";" + config.getDeltaCCQSP4m();
+        communicationGCS.sendDataPlannerInGCS(attributes);
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+
+            }
+        } while (!communicationGCS.hasReceiveRouteGCS());
+        String msgRoute = communicationGCS.getRoutePlannerGCS();
+        if (msgRoute.equals("failure")) {
+            System.out.println("Route GCS [Failure]: " + msgRoute);
+            return false;
+        } else {
+            dataAcquisition.setMission(msgRoute);
+            return true;
+        }
+    }
+    
     private boolean sendFixedMissionToDrone() {
         StandardPrints.printMsgEmph("send fixed route");                
         String path = config.getDirFixedRoute() + config.getFileFixedRoute();
@@ -416,13 +451,14 @@ public class DecisionMaking {
     
     private boolean sendMissionsToDroneCalcGroundOffboard(CommunicationGCS communicationGCS) {
         String typeAircraft = drone instanceof FixedWing ? "FixedWing" : "RotaryWing";
-        String attributes = config.getFileWaypointsMissionHGA4m()  + ";" + wptsMission3D.size()
+        String attributes = config.getTypePlanner() 
+                + ";" + config.getFileWaypointsMissionHGA4m()  + ";" + wptsMission3D.size()
                 + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
                 + ";" + config.getDirPlanner() + ";" + config.getCmdExecPlanner() 
-                + ";" + configGlobal.getOperationMode() + ";" + configGlobal.getAltRelMission()
-                + ";" + config.getTimeExecHGA4m() + ";" + config.getDeltaHGA4m() 
-                + ";" + config.getMaxVelocityHGA4m() + ";" + config.getMaxControlHGA4m() 
-                + ";" + drone.getSpeedCruize() + ";" + typeAircraft;
+                + ";" + configGlobal.getAltRelMission() + ";" + config.getTimeExecHGA4m() 
+                + ";" + config.getDeltaHGA4m() + ";" + config.getMaxVelocityHGA4m() 
+                + ";" + config.getMaxControlHGA4m() + ";" + drone.getSpeedCruize() 
+                + ";" + typeAircraft;
         communicationGCS.sendDataPlannerInGCS(attributes);
         do {
             try {

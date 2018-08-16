@@ -85,7 +85,7 @@ public class CommunicationGCS {
     
     public void sendDataPlannerInGCS(String attributes){
         if (output != null){
-            output.println(TypeMsgCommunication.IFA_GCS_PLANER + attributes);
+            output.println(TypeMsgCommunication.IFA_GCS_PLANNER + attributes);
         }
     }
 

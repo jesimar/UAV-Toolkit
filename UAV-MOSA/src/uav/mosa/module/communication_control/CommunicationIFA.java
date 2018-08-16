@@ -77,7 +77,7 @@ public class CommunicationIFA {
                             } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
                                 sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
                                 Thread.sleep(100);
-                                System.exit(0);
+                                System.exit(1);
                             }
                         }else{
                             Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);

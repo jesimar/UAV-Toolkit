@@ -6,7 +6,9 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
+import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.ifa.module.security_manager.SecurityManager;
 import uav.ifa.struct.ReaderFileConfigIFA;
 
 /**
@@ -19,6 +21,7 @@ public abstract class Replanner {
     final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone; 
+    final PointGeo pointGeo;
 
     /**
      * Class constructor
@@ -28,7 +31,8 @@ public abstract class Replanner {
         this.configLocal = ReaderFileConfigIFA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.dir = configLocal.getDirReplanner();
-        this.drone = drone;      
+        this.drone = drone;
+        this.pointGeo = SecurityManager.pointGeo;
     }
     
     public abstract boolean exec();

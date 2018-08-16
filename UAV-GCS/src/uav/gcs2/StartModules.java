@@ -7,7 +7,6 @@ package uav.gcs2;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;

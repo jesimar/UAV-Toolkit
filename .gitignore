@@ -1,10 +1,3 @@
-#ignorar todos os diretorios listados abaixo em qualquer subdiretorio
-
-nbproject/private/
-build/
-test/
-venv/
-
 #ignorar todos os arquivos por extensao
 
 *~
@@ -19,8 +12,6 @@ venv/
 
 #ignorar todos os arquivos por nome e extensao
 
-UAV-Manager/manager.properties
-
 cplex.jar
 mav.parm
 mav.tlog
@@ -28,3 +19,40 @@ mav.tlog.raw
 
 ideias-todo.txt
 dicas-voo.txt
+
+/UAV-GCS/nbproject/private/
+/UAV-GCS/build/
+/UAV-GCS/test/
+
+/UAV-Generic/nbproject/private/
+/UAV-Generic/build/
+/UAV-Generic/test/
+
+/UAV-IFA/nbproject/private/
+/UAV-IFA/build/
+/UAV-IFA/test/
+
+/UAV-MOSA/nbproject/private/
+/UAV-MOSA/build/
+/UAV-MOSA/test/
+
+/UAV-Manager/nbproject/private/
+/UAV-Manager/build/
+/UAV-Manager/test/
+/UAV-Manager/manager.properties
+
+/UAV-Mission-Creator/nbproject/private/
+/UAV-Mission-Creator/build/
+/UAV-Mission-Creator/test/
+
+/UAV-Monitoring/nbproject/private/
+/UAV-Monitoring/build/
+/UAV-Monitoring/test/
+
+/UAV-PosAnalyser/nbproject/private/
+/UAV-PosAnalyser/build/
+/UAV-PosAnalyser/test/
+
+/UAV-Tests/nbproject/private/
+/UAV-Tests/build/
+/UAV-Tests/test/

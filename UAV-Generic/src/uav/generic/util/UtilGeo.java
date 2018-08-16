@@ -65,7 +65,7 @@ public class UtilGeo {
     }
     
     public static double convertXtoLongitude(double lonBase, double latBase, double x){
-        return lonBase+ x*360/(CIRC_EQUATORIAL*Math.cos(latBase*Math.PI/180));
+        return lonBase + x*360/(CIRC_EQUATORIAL*Math.cos(latBase*Math.PI/180));
     }
     
     public static double convertGeoToX(PointGeo base, PointGeo point){

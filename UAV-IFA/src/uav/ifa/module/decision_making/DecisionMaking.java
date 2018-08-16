@@ -108,7 +108,8 @@ public class DecisionMaking {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
         dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
-        String attributes = configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
+        String attributes = configLocal.getTypeReplanner() 
+                + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
                 + ";" + configLocal.getDirReplanner() + ";" + configLocal.getCmdExecReplanner()
                 + ";" + configLocal.getTypeAltitudeDecay() + ";" + configLocal.getTimeExec()
                 + ";" + configLocal.getQtdWaypoints() + ";" + configLocal.getDelta();

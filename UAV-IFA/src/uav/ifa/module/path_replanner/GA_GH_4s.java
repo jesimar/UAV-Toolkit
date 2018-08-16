@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.geom.PointGeo;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 import uav.generic.hardware.aircraft.Drone;
@@ -39,11 +38,9 @@ public class GA_GH_4s extends Replanner{
     
     @Override
     public boolean updateFileConfig() { 
-        try {
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
-            double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
-            double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
+        try {            
+            double px = UtilGeo.convertGeoToX(pointGeo, drone.getGPS().lng);
+            double py = UtilGeo.convertGeoToY(pointGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
             int head = (int)drone.getSensorUAV().heading;
             int heading = UtilGeo.convertAngleAviationToAngleMath(head);
@@ -81,9 +78,7 @@ public class GA_GH_4s extends Replanner{
     public boolean parseRoute3DtoGeo() {
         try {
             String nameFileRoute3D =  "route.txt";
-            String nameFileRouteGeo = "routeGeo.txt";
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());        
+            String nameFileRouteGeo = "routeGeo.txt";                   
             File fileRouteGeoGA = new File(dirGA + nameFileRouteGeo);
             PrintStream printGeoGA = new PrintStream(fileRouteGeoGA);        
             Scanner readRoute3DGA = new Scanner(new File(dirGA + nameFileRoute3D));
@@ -97,7 +92,7 @@ public class GA_GH_4s extends Replanner{
                 if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
-                printGeoGA.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));   
+                printGeoGA.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));   
                 countLines++;
             }
             if (countLines == 0){
@@ -118,7 +113,7 @@ public class GA_GH_4s extends Replanner{
                 if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
-                printGeoGH.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));   
+                printGeoGH.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));   
                 countLines++;
             }
             if (countLines == 0){

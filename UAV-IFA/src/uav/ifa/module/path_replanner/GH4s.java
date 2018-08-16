@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.geom.PointGeo;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 import uav.generic.hardware.aircraft.Drone;
@@ -36,11 +35,9 @@ public class GH4s extends Replanner{
 
     @Override
     public boolean updateFileConfig() { 
-        try {
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
-            double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
-            double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
+        try {            
+            double px = UtilGeo.convertGeoToX(pointGeo, drone.getGPS().lng);
+            double py = UtilGeo.convertGeoToY(pointGeo, drone.getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
             int head = (int)drone.getSensorUAV().heading;
             int heading = UtilGeo.convertAngleAviationToAngleMath(head);
@@ -70,8 +67,6 @@ public class GH4s extends Replanner{
         try{
             String nameFileRoute3D =  "route.txt";
             String nameFileRouteGeo = "routeGeo.txt";
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());        
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);        
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
@@ -85,7 +80,7 @@ public class GH4s extends Replanner{
                 if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
-                printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));    
+                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));    
                 countLines++;
             }
             if (countLines == 0){

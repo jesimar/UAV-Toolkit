@@ -33,11 +33,17 @@ public class ReaderFileConfigGlobal {
     private String fileFeatureMission;
     
     private String hostIFA;
+    private String hostMOSA;
+    private String hostSOA;
     private int portNetworkIFAandMOSA;
     private int portNetworkIFAandGCS;
     private int portNetworkMOSAandGCS;
-    private String hostSOA;
     private int portNetworkSOA;
+    
+    private boolean hasDB;
+    private String hostOD;
+    private String portOD;
+    private String userEmail;
         
     //sensor camera
     private boolean hasCamera;
@@ -46,6 +52,15 @@ public class ReaderFileConfigGlobal {
     //sensor sonar
     private boolean hasSonar;
     private String dirSonar;
+    
+    //sensor power module
+    private boolean hasPowerModule;
+    private int levelMinimumBattery;
+    
+    //sensor temperature
+    private boolean hasTemperatureSensor;
+    private String dirTemperatureSensor;
+    private int levelMaximumTemperature;
     
     //atuactor buzzer
     private boolean hasBuzzer;
@@ -62,14 +77,6 @@ public class ReaderFileConfigGlobal {
     //atuactor Spraying
     private boolean hasSpraying;
     private String dirSpraying;
-    
-    //sensor power module
-    private boolean hasPowerModule;
-    private int levelMinimumBattery;
-    
-    //sensor temperature
-    private boolean hasTemperatureSensor;
-    private int levelMaximumTemperature;
 
     /**
      * Class constructor.
@@ -96,36 +103,40 @@ public class ReaderFileConfigGlobal {
             dirFiles              = prop.getProperty("prop.global.dir_files");
             fileFeatureMission    = prop.getProperty("prop.global.file_feature_mission");
             fileGeoBase           = prop.getProperty("prop.global.file_geo_base");
-            hostIFA               = prop.getProperty("prop.global.host_ifa");
-            portNetworkIFAandMOSA = Integer.parseInt(prop.getProperty("prop.global.port_network_ifa_mosa"));
-            portNetworkIFAandGCS  = Integer.parseInt(prop.getProperty("prop.global.port_network_ifa_gcs"));
-            portNetworkMOSAandGCS = Integer.parseInt(prop.getProperty("prop.global.port_network_mosa_gcs"));
-            hostSOA               = prop.getProperty("prop.global.host_soa");
-            portNetworkSOA        = Integer.parseInt(prop.getProperty("prop.global.port_network_soa"));
             
-            hasCamera             = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_camera"));
-            hasSonar              = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_sonar"));
-            hasBuzzer             = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_buzzer"));
-            hasParachute          = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_parachute"));
-            hasLED                = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_led"));
-            hasSpraying           = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_spraying"));
-            hasPowerModule        = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_powermodule"));
-            hasTemperatureSensor  = Boolean.parseBoolean(prop.getProperty("prop.hardware.has_temperature_sensor"));
-                    
-            dirCamera             = prop.getProperty("prop.camera.dir");
-                                    
-            dirSonar              = prop.getProperty("prop.sonar.dir");
+            hostIFA               = prop.getProperty("prop.global.comm.host_ifa");
+            hostMOSA              = prop.getProperty("prop.global.comm.host_mosa");
+            hostSOA               = prop.getProperty("prop.global.comm.host_soa");
+            portNetworkIFAandMOSA = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_ifa_mosa"));
+            portNetworkIFAandGCS  = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_ifa_gcs"));
+            portNetworkMOSAandGCS = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_mosa_gcs"));
+            portNetworkSOA        = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_soa"));
             
-            dirBuzzer             = prop.getProperty("prop.buzzer.dir");
+            hasDB                 = Boolean.parseBoolean(prop.getProperty("prop.gcs.od.hasDB"));
+            hostOD                = prop.getProperty("prop.gcs.od.host_od");
+            portOD                = prop.getProperty("prop.gcs.od.port_od_gcs");
+            userEmail             = prop.getProperty("prop.gcs.od.user_email");
             
-            dirParachute          = prop.getProperty("prop.parachute.dir");
+            hasCamera             = Boolean.parseBoolean(prop.getProperty("prop.hw.has_camera"));
+            hasSonar              = Boolean.parseBoolean(prop.getProperty("prop.hw.has_sonar"));
+            hasPowerModule        = Boolean.parseBoolean(prop.getProperty("prop.hw.has_powermodule"));
+            hasTemperatureSensor  = Boolean.parseBoolean(prop.getProperty("prop.hw.has_temperature_sensor"));
+            hasBuzzer             = Boolean.parseBoolean(prop.getProperty("prop.hw.has_buzzer"));
+            hasParachute          = Boolean.parseBoolean(prop.getProperty("prop.hw.has_parachute"));
+            hasLED                = Boolean.parseBoolean(prop.getProperty("prop.hw.has_led"));
+            hasSpraying           = Boolean.parseBoolean(prop.getProperty("prop.hw.has_spraying"));      
             
-            dirLED                = prop.getProperty("prop.led.dir");
-            dirSpraying           = prop.getProperty("prop.spraying.dir");
+            dirCamera             = prop.getProperty("prop.hw.sensor.camera.dir");
+            dirSonar              = prop.getProperty("prop.hw.sensor.sonar.dir");
+            levelMinimumBattery   = Integer.parseInt(prop.getProperty("prop.hw.sensor.powermodule.level_min_battery"));
+            dirTemperatureSensor  = prop.getProperty("prop.hw.sensor.temperature.dir");
+            levelMaximumTemperature = Integer.parseInt(prop.getProperty("prop.hw.sensor.temperature.level_max_temperature"));
             
-            levelMinimumBattery   = Integer.parseInt(prop.getProperty("prop.powermodule.level_minimum_battery"));
+            dirBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.dir");
+            dirParachute          = prop.getProperty("prop.hw.actuator.parachute.dir");
+            dirLED                = prop.getProperty("prop.hw.actuator.led.dir");
+            dirSpraying           = prop.getProperty("prop.hw.actuator.spraying.dir");
             
-            levelMaximumTemperature = Integer.parseInt(prop.getProperty("prop.temperature_sensor.level_maximum_temperature"));
             return true;
         } catch (FileNotFoundException ex){     
             StandardPrints.printMsgError2("Error [FileNotFoundException] ReaderLoadConfig()");
@@ -210,12 +221,24 @@ public class ReaderFileConfigGlobal {
         return dirFiles;
     }
     
+    public String getFileFeatureMission() {
+        return fileFeatureMission;
+    }
+    
     public String getFileGeoBase() {
         return fileGeoBase;
     }
 
     public String getHostIFA() {
         return hostIFA;
+    }
+    
+    public String getHostMOSA() {
+        return hostMOSA;
+    }
+    
+    public String getHostSOA() {
+        return hostSOA;
     }
 
     public int getPortNetworkIFAandMOSA() {
@@ -230,12 +253,24 @@ public class ReaderFileConfigGlobal {
         return portNetworkMOSAandGCS;
     }
     
-    public String getHostSOA() {
-        return hostSOA;
-    }
-
     public int getPortNetworkSOA() {
         return portNetworkSOA;
+    }
+    
+    public boolean hasDB() {
+        return hasDB;
+    }
+
+    public String getHostOD() {
+        return hostOD;
+    }
+    
+    public String getPortOD() {
+        return portOD;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
     
     public boolean hasCamera() {
@@ -277,14 +312,22 @@ public class ReaderFileConfigGlobal {
     public String getDirSonar() {
         return dirSonar;
     }
-                
+    
+    public String getDirTemperatureSensor() {
+        return dirTemperatureSensor;
+    }
+    
+    public int getLevelMinimumBattery() {
+        return levelMinimumBattery;
+    }
+    
+    public int getLevelMaximumTemperature() {
+        return levelMaximumTemperature;
+    }
+    
     public String getDirBuzzer() {
         return dirBuzzer;
     }
-    
-    public String getFileFeatureMission() {
-        return fileFeatureMission;
-    }    
     
     public String getDirParachute() {
         return dirParachute;
@@ -296,14 +339,6 @@ public class ReaderFileConfigGlobal {
     
     public String getDirSpraying() {
         return dirSpraying;
-    }
-    
-    public int getLevelMinimumBattery() {
-        return levelMinimumBattery;
-    }
-    
-    public int getLevelMaximumTemperature() {
-        return levelMaximumTemperature;
     }
 
 }

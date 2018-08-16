@@ -43,7 +43,7 @@ public class HomeLocation {
         }catch (StringIndexOutOfBoundsException ex){
             StandardPrints.printMsgError("Error [StringIndexOutOfBoundsException]: parserInfoHomeLocation()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     

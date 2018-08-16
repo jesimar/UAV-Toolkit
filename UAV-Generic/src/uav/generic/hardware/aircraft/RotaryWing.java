@@ -8,7 +8,9 @@ import uav.generic.hardware.sensors.Battery;
 import uav.generic.hardware.sensors.GPS;
 import uav.generic.hardware.sensors.GPSInfo;
 import uav.generic.hardware.sensors.SensorUAV;
+import uav.generic.hardware.sensors.Sonar;
 import uav.generic.hardware.sensors.StatusUAV;
+import uav.generic.hardware.sensors.Temperature;
 import uav.generic.hardware.sensors.Velocity;
 
 /**
@@ -35,7 +37,6 @@ public class RotaryWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
-        temperatureBattery = 0;//in celsius
         
         typeFailure = "NONE";
         
@@ -50,6 +51,8 @@ public class RotaryWing extends Drone{
         gpsinfo = new GPSInfo();
         sensorUAV = new SensorUAV();
         statusUAV = new StatusUAV();
+        sonar = new Sonar();
+        temperature = new Temperature();
     }
     
     /**
@@ -75,7 +78,6 @@ public class RotaryWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
-        temperatureBattery = 0;//in celsius
         
         typeFailure = "NONE";
         
@@ -90,5 +92,7 @@ public class RotaryWing extends Drone{
         gpsinfo = new GPSInfo();
         sensorUAV = new SensorUAV();
         statusUAV = new StatusUAV();
+        sonar = new Sonar();
+        temperature = new Temperature();
     }
 }

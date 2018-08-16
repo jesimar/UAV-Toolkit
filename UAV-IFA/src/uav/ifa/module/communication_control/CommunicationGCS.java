@@ -163,7 +163,7 @@ public class CommunicationGCS {
     
     public void sendDataReplannerInGCS(String attributes){
         if (output != null){
-            output.println(TypeMsgCommunication.IFA_GCS_REPLANER + attributes);
+            output.println(TypeMsgCommunication.IFA_GCS_REPLANNER + attributes);
         }
     }
     

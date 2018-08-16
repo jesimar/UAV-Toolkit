@@ -12,7 +12,7 @@ public class UtilString {
     /**
      * Method that change the type of separator.
      * @param line - Any line
-     * @return the line with the separator ";" without "\t", "; ", ", ", ",", " ".
+     * @return a line with the separator ";" without "\t", "; ", ", ", ",", " ".
      */
     public static String changeValueSeparator(String line){
         line = line.replace("\t", ";");

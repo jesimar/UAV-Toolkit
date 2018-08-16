@@ -12,6 +12,8 @@ import uav.generic.module.sensors_actuators.BuzzerControl;
 import uav.generic.hardware.aircraft.FixedWing;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.module.sensors_actuators.SonarControl;
+import uav.generic.module.sensors_actuators.TemperatureSensorControl;
 import uav.generic.struct.Parameter;
 import uav.generic.struct.reader.ReaderFileConfigAircraft;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
@@ -23,10 +25,12 @@ import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypeSystemExecIFA;
+import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StateReplanning;
+import uav.generic.util.UtilGeo;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.module.communication_control.CommunicationMOSA;
 import uav.ifa.module.communication_control.CommunicationGCS;
@@ -41,6 +45,7 @@ import uav.ifa.struct.Failure;
  */
 public class SecurityManager {
 
+    public static PointGeo pointGeo;
     private final Drone drone;
     private final DataCommunication dataAcquisition;
     private final CommunicationMOSA communicationMOSA;
@@ -57,6 +62,9 @@ public class SecurityManager {
     
     private StateSystem stateSystem;
     private StateMonitoring stateMonitoring;
+    
+    private SonarControl sonar;
+    private TemperatureSensorControl temperature;
 
     private long timeInit;
     private long timeActual;
@@ -71,32 +79,41 @@ public class SecurityManager {
 
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         if (!configGlobal.read()) {
-            System.exit(0);
+            System.exit(1);
         }
         if (!configGlobal.checkReadFields()) {
-            System.exit(0);
+            System.exit(1);
         }
         if (!configGlobal.parseToVariables()) {
-            System.exit(0);
+            System.exit(1);
         }
         this.configLocal = ReaderFileConfigIFA.getInstance();
         if (!configLocal.read()) {
-            System.exit(0);
+            System.exit(1);
         }
         if (!configLocal.checkReadFields()) {
-            System.exit(0);
+            System.exit(1);
         }
         if (!configLocal.parseToVariables()) {
-            System.exit(0);
+            System.exit(1);
         }
         this.configAircraft = ReaderFileConfigAircraft.getInstance();
         if (!configAircraft.read()) {
-            System.exit(0);
+            System.exit(1);
         }
         if (!configAircraft.checkReadFields()) {
-            System.exit(0);
+            System.exit(1);
         }
         this.configParam = ReaderFileConfigParam.getInstance();
+
+        try{
+            pointGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles()+configGlobal.getFileGeoBase());
+        }catch (FileNotFoundException ex){
+            StandardPrints.printMsgError2("Error [FileNotFoundException] pointGeo");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        
         if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)) {
             drone = new FixedWing(configAircraft.getNameAircraft(),
                     configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(),
@@ -118,6 +135,15 @@ public class SecurityManager {
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
         this.communicationMOSA = new CommunicationMOSA(drone);
         this.communicationGCS = new CommunicationGCS(drone, decisonMaking);
+        
+        if (configGlobal.hasSonar()){
+            startSonarSensor();
+        }
+        
+        if (configGlobal.hasTemperatureSensor()){
+            startTemperatureSensor();
+        }
+                
         stateSystem = StateSystem.INITIALIZING;
         stateMonitoring = StateMonitoring.WAITING;
     }
@@ -162,11 +188,11 @@ public class SecurityManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogOverhead()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch (Exception ex) {
             StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -183,11 +209,11 @@ public class SecurityManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogAircraft()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch (Exception ex) {
             StandardPrints.printMsgError2("Error [Exception]: createFileLogAircraft()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -204,11 +230,11 @@ public class SecurityManager {
         } catch (InterruptedException ex) {
             StandardPrints.printMsgError2("Error [InterruptedException]: waitingForTheServer()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch (Exception ex) {
             StandardPrints.printMsgError2("Error [Exception]: waitingForTheServer()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -225,11 +251,11 @@ public class SecurityManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException] configParametersToFlight()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch (Exception ex) {
             StandardPrints.printMsgError2("Error [Exception] configParametersToFlight()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
 
@@ -253,7 +279,14 @@ public class SecurityManager {
                                 .equals(TypeOperationMode.REAL_FLIGHT)){
                             dataAcquisition.getBattery();
                         }
+                        if (configGlobal.hasSonar()){
+                            drone.getSonar().distance = sonar.getDistance();
+                        }
+                        if (configGlobal.hasTemperatureSensor()){
+                            drone.getTemperature().temperature = temperature.getTemperature();
+                        }
                         checkStatusSystem();
+                        
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
                         Thread.sleep(time);
@@ -298,7 +331,7 @@ public class SecurityManager {
             StandardPrints.printMsgError("FAIL LOW BATTERY -> Time: " + drone.getTime());
         }
         if (configGlobal.hasTemperatureSensor()
-                && drone.getTemperatureBattery() > configGlobal.getLevelMaximumTemperature()
+                && drone.getTemperature().temperature > configGlobal.getLevelMaximumTemperature()
                 && !hasFailure(TypeFailure.FAIL_BATTERY_OVERHEATING)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY_OVERHEATING));
             drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY_OVERHEATING));
@@ -439,5 +472,17 @@ public class SecurityManager {
         StandardPrints.printMsgEmph("turn on the alarm");
         BuzzerControl buzzer = new BuzzerControl();
         buzzer.turnOnAlarm();
+    }
+
+    private void startSonarSensor() {
+        StandardPrints.printMsgEmph("turn on the sonar sensor");
+        sonar = new SonarControl();
+        sonar.startSonarSensor();
+    }
+
+    private void startTemperatureSensor() {
+        StandardPrints.printMsgEmph("turn on the temperature sensor");
+        temperature = new TemperatureSensorControl();
+        temperature.startTemperatureSensor();
     }
 }

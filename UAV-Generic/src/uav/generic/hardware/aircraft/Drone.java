@@ -10,7 +10,9 @@ import uav.generic.hardware.sensors.Battery;
 import uav.generic.hardware.sensors.GPS;
 import uav.generic.hardware.sensors.GPSInfo;
 import uav.generic.hardware.sensors.SensorUAV;
+import uav.generic.hardware.sensors.Sonar;
 import uav.generic.hardware.sensors.StatusUAV;
+import uav.generic.hardware.sensors.Temperature;
 import uav.generic.hardware.sensors.Velocity;
 
 /**
@@ -32,7 +34,6 @@ public abstract class Drone {
     int countWaypoint;
     double distanceToHome;//in meters
     double distanceToCurrentWaypoint;//in meters
-    double temperatureBattery;//in celsius
     
     String typeFailure;
     
@@ -47,6 +48,8 @@ public abstract class Drone {
     GPSInfo gpsinfo;
     SensorUAV sensorUAV;
     StatusUAV statusUAV;    
+    Sonar sonar;
+    Temperature temperature;
 
     public String getNameAircraft() {
         return nameAircraft;
@@ -90,10 +93,6 @@ public abstract class Drone {
     
     public double getDistanceToCurrentWaypoint() {
         return distanceToCurrentWaypoint;
-    }
-    
-    public double getTemperatureBattery(){
-        return temperatureBattery;
     }
     
     public void setTime(double time){
@@ -204,6 +203,14 @@ public abstract class Drone {
         return statusUAV;
     }
     
+    public Sonar getSonar(){
+        return sonar;
+    }
+    
+    public Temperature getTemperature(){
+        return temperature;
+    }
+    
     public void defineHomeLocation(double lat, double lng, double alt) {
         homeLocation.setHomeLocation(lat, lng, alt);
     }
@@ -248,15 +255,17 @@ public abstract class Drone {
                 + "level-bat;pitch;yaw;roll;vel-x;vel-y;vel-z;fix-type;satellites-visible;"
                 + "eph;epv;heading;groundspeed;airspeed;next-wpt;count-wpt;"
                 + "dist-to-home;dist-to-current-wpt;mode;system-status;armed;"
-                + "is-armable;ekf-ok;type-failure";
+                + "is-armable;ekf-ok;type-failure;dist-sonar;temperature-sensor";
     }
     
     @Override
     public String toString() {
         String dateHour = new SimpleDateFormat("yyyy/MM/dd;HH:mm:ss").format(new Date());
+        String dist = sonar.distance == -1 ? "NONE" : String.format("%.2f", sonar.distance);
+        String temp = temperature.temperature == -1 ? "NONE" : String.format("%.2f", temperature.temperature);
         return String.format("%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
                 "%.2f;%.2f;%d;%d;%d;%d;%.1f;%.2f;%.2f;%d;%d;%.2f;%.2f;%s;%s;%s;" +
-                "%s;%s;%s", 
+                "%s;%s;%s;%s;%s", 
                 dateHour, time, gps.lat, gps.lng, barometer.alt_rel, barometer.alt_abs,
                 battery.voltage, battery.current, battery.level, attitude.pitch,
                 attitude.yaw, attitude.roll, velocity.vx, velocity.vy, velocity.vz, 
@@ -264,6 +273,6 @@ public abstract class Drone {
                 sensorUAV.heading, sensorUAV.groundspeed, sensorUAV.airspeed, 
                 nextWaypoint, countWaypoint, distanceToHome, distanceToCurrentWaypoint,
                 statusUAV.mode, statusUAV.systemStatus, statusUAV.armed, 
-                statusUAV.isArmable, statusUAV.ekfOk, typeFailure);
+                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, dist, temp);
     }
 }

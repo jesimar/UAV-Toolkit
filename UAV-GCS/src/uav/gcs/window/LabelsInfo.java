@@ -50,6 +50,8 @@ public class LabelsInfo {
     private final JLabel labelDistToHome;
     private final JLabel labelDistToCurrWpt;
     private final JLabel labelTypeFailure;
+    private final JLabel labelSonarDistance;
+    private final JLabel labelTemperature;
 
     public LabelsInfo(JPanel panel) {
         this.labelDate = new JLabel("Date: ");
@@ -216,6 +218,17 @@ public class LabelsInfo {
         labelTypeFailure.setPreferredSize(new Dimension(160, 20));
         labelTypeFailure.setForeground(Color.BLACK);
         panel.add(labelTypeFailure);
+        
+        this.labelSonarDistance = new JLabel("Sonar Distance: ");
+        labelSonarDistance.setPreferredSize(new Dimension(160, 20));
+        labelSonarDistance.setForeground(Color.BLACK);
+        panel.add(labelSonarDistance);
+        
+        this.labelTemperature = new JLabel("Temper. Sensor: ");
+        labelTemperature.setPreferredSize(new Dimension(170, 20));
+        labelTemperature.setForeground(Color.BLACK);
+        panel.add(labelTemperature);
+        
     }
     
     public void updateInfo(Drone drone){
@@ -252,6 +265,8 @@ public class LabelsInfo {
         labelDistToHome.setText("Dist To Home: " + drone.distanceToHome);
         labelDistToCurrWpt.setText("Dist To Wpt: " + drone.distanceToCurrentWaypoint);
         labelTypeFailure.setText("Type Fail: " + drone.typeFailure);
+        labelSonarDistance.setText("Sonar Distance: " + drone.sonar.distance);
+        labelTemperature.setText("Temper. Sensor: " + drone.temperature.temperature);
     }
     
 }

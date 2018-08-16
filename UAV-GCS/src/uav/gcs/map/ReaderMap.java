@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar Arantes
  */
 public class ReaderMap {
     

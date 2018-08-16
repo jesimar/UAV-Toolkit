@@ -1,12 +1,15 @@
 package uav.gcs.struct;
 
+import com.sun.javafx.util.TempState;
 import uav.generic.hardware.sensors.Attitude;
 import uav.generic.hardware.sensors.Barometer;
 import uav.generic.hardware.sensors.Battery;
 import uav.generic.hardware.sensors.GPS;
 import uav.generic.hardware.sensors.GPSInfo;
 import uav.generic.hardware.sensors.SensorUAV;
+import uav.generic.hardware.sensors.Sonar;
 import uav.generic.hardware.sensors.StatusUAV;
+import uav.generic.hardware.sensors.Temperature;
 import uav.generic.hardware.sensors.Velocity;
 
 /**
@@ -32,6 +35,8 @@ public class Drone {
     public GPSInfo gpsinfo;
     public SensorUAV sensorUAV;
     public StatusUAV statusUAV;
+    public Sonar sonar;
+    public Temperature temperature;
 
     public Drone(String userEmail) {
         this.userEmail = userEmail;
@@ -43,6 +48,8 @@ public class Drone {
         gpsinfo = new GPSInfo();
         sensorUAV = new SensorUAV();
         statusUAV = new StatusUAV();
+        sonar = new Sonar();
+        temperature = new Temperature();
     }    
 
     public String title(){
@@ -50,14 +57,14 @@ public class Drone {
                 + "level_bat;pitch;yaw;roll;vx;vy;vz;fixtype;satellitesvisible;"
                 + "eph;epv;heading;groundspeed;airspeed;next_wpt;count_wpt;"
                 + "dist_to_home;dist_to_current_wpt;mode;system-status;armed;"
-                + "is-armable;ekf-ok;type-failure";
+                + "is-armable;ekf-ok;type-failure;dist-sonar;temperature-sensor";
     }
     
     @Override
     public String toString() {
         return String.format("%s;%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
                 "%.2f;%.2f;%d;%d;%d;%d;%.1f;%.2f;%.2f;%d;%d;%.2f;%.2f;%s;%s;%s;" +
-                "%s;%s;%s", 
+                "%s;%s;%s;%s;%s", 
                 date, hour, time, gps.lat, gps.lng, barometer.alt_rel, barometer.alt_abs,
                 battery.voltage, battery.current, battery.level, attitude.pitch,
                 attitude.yaw, attitude.roll, velocity.vx, velocity.vy, velocity.vz, 
@@ -65,6 +72,7 @@ public class Drone {
                 sensorUAV.heading, sensorUAV.groundspeed, sensorUAV.airspeed, 
                 nextWaypoint, countWaypoint, distanceToHome, distanceToCurrentWaypoint,
                 statusUAV.mode, statusUAV.systemStatus, statusUAV.armed, 
-                statusUAV.isArmable, statusUAV.ekfOk, typeFailure);
+                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, sonar.distance, 
+                temperature.temperature);
     }
 }

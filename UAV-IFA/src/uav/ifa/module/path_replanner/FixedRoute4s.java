@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.geom.PointGeo;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 import uav.generic.hardware.aircraft.Drone;
@@ -36,11 +35,9 @@ public class FixedRoute4s extends Replanner{
     
     @Override
     public boolean updateFileConfig() { 
-        try {
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
-            double px = UtilGeo.convertGeoToX(pGeo, drone.getGPS().lng);
-            double py = UtilGeo.convertGeoToY(pGeo, drone.getGPS().lat);
+        try {            
+            double px = UtilGeo.convertGeoToX(pointGeo, drone.getGPS().lng);
+            double py = UtilGeo.convertGeoToY(pointGeo, drone.getGPS().lat);
             File file = new File(dir + "position-failure.txt");
             PrintStream print = new PrintStream(file);  
             print.print(px + " " + py);
@@ -55,9 +52,7 @@ public class FixedRoute4s extends Replanner{
     public boolean parseRoute3DtoGeo() {
         try{
             String nameFileRoute3D =  "route.txt";
-            String nameFileRouteGeo = "routeGeo.txt";
-            PointGeo pGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());        
+            String nameFileRouteGeo = "routeGeo.txt";                   
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);        
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
@@ -71,7 +66,7 @@ public class FixedRoute4s extends Replanner{
                 if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
-                printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));
+                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
                 countLines++;
             }
             if (countLines == 0){

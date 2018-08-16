@@ -15,18 +15,18 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
 public class SonarControl {
     
     private final ReaderFileConfigGlobal configGlobal;
+    private double distance = -1.0;
 
     public SonarControl() {
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
     }
     
-    public void startSonar(){
+    public void startSonarSensor(){
         try {
-            boolean print = true;
             File f = new File(configGlobal.getDirSonar());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "./sonar";
+                cmd = "java -jar sonar.jar";//"./sonar";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python sonar.py";
@@ -36,10 +36,8 @@ public class SonarControl {
                 @Override
                 public void run() {
                     Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
+                    while (sc.hasNextLine()) {
+                        distance = Double.parseDouble(sc.nextLine());
                     }
                     sc.close();
                 }
@@ -47,6 +45,10 @@ public class SonarControl {
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] startSonar()");
         } 
+    }
+
+    public double getDistance() {
+        return distance;
     }
     
 }

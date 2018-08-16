@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
 import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.geom.Position3D;
 import uav.generic.struct.Waypoint;
 import uav.generic.util.UtilGeo;
@@ -31,8 +30,9 @@ public class CCQSP4m extends Planner{
     public boolean execMission() {
         boolean itIsOkUpdate = updateFileConfig();     
         boolean itIsOkExec   = execMethod();
+        boolean itIsOkCopy   = copyRoute3D();
         boolean itIsOkParse  = parseRoute3DtoGeo();
-        return itIsOkUpdate && itIsOkExec && itIsOkParse;
+        return itIsOkUpdate && itIsOkExec && itIsOkCopy && itIsOkParse;
     }
     
     public boolean updateFileConfig() {
@@ -41,8 +41,8 @@ public class CCQSP4m extends Planner{
             File dst_instance = new File(dir + "instance");
             String delta = configLocal.getDeltaCCQSP4m();
             String qtdWpt = configLocal.getWaypointsCCQSP4m();
-            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, 
-                    delta, 189, qtdWpt, 298, qtdWpt, 299);
+            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
+                    qtdWpt, 298, qtdWpt, 299);
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
@@ -50,31 +50,51 @@ public class CCQSP4m extends Planner{
         }
     }
     
+    public boolean copyRoute3D(){
+        try {
+            File fileRoute3D = new File(dir + "route3D.txt");
+            PrintStream print3D = new PrintStream(fileRoute3D);
+            Scanner readRoute3D = new Scanner(new File(dir + "output.txt"));
+            readRoute3D.nextInt();
+            double h = configGlobal.getAltRelMission();  
+            while(readRoute3D.hasNext()){
+                double x = readRoute3D.nextDouble();
+                double y = readRoute3D.nextDouble();
+                readRoute3D.nextInt();
+                print3D.println(x + ";" + y + ";" + h);
+            }
+            readRoute3D.close();
+            print3D.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException] copyRoute3D()");
+            return false;
+        } 
+    }
+    
     public boolean parseRoute3DtoGeo(){
         try {
             String nameFileRoute3D =  "output.txt";
             String nameFileRouteGeo = "routeGeo.txt";
-            PointGeo pGeoBase = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
             int countLines = 0;
             readRoute3D.nextInt();
+            double h = configGlobal.getAltRelMission();            
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextInt();
-                double h = configGlobal.getAltRelMission();            
-                printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
+                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
                 mission3D.addPosition3D(new Position3D(x, y, h));
-                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
+                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pointGeo, x, y, h)));
                 countLines++;
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
                 if (!drone.getStatusUAV().armed){
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             readRoute3D.close();

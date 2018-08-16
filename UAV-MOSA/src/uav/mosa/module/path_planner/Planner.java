@@ -10,7 +10,9 @@ import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.constants.TypeOperationMode;
+import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.mosa.module.mission_manager.MissionManager;
 import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
@@ -26,6 +28,7 @@ public abstract class Planner {
     final Mission3D waypointsMission;
     final Mission3D mission3D;
     final Mission missionGeo;
+    final PointGeo pointGeo;
 
     /**
      * Class constructor
@@ -40,6 +43,7 @@ public abstract class Planner {
         this.waypointsMission = waypointsMission; 
         this.mission3D = new Mission3D();
         this.missionGeo = new Mission();
+        this.pointGeo = MissionManager.pointGeo;
     }
     
     public abstract void clearLogs();

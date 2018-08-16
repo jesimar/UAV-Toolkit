@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import uav.gcs.struct.Drone;
+import uav.generic.struct.Waypoint;
 import uav.generic.struct.geom.PointGeo;
+import uav.generic.struct.geom.Position3D;
 import uav.generic.struct.reader.ReaderFileMission;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
@@ -26,7 +28,6 @@ public class HGA4m extends Planner{
      * @param fileGeoBase
      * @param dirPlanner
      * @param cmdExecPlanner
-     * @param localExec
      * @param altitudeFlight
      * @param time
      * @param delta
@@ -37,10 +38,10 @@ public class HGA4m extends Planner{
      */
     public HGA4m(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles, 
             String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
-            String localExec, String altitudeFlight, String time, String delta, 
+            String altitudeFlight, String time, String delta, 
             String maxVel, String maxCtrl, String cruizeSpeed, String typeWing) {
         super(drone, fileWaypointsMission, sizeWpt, dirFiles, fileGeoBase, dirPlanner, 
-                cmdExecPlanner, localExec, altitudeFlight, time, delta, maxVel, 
+                cmdExecPlanner, altitudeFlight, time, delta, maxVel, 
                 maxCtrl, cruizeSpeed, typeWing);
         readMission3D();
     }   
@@ -55,7 +56,6 @@ public class HGA4m extends Planner{
         }
     }
     
-    @Override
     public boolean execMission(int i) {
         boolean itIsOkUpdate = updateFileConfig(i);
         boolean itIsOkpathAB = definePathAB(i);        
@@ -65,7 +65,6 @@ public class HGA4m extends Planner{
         return itIsOkUpdate && itIsOkpathAB && itIsOkExec && itIsOkRoute && itIsOkParse;
     }
     
-    @Override
     public boolean updateFileConfig(int i) {
         try {
             double px1 = waypointsMission.getPosition3D(i).getX();
@@ -171,7 +170,6 @@ public class HGA4m extends Planner{
         }
     }
     
-    @Override
     public boolean parseRoute3DtoGeo(int i){
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
@@ -181,19 +179,21 @@ public class HGA4m extends Planner{
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
             int countLines = 0;
+            double h = Double.parseDouble(altitudeFlight);
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
-                double h = Double.parseDouble(altitudeFlight);
                 printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
+                mission3D.addPosition3D(new Position3D(x, y, h));
+                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
                 countLines++;
             }
             if (countLines == 0){
                 System.out.println("Route-Empty");
                 if (!drone.statusUAV.armed){
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             readRoute3D.close();
@@ -209,6 +209,7 @@ public class HGA4m extends Planner{
     public void clearLogs() {
         UtilIO.deleteFile(new File(dir), ".log");
         UtilIO.deleteFile(new File(dir), ".png");
+        UtilIO.deleteFile(new File(dir), ".err");
         new File(dir + "log_error.txt").delete(); 
     }
     

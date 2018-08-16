@@ -1,9 +1,18 @@
 # Changelog
 
-## Version v2.1.0 (02/08/2018)
+## Version v3.0.0 (16/08/2018)
 
 ### Features:
 
+* Updated code UAV-IFA to support sonar altitude and temperature sensor.
+* Updated diretory Modules-Global with TemperatureSensor.
+* Updated code UAV-GCS to plot Google Maps with route the UAV in real time.
+* Updated code UAV-GCS to plot simple mission with route the UAV in real time.
+* Updated code UAV-Generic (UAV-IFA and UAV-MOSA) to support buzzer-pc, alarm-pc, picture-pc and video-pc.
+* Updated file config-global.properties and removed file config-gcs.properties.
+* Updated code UAV-GCS to show options whether resource exists in config-global.properties.
+* Updated code to support CCQSP4m executed in GCS (executed OFFBOARD).
+* Updated code to support MS4s, GH4s, GA4s, DE4s executed in GCS (executed OFFBOARD).
 * Directory Instances with new formats JSON and XML for the maps.
 * Updated UAV-Mission-Manager to support missions with CCQSP4m path planner.
 * Added code UAV-Manager.

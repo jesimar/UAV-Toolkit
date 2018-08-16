@@ -22,7 +22,7 @@ public class TypeMsgCommunication {
     
     //Mensagem em que IFA diz a GCS alguma informação.
     public static final String IFA_GCS_INFO               = "IFA->GCS[INFO]";
-    public static final String IFA_GCS_PLANER             = "IFA->GCS[PLANNER]";
-    public static final String IFA_GCS_REPLANER           = "IFA->GCS[REPLANNER]";
+    public static final String IFA_GCS_PLANNER            = "IFA->GCS[PLANNER]";
+    public static final String IFA_GCS_REPLANNER          = "IFA->GCS[REPLANNER]";
     
 }

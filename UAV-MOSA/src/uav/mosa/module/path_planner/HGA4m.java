@@ -7,7 +7,6 @@ import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
 import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.geom.Position3D;
 import uav.generic.struct.Waypoint;
 import uav.generic.util.UtilGeo;
@@ -153,27 +152,25 @@ public class HGA4m extends Planner{
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
             String nameFileRouteGeo = "routeGeo" + i + ".txt";
-            PointGeo pGeoBase = UtilGeo.getPointGeo(configGlobal.getDirFiles() + 
-                    configGlobal.getFileGeoBase());
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
             int countLines = 0;
+            double h = configGlobal.getAltRelMission(); 
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
-                double h = configGlobal.getAltRelMission();            
-                printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
+                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
                 mission3D.addPosition3D(new Position3D(x, y, h));
-                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
+                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pointGeo, x, y, h)));
                 countLines++;
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
                 if (!drone.getStatusUAV().armed){
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             readRoute3D.close();

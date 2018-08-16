@@ -19,13 +19,16 @@ import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeOperationMode;
+import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
+import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.struct.reader.ReaderFileMission;
+import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilGeom;
 import uav.mosa.module.communication_control.CommunicationGCS;
 import uav.mosa.module.communication_control.CommunicationIFA;
@@ -38,6 +41,7 @@ import uav.mosa.struct.ReaderFileConfigMOSA;
  */
 public class MissionManager {
     
+    public static PointGeo pointGeo;
     private final Drone drone;
     private final DataCommunication dataAcquisition;
     private final CommunicationIFA communicationIFA;
@@ -72,31 +76,39 @@ public class MissionManager {
         
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         if (!configGlobal.read()){
-            System.exit(0);
+            System.exit(1);
         }
         if (!configGlobal.checkReadFields()){
-            System.exit(0);
+            System.exit(1);
         }
         if (!configGlobal.parseToVariables()){
-            System.exit(0);
+            System.exit(1);
         }
         this.configLocal = ReaderFileConfigMOSA.getInstance();
         if (!configLocal.read()){
-            System.exit(0);
+            System.exit(1);
         }
         if (!configLocal.checkReadFields()){
-            System.exit(0);
+            System.exit(1);
         }
         if (!configLocal.parseToVariables()){
-            System.exit(0);
+            System.exit(1);
         }
         
         this.configAircraft = ReaderFileConfigAircraft.getInstance();
         if (!configAircraft.read()){
-            System.exit(0);
+            System.exit(1);
         }
         if (!configAircraft.checkReadFields()){
-            System.exit(0);
+            System.exit(1);
+        }
+        
+        try{
+            pointGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles()+configGlobal.getFileGeoBase());
+        }catch (FileNotFoundException ex){
+            StandardPrints.printMsgError2("Error [FileNotFoundException] pointGeo");
+            ex.printStackTrace();
+            System.exit(1);
         }
         
         if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
@@ -177,24 +189,26 @@ public class MissionManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogOverhead()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         } catch(Exception ex){
             StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     
     private void readMission3D(){
         try {
             if (configLocal.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
-                String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMissionHGA4m();
-                ReaderFileMission.mission3D(new File(path), wptsMission3D);
+                if (configLocal.getTypePlanner().equals(TypePlanner.HGA4M)){
+                    String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMissionHGA4m();
+                    ReaderFileMission.mission3D(new File(path), wptsMission3D);
+                }
             }
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException] readMission3D()");
             ex.printStackTrace();            
-            System.exit(0);
+            System.exit(1);
         }
     }
     
@@ -205,7 +219,7 @@ public class MissionManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileBuzzer()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     
@@ -216,7 +230,7 @@ public class MissionManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraPhoto()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     
@@ -227,7 +241,7 @@ public class MissionManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraVideo()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     
@@ -238,7 +252,7 @@ public class MissionManager {
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileSpraying()");
             ex.printStackTrace();
-            System.exit(0);
+            System.exit(1);
         }
     }
     
@@ -325,19 +339,19 @@ public class MissionManager {
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
-                            System.exit(0);
+                            System.exit(1);
                         }
                         if (decisonMaking.getStatePlanning()== StatePlanning.DISABLED){
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
-                            System.exit(0);
+                            System.exit(1);
                         }
                         if (stateMonitoring == StateMonitoring.DISABLED){
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
-                            System.exit(0);
+                            System.exit(1);
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_MONITORING_STATE_MACHINE);                     
                     }
