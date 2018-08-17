@@ -40,7 +40,6 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth. [[UAV-Mission-Creator](./UAV-Mission-Creator/)]
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave. [[UAV-Monitoring](./UAV-Monitoring/)]
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave. [[UAV-PosAnalyser](./UAV-PosAnalyser/)]
-* **UAV-Routes-Standard** -> Código em C que gera um conjunto de rotas com formato padrão (círculo, triângulo e retângulo). [[UAV-Routes-Standard](./UAV-Routes-Standard/)]
 * **UAV-SOA-Interface** -> Código em python que provê serviços de acesso a informações do drone através do dronekit. [[UAV-SOA-Interface](./UAV-SOA-Interface/)]
 * **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-SOA-Interface. [[UAV-Tests](./UAV-Tests/)]
 
