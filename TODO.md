@@ -204,20 +204,24 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 
 * Criar um UAV-Text-Commands: Colocar em um arquivo de texto uma lista de comandos e mandar o drone seguir a missão.
 
+```
 -----Exemplo 1 (primeiro tipo de arquivo )------
-| takeoff                                      |
-| forward                                      |
-| forward                                      |
-| right                                        |
-| back                                         |
-| land                                         |
+| takeoff .....................................|
+| forward .....................................|
+| forward .....................................|
+| right .......................................|
+| back ........................................|
+| land ........................................|
 ------------------------------------------------
+```
 
+```
 ------Exemplo 2 (segundo tipo de arquivo):------
-| takeoff                                      |
-| forward 10                                   |   (metros)
-| rigth 4                                      |   (metros)
-| forward                                      |   (se não escrito a metragem o drone move-se 3 metros)
-| left 5                                       |
-| land                                         |
+| takeoff .....................................|
+| forward 10 ..................................|   (metros)
+| rigth 4 .....................................|   (metros)
+| forward .....................................|   (se não escrito a metragem o drone move-se 3 metros)
+| left 5 ......................................|
+| land ........................................|
 ------------------------------------------------
+```

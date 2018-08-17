@@ -4,6 +4,7 @@
 
 ### Features:
 
+* Removed code UAV-Routes-Standard (copied to UAV-Tools).
 * Updated code UAV-IFA to support sonar altitude and temperature sensor.
 * Updated diretory Modules-Global with TemperatureSensor.
 * Updated code UAV-GCS to plot Google Maps with route the UAV in real time.
