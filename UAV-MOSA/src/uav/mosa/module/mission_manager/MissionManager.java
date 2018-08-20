@@ -13,7 +13,6 @@ import uav.generic.hardware.aircraft.FixedWing;
 import uav.generic.hardware.aircraft.RotaryWing;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.reader.ReaderFileConfigAircraft;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
@@ -33,7 +32,6 @@ import uav.generic.util.UtilGeom;
 import uav.mosa.module.communication_control.CommunicationGCS;
 import uav.mosa.module.communication_control.CommunicationIFA;
 import uav.mosa.module.decision_making.DecisionMaking;
-import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
  * Classe que gerencia toda a missão em curso pela aeronave.
@@ -48,10 +46,9 @@ public class MissionManager {
     private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
     
-    private final ReaderFileConfigMOSA configLocal;
     private final ReaderFileConfigGlobal configGlobal;
-    private final ReaderFileConfigAircraft configAircraft;
     
+    private CameraControl camera;
     private final Mission3D wptsMission3D;
     private Mission wptsBuzzer;
     private Mission wptsCameraPhoto;
@@ -84,24 +81,6 @@ public class MissionManager {
         if (!configGlobal.parseToVariables()){
             System.exit(1);
         }
-        this.configLocal = ReaderFileConfigMOSA.getInstance();
-        if (!configLocal.read()){
-            System.exit(1);
-        }
-        if (!configLocal.checkReadFields()){
-            System.exit(1);
-        }
-        if (!configLocal.parseToVariables()){
-            System.exit(1);
-        }
-        
-        this.configAircraft = ReaderFileConfigAircraft.getInstance();
-        if (!configAircraft.read()){
-            System.exit(1);
-        }
-        if (!configAircraft.checkReadFields()){
-            System.exit(1);
-        }
         
         try{
             pointGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles()+configGlobal.getFileGeoBase());
@@ -112,22 +91,22 @@ public class MissionManager {
         }
         
         if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
-            drone = new FixedWing(configAircraft.getNameAircraft(), 
-                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(), 
-                    configAircraft.getMass(), configAircraft.getPayload(), 
-                    configAircraft.getEndurance());
+            drone = new FixedWing(configGlobal.getUavName(), 
+                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(), 
+                    configGlobal.getUavMass(), configGlobal.getUavPayload(), 
+                    configGlobal.getUavEndurance());
         } else if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
-            drone = new RotaryWing(configAircraft.getNameAircraft(), 
-                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(), 
-                    configAircraft.getMass(), configAircraft.getPayload(), 
-                    configAircraft.getEndurance());
+            drone = new RotaryWing(configGlobal.getUavName(), 
+                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(), 
+                    configGlobal.getUavMass(), configGlobal.getUavPayload(), 
+                    configGlobal.getUavEndurance());
         } else{
             drone = new RotaryWing("iDroneAlpha");
         }
         
         createFileLogOverhead();
         this.dataAcquisition = new DataCommunication(drone, "MOSA", 
-                configGlobal.getHostSOA(), configGlobal.getPortNetworkSOA(), 
+                configGlobal.getHostS2DK(), configGlobal.getPortNetworkS2DK(), 
                 printLogOverhead);
         this.wptsMission3D = new Mission3D();
         readMission3D();
@@ -140,6 +119,7 @@ public class MissionManager {
             readerFileBuzzer();
         }
         if (configGlobal.hasCamera()){
+            this.camera = new CameraControl();
             this.wptsCameraPhoto = new Mission(); 
             this.wptsCameraVideo = new Mission();
             readerFileCameraPhoto();
@@ -199,9 +179,9 @@ public class MissionManager {
     
     private void readMission3D(){
         try {
-            if (configLocal.getSystemExec().equals(TypeSystemExecMOSA.PLANNER)){
-                if (configLocal.getTypePlanner().equals(TypePlanner.HGA4M)){
-                    String path = configLocal.getDirPlanner() + configLocal.getFileWaypointsMissionHGA4m();
+            if (configGlobal.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
+                if (configGlobal.getTypePlanner().equals(TypePlanner.HGA4M)){
+                    String path = configGlobal.getDirPlanner() + configGlobal.getFileMissionPlannerHGA4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }
@@ -280,6 +260,7 @@ public class MissionManager {
                         }
                         if (configGlobal.hasCamera()){
                             actionTakeAPicture();
+//                            actionMakeAVideo();
                         }
                         //Codigo usado no artigo ICAS 2018 para insercao de falha no MOSA
 //                        if (drone.getTime() > 80){//Tempos testados 70, 80, 92, 102, 122.
@@ -312,7 +293,7 @@ public class MissionManager {
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
                         if (communicationIFA.isStartMission()){
-                            if (configLocal.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                            if (configGlobal.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionToDoSomething();
                             }else{
                                 decisonMaking.actionToDoSomethingOffboard(communicationGCS);
@@ -426,8 +407,35 @@ public class MissionManager {
                 wptsCameraPhoto.removeWaypoint(index);
             }
             StandardPrints.printMsgEmph("turn on the camera");
-            CameraControl camera = new CameraControl();
             camera.takeAPicture();
+        }
+    }
+    
+    private void actionMakeAVideo(){
+        double lat = drone.getGPS().lat;
+        double lng = drone.getGPS().lng;
+        double alt = drone.getBarometer().alt_rel;        
+        double distH = Integer.MAX_VALUE;
+        double distV = Integer.MAX_VALUE;
+        int index = 0;
+        for (int i = 0; i < wptsCameraVideo.size(); i++){
+            double latDestiny = wptsCameraVideo.getWaypoint(i).getLat();
+            double lngDestiny = wptsCameraVideo.getWaypoint(i).getLng();
+            double altDestiny = configGlobal.getAltRelMission();            
+            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distVActual = Math.abs(alt - altDestiny); 
+            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+                distH = distHActual;
+                distV = distVActual;
+                index = i;
+            }
+        }        
+        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+            if (wptsCameraVideo.size() > 0){
+                wptsCameraVideo.removeWaypoint(index);
+            }
+            StandardPrints.printMsgEmph("turn on the video");
+            camera.makeAVideo();
         }
     }
     
@@ -442,8 +450,4 @@ public class MissionManager {
         }
     }
     
-    //falta começar
-    private void actionMakeAVideo(){
-        
-    }
 }

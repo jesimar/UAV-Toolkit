@@ -29,7 +29,7 @@ public final class GCS2 extends JFrame {
     private final JTextArea textAreaGeneral;
     private final JTextArea textAreaSITL;
     private final JTextArea textAreaMAVProxy;
-    private final JTextArea textAreaSOA;
+    private final JTextArea textAreaS2DK;
     private final JTextArea textAreaIFA;
     private final JTextArea textAreaMOSA;
     
@@ -137,16 +137,16 @@ public final class GCS2 extends JFrame {
         });
         panelLeft.add(btnStartMavproxy);
 
-        JButton btnStartSOA = new JButton("Start SOA");
-        btnStartSOA.setPreferredSize(new Dimension(170, 25));
-        btnStartSOA.addActionListener(new ActionListener() {
+        JButton btnStartS2DK = new JButton("Start S2DK");
+        btnStartS2DK.setPreferredSize(new Dimension(170, 25));
+        btnStartS2DK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                start.execSOAInterface(textAreaSOA);
-                btnStartSOA.setEnabled(false);
+                start.execS2DK(textAreaS2DK);
+                btnStartS2DK.setEnabled(false);
             }
         });
-        panelLeft.add(btnStartSOA);
+        panelLeft.add(btnStartS2DK);
 
         JButton btnStartIFA = new JButton("Start IFA");
         btnStartIFA.setPreferredSize(new Dimension(170, 25));
@@ -205,10 +205,10 @@ public final class GCS2 extends JFrame {
         labelMAVProxy.setForeground(Color.WHITE);
         panelRight.add(labelMAVProxy);
         
-        JLabel labelSOA = new JLabel("Terminal SOA Interface");
-        labelSOA.setPreferredSize(new Dimension(470, 20));
-        labelSOA.setForeground(Color.WHITE);
-        panelRight.add(labelSOA);
+        JLabel labelS2DK = new JLabel("Terminal S2KD");
+        labelS2DK.setPreferredSize(new Dimension(470, 20));
+        labelS2DK.setForeground(Color.WHITE);
+        panelRight.add(labelS2DK);
 
         JScrollPane scrollMavproxy = new JScrollPane();
         textAreaMAVProxy = new JTextArea(11, 36);
@@ -220,15 +220,15 @@ public final class GCS2 extends JFrame {
         scrollMavproxy.setViewportView(textAreaMAVProxy);
         panelRight.add(scrollMavproxy);
 
-        JScrollPane scrollSOA = new JScrollPane();
-        textAreaSOA = new JTextArea(11, 36);
-        textAreaSOA.setForeground(Color.BLACK);
-        textAreaSOA.setSelectedTextColor(Color.RED);
-        textAreaSOA.setBackground(Color.WHITE);
-        textAreaSOA.setFont(new Font(Font.SERIF, Font.BOLD, 12));
-        textAreaSOA.setEditable(false);
-        scrollSOA.setViewportView(textAreaSOA);
-        panelRight.add(scrollSOA);
+        JScrollPane scrollS2DK = new JScrollPane();
+        textAreaS2DK = new JTextArea(11, 36);
+        textAreaS2DK.setForeground(Color.BLACK);
+        textAreaS2DK.setSelectedTextColor(Color.RED);
+        textAreaS2DK.setBackground(Color.WHITE);
+        textAreaS2DK.setFont(new Font(Font.SERIF, Font.BOLD, 12));
+        textAreaS2DK.setEditable(false);
+        scrollS2DK.setViewportView(textAreaS2DK);
+        panelRight.add(scrollS2DK);
         
         JLabel labelIFA = new JLabel("Terminal IFA");
         labelIFA.setPreferredSize(new Dimension(450, 20));

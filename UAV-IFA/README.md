@@ -10,20 +10,20 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-local.sh        (PC)
-3. ./exec-soa-interface.sh         (PC)
+3. ./exec-s2dk.sh                  (PC)
 4. ./exec-ifa.sh                   (PC)
 
 Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-cc-sitl.sh      (CC)
-3. ./exec-soa-interface.sh         (CC)
+3. ./exec-s2dk.sh                  (CC)
 4. ./exec-ifa.sh                   (CC)
 
 Forma 3 -> Execução no Drone no CC:
 
 1. ./exec-mavproxy-cc-real-*.sh    (CC)
-2. ./exec-soa-interface.sh         (CC)
+2. ./exec-s2dk.sh                  (CC)
 3. ./exec-ifa.sh                   (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.
@@ -36,7 +36,7 @@ OBS: Você pode abrir/executar também uma estação de controle de solo para ac
 
 ## Arquivos de Entrada
 
-No diretório raiz tem-se um arquivo de propriedades (config-ifa.properties), em que se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
+No diretório /Modules-Global/ tem-se um arquivo de propriedades (config-global.properties), em que se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
 
 ## Arquivos de Saída
 

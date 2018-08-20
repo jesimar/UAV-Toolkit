@@ -29,7 +29,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Para tanto a pessoa deve criar a missão no Google Earth.
 * Em seguida tirar uma fotografia da missão e o sugeito escolha qual missão executar atualizando todos os arquivos da missão.
 
-## Sistema UAV-SOA-Interface:
+## Sistema UAV-S2DK:
 
 * Corrigir problema na função setHomeLocation(). Problema no cmds.download() e cmds.wait_ready().
 * Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
@@ -44,6 +44,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Geral
 
 * Documentação: Melhorar a descrição do projeto no github.
+    Usar os termos: 
+        x86 para 32 bits
+        x64 para 64 bits
+        ARM32 para 32 bits
+        ARM64 para 64 bits
 * Documentação: Traduzir a descrição do projeto no github para o Inglês.
 * Documentação: Melhorar as descrições do github através de links, figuras, diagramas e vídeos.
 * Documentação: Colocar informações sobre como configurar os arquivos de properties no github.
@@ -54,27 +59,27 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Documentação Formal das Falhas no Sistema
 
-* Falha no appendMission(MOSA) (SOA)
+* Falha no appendMission(MOSA) (S2DK)
 1. Falha em wait_ready
 2. Não tem solução
 3. Drone pode cair
 
-* Falha no getHomeLocation (IFA) (SOA)
+* Falha no getHomeLocation (IFA) (S2DK)
 1. Falha em wait_ready
 2. Não tem solução
 3. Drone não cai
 
-* Falha em getHomeLocation (IFA) (SOA)
+* Falha em getHomeLocation (IFA) (S2DK)
 1. Falha em attribute lat
-2. Não tem solução (mas acredito que é só esperar mais 5 segundos entre a execução do SOA e o IFA)
+2. Não tem solução (mas acredito que é só esperar mais 5 segundos entre a execução do S2DK e o IFA)
 3. Drone não cai
 4. Print do Erro:
 ```
 127.0.0.1 - - [22/May/2018 10:49:32] "GET /get-home-location/ HTTP/1.1" 500 -
 Traceback (most recent call last):
-  File "/media/jesimar/Workspace/Work/UAV/UAV-SOA-Interface/server.py", line 25, in do_GET
+  File "/media/jesimar/Workspace/Work/UAV/UAV-S2DK/server.py", line 25, in do_GET
     response = GET_URLS[self.path](request)
-  File "/media/jesimar/Workspace/Work/UAV/UAV-SOA-Interface/views.py", line 161, in getHomeLocation
+  File "/media/jesimar/Workspace/Work/UAV/UAV-S2DK/views.py", line 161, in getHomeLocation
     'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
 AttributeError: 'NoneType' object has no attribute 'lat'
 ```
@@ -107,7 +112,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
 * Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
-* Criar ambiente de testes da funções do UAV-SOA-Interface independente da linguagem Java em python. 
+* Criar ambiente de testes da funções do UAV-S2DK independente da linguagem Java em python. 
 * Trabalhar melhor no getHomeLocation esta função está dando problemas com a placa Pixhawk (com a APM funciona perfeitamente).
 * Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 * Remover prints coloridos aplicação, pois não funcionam no SO Windows (UAV-MOSA, UAV-IFA e UAV-Generic).
@@ -172,9 +177,9 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 
 * Colocar recurso para mapear obstáculos (definir regiões bonificadores, penalizadores, e nfz). Criar o mapa em si, substituindo o Google Earth.
 * Desenvolver as seguintes funcionalidades: HOVER, STOP_MISSION
-* Melhorar formato JSON da comunicação entre UAV-IFA e UAV-MOSA.
+* Melhorar formato JSON da comunicação entre UAV-IFA, UAV-MOSA e UAV-S2DK.
 
-### UAV-SOA-Interface
+### UAV-S2DK
 
 * Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar. 
 * Observar o porquê o drone esta pousando no final da missão.

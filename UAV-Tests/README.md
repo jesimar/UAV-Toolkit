@@ -1,6 +1,6 @@
 # UAV-Tests
 
-Projeto escrito em Java usando a IDE Netbeans para testes de funções do UAV-SOA-Interface.
+Projeto escrito em Java usando a IDE Netbeans para testes de funções do UAV-S2KD.
 
 ## Como Executar
 
@@ -8,7 +8,7 @@ Para testar este código, primeiramente, deve-se executar os seguintes scripts (
 
 1. ./exec-sitl.sh                (PC)
 2. ./exec-mavproxy-local.sh      (PC)
-3. ./exec-soa-interface.sh       (PC)
+3. ./exec-s2dk.sh                (PC)
 4. ./exec-tests.sh               (PC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.

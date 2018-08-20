@@ -6,7 +6,7 @@
 
 def readFileParameters():
 	parameters = ''
-	fileConfig = open('config-soa.properties', 'r')
+	fileConfig = open('config-s2dk.properties', 'r')
 	text = fileConfig.readlines()
 	for line in text:
 		l1 = line.find('#')

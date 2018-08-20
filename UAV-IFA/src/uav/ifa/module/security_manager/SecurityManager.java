@@ -15,7 +15,6 @@ import uav.generic.hardware.aircraft.RotaryWing;
 import uav.generic.module.sensors_actuators.SonarControl;
 import uav.generic.module.sensors_actuators.TemperatureSensorControl;
 import uav.generic.struct.Parameter;
-import uav.generic.struct.reader.ReaderFileConfigAircraft;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.generic.struct.reader.ReaderFileConfigParam;
 import uav.generic.struct.constants.TypeAircraft;
@@ -34,7 +33,6 @@ import uav.generic.util.UtilGeo;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.module.communication_control.CommunicationMOSA;
 import uav.ifa.module.communication_control.CommunicationGCS;
-import uav.ifa.struct.ReaderFileConfigIFA;
 import uav.ifa.struct.Failure;
 
 
@@ -53,9 +51,7 @@ public class SecurityManager {
     private final DecisionMaking decisonMaking;
 
     private final ReaderFileConfigGlobal configGlobal;
-    private final ReaderFileConfigIFA configLocal;
     private final ReaderFileConfigParam configParam;
-    private final ReaderFileConfigAircraft configAircraft;
 
     private PrintStream printLogAircraft;
     private PrintStream printLogOverhead;
@@ -87,23 +83,6 @@ public class SecurityManager {
         if (!configGlobal.parseToVariables()) {
             System.exit(1);
         }
-        this.configLocal = ReaderFileConfigIFA.getInstance();
-        if (!configLocal.read()) {
-            System.exit(1);
-        }
-        if (!configLocal.checkReadFields()) {
-            System.exit(1);
-        }
-        if (!configLocal.parseToVariables()) {
-            System.exit(1);
-        }
-        this.configAircraft = ReaderFileConfigAircraft.getInstance();
-        if (!configAircraft.read()) {
-            System.exit(1);
-        }
-        if (!configAircraft.checkReadFields()) {
-            System.exit(1);
-        }
         this.configParam = ReaderFileConfigParam.getInstance();
 
         try{
@@ -115,23 +94,23 @@ public class SecurityManager {
         }
         
         if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)) {
-            drone = new FixedWing(configAircraft.getNameAircraft(),
-                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(),
-                    configAircraft.getMass(), configAircraft.getPayload(),
-                    configAircraft.getEndurance());
+            drone = new FixedWing(configGlobal.getUavName(),
+                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(),
+                    configGlobal.getUavMass(), configGlobal.getUavPayload(),
+                    configGlobal.getUavEndurance());
         } else if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
-            drone = new RotaryWing(configAircraft.getNameAircraft(),
-                    configAircraft.getSpeedCruize(), configAircraft.getSpeedMax(),
-                    configAircraft.getMass(), configAircraft.getPayload(),
-                    configAircraft.getEndurance());
+            drone = new RotaryWing(configGlobal.getUavName(),
+                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(),
+                    configGlobal.getUavMass(), configGlobal.getUavPayload(),
+                    configGlobal.getUavEndurance());
         } else {
             drone = new RotaryWing("iDroneAlpha");
         }
 
         createFileLogOverhead();
         this.dataAcquisition = new DataCommunication(
-                drone, "IFA", configGlobal.getHostSOA(),
-                configGlobal.getPortNetworkSOA(), printLogOverhead);
+                drone, "IFA", configGlobal.getHostS2DK(),
+                configGlobal.getPortNetworkS2DK(), printLogOverhead);
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
         this.communicationMOSA = new CommunicationMOSA(drone);
         this.communicationGCS = new CommunicationGCS(drone, decisonMaking);
@@ -160,7 +139,7 @@ public class SecurityManager {
         communicationGCS.startServerIFA();      //Thread
         communicationGCS.receiveData();         //Thread
 
-        if (!configLocal.getSystemExec().equals(TypeSystemExecIFA.CONTROLLER)){
+        if (!configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.CONTROLLER)){
             communicationMOSA.startServerIFA(); //blocked
             communicationMOSA.receiveData();    //Thread        
         }
@@ -404,7 +383,7 @@ public class SecurityManager {
                             if (configGlobal.hasBuzzer()) {
                                 actionTurnOnTheAlarm();
                             }
-                            if (configLocal.getLocalExecReplanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                            if (configGlobal.getLocalExecReplanner().equals(TypeLocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionToDoSomethingOnboard(listOfFailure.get(0));
                             }else{
                                 decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), communicationGCS);

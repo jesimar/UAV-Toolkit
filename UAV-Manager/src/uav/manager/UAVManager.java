@@ -335,7 +335,7 @@ public class UAVManager {
             commands = new PanelCommand[]{
                 new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl"),
                 new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy"),
-                new PanelCommand("UAV-SOA >>",  properties_file, background, "SOA_INTERFACE_APP", "exec-soa", "SOA_INTERFACE_DIR"),
+                new PanelCommand("UAV-S2DK >>",  properties_file, background, "S2DK_APP", "exec-s2dk", "S2DK_DIR"),
                 new PanelCommand("GCS >>",      properties_file, background, "GROUND_STATION_APP", "exec-gcs", "GROUND_STATION_DIR"),
                 new PanelCommand("UAV-GCS >>",  properties_file, background, "UAV_GCS_APP", "exec-uav-gcs", "UAV_GCS_DIR"),
                 new PanelCommand("IFA >>",      properties_file, background, "UAV_IFA_APP", "exec-uav-ifa", "UAV_IFA_DIR"),
@@ -623,10 +623,10 @@ public class UAVManager {
                     new CheckFindApp(finder, saver, "GROUND_STATION_DIR", "GROUND_STATION_APP"),
                     "Please install manually and click here to select one Ground Control Station aplication"
                 ),
-                new CheckPanel(true, false, false, "SOA Interface", 
-                    (r) -> r.accept(new File(properties.getProperty("SOA_INTERFACE_DIR"), properties.getProperty("SOA_INTERFACE_APP")).exists()),
-                    new CheckFindApp(finder, saver, "SOA_INTERFACE_DIR", "SOA_INTERFACE_APP"),
-                    "Please select the file init.py from UAV-Toolkit/UAV-SOA-Interface/ directory"
+                new CheckPanel(true, false, false, "S2DK", 
+                    (r) -> r.accept(new File(properties.getProperty("S2DK_DIR"), properties.getProperty("S2DK_APP")).exists()),
+                    new CheckFindApp(finder, saver, "S2DK_DIR", "S2DK_APP"),
+                    "Please select the file init.py from UAV-Toolkit/UAV-S2DK/ directory"
                 ),
                 new CheckPanel(true, true, true, "UAV-GCS", 
                     (r) -> r.accept(new File(properties.getProperty("UAV_GCS_DIR"), properties.getProperty("UAV_GCS_APP")).exists()),

@@ -53,13 +53,13 @@ public class GA_GA_4s extends Replanner{
             File src = new File(dirGA + "config-base.sgl");
             File dst = new File(dirGA + "config.sgl");
             String state = px + " " + py + " " + vel + " " + angle;
-            String qtdWpt = configLocal.getQtdWaypoints();
-            String delta = configLocal.getDelta();
+            String qtdWpt = configGlobal.getNumberWaypointsReplanner();
+            String delta = configGlobal.getDeltaReplanner();
             UtilIO.copyFileModifiedIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             File src_ga = new File(dirGA + "instance-base");
             File dst_ga = new File(dirGA + "instance");
-            String time = configLocal.getTimeExec();
+            String time = configGlobal.getTimeExecReplanner();
             UtilIO.copyFileModifiedIFA(src_ga, dst_ga, time, 117);
             return true;
         } catch (FileNotFoundException ex) {
@@ -83,7 +83,7 @@ public class GA_GA_4s extends Replanner{
             while(readRoute3D.hasNext()){                        
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();           
-                if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
+                if (configGlobal.getTypeAltitudeDecayReplanner().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
                 printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));   

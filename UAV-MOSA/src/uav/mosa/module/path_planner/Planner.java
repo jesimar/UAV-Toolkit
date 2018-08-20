@@ -13,7 +13,6 @@ import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.mosa.module.mission_manager.MissionManager;
-import uav.mosa.struct.ReaderFileConfigMOSA;
 
 /**
  * Classe que modela o planejador da missão do drone evitando obstáculos.
@@ -21,7 +20,6 @@ import uav.mosa.struct.ReaderFileConfigMOSA;
  */
 public abstract class Planner {
     
-    final ReaderFileConfigMOSA configLocal;
     final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone;
@@ -36,9 +34,8 @@ public abstract class Planner {
      * @param waypointsMission waypoints of the mission
      */
     public Planner(Drone drone, Mission3D waypointsMission) {
-        this.configLocal = ReaderFileConfigMOSA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        this.dir = configLocal.getDirPlanner();
+        this.dir = configGlobal.getDirPlanner();
         this.drone = drone;
         this.waypointsMission = waypointsMission; 
         this.mission3D = new Mission3D();
@@ -63,13 +60,13 @@ public abstract class Planner {
             File f = new File(dir);
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = configLocal.getCmdExecPlanner() + " local";
+                cmd = configGlobal.getCmdExecPlanner() + " local";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (configGlobal.getTypeCC().equals(TypeCC.EDISON)){
-                    cmd = configLocal.getCmdExecPlanner() + " edison";
+                    cmd = configGlobal.getCmdExecPlanner() + " edison";
                 }else if (configGlobal.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = configLocal.getCmdExecPlanner() + " rpi";
+                    cmd = configGlobal.getCmdExecPlanner() + " rpi";
                 }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

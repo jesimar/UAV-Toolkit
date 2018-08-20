@@ -23,8 +23,6 @@ public class PanelPlotGoogleMaps extends JPanel {
 
     private GoogleMapsScene api;
     private final String file = "./html/maps.html";
-    private double latDrone;
-    private double lngDrone;
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
     private final double lngBase = GCS.pointGeo.getLng();
@@ -35,7 +33,7 @@ public class PanelPlotGoogleMaps extends JPanel {
         routeMOSA = new ReaderRoute();
     }
 
-    public void init() {
+    public void init(int width, int height) {
         try {
             api = GoogleMapsScene.launch(new File(file), (String) null);
             final JFXPanel fxPanel = new JFXPanel() {
@@ -47,13 +45,13 @@ public class PanelPlotGoogleMaps extends JPanel {
             api.attach(fxPanel);
             this.setLayout(new FlowLayout());
             this.add(fxPanel);
-            this.setSize(800, 600);
-            fxPanel.setPreferredSize(new Dimension(this.getWidth() - 30, this.getHeight() - 80));
+            this.setSize(width, height);
+            fxPanel.setPreferredSize(new Dimension(this.getWidth() - 20, this.getHeight() - 10));
             PanelPlotGoogleMaps panel = this;
             this.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentResized(ComponentEvent e) {
-                    fxPanel.setPreferredSize(new Dimension(panel.getWidth() - 30, panel.getHeight() - 80));
+                    fxPanel.setPreferredSize(new Dimension(panel.getWidth() - 20, panel.getHeight() - 10));
                     SwingUtilities.updateComponentTreeUI(panel);
                 }
             });
@@ -66,7 +64,7 @@ public class PanelPlotGoogleMaps extends JPanel {
     private ReaderMap mapIFA;
 
     public void drawMap() {
-        String pathMap = "../Modules-IFA/MPGA4s/map.sgl";
+        String pathMap = "../Modules-Global/Files/map-full.sgl";
         if (pathMap.equals("")) {
             System.out.println("The name of map file isn't valid.");
         }
@@ -209,6 +207,8 @@ public class PanelPlotGoogleMaps extends JPanel {
             }
         });
     }
+    
+    boolean firstTime = true;
 
     public void plotDroneInRealTime(Drone drone) {
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -220,6 +220,10 @@ public class PanelPlotGoogleMaps extends JPanel {
                         double latDrone = drone.gps.lat;
                         double lngDrone = drone.gps.lng;
                         if (latDrone != 0.0 && lngDrone != 0) {
+                            if (firstTime){
+                                api.setCenter(latDrone, lngDrone);
+                                firstTime = false;
+                            }
                             api.delMarker("UAV");
                             api.addMarker(latDrone, lngDrone, "UAV", "uav");
                             repaint();
@@ -231,86 +235,4 @@ public class PanelPlotGoogleMaps extends JPanel {
             }
         });
     }
-
-    /*
-    private static int count_markers = 0;
-    
-    public PanelPlotGoogleMaps() {
-        try {
-            final GoogleMapsScene api = GoogleMapsScene.launch(new File("./html/maps.html"), (String) null);
-            
-            JFrame frame = new JFrame("Google Maps JavaScript API on a swing JPanel");
-            
-            final JFXPanel fxPanel = new JFXPanel(){
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-//                g.setColor(Color.WHITE);
-//                g.fillRect(15, 55, 420, 90);
-//                g.setColor(Color.BLACK);
-//                g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
-//                g.drawString("INSTRUCTIONS:", 20, 70);
-//                g.drawString("0) status.started = "+started, 20, 95);
-                }
-            };
-            
-            api.attach(fxPanel);
-            
-            JButton btmSetFixedCenter = new JButton("Center");
-            btmSetFixedCenter.addActionListener((event)->{
-                api.setCenter(-27.573252, -48.537125);
-            });
-            
-            JButton btmAddRandomMarker = new JButton("Marker");
-            btmAddRandomMarker.addActionListener((event)->{
-                double dlat = (1-Math.random()*2)/1000.0;
-                double dlng = (1-Math.random()*2)/1000.0;
-                double lat = -27.573252+dlat;
-                double lng = -48.537125+dlng;
-                String key = ""+(count_markers++);
-                api.addMarker(lat, lng, key, null);
-            });
-            
-            JButton btmAddRandomPoly = new JButton("Poly");
-            btmAddRandomPoly.addActionListener((event)->{
-                //Create a square in a random position
-                double size = 0.0003;
-                double dlat = (1-Math.random()*2)/1000.0;
-                double dlng = (1-Math.random()*2)/1000.0;
-                double lat = -27.573252+dlat;
-                double lng = -48.537125+dlng;
-                
-                api.addPolygon("#FF0000", 0.8, 2, "#FF0000", 0.35,
-                        new Point2D.Double(lat+size, lng+size),
-                        new Point2D.Double(lat+size, lng-size),
-                        new Point2D.Double(lat-size, lng-size),
-                        new Point2D.Double(lat-size, lng+size)
-                );
-            });
-            
-            frame.setLayout(new FlowLayout());
-            frame.add(btmSetFixedCenter);
-            frame.add(btmAddRandomMarker);
-            frame.add(btmAddRandomPoly);
-            
-            frame.add(fxPanel);
-            
-            frame.setSize(800, 600);
-            fxPanel.setPreferredSize(new Dimension(frame.getWidth()-30, frame.getHeight()-80));
-            
-            frame.addComponentListener(new ComponentAdapter() {
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    fxPanel.setPreferredSize(new Dimension(frame.getWidth()-30, frame.getHeight()-80));
-                    SwingUtilities.updateComponentTreeUI(frame);
-                }
-            });
-            
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-    }
-     */
 }

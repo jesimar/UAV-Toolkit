@@ -9,7 +9,7 @@ from dronekit import connect
 from status import getStatus
 from readfile import readFileParameters
 
-print '<<<<< UAV-SOA-Interface >>>>'
+print '<<<<< UAV-S2DK >>>>'
 
 print '====Read File Parameters===='
 parameters = readFileParameters()

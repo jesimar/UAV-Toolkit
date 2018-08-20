@@ -14,6 +14,8 @@ Os diretórios a seguir contém códigos utilizados pelo sistema IFA.
 
 * **Route-Simplifier** -> Código responsável por fazer a simplificação de waypoints de forma a tornar mais leve para o piloto automático a execução da rota.
 
+* **TemperatureSensor** -> Código responsável por pegar dados do sonar para correção da altitude do drone em caso de baixa altitude.
+
 Os diretórios a seguir contém códigos utilizados pelo sistema MOSA.
 
 * **Buzzer** -> Código responsável por acionar o buzzer do drone após um waypoint específico ter sido alcançado. 
@@ -36,6 +38,5 @@ O diretório Files contém arquivos utilizados pelo sistema MOSA e IFA.
 
 Este diretório possui dois arquivos de configuração que são:
 
-* **config-aircraft.properties** -> Arquivo usado pelos sistemas MOSA e IFA com dados da aeronave utilizada na missão.
-* **config-global.properties** -> Arquivo usado pelos sistemas MOSA e IFA para descrever os aspectos gerais da missão.
+* **config-global.properties** -> Arquivo usado pelos sistemas MOSA, IFA, GCS, S2DK para descrever os aspectos gerais da missão.
 * **config-param.properties** -> Arquivo usado pelo sistema IFA para calibrar os parâmetros do Piloto Automático.

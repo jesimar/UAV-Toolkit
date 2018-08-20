@@ -26,7 +26,7 @@ public class TemperatureSensorControl {
             File f = new File(configGlobal.getDirTemperatureSensor());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar temperature.jar";//"./sonar";
+                cmd = "java -jar temperature.jar";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python temperature.py";

@@ -9,7 +9,6 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileConfigGlobal;
 import uav.ifa.module.security_manager.SecurityManager;
-import uav.ifa.struct.ReaderFileConfigIFA;
 
 /**
  * Classe que modela o replanejador de rota do drone evitando obstáculos.
@@ -17,7 +16,6 @@ import uav.ifa.struct.ReaderFileConfigIFA;
  */
 public abstract class Replanner {
     
-    final ReaderFileConfigIFA configLocal;
     final ReaderFileConfigGlobal configGlobal;
     final String dir;
     final Drone drone; 
@@ -28,9 +26,8 @@ public abstract class Replanner {
      * @param drone instance of the aircraft
      */
     public Replanner(Drone drone) {
-        this.configLocal = ReaderFileConfigIFA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        this.dir = configLocal.getDirReplanner();
+        this.dir = configGlobal.getDirReplanner();
         this.drone = drone;
         this.pointGeo = SecurityManager.pointGeo;
     }
@@ -48,7 +45,7 @@ public abstract class Replanner {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(configLocal.getCmdExecReplanner(), null, f);
+            final Process comp = Runtime.getRuntime().exec(configGlobal.getCmdExecReplanner(), null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
