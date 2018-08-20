@@ -11,8 +11,8 @@ if [ -z $1 ]
 then
 	#IP_INIT=192.168.205    #LCR            192.168.205.*
 	#IP_INIT=192.168.43     #redeDroneC     192.168.43.*
-	#IP_INIT=192.168.43     #RedeDroneCjes  192.168.43.*
-	IP_INIT=192.168.0      #JeitoCaetano   192.168.0.*
+	IP_INIT=192.168.43     #RedeDroneCjes  192.168.43.*
+	#IP_INIT=192.168.0      #JeitoCaetano   192.168.0.*
 else
 	IP_INIT=$1
 fi
