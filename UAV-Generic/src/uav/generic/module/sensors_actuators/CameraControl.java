@@ -26,10 +26,39 @@ public class CameraControl {
             File f = new File(configGlobal.getDirCamera());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar picture.jar";//"./picture";
+                cmd = "java -jar picture.jar";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python picture.py";
+            } 
+            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
+        } 
+    }
+    
+    public void photoInSequence(){
+        try {
+            boolean print = true;
+            File f = new File(configGlobal.getDirCamera());
+            String cmd = "";
+            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar photo-in-sequence.jar";
+            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                cmd = "python photo-in-sequence.py";
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -55,7 +84,7 @@ public class CameraControl {
             File f = new File(configGlobal.getDirCamera());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar video.jar";//"./video";
+                cmd = "java -jar video.jar";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python video.py";

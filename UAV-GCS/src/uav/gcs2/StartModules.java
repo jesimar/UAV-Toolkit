@@ -29,43 +29,35 @@ public class StartModules {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("open sitl");
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
                         try {
-                            System.out.println("sc next line");
                             String str = sc.nextLine();
-                            textArea.append(str + "\n");
-                            System.out.println("str: " + str);    
+                            textArea.append(str + "\n"); 
                             Thread.sleep(200);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                             break;
                         }
                     }
-                    sc.close();
-                    System.out.println("close sitl");                    
+                    sc.close();               
                 }
             });
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.err.println("open sitl err");
                     Scanner sc = new Scanner(comp.getErrorStream());
                     while (sc.hasNextLine()) {
                         try {
-                            System.err.println("sc next line");
                             String str = sc.nextLine();
-                            textArea.append(str + "\n");
-                            System.err.println("str: " + str);    
+                            textArea.append(str + "\n");  
                             Thread.sleep(200);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                             break;
                         }
                     }
-                    sc.close();
-                    System.err.println("close sitl err");                    
+                    sc.close();                  
                 }
             });
             comp.waitFor();
@@ -83,16 +75,12 @@ public class StartModules {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("open mavproxy");
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        System.out.println("aqui mavproxy");
                         String str = sc.nextLine();
                         textArea.append(str + "\n");
-                        System.out.println("str: " + str);
                     }
                     sc.close();
-                    System.out.println("close mavproxy");
                 }
             });
         } catch (IOException ex) {
@@ -100,23 +88,19 @@ public class StartModules {
         }
     }
 
-    public void execSOAInterface(JTextArea textArea) {
+    public void execS2DK(JTextArea textArea) {
         try {
             File f = new File("../Scripts/");
-            final Process comp = Runtime.getRuntime().exec("./exec-soa-interface.sh", null, f);
+            final Process comp = Runtime.getRuntime().exec("./exec-s2dk.sh", null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("open soa");
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        System.out.println("aqui soa");
                         String str = sc.nextLine();                     
                         textArea.append(str + "\n");
-                        System.out.println("str: " + str);
                     }
                     sc.close();
-                    System.out.println("close soa");
                 }
             });
         } catch (IOException ex) {
@@ -131,18 +115,14 @@ public class StartModules {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("open ifa");
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        System.out.println("aqui ifa");
                         String str = sc.nextLine();
                         str = str.replace("[", "");
                         str = str.replaceAll("[0-9]+m", "");                        
                         textArea.append(str + "\n");
-                        System.out.println("str: " + str);
                     }
                     sc.close();
-                    System.out.println("close ifa");
                 }
             });
         } catch (IOException ex) {
@@ -157,17 +137,14 @@ public class StartModules {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("open mosa");
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        System.out.println("aqui mosa");
                         String str = sc.nextLine();
                         str = str.replace("[", "");
                         str = str.replaceAll("[0-9]+m", "");                        
                         textArea.append(str + "\n");
                     }
                     sc.close();
-                    System.out.println("close mosa");
                 }
             });
         } catch (IOException ex) {

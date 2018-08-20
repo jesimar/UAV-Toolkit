@@ -10,7 +10,7 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-local.sh        (PC)
-3. ./exec-soa-interface.sh         (PC)
+3. ./exec-s2dk.sh                  (PC)
 4. ./exec-ifa.sh                   (PC)
 5. ./exec-mosa.sh                  (PC)
 
@@ -18,14 +18,14 @@ Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-cc-sitl.sh      (CC)
-3. ./exec-soa-interface.sh         (CC)
+3. ./exec-s2dk.sh                  (CC)
 4. ./exec-ifa.sh                   (CC)
 5. ./exec-mosa.sh                  (CC)
 
 Forma 3 -> Execução no Drone no CC:
 
 1. ./exec-mavproxy-cc-real-*.sh    (CC)
-2. ./exec-soa-interface.sh         (CC)
+2. ./exec-s2dk.sh                  (CC)
 3. ./exec-ifa.sh                   (CC)
 4. ./exec-mosa.sh                  (CC)
 
@@ -37,7 +37,7 @@ OBS: Você pode abrir/executar também uma estação de controle de solo para ac
 
 ## Arquivos de Entrada
 
-No diretório raiz tem-se um arquivo de entrada (config-mosa.properties), em que se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar entre outras configurações do sistema MOSA.
+No diretório /Modules-Global/ tem-se um arquivo de entrada (config-global.properties), em que se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar entre outras configurações do sistema MOSA.
 
 ## Arquivos de Saída
 

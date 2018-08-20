@@ -51,13 +51,13 @@ public class HGA4m extends Planner{
             
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = configLocal.getTimeExecHGA4m(i);
+            String time = configGlobal.getTimeExecPlannerHGA4m(i);
             String timeH = String.format("%d", (int)(dist));
             //usando metade dos waypoints DeltaT=2
             String qtdWpt = String.format("%d", (int)(dist/2));
-            String delta = configLocal.getDeltaHGA4m();
-            String maxVel = configLocal.getMaxVelocityHGA4m();
-            String maxCtrl = configLocal.getMaxControlHGA4m();
+            String delta = configGlobal.getDeltaPlannerHGA4m();
+            String maxVel = configGlobal.getMaxVelocityPlannerHGA4m();
+            String maxCtrl = configGlobal.getMaxControlPlannerHGA4m();
             UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, time, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;

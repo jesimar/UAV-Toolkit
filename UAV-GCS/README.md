@@ -10,7 +10,7 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-local.sh        (PC)
-3. ./exec-soa-interface.sh         (PC)
+3. ./exec-s2dk.sh                  (PC)
 4. ./exec-ifa.sh                   (PC)
 5. ./exec-gcs.sh                   (PC)
 6. ./exec-mosa.sh                  (PC)
@@ -19,7 +19,7 @@ Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-cc-sitl.sh      (CC)
-3. ./exec-soa-interface.sh         (CC)
+3. ./exec-s2dk.sh                  (CC)
 4. ./exec-gcs.sh                   (PC)
 5. ./exec-ifa.sh                   (CC)
 6. ./exec-mosa.sh                  (CC)
@@ -27,7 +27,7 @@ Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 Forma 3 -> Execução no Drone na EDISON:
 
 1. ./exec-mavproxy-cc-real-*.sh    (CC)
-2. ./exec-soa-interface.sh         (CC)
+2. ./exec-s2dk.sh                  (CC)
 3. ./exec-gcs.sh                   (PC)
 4. ./exec-ifa.sh                   (CC)
 5. ./exec-mosa.sh                  (CC)

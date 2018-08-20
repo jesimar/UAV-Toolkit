@@ -39,8 +39,8 @@ public class CCQSP4m extends Planner{
         try {
             File src_instance = new File(dir + "instance-base");
             File dst_instance = new File(dir + "instance");
-            String delta = configLocal.getDeltaCCQSP4m();
-            String qtdWpt = configLocal.getWaypointsCCQSP4m();
+            String delta = configGlobal.getDeltaPlannerCCQSP4m();
+            String qtdWpt = configGlobal.getWaypointsPlannerCCQSP4m();
             UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
                     qtdWpt, 298, qtdWpt, 299);
             return true;

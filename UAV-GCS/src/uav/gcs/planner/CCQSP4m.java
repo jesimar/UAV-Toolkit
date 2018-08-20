@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Scanner;
+import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.geom.Position3D;
@@ -38,8 +39,9 @@ public class CCQSP4m extends Planner{
     public boolean execMission() {
         boolean itIsOkUpdate = updateFileConfig();     
         boolean itIsOkExec   = execMethod();
+        boolean itIsOkCopy   = copyRoute3D();
         boolean itIsOkParse  = parseRoute3DtoGeo();
-        return itIsOkUpdate && itIsOkExec && itIsOkParse;
+        return itIsOkUpdate && itIsOkExec && itIsOkCopy && itIsOkParse;
     }
     
     public boolean updateFileConfig() {
@@ -53,6 +55,28 @@ public class CCQSP4m extends Planner{
             System.out.println("Warning [FileNotFoundException]: updateFileConfig()");
             return false;
         }
+    }
+    
+    public boolean copyRoute3D(){
+        try {
+            File fileRoute3D = new File(dir + "route3D.txt");
+            PrintStream print3D = new PrintStream(fileRoute3D);
+            Scanner readRoute3D = new Scanner(new File(dir + "output.txt"));
+            readRoute3D.nextInt();
+            double h = Double.parseDouble(altitudeFlight);
+            while(readRoute3D.hasNext()){
+                double x = readRoute3D.nextDouble();
+                double y = readRoute3D.nextDouble();
+                readRoute3D.nextInt();
+                print3D.println(x + ";" + y + ";" + h);
+            }
+            readRoute3D.close();
+            print3D.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException] copyRoute3D()");
+            return false;
+        } 
     }
     
     public boolean parseRoute3DtoGeo(){

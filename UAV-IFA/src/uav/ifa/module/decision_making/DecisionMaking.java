@@ -30,7 +30,6 @@ import uav.ifa.module.path_replanner.MPGA4s;
 import uav.ifa.module.path_replanner.MS4s;
 import uav.ifa.module.path_replanner.Replanner;
 import uav.ifa.struct.Failure;
-import uav.ifa.struct.ReaderFileConfigIFA;
 
 /**
  * Classe que faz as tomadas de decisão do sistema IFA.
@@ -41,7 +40,6 @@ public class DecisionMaking {
 
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final ReaderFileConfigIFA configLocal;
     private final ReaderFileConfigGlobal configGlobal;
     private Replanner replanner;
     private StateReplanning stateReplanning;
@@ -56,7 +54,6 @@ public class DecisionMaking {
      * @param dataAcquisition object to send commands to drone
      */
     public DecisionMaking(Drone drone, DataCommunication dataAcquisition) {
-        this.configLocal = ReaderFileConfigIFA.getInstance();
         this.configGlobal = ReaderFileConfigGlobal.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;
@@ -65,7 +62,7 @@ public class DecisionMaking {
 
     public void actionToDoSomethingOffboard(Failure failure, CommunicationGCS communicationGCS) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (configLocal.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
             if (failure.getTypeFailure() != null) {
                 switch (failure.getTypeFailure()) {
                     case FAIL_AP_CRITICAL:
@@ -108,11 +105,15 @@ public class DecisionMaking {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
         dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
-        String attributes = configLocal.getTypeReplanner() 
-                + ";" + configGlobal.getDirFiles() + ";" + configGlobal.getFileGeoBase()
-                + ";" + configLocal.getDirReplanner() + ";" + configLocal.getCmdExecReplanner()
-                + ";" + configLocal.getTypeAltitudeDecay() + ";" + configLocal.getTimeExec()
-                + ";" + configLocal.getQtdWaypoints() + ";" + configLocal.getDelta();
+        String attributes = configGlobal.getTypeReplanner() 
+                + ";" + configGlobal.getDirFiles() 
+                + ";" + configGlobal.getFileGeoBase()
+                + ";" + configGlobal.getDirReplanner() 
+                + ";" + configGlobal.getCmdExecReplanner()
+                + ";" + configGlobal.getTypeAltitudeDecayReplanner()
+                + ";" + configGlobal.getTimeExecReplanner()
+                + ";" + configGlobal.getNumberWaypointsReplanner() 
+                + ";" + configGlobal.getDeltaReplanner();
         communicationGCS.sendDataReplannerInGCS(attributes);
         do {
             try {
@@ -137,7 +138,7 @@ public class DecisionMaking {
 
     public void actionToDoSomethingOnboard(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (configLocal.getSystemExec().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
             if (failure.getTypeFailure() != null) {
                 switch (failure.getTypeFailure()) {
                     case FAIL_AP_POWEROFF:
@@ -214,7 +215,7 @@ public class DecisionMaking {
                         break;
                 }
             }
-        } else if (configLocal.getSystemExec().equals(TypeSystemExecIFA.FIXED_ROUTE)) {
+        } else if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.FIXED_ROUTE)) {
             boolean respF = sendFixedRouteStaticToDrone();
             if (respF) {
                 stateReplanning = StateReplanning.READY;
@@ -255,21 +256,21 @@ public class DecisionMaking {
         dataAcquisition.changeNavigationSpeed(navSpeed / 10);
 
         StandardPrints.printMsgEmph("decison making -> emergeny landing: " + typeAction);
-        if (configLocal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
+        if (configGlobal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
             replanner = new GH4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
             replanner = new GA4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
             replanner = new MPGA4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.MS4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.MS4S)) {
             replanner = new MS4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
             replanner = new DE4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
             replanner = new GA_GA_4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
             replanner = new GA_GH_4s(drone);
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.FIXED_ROUTE4s)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.FIXED_ROUTE4s)) {
             replanner = new FixedRoute4s(drone);
         }
         replanner.clearLogs();
@@ -281,12 +282,12 @@ public class DecisionMaking {
         dataAcquisition.changeNavigationSpeed(navSpeed);
 
         Mission mission = new Mission();
-        String path = configLocal.getDirReplanner() + "routeGeo.txt";
+        String path = configGlobal.getDirReplanner() + "routeGeo.txt";
 
-        if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+        if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
             System.out.println("TypeReplanner.GA_GA_4S");
             path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
-        } else if (configLocal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
             String best = ((GA_GH_4s) replanner).bestMethod();
             if (best.equals("GA")) {
                 path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
@@ -378,7 +379,7 @@ public class DecisionMaking {
 
     private boolean sendFixedRouteStaticToDrone() {
         StandardPrints.printMsgEmph("send fixed route static");
-        String path = configLocal.getDirFixedRoute() + configLocal.getFileFixedRoute();
+        String path = configGlobal.getDirFixedRouteIFA()+ configGlobal.getFileFixedRouteIFA();
         Mission route = new Mission();
         boolean resp = readFileRoute(route, path, 2);
         if (!resp) {

@@ -10,20 +10,20 @@ Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-local.sh        (PC)
-3. ./exec-soa-interface.sh         (PC)
+3. ./exec-s2dk.sh                  (PC)
 4. ./exec-monitoring.sh            (PC)
 
 Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-cc-sitl.sh      (CC)
-3. ./exec-soa-interface.sh         (CC)
+3. ./exec-s2dk.sh                  (CC)
 4. ./exec-monitoring.sh            (CC)
 
 Forma 3 -> Execução no Drone no CC:
 
 1. ./exec-mavproxy-cc-real-*.sh    (CC)
-2. ./exec-soa-interface.sh         (CC)
+2. ./exec-s2dk.sh                  (CC)
 3. ./exec-monitoring.sh            (CC)
 
 OBS: Deve-se executar cada um desses scripts em um terminal diferente.

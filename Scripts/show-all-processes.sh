@@ -10,7 +10,7 @@ echo "======= show all processes uav-toolkit ======="
 ps -All | grep apm
 ps -All | grep dronekit-sitl
 ps -All | grep mavproxy
-ps -All | grep soa-inter
+ps -All | grep s2dk
 ps -All | grep ifa
 ps -All | grep mosa
 ps -All | grep uav-tests

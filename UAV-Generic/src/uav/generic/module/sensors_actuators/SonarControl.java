@@ -26,7 +26,7 @@ public class SonarControl {
             File f = new File(configGlobal.getDirSonar());
             String cmd = "";
             if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar sonar.jar";//"./sonar";
+                cmd = "java -jar sonar.jar";
             } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
                     configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python sonar.py";

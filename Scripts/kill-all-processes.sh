@@ -10,7 +10,7 @@ echo "======= kill all processes uav-toolkit ======="
 pkill apm
 pkill dronekit-sitl
 pkill mavproxy
-pkill soa-inter
+pkill s2dk
 pkill ifa
 pkill mosa
 pkill uav-tests

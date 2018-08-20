@@ -21,7 +21,7 @@ import uav.generic.struct.WaypointJSON;
 import uav.generic.hardware.aircraft.Drone;
 
 /**
- * Classe que modela toda a comunicação do sistema MOSA e IFA com o UAV-SOA-Interface.
+ * Classe que modela toda a comunicação do sistema MOSA e IFA com o UAV-S2DK.
  * @author Jesimar S. Arantes
  */
 public class DataCommunication {
@@ -52,8 +52,8 @@ public class DataCommunication {
      * Class constructor.
      * @param drone object drone
      * @param uavSource IFA or MOSA
-     * @param host ip of UAV-SOA-Interface
-     * @param port network port used in UAV-SOA-Interface
+     * @param host ip of UAV-S2DK
+     * @param port network port used in UAV-S2DK
      * @param overhead file to print informations overhead
      */
     public DataCommunication(Drone drone, String uavSource, String host, int port, 
@@ -380,7 +380,7 @@ public class DataCommunication {
     }
    
     /**
-     * Request for UAV-SOA-Interface of all sensor data.
+     * Request for UAV-S2DK of all sensor data.
      * FORMAT:
      * {"all-sensors": [-22.0059333, -47.8987082, 0.07, 870.0, 0.009657, 2.025, 
      * 0.004823, 116, 0.0, 0.0, 3, 10, 121, 65535, [0.0, -0.31, 0.01], 0, 0, 

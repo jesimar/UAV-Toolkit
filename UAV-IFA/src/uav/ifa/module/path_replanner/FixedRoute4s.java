@@ -63,7 +63,7 @@ public class FixedRoute4s extends Replanner{
             while(readRoute3D.hasNext()){                        
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();           
-                if (configLocal.getTypeAltitudeDecay().equals(TypeAltitudeDecay.LINEAR)){
+                if (configGlobal.getTypeAltitudeDecayReplanner().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
                 printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));

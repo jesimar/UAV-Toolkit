@@ -1,5 +1,12 @@
 # Changelog
 
+## Version v3.1.0 (17/08/2018)
+
+### Features:
+
+* Updated code UAV-IFA, UAV-MOSA, UAV-Generic to support only one file input with properties.
+* Renamed UAV-SOA-Interface to UAV-S2DK (UAV-Services to DroneKit).
+
 ## Version v3.0.0 (16/08/2018)
 
 ### Features:

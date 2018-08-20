@@ -358,7 +358,7 @@ public final class GCS extends JFrame {
         panelPlotMission.plotDroneInRealTime(drone);
         
         panelPlotGoogleMaps = new PanelPlotGoogleMaps();
-        panelPlotGoogleMaps.init();
+        panelPlotGoogleMaps.init(width - 200, height - 100);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {

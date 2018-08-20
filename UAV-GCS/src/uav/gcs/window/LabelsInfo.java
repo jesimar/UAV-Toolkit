@@ -265,8 +265,10 @@ public class LabelsInfo {
         labelDistToHome.setText("Dist To Home: " + drone.distanceToHome);
         labelDistToCurrWpt.setText("Dist To Wpt: " + drone.distanceToCurrentWaypoint);
         labelTypeFailure.setText("Type Fail: " + drone.typeFailure);
-        labelSonarDistance.setText("Sonar Distance: " + drone.sonar.distance);
-        labelTemperature.setText("Temper. Sensor: " + drone.temperature.temperature);
+        String dist = drone.sonar.distance == -1 ? "NONE" : drone.sonar.distance+"";
+        labelSonarDistance.setText("Sonar Distance: " + dist);
+        String temp = drone.temperature.temperature == -1 ? "NONE" : drone.temperature.temperature+"";
+        labelTemperature.setText("Temper. Sensor: " + temp);
     }
     
 }

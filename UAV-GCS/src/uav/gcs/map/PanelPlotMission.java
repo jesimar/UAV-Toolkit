@@ -32,7 +32,7 @@ public class PanelPlotMission extends sPanelDraw {
 
     public PanelPlotMission() {
         super(Color.WHITE);
-        String pathMap = "../Modules-IFA/MPGA4s/map.sgl";
+        String pathMap = "../Modules-Global/Files/map-full.sgl";
         if (pathMap.equals("")) {
             System.out.println("The name of map file isn't valid.");
         }
@@ -45,6 +45,9 @@ public class PanelPlotMission extends sPanelDraw {
     public void setNewDimensions(int width, int height) {
         this.Config(width, height);
         this.restart_system();
+        if (mapIFA.getVetorX_NFZ().length == 0){
+            return;
+        }
         int xInit = Arrays.stream(mapIFA.getVetorX_NFZ())
                 .mapToInt(
                         (d) -> Arrays.stream(d)

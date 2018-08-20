@@ -1,30 +1,38 @@
 AUTHORS
 -------
 
-Jesimar da Silva Arantes
-Main developer and idealizer
+Jesimar da Silva Arantes (PhD Student)
+Main developer and idealizer.
 jesimar.arantes@gmail.com
 
-Márcio da Silva Arantes
-Developer of some secondary modules (UAV-Manager, module HGA4m and CCQSP4m)
+Márcio da Silva Arantes (Researcher)
+Developer of some secondary modules (UAV-Manager, module HGA4m and CCQSP4m).
 marcio.da.silva.arantes@gmail.com
 
-Veronica Vannini
+Veronica Vannini (PhD Student)
 Has supported the development of some hardwares/software modules (module buzzer.py to raspberry pi).
 vee.vannini@gmail.com 
 
-André Missaglia
-Developer of some secondary modules (first version UAV-SOA-Interface)
+André Missaglia (Undergraduate Student)
+Developer of some secondary modules (first version UAV-S2DK).
 andre.missaglia@gmail.com
 
-Pedro Henrique Rampim Natali 
-Developer of some secondary modules (first version Route-Simplifier)
+Pedro Henrique Rampim Natali (Undergraduate Student)
+Developer of some secondary modules (first version Route-Simplifier).
 pedronatali@usp.br
 
-Rafael Farias Pinho 
-Developer of some secondary modules (first version Route-Simplifier)
+Rafael Farias Pinho (Undergraduate Student)
+Developer of some secondary modules (first version Route-Simplifier).
 rafaelfpinho@usp.br
 
-Claudio Fabiano Motta Toledo
-Project supervisor
+Eduardo do Valle Simões (Professor)
+Supervisor of technical aspects of hardware.
+simoes@icmc.usp.br
+
+Onofre Trindade Júnior (Professor)
+Idealizer of IFA and MOSA systems and project consultant.
+onofre.trindade.junior@gmail.com
+
+Claudio Fabiano Motta Toledo (Professor)
+Project supervisor.
 toledocfm@gmail.com 

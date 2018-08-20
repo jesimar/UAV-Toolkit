@@ -40,8 +40,8 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth. [[UAV-Mission-Creator](./UAV-Mission-Creator/)]
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave. [[UAV-Monitoring](./UAV-Monitoring/)]
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave. [[UAV-PosAnalyser](./UAV-PosAnalyser/)]
-* **UAV-SOA-Interface** -> Código em python que provê serviços de acesso a informações do drone através do dronekit. [[UAV-SOA-Interface](./UAV-SOA-Interface/)]
-* **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-SOA-Interface. [[UAV-Tests](./UAV-Tests/)]
+* **UAV-S2DK** -> Código em python que provê serviços de acesso a informações do drone através do dronekit. [[UAV-S2DK](./UAV-S2DK/)]
+* **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-S2DK. [[UAV-Tests](./UAV-Tests/)]
 
 ## Instalação
 
@@ -170,7 +170,7 @@ Existem alguns arquivos que devem ser sempre conferidos antes de executar o ambi
 Existem alguns outros arquivos de configuração que devem ser modificados apenas por usuários avançados que são: 
 
 ```
-./UAV-Toolkit/UAV-SOA-Interface/config-soa.properties
+./UAV-Toolkit/UAV-S2DK/config-s2dk.properties
 ./UAV-Toolkit/Modules-Global/config-aircraft.properties
 ./UAV-Toolkit/Modules-Global/config-param.properties
 ```
@@ -191,7 +191,7 @@ Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-sitl.sh                  (PC)
 3. UAV-Toolkit/Scripts$ ./exec-mavproxy-local.sh        (PC)
-4. UAV-Toolkit/Scripts$ ./exec-soa-interface.sh         (PC)
+4. UAV-Toolkit/Scripts$ ./exec-s2dk.sh                  (PC)
 5. UAV-Toolkit/Scripts$ ./exec-ifa.sh                   (PC)
 6. UAV-Toolkit/Scripts$ ./exec-mosa.sh                  (PC)
 ```
@@ -203,7 +203,7 @@ Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-sitl.sh                  (PC)
 3. UAV-Toolkit/Scripts$ ./exec-mavproxy-cc-sitl.sh      (CC)
-4. UAV-Toolkit/Scripts$ ./exec-soa-interface.sh         (CC)
+4. UAV-Toolkit/Scripts$ ./exec-s2dk.sh                  (CC)
 5. UAV-Toolkit/Scripts$ ./exec-ifa.sh                   (CC)
 6. UAV-Toolkit/Scripts$ ./exec-mosa.sh                  (CC)
 ```
@@ -214,7 +214,7 @@ Forma 3 -> Execução em REAL FLIGHT-CC (CC - Companion Computer):
 Ordem                    Software                       (Local de Execução)
 1. Abra uma GCS como o QGroundControl                   (PC)
 2. UAV-Toolkit/Scripts$ ./exec-mavproxy-cc-real-*.sh    (CC)
-3. UAV-Toolkit/Scripts$ ./exec-soa-interface.sh         (CC)
+3. UAV-Toolkit/Scripts$ ./exec-s2dk.sh                  (CC)
 4. UAV-Toolkit/Scripts$ ./exec-ifa.sh                   (CC)
 5. UAV-Toolkit/Scripts$ ./exec-mosa.sh                  (CC)
 ```
@@ -298,7 +298,7 @@ UAV-Toolkit está disponível sobre código aberto com permissões [GNU General 
 
 ![](./Figures/communication-inteledison-ap-gcs.png)
 
-![](./Figures/uav-soa-interface.png)
+![](./Figures/uav-s2dk.png)
 
 ![](./Figures/architecture-mosa-ifa-system.png)
 -->
