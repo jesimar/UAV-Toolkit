@@ -12,7 +12,7 @@ then
 	#IP_RPI=172.28.107.227   #IP to network eduroam
 	#IP_RPI=192.168.0.102    #IP to network RedeDrone
 	#IP_RPI=192.168.43.133   #IP to network redeDroneC (cell phone veronica)
-	IP_RPI=192.168.43.8     #IP to network RedeDroneCjes (cell phone jesimar)
+	IP_RPI=192.168.43.2     #IP to network RedeDroneCjes (cell phone jesimar)
 	#IP_RPI=10.42.0.199      #IP to network RedeDronePC
 else
 	IP_RPI=$1

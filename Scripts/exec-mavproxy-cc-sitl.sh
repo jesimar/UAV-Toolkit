@@ -7,7 +7,7 @@
 
 if [ -z $1 ]
 then
-	IP_GCS=192.168.205.231
+	IP_GCS=192.168.43.124
 else
 	IP_GCS=$1
 fi
