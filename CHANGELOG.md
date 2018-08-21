@@ -4,8 +4,17 @@
 
 ### Features:
 
-* Updated code UAV-IFA, UAV-MOSA, UAV-Generic to support only one file input with properties.
+* Updated code UAV-Mission-Creator to support new format of video and photo-in-sequence.
+* Updated file of properties to define the directory of the mission (IFA always copy the mission to the directory).
+* Updated code camera, video and photo-in-sequence to support parameters by file of properties.
+* Updated code buzzer and alarm to support signal pin by file of properties.
+* Updated code to support picture, photo in sequence and video.
+* Updated code UAV-IFA, UAV-MOSA, UAV-Generic and UAV-S2DK to support only one file input with properties.
 * Renamed UAV-SOA-Interface to UAV-S2DK (UAV-Services to DroneKit).
+
+### Bug Fixes:
+
+* Enable Google Maps feature in UAV-GCS (google maps need the internet to work) (defined by file of properties).
 
 ## Version v3.0.0 (16/08/2018)
 

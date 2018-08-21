@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  *
@@ -14,22 +15,26 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
  */
 public class CameraControl {
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
 
     public CameraControl() {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
     }
     
     public void takeAPicture(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirCamera());
+            File f = new File(config.getDirCamera());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar picture.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python picture.py";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar picture-pc.jar";
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python picture-rpi.py";
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -52,13 +57,21 @@ public class CameraControl {
     public void photoInSequence(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirCamera());
+            File f = new File(config.getDirCamera());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar photo-in-sequence.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python photo-in-sequence.py";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar photo-in-sequence-pc.jar " + 
+                            config.getNumberPhotoInSequence() + " " + 
+                            config.getDelayPhotoInSequence();
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python photo-in-sequence-rpi.py " + 
+                            config.getNumberPhotoInSequence() + " " + 
+                            config.getDelayPhotoInSequence();
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -81,13 +94,17 @@ public class CameraControl {
     public void makeAVideo(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirCamera());
+            File f = new File(config.getDirCamera());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar video.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python video.py";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar video-pc.jar " + config.getTimeVideo();
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python video-rpi.py " + config.getTimeVideo();
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

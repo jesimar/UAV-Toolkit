@@ -128,11 +128,14 @@ public class MissionCreator {
         printFeaturesMission.print("Waypoints Buzzer\n");
         printFeaturesMission.print(mission.getWaypointsBuzzer());
         
-        printFeaturesMission.print("Waypoints Camera Photo\n");
-        printFeaturesMission.print(mission.getWaypointsCameraPhoto());
+        printFeaturesMission.print("Waypoints Camera Picture\n");
+        printFeaturesMission.print(mission.getWaypointsCameraPicture());
         
         printFeaturesMission.print("Waypoints Camera Video\n");
         printFeaturesMission.print(mission.getWaypointsCameraVideo());
+        
+        printFeaturesMission.print("Waypoints Camera Photo In Sequence\n");
+        printFeaturesMission.print(mission.getWaypointsCameraPhotoInSequence());
         
         printFeaturesMission.print("Waypoints Spraying\n");
         printFeaturesMission.print(mission.getWaypointsSpraying());

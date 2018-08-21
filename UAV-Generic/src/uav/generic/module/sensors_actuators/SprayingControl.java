@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  *
@@ -14,21 +14,21 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
  */
 public class SprayingControl {
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
 
     public SprayingControl() {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
     }
     
     public void openSpraying(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirSpraying());
+            File f = new File(config.getDirSpraying());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./open-spraying";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python open-spraying.py";
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
@@ -52,12 +52,12 @@ public class SprayingControl {
     public void closeSpraying(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirSpraying());
+            File f = new File(config.getDirSpraying());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./close-spraying";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python close-spraying.py";
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

@@ -6,7 +6,7 @@ package uav.generic.struct.constants;
  */
 public class TypeCC {
     
-    public static final String EDISON = "EDISON";
+    public static final String INTEL_EDISON = "EDISON";
     public static final String RASPBERRY = "RASPBERRY";
     
 }

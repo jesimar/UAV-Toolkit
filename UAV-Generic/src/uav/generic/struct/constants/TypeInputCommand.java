@@ -24,6 +24,7 @@ public class TypeInputCommand {
     public static final String CMD_ALARM = "alarm";
     public static final String CMD_PICTURE = "picture";
     public static final String CMD_VIDEO = "video";
+    public static final String CMD_PHOTO_IN_SEQUENCE = "photoinsequence";
     public static final String CMD_LED = "led";
     public static final String CMD_BLINK = "blink";
     public static final String CMD_SPRAYING = "spraying";    

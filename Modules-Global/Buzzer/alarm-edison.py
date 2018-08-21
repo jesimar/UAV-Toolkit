@@ -1,13 +1,14 @@
 #Author: Jesimar da Silva Arantes
 #Date: 15/03/2018
-#Last Update: 15/03/2018
+#Last Update: 21/08/2018
 #Description: Code that turns on the alarm when the buzzer is turned on several times on the Intel Edison.
 #Descricao: Codigo que liga soa um alarme ao ligar o buzzer diversas vezes na Intel Edison.
 
 import mraa
 import time
+import sys
 
-pin = 8
+pin = sys.argv[1]
 alarm = mraa.Gpio(pin)
 alarm.dir(mraa.DIR_OUT)
 

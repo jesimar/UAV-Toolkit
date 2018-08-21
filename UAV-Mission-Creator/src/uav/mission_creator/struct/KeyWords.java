@@ -28,17 +28,17 @@ public class KeyWords {
     /**
      * Define um ponto onde devera ocorrer a retirada de uma fotografia 
      */
-    public static String CMD_PHOTO = "cmd_photo";        
+    public static String CMD_PICTURE = "cmd_picture";        
     
     /**
      * Define um ponto a partir do qual se iniciara a filmagem da regiao
      */
-    public static String CMD_VIDEO_BEGIN = "cmd_video_begin";
+    public static String CMD_VIDEO = "cmd_video";
     
     /**
-     * Define um ponto de termino da filmagem
+     * Define um ponto a partir do qual se iniciara um conjunto de fotos da regiao.
      */
-    public static String CMD_VIDEO_END = "cmd_video_end";
+    public static String CMD_PHOTO_IN_SEQUENCE = "cmd_photo_seq";
     
     /**
      * Define um ponto a partir do qual se iniciara a pulverizacao da regiao

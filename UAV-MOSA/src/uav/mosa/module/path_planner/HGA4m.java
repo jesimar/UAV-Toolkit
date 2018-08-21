@@ -51,13 +51,13 @@ public class HGA4m extends Planner{
             
             File src_ga = new File(dir + "ga-config-base");
             File dst_ga = new File(dir + "ga-config");
-            String time = configGlobal.getTimeExecPlannerHGA4m(i);
+            String time = config.getTimeExecPlannerHGA4m(i);
             String timeH = String.format("%d", (int)(dist));
             //usando metade dos waypoints DeltaT=2
             String qtdWpt = String.format("%d", (int)(dist/2));
-            String delta = configGlobal.getDeltaPlannerHGA4m();
-            String maxVel = configGlobal.getMaxVelocityPlannerHGA4m();
-            String maxCtrl = configGlobal.getMaxControlPlannerHGA4m();
+            String delta = config.getDeltaPlannerHGA4m();
+            String maxVel = config.getMaxVelocityPlannerHGA4m();
+            String maxCtrl = config.getMaxControlPlannerHGA4m();
             UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, time, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
@@ -156,7 +156,7 @@ public class HGA4m extends Planner{
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
             int countLines = 0;
-            double h = configGlobal.getAltRelMission(); 
+            double h = config.getAltRelMission(); 
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();

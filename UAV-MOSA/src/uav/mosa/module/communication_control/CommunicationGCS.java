@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  * Classe que faz o controle da comunicação com GCS.
@@ -25,13 +25,13 @@ public class CommunicationGCS {
 
     private boolean hasReceiveRouteGCS;
     private String routePlannerGCS;
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
 
     /**
      * Class contructor.
      */
     public CommunicationGCS() {
-        configGlobal = ReaderFileConfigGlobal.getInstance();
+        config = ReaderFileConfig.getInstance();
         hasReceiveRouteGCS = false;
     }
 
@@ -41,7 +41,7 @@ public class CommunicationGCS {
             @Override
             public void run() {
                 try {
-                    server = new ServerSocket(configGlobal.getPortNetworkMOSAandGCS());
+                    server = new ServerSocket(config.getPortNetworkMOSAandGCS());
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     output = new PrintWriter(socket.getOutputStream(), true);

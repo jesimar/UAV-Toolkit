@@ -20,6 +20,11 @@ mav.tlog.raw
 ideias-todo.txt
 dicas-voo.txt
 
+/Modules-Global/Camera/*.png
+/Modules-Global/Camera/*.jpg
+/Modules-Global/Camera/*.mov
+/Modules-Global/Camera/*.h264
+
 /UAV-GCS/nbproject/private/
 /UAV-GCS/build/
 /UAV-GCS/test/

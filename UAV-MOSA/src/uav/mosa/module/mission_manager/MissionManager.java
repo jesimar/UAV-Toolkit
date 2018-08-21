@@ -13,7 +13,7 @@ import uav.generic.hardware.aircraft.FixedWing;
 import uav.generic.hardware.aircraft.RotaryWing;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
@@ -46,13 +46,14 @@ public class MissionManager {
     private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
     
     private CameraControl camera;
     private final Mission3D wptsMission3D;
     private Mission wptsBuzzer;
-    private Mission wptsCameraPhoto;
+    private Mission wptsCameraPicture;
     private Mission wptsCameraVideo;
+    private Mission wptsCameraPhotoInSeq;
     private Mission wptsSpraying;
     private PrintStream printLogOverhead;     
     
@@ -71,42 +72,42 @@ public class MissionManager {
     public MissionManager() {
         timeInit = System.currentTimeMillis();
         
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        if (!configGlobal.read()){
+        this.config = ReaderFileConfig.getInstance();
+        if (!config.read()){
             System.exit(1);
         }
-        if (!configGlobal.checkReadFields()){
+        if (!config.checkReadFields()){
             System.exit(1);
         }
-        if (!configGlobal.parseToVariables()){
+        if (!config.parseToVariables()){
             System.exit(1);
         }
         
         try{
-            pointGeo = UtilGeo.getPointGeo(configGlobal.getDirFiles()+configGlobal.getFileGeoBase());
+            pointGeo = UtilGeo.getPointGeo(config.getDirFiles()+config.getFileGeoBase());
         }catch (FileNotFoundException ex){
             StandardPrints.printMsgError2("Error [FileNotFoundException] pointGeo");
             ex.printStackTrace();
             System.exit(1);
         }
         
-        if (configGlobal.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
-            drone = new FixedWing(configGlobal.getUavName(), 
-                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(), 
-                    configGlobal.getUavMass(), configGlobal.getUavPayload(), 
-                    configGlobal.getUavEndurance());
-        } else if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
-            drone = new RotaryWing(configGlobal.getUavName(), 
-                    configGlobal.getUavSpeedCruize(), configGlobal.getUavSpeedMax(), 
-                    configGlobal.getUavMass(), configGlobal.getUavPayload(), 
-                    configGlobal.getUavEndurance());
+        if (config.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
+            drone = new FixedWing(config.getUavName(), 
+                    config.getUavSpeedCruize(), config.getUavSpeedMax(), 
+                    config.getUavMass(), config.getUavPayload(), 
+                    config.getUavEndurance());
+        } else if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+            drone = new RotaryWing(config.getUavName(), 
+                    config.getUavSpeedCruize(), config.getUavSpeedMax(), 
+                    config.getUavMass(), config.getUavPayload(), 
+                    config.getUavEndurance());
         } else{
             drone = new RotaryWing("iDroneAlpha");
         }
         
         createFileLogOverhead();
         this.dataAcquisition = new DataCommunication(drone, "MOSA", 
-                configGlobal.getHostS2DK(), configGlobal.getPortNetworkS2DK(), 
+                config.getHostS2DK(), config.getPortNetworkS2DK(), 
                 printLogOverhead);
         this.wptsMission3D = new Mission3D();
         readMission3D();
@@ -114,18 +115,20 @@ public class MissionManager {
         this.communicationIFA = new CommunicationIFA(drone);
         this.communicationGCS = new CommunicationGCS();
         
-        if (configGlobal.hasBuzzer()){
+        if (config.hasBuzzer()){
             this.wptsBuzzer = new Mission();
             readerFileBuzzer();
         }
-        if (configGlobal.hasCamera()){
+        if (config.hasCamera()){
             this.camera = new CameraControl();
-            this.wptsCameraPhoto = new Mission(); 
+            this.wptsCameraPicture = new Mission(); 
             this.wptsCameraVideo = new Mission();
+            this.wptsCameraPhotoInSeq = new Mission();
             readerFileCameraPhoto();
             readerFileCameraVideo();
+            readerFileCameraPhotoInSeq();
         }
-        if (configGlobal.hasSpraying()){
+        if (config.hasSpraying()){
             this.wptsSpraying = new Mission(); 
             readerFileSpraying();
         }
@@ -179,9 +182,9 @@ public class MissionManager {
     
     private void readMission3D(){
         try {
-            if (configGlobal.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
-                if (configGlobal.getTypePlanner().equals(TypePlanner.HGA4M)){
-                    String path = configGlobal.getDirPlanner() + configGlobal.getFileMissionPlannerHGA4m();
+            if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
+                if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
+                    String path = config.getDirPlanner() + config.getFileMissionPlannerHGA4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }
@@ -194,7 +197,7 @@ public class MissionManager {
     
     private void readerFileBuzzer(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
             ReaderFileMission.missionBuzzer(new File(path), wptsBuzzer);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileBuzzer()");
@@ -205,8 +208,8 @@ public class MissionManager {
     
     private void readerFileCameraPhoto(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
-            ReaderFileMission.missionCameraPhoto(new File(path), wptsCameraPhoto);
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionCameraPicture(new File(path), wptsCameraPicture);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraPhoto()");
             ex.printStackTrace();
@@ -216,7 +219,7 @@ public class MissionManager {
     
     private void readerFileCameraVideo(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
             ReaderFileMission.missionCameraVideo(new File(path), wptsCameraVideo);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraVideo()");
@@ -225,9 +228,21 @@ public class MissionManager {
         }
     }
     
+    private void readerFileCameraPhotoInSeq(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionCameraPhotoInSequence(new File(path), wptsCameraPhotoInSeq);
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileCameraVideo()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    
     private void readerFileSpraying(){
         try {
-            String path = configGlobal.getDirFiles()+ configGlobal.getFileFeatureMission();
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
             ReaderFileMission.missionSpraying(new File(path), wptsSpraying);
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException]: readerFileSpraying()");
@@ -238,7 +253,7 @@ public class MissionManager {
     
     private void monitoringAircraft() {
         StandardPrints.printMsgEmph("monitoring aircraft");
-        int time = (int)(1000.0/configGlobal.getFreqUpdateDataAP());      
+        int time = (int)(1000.0/config.getFreqUpdateDataAP());      
         stateMonitoring = StateMonitoring.MONITORING;
         
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -250,17 +265,18 @@ public class MissionManager {
                         double timeDiff = (timeActual - timeInit)/1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        if (configGlobal.hasPowerModule() || 
-                                !configGlobal.getOperationMode()
+                        if (config.hasPowerModule() || 
+                                !config.getOperationMode()
                                 .equals(TypeOperationMode.REAL_FLIGHT)){
                             dataAcquisition.getBattery();
                         }
-                        if (configGlobal.hasBuzzer()){
+                        if (config.hasBuzzer()){
                             actionTurnOnTheBuzzer();
                         }
-                        if (configGlobal.hasCamera()){
+                        if (config.hasCamera()){
                             actionTakeAPicture();
-//                            actionMakeAVideo();
+                            actionMakeAVideo();
+                            actionPhotoInSequence();
                         }
                         //Codigo usado no artigo ICAS 2018 para insercao de falha no MOSA
 //                        if (drone.getTime() > 80){//Tempos testados 70, 80, 92, 102, 122.
@@ -293,7 +309,7 @@ public class MissionManager {
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
                         if (communicationIFA.isStartMission()){
-                            if (configGlobal.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                            if (config.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionToDoSomething();
                             }else{
                                 decisonMaking.actionToDoSomethingOffboard(communicationGCS);
@@ -364,7 +380,7 @@ public class MissionManager {
         for (int i = 0; i < wptsBuzzer.size(); i++){
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
-            double altDestiny = configGlobal.getAltRelMission();            
+            double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < VERTICAL_ERROR){
@@ -390,10 +406,10 @@ public class MissionManager {
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
-        for (int i = 0; i < wptsCameraPhoto.size(); i++){
-            double latDestiny = wptsCameraPhoto.getWaypoint(i).getLat();
-            double lngDestiny = wptsCameraPhoto.getWaypoint(i).getLng();
-            double altDestiny = configGlobal.getAltRelMission();            
+        for (int i = 0; i < wptsCameraPicture.size(); i++){
+            double latDestiny = wptsCameraPicture.getWaypoint(i).getLat();
+            double lngDestiny = wptsCameraPicture.getWaypoint(i).getLng();
+            double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < VERTICAL_ERROR){
@@ -403,8 +419,8 @@ public class MissionManager {
             }
         }        
         if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
-            if (wptsCameraPhoto.size() > 0){
-                wptsCameraPhoto.removeWaypoint(index);
+            if (wptsCameraPicture.size() > 0){
+                wptsCameraPicture.removeWaypoint(index);
             }
             StandardPrints.printMsgEmph("turn on the camera");
             camera.takeAPicture();
@@ -421,7 +437,7 @@ public class MissionManager {
         for (int i = 0; i < wptsCameraVideo.size(); i++){
             double latDestiny = wptsCameraVideo.getWaypoint(i).getLat();
             double lngDestiny = wptsCameraVideo.getWaypoint(i).getLng();
-            double altDestiny = configGlobal.getAltRelMission();            
+            double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < VERTICAL_ERROR){
@@ -436,6 +452,34 @@ public class MissionManager {
             }
             StandardPrints.printMsgEmph("turn on the video");
             camera.makeAVideo();
+        }
+    }
+    
+    private void actionPhotoInSequence(){
+        double lat = drone.getGPS().lat;
+        double lng = drone.getGPS().lng;
+        double alt = drone.getBarometer().alt_rel;        
+        double distH = Integer.MAX_VALUE;
+        double distV = Integer.MAX_VALUE;
+        int index = 0;
+        for (int i = 0; i < wptsCameraPhotoInSeq.size(); i++){
+            double latDestiny = wptsCameraPhotoInSeq.getWaypoint(i).getLat();
+            double lngDestiny = wptsCameraPhotoInSeq.getWaypoint(i).getLng();
+            double altDestiny = config.getAltRelMission();            
+            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distVActual = Math.abs(alt - altDestiny); 
+            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+                distH = distHActual;
+                distV = distVActual;
+                index = i;
+            }
+        }
+        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+            if (wptsCameraPhotoInSeq.size() > 0){
+                wptsCameraPhotoInSeq.removeWaypoint(index);
+            }
+            StandardPrints.printMsgEmph("turn on photo in sequence");
+            camera.photoInSequence();
         }
     }
     

@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.ifa.module.security_manager.SecurityManager;
 
 /**
@@ -16,7 +16,7 @@ import uav.ifa.module.security_manager.SecurityManager;
  */
 public abstract class Replanner {
     
-    final ReaderFileConfigGlobal configGlobal;
+    final ReaderFileConfig config;
     final String dir;
     final Drone drone; 
     final PointGeo pointGeo;
@@ -26,8 +26,8 @@ public abstract class Replanner {
      * @param drone instance of the aircraft
      */
     public Replanner(Drone drone) {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        this.dir = configGlobal.getDirReplanner();
+        this.config = ReaderFileConfig.getInstance();
+        this.dir = config.getDirReplanner();
         this.drone = drone;
         this.pointGeo = SecurityManager.pointGeo;
     }
@@ -45,7 +45,7 @@ public abstract class Replanner {
             boolean print = false;
             boolean error = false;
             File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(configGlobal.getCmdExecReplanner(), null, f);
+            final Process comp = Runtime.getRuntime().exec(config.getCmdExecReplanner(), null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

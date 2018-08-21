@@ -17,7 +17,7 @@ import uav.generic.module.sensors_actuators.SprayingControl;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.ifa.module.decision_making.DecisionMaking;
 
 /**
@@ -36,7 +36,7 @@ public class CommunicationGCS {
     private boolean hasReceiveRouteGCS;
     private String routeReplannerGCS;
     private String typeAction;
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
     private final Drone drone;
     private final DecisionMaking decisonMaking;
 
@@ -48,7 +48,7 @@ public class CommunicationGCS {
     public CommunicationGCS(Drone drone, DecisionMaking decisonMaking) {
         this.drone = drone;
         this.decisonMaking = decisonMaking;
-        configGlobal = ReaderFileConfigGlobal.getInstance();
+        config = ReaderFileConfig.getInstance();
         hasFailure = false;
         hasFailureBadWeather = false;
         hasReceiveRouteGCS = false;
@@ -61,7 +61,7 @@ public class CommunicationGCS {
             @Override
             public void run() {
                 try {
-                    server = new ServerSocket(configGlobal.getPortNetworkIFAandGCS());
+                    server = new ServerSocket(config.getPortNetworkIFAandGCS());
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     output = new PrintWriter(socket.getOutputStream(), true);
@@ -110,6 +110,9 @@ public class CommunicationGCS {
                                 } else if (answer.equals(TypeInputCommand.CMD_VIDEO)){
                                     CameraControl camera = new CameraControl();
                                     camera.makeAVideo();
+                                } else if (answer.equals(TypeInputCommand.CMD_PHOTO_IN_SEQUENCE)){
+                                    CameraControl camera = new CameraControl();
+                                    camera.photoInSequence();
                                 } else if (answer.equals(TypeInputCommand.CMD_LED)){
                                     LEDControl led = new LEDControl();
                                     led.turnOnLED();

@@ -4,13 +4,11 @@
 #Description: Code that take a picture.
 
 from picamera import PiCamera
-from time import sleep
 from time import gmtime, strftime
 
 camera = PiCamera()
 
-camera.start_preview()
-sleep(5)
+camera.resolution = (2592, 1944)
+
 i = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
-camera.capture('/home/pi/Desktop/picture_%s.jpg' % i)
-camera.stop_preview()
+camera.capture('picture_%s.jpg' % i)

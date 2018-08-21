@@ -20,9 +20,9 @@ import uav.generic.struct.constants.TypeSystemExecMOSA;
  * Classe que lê o arquivo com configurações gerais da missão.
  * @author Jesimar S. Arantes
  */
-public class ReaderFileConfigGlobal {
+public class ReaderFileConfig {
     
-    private static final ReaderFileConfigGlobal instance = new ReaderFileConfigGlobal();
+    private static final ReaderFileConfig instance = new ReaderFileConfig();
     
     private final String nameFile = "../Modules-Global/config-global.properties";
     private Properties prop;
@@ -32,8 +32,9 @@ public class ReaderFileConfigGlobal {
     private String typeAP;
     private String operationMode;
     private String typeAircraft;
-    private double freqUpdateDataAP;
+    private String dirMission;
     private double altRelMission;
+    private double freqUpdateDataAP;
     private String dirFiles;
     private String fileGeoBase;
     private String fileFeatureMission;
@@ -50,6 +51,9 @@ public class ReaderFileConfigGlobal {
     //sensor
     private boolean hasCamera;
     private String dirCamera;
+    private String timeVideo;
+    private String numberPhotoInSequence;
+    private String delayPhotoInSequence;
     private boolean hasSonar;
     private String dirSonar;
     private boolean hasPowerModule;
@@ -61,6 +65,7 @@ public class ReaderFileConfigGlobal {
     //atuactor
     private boolean hasBuzzer;
     private String dirBuzzer;
+    private String pinBuzzer;
     private boolean hasParachute;
     private String dirParachute;
     private boolean hasLED;
@@ -77,6 +82,7 @@ public class ReaderFileConfigGlobal {
     private double uavEndurance;
     
     //gcs
+    private boolean hasGoogleMaps;
     private boolean hasDB;
     private String hostOD;
     private String portOD;
@@ -134,11 +140,11 @@ public class ReaderFileConfigGlobal {
     /**
      * Class constructor.
      */
-    private ReaderFileConfigGlobal() {
+    private ReaderFileConfig() {
         
     }
     
-    public static ReaderFileConfigGlobal getInstance() {
+    public static ReaderFileConfig getInstance() {
         return instance;
     }
     
@@ -152,8 +158,10 @@ public class ReaderFileConfigGlobal {
             typeAP                = prop.getProperty("prop.global.type_ap");
             operationMode         = prop.getProperty("prop.global.operation_mode");
             typeAircraft          = prop.getProperty("prop.global.type_aircraft");
+            dirMission            = prop.getProperty("prop.global.mission.dir");
+            altRelMission         = Double.parseDouble(prop.getProperty("prop.global.mission.altitude_relative"));
             freqUpdateDataAP      = Double.parseDouble(prop.getProperty("prop.global.freq_update_data_ap"));
-            altRelMission         = Double.parseDouble(prop.getProperty("prop.global.altitude_relative_mission"));
+            
             dirFiles              = prop.getProperty("prop.global.dir_files");
             fileFeatureMission    = prop.getProperty("prop.global.file.feature_mission");
             fileGeoBase           = prop.getProperty("prop.global.file.geo_base");
@@ -179,6 +187,9 @@ public class ReaderFileConfigGlobal {
             
             //sensor
             dirCamera             = prop.getProperty("prop.hw.sensor.camera.dir");
+            timeVideo             = prop.getProperty("prop.hw.sensor.camera.video.time");
+            numberPhotoInSequence = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.number");
+            delayPhotoInSequence  = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.delay");
             dirSonar              = prop.getProperty("prop.hw.sensor.sonar.dir");
             levelMinimumBattery   = Integer.parseInt(prop.getProperty("prop.hw.sensor.powermodule.level_min_battery"));
             dirTemperatureSensor  = prop.getProperty("prop.hw.sensor.temperature.dir");
@@ -186,6 +197,7 @@ public class ReaderFileConfigGlobal {
             
             //actuators
             dirBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.dir");
+            pinBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.pin");
             dirParachute          = prop.getProperty("prop.hw.actuator.parachute.dir");
             dirLED                = prop.getProperty("prop.hw.actuator.led.dir");
             dirSpraying           = prop.getProperty("prop.hw.actuator.spraying.dir");
@@ -200,6 +212,7 @@ public class ReaderFileConfigGlobal {
             
             //modules software
             //gcs
+            hasGoogleMaps         = Boolean.parseBoolean(prop.getProperty("prop.gcs.internet.has_googlemaps"));
             hasDB                 = Boolean.parseBoolean(prop.getProperty("prop.gcs.od.has_db"));
             hostOD                = prop.getProperty("prop.gcs.od.host_od");
             portOD                = prop.getProperty("prop.gcs.od.port_od_gcs");
@@ -256,7 +269,7 @@ public class ReaderFileConfigGlobal {
     
     public boolean checkReadFields(){
         if (typeCC == null || 
-                (!typeCC.equals(TypeCC.EDISON) && 
+                (!typeCC.equals(TypeCC.INTEL_EDISON) && 
                 !typeCC.equals(TypeCC.RASPBERRY))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of companion computer not valid");
             return false;
@@ -395,13 +408,17 @@ public class ReaderFileConfigGlobal {
     public String getTypeAircraft() {
         return typeAircraft;
     }
-
-    public double getFreqUpdateDataAP() {
-        return freqUpdateDataAP;
+    
+    public String getDirMission() {
+        return dirMission;
     }
     
     public double getAltRelMission() {
         return altRelMission;
+    }
+
+    public double getFreqUpdateDataAP() {
+        return freqUpdateDataAP;
     }
     
     public String getDirFiles() {
@@ -482,6 +499,18 @@ public class ReaderFileConfigGlobal {
     public String getDirCamera() {
         return dirCamera;
     }
+    
+    public String getTimeVideo() {
+        return timeVideo;
+    }
+    
+    public String getNumberPhotoInSequence() {
+        return numberPhotoInSequence;
+    }
+    
+    public String getDelayPhotoInSequence() {
+        return delayPhotoInSequence;
+    }
 
     public String getDirSonar() {
         return dirSonar;
@@ -502,6 +531,10 @@ public class ReaderFileConfigGlobal {
     //actuators
     public String getDirBuzzer() {
         return dirBuzzer;
+    }
+    
+    public String getPinBuzzer() {
+        return pinBuzzer;
     }
     
     public String getDirParachute() {
@@ -539,6 +572,10 @@ public class ReaderFileConfigGlobal {
 
     public double getUavEndurance() {
         return uavEndurance;
+    }
+    
+    public boolean hasGoogleMaps() {
+        return hasGoogleMaps;
     }
     
     public boolean hasDB() {

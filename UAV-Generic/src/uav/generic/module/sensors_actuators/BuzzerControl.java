@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  *
@@ -14,22 +15,26 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
  */
 public class BuzzerControl {
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
 
     public BuzzerControl() {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
     }
     
     public void turnOnBuzzer(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirBuzzer());
+            File f = new File(config.getDirBuzzer());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar buzzer.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python buzzer.py";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar buzzer-pc.jar";
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python buzzer-edison.py " + config.getPinBuzzer();
+                }else{
+                    cmd = "./device";
+                }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -52,13 +57,17 @@ public class BuzzerControl {
     public void turnOnAlarm(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirBuzzer());
+            File f = new File(config.getDirBuzzer());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar alarm.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python alarm.py";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = "java -jar alarm-pc.jar";
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python alarm-edison.py " + config.getPinBuzzer();
+                }else{
+                    cmd = "./device";
+                }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

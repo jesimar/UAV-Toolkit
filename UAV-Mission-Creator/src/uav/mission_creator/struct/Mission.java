@@ -314,16 +314,16 @@ public class Mission {
         return str;
     } 
     
-    public String getWaypointsCameraPhoto(){
+    public String getWaypointsCameraPicture(){
         int i = 0;
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_PHOTO)){               
+            if (point.getName().contains(KeyWords.CMD_PICTURE)){               
                 i++;
             }
         }
         String str = i + "\n";
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_PHOTO)){
+            if (point.getName().contains(KeyWords.CMD_PICTURE)){
                 str += point.toString2();
             }
         }
@@ -331,26 +331,36 @@ public class Mission {
     }
     
     public String getWaypointsCameraVideo(){
-        String str = "";
-        if (hasCameraVideo()){
-            str = "2\n";
-        }else{
-            str = "0\n";
-            return str;
-        }
+        int i = 0;
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_VIDEO_BEGIN)){
-                str += point.toString2();
+            if (point.getName().contains(KeyWords.CMD_VIDEO)){               
+                i++;
             }
         }
+        String str = i + "\n";
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_VIDEO_END)){
+            if (point.getName().contains(KeyWords.CMD_VIDEO)){
                 str += point.toString2();
             }
         }
         return str;
     }
     
+    public String getWaypointsCameraPhotoInSequence(){
+        int i = 0;
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_PHOTO_IN_SEQUENCE)){               
+                i++;
+            }
+        }
+        String str = i + "\n";
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_PHOTO_IN_SEQUENCE)){
+                str += point.toString2();
+            }
+        }
+        return str;
+    }
     
     public String getWaypointsSpraying(){
         String str = "";
@@ -383,9 +393,9 @@ public class Mission {
         return heightFly;
     }
     
-    public boolean hasCameraPhoto(){
+    public boolean hasCameraPicture(){
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_PHOTO)){
+            if (point.getName().contains(KeyWords.CMD_PICTURE)){
                 return true;
             }
         }
@@ -393,17 +403,19 @@ public class Mission {
     }
     
     public boolean hasCameraVideo(){
-        int i = 0;
         for (PointGeo point : listPointGeo){
-            if (point.getName().contains(KeyWords.CMD_VIDEO_BEGIN)){
-                i++;
-            }
-            if (point.getName().contains(KeyWords.CMD_VIDEO_END)){
-                i++;
+            if (point.getName().contains(KeyWords.CMD_VIDEO)){
+                return true;
             }
         }
-        if (i == 2){
-            return true;
+        return false;
+    }
+    
+    public boolean hasCameraPhotoInSequence(){
+        for (PointGeo point : listPointGeo){
+            if (point.getName().contains(KeyWords.CMD_PHOTO_IN_SEQUENCE)){
+                return true;
+            }
         }
         return false;
     }

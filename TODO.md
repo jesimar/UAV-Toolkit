@@ -109,7 +109,6 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 
 ## Trabalhos Futuros ou Não Fazer Mais
 
-* Colocar no arquivo de properties o número do pino que liga o buzzer e o alarm (deixar isso genérico).
 * Gravar todos os prints na tela em um arquivo de log para posterir análise (MOSA e IFA).
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Criar ambiente de testes da funções do UAV-S2DK independente da linguagem Java em python. 

@@ -75,13 +75,12 @@ Comando para verificar qual a versão do MavProxy está em uso:
 
 ## Arquivo de Entrada
 
-No diretório raiz tem-se um arquivo de propriedades (config-s2dk.properties), em que se define que os IPs e as portas usada na comunicação entre os sistemas. 
+No diretório Modules-Global tem-se um arquivo de propriedades (config-global.properties), em que se define que os IPs e as portas usada na comunicação entre os sistemas. 
 
 ```
-prop.global.host_mavproxy=127.0.0.1
-prop.global.port_mavproxy=14551
-prop.global.host_http=localhost
-prop.global.port_http=50000
+prop.global.comm.host_s2dk=localhost
+prop.global.comm.port_network_mavproxy=14551
+prop.global.comm.port_network_s2dk=50000
 ```
 
 ## Requisições:

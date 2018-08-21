@@ -39,8 +39,8 @@ public class CCQSP4m extends Planner{
         try {
             File src_instance = new File(dir + "instance-base");
             File dst_instance = new File(dir + "instance");
-            String delta = configGlobal.getDeltaPlannerCCQSP4m();
-            String qtdWpt = configGlobal.getWaypointsPlannerCCQSP4m();
+            String delta = config.getDeltaPlannerCCQSP4m();
+            String qtdWpt = config.getWaypointsPlannerCCQSP4m();
             UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
                     qtdWpt, 298, qtdWpt, 299);
             return true;
@@ -56,7 +56,7 @@ public class CCQSP4m extends Planner{
             PrintStream print3D = new PrintStream(fileRoute3D);
             Scanner readRoute3D = new Scanner(new File(dir + "output.txt"));
             readRoute3D.nextInt();
-            double h = configGlobal.getAltRelMission();  
+            double h = config.getAltRelMission();  
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();
@@ -81,7 +81,7 @@ public class CCQSP4m extends Planner{
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
             int countLines = 0;
             readRoute3D.nextInt();
-            double h = configGlobal.getAltRelMission();            
+            double h = config.getAltRelMission();            
             while(readRoute3D.hasNext()){
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();

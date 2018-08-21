@@ -86,24 +86,24 @@ public class ReaderFileMission {
      * Read a file in this format (geographical coordinates [lat, lng]):.
      * ---------------------------------------
      * | ...                                 |
-     * | Waypoints Camera Photo              |
+     * | Waypoints Camera Picture            |
      * | 2                                   |
      * | -22.00593333;-47.89870833;0.00      |
      * | -22.00613771;-47.89869416;0.00      |
      * | ...                                 |
      * ---------------------------------------
      * @param file - File to read
-     * @param wptsPhoto - object to put the waypoints of the camera to photo
+     * @param wptsPhoto - object to put the waypoints of the camera to picture
      * @throws FileNotFoundException 
      */
-    public static void missionCameraPhoto(File file, Mission wptsPhoto) 
+    public static void missionCameraPicture(File file, Mission wptsPhoto) 
             throws FileNotFoundException {
         try {
             Scanner sc = new Scanner(file);
             while(sc.hasNextLine()){
                 String lineCommentary = sc.nextLine();
                 String lineNumber = sc.nextLine();
-                if (lineCommentary.equals("Waypoints Camera Photo")){
+                if (lineCommentary.equals("Waypoints Camera Picture")){
                     for (int i = 0; i < Integer.parseInt(lineNumber); i++){
                         String line = sc.nextLine();
                         String v[] = line.split(";");
@@ -172,6 +172,49 @@ public class ReaderFileMission {
      * Read a file in this format (geographical coordinates [lat, lng]):.
      * ---------------------------------------
      * | ...                                 |
+     * | Waypoints Camera Photo In Sequence  |
+     * | 2                                   |
+     * | -22.00593333;-47.89870833;0.00      |
+     * | -22.00613771;-47.89869416;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file - File to read
+     * @param wptsPhoto - object to put the waypoints of the camera to photo in sequence
+     * @throws FileNotFoundException 
+     */
+    public static void missionCameraPhotoInSequence(File file, Mission wptsPhoto) 
+            throws FileNotFoundException {
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Camera Photo In Sequence")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsPhoto.addWaypoint(wpt);
+                    }
+                }else{
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        sc.nextLine();
+                    }
+                }
+            }
+            sc.close();
+        } catch (NoSuchElementException ex) {
+            
+        }
+    }
+    
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | ...                                 |
      * | Waypoints Spraying                  |
      * | 2                                   |
      * | -22.00203126;-47.93308617;0.00      |
@@ -213,7 +256,7 @@ public class ReaderFileMission {
     
     public static void readerRoute(File inFile, Route3D route3D) 
             throws FileNotFoundException {
-        double alt = ReaderFileConfigGlobal.getInstance().getAltRelMission();
+        double alt = ReaderFileConfig.getInstance().getAltRelMission();
         try {
             Scanner sc = new Scanner(inFile);
             while(sc.hasNextLine()){

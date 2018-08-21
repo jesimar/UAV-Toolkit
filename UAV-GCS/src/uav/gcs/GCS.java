@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import javax.swing.JButton;
@@ -30,7 +33,7 @@ import uav.gcs.map.PanelPlotMission;
 import uav.gcs.window.LabelsInfo;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.util.UtilGeo;
 
 /**
@@ -58,6 +61,7 @@ public final class GCS extends JFrame {
     private JButton btnAlarm;
     private JButton btnPicture;
     private JButton btnVideo;
+    private JButton btnPhotoInSequence;
     private JButton btnLED;
     private JButton btnBlink;
     private JButton btnSpraying;
@@ -76,7 +80,7 @@ public final class GCS extends JFrame {
     private final int height = 620;
 
     private final Drone drone;
-    private final ReaderFileConfigGlobal config;
+    private final ReaderFileConfig config;
     private final CommunicationIFA communicationIFA;
     private final CommunicationMOSA communicationMOSA;
 
@@ -90,7 +94,7 @@ public final class GCS extends JFrame {
 
     public GCS() {
         Locale.setDefault(Locale.US);
-        config = ReaderFileConfigGlobal.getInstance();
+        config = ReaderFileConfig.getInstance();
         if (!config.read()) {
             System.exit(1);
         }
@@ -100,6 +104,8 @@ public final class GCS extends JFrame {
         if (!config.parseToVariables()) {
             System.exit(1);
         }
+        
+        execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
         
         try{
             pointGeo = UtilGeo.getPointGeo(config.getDirFiles()+config.getFileGeoBase());
@@ -255,6 +261,17 @@ public final class GCS extends JFrame {
                 }
             });
             panelLeft.add(btnVideo);
+            
+            btnPhotoInSequence = new JButton("CAMERA-PHOTO-IN-SEQ");
+            btnPhotoInSequence.setPreferredSize(new Dimension(185, 25));
+            btnPhotoInSequence.setEnabled(false);
+            btnPhotoInSequence.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    communicationIFA.sendData(TypeInputCommand.CMD_PHOTO_IN_SEQUENCE);
+                }
+            });
+            panelLeft.add(btnPhotoInSequence);
         }
 
         if (config.hasLED()) {
@@ -357,20 +374,24 @@ public final class GCS extends JFrame {
         panelPlotMission.waitingForRoutes();
         panelPlotMission.plotDroneInRealTime(drone);
         
-        panelPlotGoogleMaps = new PanelPlotGoogleMaps();
-        panelPlotGoogleMaps.init(width - 200, height - 100);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        if (config.hasGoogleMaps()){
+            panelPlotGoogleMaps = new PanelPlotGoogleMaps();
+            panelPlotGoogleMaps.init(width - 200, height - 100);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            panelPlotGoogleMaps.drawMap();
+            panelPlotGoogleMaps.waitingForRoutes();
+            panelPlotGoogleMaps.plotDroneInRealTime(drone);
         }
-        panelPlotGoogleMaps.drawMap();
-        panelPlotGoogleMaps.waitingForRoutes();
-        panelPlotGoogleMaps.plotDroneInRealTime(drone);
 
         tab.add("UAV Data", panelRight);
         tab.add("Plot Simple Map", panelPlotMission);
-        tab.add("Plot Google Maps", panelPlotGoogleMaps);
+        if (config.hasGoogleMaps()){
+            tab.add("Plot Google Maps", panelPlotGoogleMaps);
+        }
         
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
@@ -465,6 +486,7 @@ public final class GCS extends JFrame {
                             if (config.hasCamera()) {
                                 btnPicture.setEnabled(true);
                                 btnVideo.setEnabled(true);
+                                btnPhotoInSequence.setEnabled(true);
                             }
                             if (config.hasLED()) {
                                 btnLED.setEnabled(true);
@@ -540,9 +562,27 @@ public final class GCS extends JFrame {
     public void showAbout() {
         String msgAbout = "Program: UAV-GCS\n"
                 + "Author: Jesimar da Silva Arantes\n"
-                + "Version: 1.0.0\n"
-                + "Date: 16/08/2018";
+                + "Version: 3.0.0\n"
+                + "Date: 21/08/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void execScript(String cmd) {
+        try {
+            Process proc = Runtime.getRuntime().exec(cmd);
+            BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            try {
+                proc.waitFor();
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+            while (read.ready()) {
+                System.out.println(read.readLine());
+            }
+        }catch (IOException ex){
+            ex.printStackTrace();
+            System.exit(1);
+        }
     }
 }

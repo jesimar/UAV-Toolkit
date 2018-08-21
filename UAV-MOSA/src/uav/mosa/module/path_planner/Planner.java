@@ -11,7 +11,7 @@ import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.mosa.module.mission_manager.MissionManager;
 
 /**
@@ -20,7 +20,7 @@ import uav.mosa.module.mission_manager.MissionManager;
  */
 public abstract class Planner {
     
-    final ReaderFileConfigGlobal configGlobal;
+    final ReaderFileConfig config;
     final String dir;
     final Drone drone;
     final Mission3D waypointsMission;
@@ -34,8 +34,8 @@ public abstract class Planner {
      * @param waypointsMission waypoints of the mission
      */
     public Planner(Drone drone, Mission3D waypointsMission) {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
-        this.dir = configGlobal.getDirPlanner();
+        this.config = ReaderFileConfig.getInstance();
+        this.dir = config.getDirPlanner();
         this.drone = drone;
         this.waypointsMission = waypointsMission; 
         this.mission3D = new Mission3D();
@@ -59,14 +59,14 @@ public abstract class Planner {
             boolean error = false;
             File f = new File(dir);
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = configGlobal.getCmdExecPlanner() + " local";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                if (configGlobal.getTypeCC().equals(TypeCC.EDISON)){
-                    cmd = configGlobal.getCmdExecPlanner() + " edison";
-                }else if (configGlobal.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = configGlobal.getCmdExecPlanner() + " rpi";
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+                cmd = config.getCmdExecPlanner() + " local";
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = config.getCmdExecPlanner() + " edison";
+                }else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = config.getCmdExecPlanner() + " rpi";
                 }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

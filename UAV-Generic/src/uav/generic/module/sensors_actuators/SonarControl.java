@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  *
@@ -14,21 +14,21 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
  */
 public class SonarControl {
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
     private double distance = -1.0;
 
     public SonarControl() {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
     }
     
     public void startSonarSensor(){
         try {
-            File f = new File(configGlobal.getDirSonar());
+            File f = new File(config.getDirSonar());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "java -jar sonar.jar";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python sonar.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);

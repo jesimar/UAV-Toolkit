@@ -51,8 +51,8 @@ public class GH4s extends Replanner{
             File src = new File(dir + "config-base.sgl");
             File dst = new File(dir + "config.sgl");
             String state = px + " " + py + " " + vel + " " + angle;
-            String qtdWpt = configGlobal.getNumberWaypointsReplanner();
-            String delta = configGlobal.getDeltaReplanner();
+            String qtdWpt = config.getNumberWaypointsReplanner();
+            String delta = config.getDeltaReplanner();
             UtilIO.copyFileModifiedIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             
             return true;
@@ -77,7 +77,7 @@ public class GH4s extends Replanner{
             while(readRoute3D.hasNext()){                        
                 double x = readRoute3D.nextDouble();
                 double y = readRoute3D.nextDouble();           
-                if (configGlobal.getTypeAltitudeDecayReplanner().equals(TypeAltitudeDecay.LINEAR)){
+                if (config.getTypeAltitudeDecayReplanner().equals(TypeAltitudeDecay.LINEAR)){
                     h = h - frac;
                 }
                 printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));    

@@ -17,7 +17,7 @@ import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeReplanner;
 import uav.generic.struct.constants.TypeSystemExecIFA;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.struct.states.StateReplanning;
 import uav.ifa.module.communication_control.CommunicationGCS;
 import uav.ifa.module.path_replanner.DE4s;
@@ -40,7 +40,7 @@ public class DecisionMaking {
 
     private final Drone drone;
     private final DataCommunication dataAcquisition;
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
     private Replanner replanner;
     private StateReplanning stateReplanning;
     private String typeAction = "";
@@ -54,7 +54,7 @@ public class DecisionMaking {
      * @param dataAcquisition object to send commands to drone
      */
     public DecisionMaking(Drone drone, DataCommunication dataAcquisition) {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;
         this.stateReplanning = StateReplanning.WAITING;
@@ -62,7 +62,7 @@ public class DecisionMaking {
 
     public void actionToDoSomethingOffboard(Failure failure, CommunicationGCS communicationGCS) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
             if (failure.getTypeFailure() != null) {
                 switch (failure.getTypeFailure()) {
                     case FAIL_AP_CRITICAL:
@@ -93,7 +93,7 @@ public class DecisionMaking {
     private void execEmergencyLandingOffboard(CommunicationGCS communicationGCS) {
         boolean itIsOkEmergencyLanding = emergenyLandingOffboard(communicationGCS);
         if (!itIsOkEmergencyLanding) {
-            if (configGlobal.hasParachute()) {
+            if (config.hasParachute()) {
                 openParachute();
             } else {
                 landVertical();
@@ -105,15 +105,15 @@ public class DecisionMaking {
         double navSpeed = drone.getListParameters().getValue("WPNAV_SPEED");
         dataAcquisition.changeNavigationSpeed(navSpeed/10);
 
-        String attributes = configGlobal.getTypeReplanner() 
-                + ";" + configGlobal.getDirFiles() 
-                + ";" + configGlobal.getFileGeoBase()
-                + ";" + configGlobal.getDirReplanner() 
-                + ";" + configGlobal.getCmdExecReplanner()
-                + ";" + configGlobal.getTypeAltitudeDecayReplanner()
-                + ";" + configGlobal.getTimeExecReplanner()
-                + ";" + configGlobal.getNumberWaypointsReplanner() 
-                + ";" + configGlobal.getDeltaReplanner();
+        String attributes = config.getTypeReplanner() 
+                + ";" + config.getDirFiles() 
+                + ";" + config.getFileGeoBase()
+                + ";" + config.getDirReplanner() 
+                + ";" + config.getCmdExecReplanner()
+                + ";" + config.getTypeAltitudeDecayReplanner()
+                + ";" + config.getTimeExecReplanner()
+                + ";" + config.getNumberWaypointsReplanner() 
+                + ";" + config.getDeltaReplanner();
         communicationGCS.sendDataReplannerInGCS(attributes);
         do {
             try {
@@ -138,23 +138,23 @@ public class DecisionMaking {
 
     public void actionToDoSomethingOnboard(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
-        if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
             if (failure.getTypeFailure() != null) {
                 switch (failure.getTypeFailure()) {
                     case FAIL_AP_POWEROFF:
-                        if (configGlobal.hasParachute()) {
+                        if (config.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                            if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
                         break;
                     case FAIL_AP_EMERGENCY:
-                        if (configGlobal.hasParachute()) {
+                        if (config.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                            if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
@@ -163,28 +163,28 @@ public class DecisionMaking {
                         execEmergencyLanding();
                         break;
                     case FAIL_GPS:
-                        if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                        if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                             landVertical();
                         } else {
-                            if (configGlobal.hasParachute()) {
+                            if (config.hasParachute()) {
                                 openParachute();
                             }
                         }
                         break;
                     case FAIL_ENGINE:
-                        if (configGlobal.hasParachute()) {
+                        if (config.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                            if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
                         break;
                     case FAIL_SYSTEM_IFA:
-                        if (configGlobal.hasParachute()) {
+                        if (config.hasParachute()) {
                             openParachute();
                         } else {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                            if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         }
@@ -202,7 +202,7 @@ public class DecisionMaking {
                         if (typeAction.equals(TypeInputCommand.CMD_EMERGENCY_LANDING)) {
                             execEmergencyLanding();
                         } else if (typeAction.equals(TypeInputCommand.CMD_LAND)) {
-                            if (configGlobal.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
+                            if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
                                 landVertical();
                             }
                         } else if (typeAction.equals(TypeInputCommand.CMD_RTL)) {
@@ -215,7 +215,7 @@ public class DecisionMaking {
                         break;
                 }
             }
-        } else if (configGlobal.getSystemExecIFA().equals(TypeSystemExecIFA.FIXED_ROUTE)) {
+        } else if (config.getSystemExecIFA().equals(TypeSystemExecIFA.FIXED_ROUTE)) {
             boolean respF = sendFixedRouteStaticToDrone();
             if (respF) {
                 stateReplanning = StateReplanning.READY;
@@ -236,7 +236,7 @@ public class DecisionMaking {
     private void execEmergencyLanding() {
         boolean itIsOkEmergencyLanding = emergenyLanding();
         if (!itIsOkEmergencyLanding) {
-            if (configGlobal.hasParachute()) {
+            if (config.hasParachute()) {
                 openParachute();
             } else {
                 landVertical();
@@ -256,21 +256,21 @@ public class DecisionMaking {
         dataAcquisition.changeNavigationSpeed(navSpeed / 10);
 
         StandardPrints.printMsgEmph("decison making -> emergeny landing: " + typeAction);
-        if (configGlobal.getTypeReplanner().equals(TypeReplanner.GH4S)) {
+        if (config.getTypeReplanner().equals(TypeReplanner.GH4S)) {
             replanner = new GH4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.GA4S)) {
             replanner = new GA4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.MPGA4S)) {
             replanner = new MPGA4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.MS4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.MS4S)) {
             replanner = new MS4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.DE4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.DE4S)) {
             replanner = new DE4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
             replanner = new GA_GA_4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
             replanner = new GA_GH_4s(drone);
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.FIXED_ROUTE4s)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.FIXED_ROUTE4s)) {
             replanner = new FixedRoute4s(drone);
         }
         replanner.clearLogs();
@@ -282,12 +282,12 @@ public class DecisionMaking {
         dataAcquisition.changeNavigationSpeed(navSpeed);
 
         Mission mission = new Mission();
-        String path = configGlobal.getDirReplanner() + "routeGeo.txt";
+        String path = config.getDirReplanner() + "routeGeo.txt";
 
-        if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
+        if (config.getTypeReplanner().equals(TypeReplanner.GA_GA_4S)) {
             System.out.println("TypeReplanner.GA_GA_4S");
             path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
-        } else if (configGlobal.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
+        } else if (config.getTypeReplanner().equals(TypeReplanner.GA_GH_4S)) {
             String best = ((GA_GH_4s) replanner).bestMethod();
             if (best.equals("GA")) {
                 path = "../Modules-IFA/GA4s/" + "routeGeo.txt";
@@ -379,7 +379,7 @@ public class DecisionMaking {
 
     private boolean sendFixedRouteStaticToDrone() {
         StandardPrints.printMsgEmph("send fixed route static");
-        String path = configGlobal.getDirFixedRouteIFA()+ configGlobal.getFileFixedRouteIFA();
+        String path = config.getDirFixedRouteIFA()+ config.getFileFixedRouteIFA();
         Mission route = new Mission();
         boolean resp = readFileRoute(route, path, 2);
         if (!resp) {

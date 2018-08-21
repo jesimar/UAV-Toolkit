@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.reader.ReaderFileConfigGlobal;
+import uav.generic.struct.reader.ReaderFileConfig;
 
 /**
  *
@@ -14,21 +14,21 @@ import uav.generic.struct.reader.ReaderFileConfigGlobal;
  */
 public class LEDControl {
     
-    private final ReaderFileConfigGlobal configGlobal;
+    private final ReaderFileConfig config;
 
     public LEDControl() {
-        this.configGlobal = ReaderFileConfigGlobal.getInstance();
+        this.config = ReaderFileConfig.getInstance();
     }
     
     public void turnOnLED(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirLED());
+            File f = new File(config.getDirLED());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-on-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-on-led.py";
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
@@ -52,12 +52,12 @@ public class LEDControl {
     public void turnOffLED(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirLED());
+            File f = new File(config.getDirLED());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./turn-off-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python turn-off-led.py";
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
@@ -81,12 +81,12 @@ public class LEDControl {
     public void blinkLED(){
         try {
             boolean print = true;
-            File f = new File(configGlobal.getDirLED());
+            File f = new File(config.getDirLED());
             String cmd = "";
-            if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
                 cmd = "./blink-led";
-            } else if (configGlobal.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
-                    configGlobal.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+                    config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 cmd = "python blink-led.py";
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
