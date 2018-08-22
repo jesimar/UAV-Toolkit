@@ -4,6 +4,8 @@
 
 ### Features:
 
+* Added code to support the sonar in raspberry pi.
+* Hardware of the raspberry pi incorporated in the system.
 * Updated code UAV-Mission-Creator to support new format of video and photo-in-sequence.
 * Updated file of properties to define the directory of the mission (IFA always copy the mission to the directory).
 * Updated code camera, video and photo-in-sequence to support parameters by file of properties.

@@ -8,7 +8,7 @@ from time import sleep
 from time import gmtime, strftime
 import sys
 
-time = sys.argv[1]
+time = int(sys.argv[1])
 
 camera = PiCamera()
 

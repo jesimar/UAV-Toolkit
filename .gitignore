@@ -23,6 +23,7 @@ dicas-voo.txt
 /Modules-Global/Camera/*.png
 /Modules-Global/Camera/*.jpg
 /Modules-Global/Camera/*.mov
+/Modules-Global/Camera/*.cap
 /Modules-Global/Camera/*.h264
 
 /UAV-GCS/nbproject/private/

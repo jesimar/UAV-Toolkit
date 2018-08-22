@@ -20,16 +20,10 @@ fi
 
 echo "=============swap file mission============="
 
-echo "copy file geoBase.txt to files"
+echo "copy file geoBase.txt, map-full.sgl, map-nfz.sgl and featureMission.txt to files"
 cp ../$DIR_FILES/geoBase.txt ../Modules-Global/Files/. 2>/dev/null
-
-echo "copy file map-full.sgl to files"
 cp ../$DIR_FILES/map-full.sgl ../Modules-Global/Files/map-full.sgl 2>/dev/null
-
-echo "copy file map-nfz.sgl to files"
 cp ../$DIR_FILES/map-nfz.sgl ../Modules-Global/Files/map-nfz.sgl 2>/dev/null
-
-echo "copy file featureMission.txt to files"
 cp ../$DIR_FILES/featureMission.txt ../Modules-Global/Files/. 2>/dev/null
 
 echo "copy file map-full.sgl to IFA"
@@ -40,13 +34,11 @@ cp ../$DIR_FILES/map-full.sgl ../Modules-IFA/MPGA4s/map.sgl 2>/dev/null
 cp ../$DIR_FILES/map-full.sgl ../Modules-IFA/MS4s/map.sgl 2>/dev/null
 cp ../$DIR_FILES/map-full.sgl ../Modules-IFA/MILP4s/map.sgl 2>/dev/null
 
-echo "copy file map-nfz.sgl to MOSA"
+echo "copy file map-nfz.sgl and waypointsMission.txt to HGA4m in MOSA"
 cp ../$DIR_FILES/map-nfz.sgl ../Modules-MOSA/HGA4m/. 2>/dev/null
-
-echo "copy file waypointsMission.txt to MOSA"
 cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/. 2>/dev/null
 
-echo "copy file mission_ccqsp.sgl to MOSA"
+echo "copy file mission_ccqsp.sgl to CCQSP4m in MOSA"
 cp ../$DIR_FILES/mission_ccqsp.sgl ../Modules-MOSA/CCQSP4m/. 2>/dev/null
 
 echo "====================done==================="

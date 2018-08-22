@@ -2,27 +2,7 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
 	<name>Missao-Campus2-CCQSP.kml</name>
-	<StyleMap id="msn_ylw-pushpin">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_ylw-pushpin1</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_ylw-pushpin</styleUrl>
-		</Pair>
-	</StyleMap>
-	<StyleMap id="msn_ylw-pushpin0">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_ylw-pushpin0</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_ylw-pushpin0</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="sn_ylw-pushpin">
+	<Style id="sn_ylw-pushpin1">
 		<IconStyle>
 			<scale>1.1</scale>
 			<Icon>
@@ -31,45 +11,12 @@
 			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 		</IconStyle>
 		<LineStyle>
-			<color>ffff0055</color>
+			<color>ff000000</color>
 		</LineStyle>
 		<PolyStyle>
-			<color>80ff0000</color>
+			<color>80ffffff</color>
 		</PolyStyle>
 	</Style>
-	<Style id="sn_blu-blank02">
-		<IconStyle>
-			<scale>1.1</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
-			</Icon>
-			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
-		<ListStyle>
-			<ItemIcon>
-				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
-			</ItemIcon>
-		</ListStyle>
-	</Style>
-	<Style id="sh_ylw-pushpin35">
-		<IconStyle>
-			<scale>1.3</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
-			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
-	</Style>
-	<StyleMap id="msn_placemark_square">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_placemark_square</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_placemark_square_highlight</styleUrl>
-		</Pair>
-	</StyleMap>
 	<StyleMap id="msn_ylw-pushpin1">
 		<Pair>
 			<key>normal</key>
@@ -78,16 +25,6 @@
 		<Pair>
 			<key>highlight</key>
 			<styleUrl>#sh_ylw-pushpin1</styleUrl>
-		</Pair>
-	</StyleMap>
-	<StyleMap id="msn_placemark_square0">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_placemark_square0</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_placemark_square_highlight0</styleUrl>
 		</Pair>
 	</StyleMap>
 	<Style id="sh_blu-blank10">
@@ -104,40 +41,39 @@
 			</ItemIcon>
 		</ListStyle>
 	</Style>
-	<StyleMap id="msn_ylw-pushpin38">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_ylw-pushpin37</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_ylw-pushpin35</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="sh_ylw-pushpin">
+	<Style id="sn_ylw-pushpin">
 		<IconStyle>
-			<scale>1.3</scale>
+			<scale>1.1</scale>
 			<Icon>
 				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
 			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 		</IconStyle>
 		<LineStyle>
-			<color>ff000000</color>
+			<color>ffff0055</color>
 		</LineStyle>
 		<PolyStyle>
-			<color>80ffffff</color>
+			<color>80ff0000</color>
 		</PolyStyle>
 	</Style>
-	<Style id="sh_placemark_square_highlight">
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin37">
 		<IconStyle>
-			<scale>1.2</scale>
+			<scale>1.1</scale>
 			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 		</IconStyle>
-		<ListStyle>
-		</ListStyle>
 	</Style>
 	<StyleMap id="msn_blu-blank02">
 		<Pair>
@@ -149,7 +85,46 @@
 			<styleUrl>#sh_blu-blank100</styleUrl>
 		</Pair>
 	</StyleMap>
-	<Style id="sn_blu-blank020">
+	<StyleMap id="msn_placemark_square">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_placemark_square</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_placemark_square_highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_ylw-pushpin35">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin38">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin37</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin35</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_blu-blank021">
 		<IconStyle>
 			<scale>1.1</scale>
 			<Icon>
@@ -163,16 +138,14 @@
 			</ItemIcon>
 		</ListStyle>
 	</Style>
-	<StyleMap id="msn_blu-blank020">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#sn_blu-blank020</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#sh_blu-blank10</styleUrl>
-		</Pair>
-	</StyleMap>
+	<Style id="sn_placemark_square">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
 	<Style id="sn_ylw-pushpin0">
 		<IconStyle>
 			<scale>1.1</scale>
@@ -188,44 +161,23 @@
 			<color>8000aa00</color>
 		</PolyStyle>
 	</Style>
-	<Style id="sh_ylw-pushpin0">
-		<IconStyle>
-			<scale>1.3</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
-			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
-		<LineStyle>
-			<color>ff00aa00</color>
-		</LineStyle>
-		<PolyStyle>
-			<color>8000aa00</color>
-		</PolyStyle>
-	</Style>
-	<Style id="sh_placemark_square_highlight0">
+	<StyleMap id="msn_blu-blank021">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_blu-blank021</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_blu-blank10</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_placemark_square0">
 		<IconStyle>
 			<scale>1.2</scale>
 			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>
 			</Icon>
 		</IconStyle>
-		<ListStyle>
-		</ListStyle>
-	</Style>
-	<Style id="sh_blu-blank100">
-		<IconStyle>
-			<scale>1.3</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
-			</Icon>
-			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
-		<ListStyle>
-			<ItemIcon>
-				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
-			</ItemIcon>
-		</ListStyle>
 	</Style>
 	<Style id="sh_ylw-pushpin1">
 		<IconStyle>
@@ -242,9 +194,78 @@
 			<color>80ff0000</color>
 		</PolyStyle>
 	</Style>
-	<Style id="sn_ylw-pushpin1">
+	<Style id="sh_placemark_square_highlight0">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="sn_blu-blank02">
 		<IconStyle>
 			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<StyleMap id="msn_placemark_square0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_placemark_square0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_placemark_square_highlight0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_placemark_square_highlight">
+		<IconStyle>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ff00aa00</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>8000aa00</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_blu-blank100">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank.png</href>
+			</Icon>
+			<hotSpot x="32" y="1" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<ListStyle>
+			<ItemIcon>
+				<href>http://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png</href>
+			</ItemIcon>
+		</ListStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin">
+		<IconStyle>
+			<scale>1.3</scale>
 			<Icon>
 				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
 			</Icon>
@@ -257,42 +278,11 @@
 			<color>80ffffff</color>
 		</PolyStyle>
 	</Style>
-	<Style id="sn_ylw-pushpin37">
-		<IconStyle>
-			<scale>1.1</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
-			</Icon>
-			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
-		</IconStyle>
-	</Style>
-	<Style id="sn_placemark_square">
-		<IconStyle>
-			<scale>1.2</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>
-			</Icon>
-		</IconStyle>
-		<ListStyle>
-		</ListStyle>
-	</Style>
-	<Style id="sn_placemark_square0">
-		<IconStyle>
-			<scale>1.2</scale>
-			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>
-			</Icon>
-		</IconStyle>
-		<ListStyle>
-		</ListStyle>
-	</Style>
 	<Folder>
 		<name>Missao-Campus2-CCQSP</name>
-		<visibility>0</visibility>
 		<open>1</open>
 		<Placemark>
 			<name>geo_base</name>
-			<visibility>0</visibility>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93262638646174</longitude>
@@ -311,7 +301,6 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_takeoff</name>
-			<visibility>0</visibility>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93297165752332</longitude>
@@ -322,7 +311,7 @@
 				<range>119.0750098855618</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank020</styleUrl>
+			<styleUrl>#msn_blu-blank021</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.93304254164829,-22.00208833822264,0</coordinates>
@@ -330,7 +319,6 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_2</name>
-			<visibility>0</visibility>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93305665552566</longitude>
@@ -349,7 +337,6 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_3</name>
-			<visibility>0</visibility>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93305665552566</longitude>
@@ -368,7 +355,6 @@
 		</Placemark>
 		<Placemark>
 			<name>waypoint_land</name>
-			<visibility>0</visibility>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93297165752332</longitude>
@@ -379,15 +365,14 @@
 				<range>119.0750098855618</range>
 				<gx:altitudeMode>relativeToSeaFloor</gx:altitudeMode>
 			</LookAt>
-			<styleUrl>#msn_blu-blank020</styleUrl>
+			<styleUrl>#msn_blu-blank021</styleUrl>
 			<Point>
 				<gx:drawOrder>1</gx:drawOrder>
 				<coordinates>-47.93304254164829,-22.00208833822264,0</coordinates>
 			</Point>
 		</Placemark>
 		<Placemark>
-			<name>cmd_photo1</name>
-			<visibility>0</visibility>
+			<name>cmd_picture1</name>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93305665552566</longitude>
@@ -405,8 +390,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
-			<name>cmd_photo2</name>
-			<visibility>0</visibility>
+			<name>cmd_picture2</name>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93305665552566</longitude>
@@ -424,8 +408,7 @@
 			</Point>
 		</Placemark>
 		<Placemark>
-			<name>cmd_photo3</name>
-			<visibility>0</visibility>
+			<name>cmd_picture3</name>
 			<open>1</open>
 			<LookAt>
 				<longitude>-47.93305732463319</longitude>
@@ -444,7 +427,6 @@
 		</Placemark>
 		<Placemark>
 			<name>map_frontier</name>
-			<visibility>0</visibility>
 			<styleUrl>#msn_ylw-pushpin</styleUrl>
 			<Polygon>
 				<tessellate>1</tessellate>
@@ -459,7 +441,6 @@
 		</Placemark>
 		<Placemark>
 			<name>map_obstacle_obj1</name>
-			<visibility>0</visibility>
 			<styleUrl>#msn_ylw-pushpin0</styleUrl>
 			<Polygon>
 				<tessellate>1</tessellate>
@@ -474,7 +455,6 @@
 		</Placemark>
 		<Placemark>
 			<name>map_bonus1</name>
-			<visibility>0</visibility>
 			<styleUrl>#msn_ylw-pushpin1</styleUrl>
 			<Polygon>
 				<tessellate>1</tessellate>

@@ -422,7 +422,7 @@ public class MissionManager {
             if (wptsCameraPicture.size() > 0){
                 wptsCameraPicture.removeWaypoint(index);
             }
-            StandardPrints.printMsgEmph("turn on the camera");
+            StandardPrints.printMsgEmph("turn on the camera picture");
             camera.takeAPicture();
         }
     }
@@ -450,7 +450,7 @@ public class MissionManager {
             if (wptsCameraVideo.size() > 0){
                 wptsCameraVideo.removeWaypoint(index);
             }
-            StandardPrints.printMsgEmph("turn on the video");
+            StandardPrints.printMsgEmph("turn on the camera video");
             camera.makeAVideo();
         }
     }
@@ -478,7 +478,7 @@ public class MissionManager {
             if (wptsCameraPhotoInSeq.size() > 0){
                 wptsCameraPhotoInSeq.removeWaypoint(index);
             }
-            StandardPrints.printMsgEmph("turn on photo in sequence");
+            StandardPrints.printMsgEmph("turn on the camera photo in sequence");
             camera.photoInSequence();
         }
     }

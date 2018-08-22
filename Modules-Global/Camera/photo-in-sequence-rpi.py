@@ -7,8 +7,8 @@ from picamera import PiCamera
 from time import sleep
 import sys
 
-number = sys.argv[1]
-delay = sys.argv[2]
+number = int(sys.argv[1])
+delay = int(sys.argv[2])
 
 camera = PiCamera()
 

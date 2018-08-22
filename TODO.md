@@ -4,11 +4,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Drone - iDroneAlpha:
 
-* Incorporar hardware da câmera no drone.
 * Incorporar hardware de leds no drone.
 * Incorporar hardware de sonar no drone apontado para baixo.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para acender os leds.
-* Desenvolver aplicação básica na Edison e Raspberry Pi para bater fotos e fazer filmagem com a câmera.
 * Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
 
 ## Sistema IFA:
@@ -127,6 +125,7 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Incorporar hardware/software de disparo de paraquedas.
 * Incorporar hardware/software de sonar no drone apontado para frente.
 * Incorporar hardware/software de pulverização de plantações.
+* Incorporar hardware/software de câmera na Intel Edison para bater foto e fazer filmagens.
 
 ### Drone
 
