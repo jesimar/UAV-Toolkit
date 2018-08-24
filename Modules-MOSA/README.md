@@ -8,6 +8,8 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento 
 
 * **CCQSP4m** -> *Chance Constraint Qualitative State Plan for mission* - Utiliza um algoritmo baseado em Programação Linear Inteira-Mista (PLIM) para encontrar a rota. Necessita do IBM CPLEX instalado para utilizá-lo. [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-05122017-083420/pt-br.php)]
 
+* **A-Star4m** -> Algoritmo A* para missão.
+
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.
 
 * **Fixed-Route4m** -> *Fixed Route for mission* - Arquivos com missões completas pré-definidas. 

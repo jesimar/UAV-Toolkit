@@ -92,7 +92,6 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 * Fazer simplificador de rotas baseado em derivadas (Feito)
 * Sistema de voz da Google
 * Trabalhar com sistema de paraquedas
-* Trabalhar com sistema de câmera
 * Trabalhar com sistema sonar + edison
 * Trabalhar com sistema sonar + raspberry pi
 * Fazer programa inicilizar junto com o sistema operacional (ubuntu, raspbian, yocto linux)
