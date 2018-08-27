@@ -277,6 +277,8 @@ UAV-Toolkit está disponível sobre código aberto com permissões [GNU General 
 
 * O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
 * O sistema IFA suporta apenas um cliente MOSA. 
+* Não é possível ao projetista da missão mandar gravar um vídeo e em seguida mandar retirar uma fotografia, pois o recurso estará em uso. Isso não é verificado pelo sistema.
+* O sistema IFA suporta apenas um recalculo de rota para pouso emergencial. Ele não aceita chamar duas vezes o MPGA4s, por exemplo.
 
 ## Arquitetura de Hardware
 

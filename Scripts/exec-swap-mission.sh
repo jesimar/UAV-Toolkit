@@ -14,6 +14,13 @@ then
 	#DIR_FILES=UAV-Mission-Creator/mission/icas
 	#DIR_FILES=UAV-Mission-Creator/mission/campus2
 	DIR_FILES=UAV-Mission-Creator/mission/campus2ccqsp
+	echo "DIR_FILES used:" $DIR_FILES
+elif [ $1 == '--help' ]
+then
+	echo "How to use: "
+	echo "    Format: ./exec-swap-mission.sh DIR_FILES"
+	echo "    Example: ./exec-swap-mission.sh 192.168.43.2"
+	exit 1
 else
 	DIR_FILES=$1
 fi

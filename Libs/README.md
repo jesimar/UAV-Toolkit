@@ -10,7 +10,7 @@ Lista de bibliotecas desenvolvidas nesse projeto e utilizadas nesse projeto:
 Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 
 * **jsc.jar** -> Biblioteca para manipulação estatística. Usada nos replanejadores de rotas (DE4s, GH4s, GA4s, MPGA4s) [[Link](https://mvnrepository.com/artifact/jsc/jsc/1.0)] (Licença N/A).
-* **jmf.jar** -> Biblioteca para manipulação multimedia. Usada nos gravador de vídeo Video-PC [[Link](https://mvnrepository.com/artifact/javax.media/jmf)](Licença SCSL)
+* **jmf.jar** -> Biblioteca para manipulação multimedia. Usada nos gravador de vídeo Video-PC [[Link](https://mvnrepository.com/artifact/javax.media/jmf)] (Licença SCSL)
 * **Jama-1.0.3.jar** -> Biblioteca para minipulação de álgebra linear. Usada nos planejadores de rotas (HGA4m, CCQSP4m) [[Link](https://mvnrepository.com/artifact/gov.nist.math/jama/1.0.3)] (Licença Creative Commons).
 * **jdom-2.0.6.jar** -> Biblioteca para acesso e manipulação de dados XML. Usada para leitura de arquivo em formato XML [[Link](https://mvnrepository.com/artifact/org.jdom/jdom2)] (Licença própria estilo Apache).
 * **gson-2.8.2.jar** -> Biblioteca para conversão de objetos para formato JSON. Usada para conversão em formato JSON [[Link](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.2)] (Licença Apache 2.0).

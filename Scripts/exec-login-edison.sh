@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 12/01/2018
-#Last Update: 03/07/2018
+#Last Update: 24/08/2018
 #Description: Script that automatically login in to the Intel Edison Companion Computer (CC) via SSH.
 #Descrição: Script que faz login automático no Companion Computer (CC) Intel Edison através de SSH.
 
@@ -13,6 +13,13 @@ then
 	IP_EDISON=192.168.43.133   #IP to network redeDroneC (cell phone veronica)
 	#IP_EDISON=192.168.43.9     #IP to network RedeDroneCjes (cell phone jesimar)
 	#IP_EDISON=10.42.0.199      #IP to network RedeDronePC
+	echo "IP_EDISON used:" $IP_EDISON
+elif [ $1 == '--help' ]
+then
+	echo "How to use: "
+	echo "    Format: ./exec-login-edison.sh IP_EDISON"
+	echo "    Example: ./exec-login-edison.sh 192.168.43.2"
+	exit 1
 else
 	IP_EDISON=$1
 fi

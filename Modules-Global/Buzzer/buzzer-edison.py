@@ -8,7 +8,7 @@ import mraa
 import time
 import sys
 
-pin = sys.argv[1]
+pin = int(sys.argv[1])
 buzzer = mraa.Gpio(pin)
 buzzer.dir(mraa.DIR_OUT)
 
