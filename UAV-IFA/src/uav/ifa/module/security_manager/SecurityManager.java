@@ -74,7 +74,7 @@ public class SecurityManager {
      */
     public SecurityManager() {
         timeInit = System.currentTimeMillis();
-
+        
         this.config = ReaderFileConfig.getInstance();
         if (!config.read()) {
             System.exit(1);

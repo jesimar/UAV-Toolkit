@@ -253,15 +253,15 @@ public class ReaderFileConfig {
             
             return true;
         } catch (FileNotFoundException ex){     
-            StandardPrints.printMsgError2("Error [FileNotFoundException] ReaderLoadConfig()");
+            StandardPrints.printMsgError2("Error [FileNotFoundException] read()");
             ex.printStackTrace();
             return false;
         } catch (IOException ex) {
-            StandardPrints.printMsgError2("Error [IOException] ReaderLoadConfig()");
+            StandardPrints.printMsgError2("Error [IOException] read()");
             ex.printStackTrace();
             return false;
         } catch (NumberFormatException ex) {
-            StandardPrints.printMsgError2("Error [NumberFormatException] ReaderLoadConfig()");
+            StandardPrints.printMsgError2("Error [NumberFormatException] read()");
             ex.printStackTrace();
             return false;
         }

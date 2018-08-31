@@ -49,6 +49,12 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Geral
 
+* Criar no github o UAV-Embedded
+* Corrigir problema câmera raspberry pi (fotos verdes), calibrar melhor o AWB.
+1. Link: https://www.raspberrypi.org/forums/viewtopic.php?t=132944
+2. Link: https://raspberrypi.stackexchange.com/questions/79848/green-image-with-rpi-picamera
+3. Link: https://www.raspberrypi.org/forums/viewtopic.php?t=87244
+4. Link: https://raspberrypi.stackexchange.com/questions/14047/camera-problems-green-tint-and-long-delays-after-snapshot
 * Diagramar toda a máquina de estados dos modos de voo do drone (Guided, Auto, Stabilized, etc).
 * Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Documentação: Melhorar a descrição do projeto no github.

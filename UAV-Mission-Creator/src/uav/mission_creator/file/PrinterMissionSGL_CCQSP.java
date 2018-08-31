@@ -16,9 +16,9 @@ public class PrinterMissionSGL_CCQSP {
     private final Mission mission;
     private final double vx = 0.0;
     private final double vy = 0.0;
-    private final double delta = 0.01;
+    private final double delta = 0.04;
     private final double timeMax = 60.0;
-    private final double offset = 1.0;
+    private final double offset = 0.5;
     
     public PrinterMissionSGL_CCQSP(File fileMission, Mission mission) {
         this.fileMission = fileMission;
