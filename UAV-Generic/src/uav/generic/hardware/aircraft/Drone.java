@@ -34,6 +34,8 @@ public abstract class Drone {
     int countWaypoint;
     double distanceToHome;//in meters
     double distanceToCurrentWaypoint;//in meters
+    double estimatedTimeToDoRTL;//in seconds
+    double estimatedConsumptionBatForRTL;//in percentage
     
     String typeFailure;
     
@@ -95,6 +97,14 @@ public abstract class Drone {
         return distanceToCurrentWaypoint;
     }
     
+    public double getEstimatedTimeForRLT(){
+        return estimatedTimeToDoRTL;
+    }
+    
+    public double getEstimatedConsumptionBatForRTL(){
+        return estimatedConsumptionBatForRTL;
+    }
+    
     public void setTime(double time){
         this.time = time;
     }
@@ -105,6 +115,14 @@ public abstract class Drone {
     
     public void setCountWaypoint(String count) {
         this.countWaypoint = Integer.parseInt(count);
+    }
+    
+    public void setEstimatedTimeToDoRTL(double time) {
+        this.estimatedTimeToDoRTL = time;
+    }
+    
+    public void setEstimatedConsumptionBatForRTL(double consumptionBattery){
+        this.estimatedConsumptionBatForRTL = consumptionBattery;
     }
     
     public void setDistanceToHome(String dist) {
@@ -255,7 +273,8 @@ public abstract class Drone {
                 + "level-bat;pitch;yaw;roll;vel-x;vel-y;vel-z;fix-type;satellites-visible;"
                 + "eph;epv;heading;groundspeed;airspeed;next-wpt;count-wpt;"
                 + "dist-to-home;dist-to-current-wpt;mode;system-status;armed;"
-                + "is-armable;ekf-ok;type-failure;dist-sonar;temperature-sensor";
+                + "is-armable;ekf-ok;type-failure;est-time-to-do-rtl;est-consumption-bat-rtl;"
+                + "dist-sonar;temperature-sensor";
     }
     
     @Override
@@ -265,7 +284,7 @@ public abstract class Drone {
         String temp = temperature.temperature == -1 ? "NONE" : String.format("%.2f", temperature.temperature);
         return String.format("%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
                 "%.2f;%.2f;%d;%d;%d;%d;%.1f;%.2f;%.2f;%d;%d;%.2f;%.2f;%s;%s;%s;" +
-                "%s;%s;%s;%s;%s", 
+                "%s;%s;%s;%.2f;%.2f;%s;%s", 
                 dateHour, time, gps.lat, gps.lng, barometer.alt_rel, barometer.alt_abs,
                 battery.voltage, battery.current, battery.level, attitude.pitch,
                 attitude.yaw, attitude.roll, velocity.vx, velocity.vy, velocity.vz, 
@@ -273,6 +292,7 @@ public abstract class Drone {
                 sensorUAV.heading, sensorUAV.groundspeed, sensorUAV.airspeed, 
                 nextWaypoint, countWaypoint, distanceToHome, distanceToCurrentWaypoint,
                 statusUAV.mode, statusUAV.systemStatus, statusUAV.armed, 
-                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, dist, temp);
+                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, estimatedTimeToDoRTL,
+                estimatedConsumptionBatForRTL, dist, temp);
     }
 }

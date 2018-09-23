@@ -160,8 +160,10 @@ public class CommunicationIFA {
         drone.statusUAV.isArmable = Boolean.parseBoolean(v[30]);
         drone.statusUAV.ekfOk = Boolean.parseBoolean(v[31]);
         drone.typeFailure = v[32];
-        drone.sonar.distance = v[33].equals("NONE") ? -1.0 : Double.parseDouble(v[33]);
-        drone.temperature.temperature = v[34].equals("NONE") ? -1.0 : Double.parseDouble(v[34]);
+        drone.estimatedTimeToDoRTL = Double.parseDouble(v[33]);
+        drone.estimatedConsumptionBatForRTL = Double.parseDouble(v[34]);
+        drone.sonar.distance = v[35].equals("NONE") ? -1.0 : Double.parseDouble(v[35]);
+        drone.temperature.temperature = v[36].equals("NONE") ? -1.0 : Double.parseDouble(v[36]);
     }
 
     private void replannerInGCS(String answer) {

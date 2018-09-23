@@ -50,6 +50,8 @@ public class LabelsInfo {
     private final JLabel labelDistToHome;
     private final JLabel labelDistToCurrWpt;
     private final JLabel labelTypeFailure;
+    private final JLabel labelEstTimeToDoRTL;
+    private final JLabel labelEstConBatRTL;
     private final JLabel labelSonarDistance;
     private final JLabel labelTemperature;
 
@@ -219,6 +221,16 @@ public class LabelsInfo {
         labelTypeFailure.setForeground(Color.BLACK);
         panel.add(labelTypeFailure);
         
+        this.labelEstTimeToDoRTL = new JLabel("Estim. Time RTL: ");
+        labelEstTimeToDoRTL.setPreferredSize(new Dimension(160, 20));
+        labelEstTimeToDoRTL.setForeground(Color.BLACK);
+        panel.add(labelEstTimeToDoRTL);
+        
+        this.labelEstConBatRTL = new JLabel("Estim. Bat RTL: ");
+        labelEstConBatRTL.setPreferredSize(new Dimension(160, 20));
+        labelEstConBatRTL.setForeground(Color.BLACK);
+        panel.add(labelEstConBatRTL);
+        
         this.labelSonarDistance = new JLabel("Sonar Distance: ");
         labelSonarDistance.setPreferredSize(new Dimension(160, 20));
         labelSonarDistance.setForeground(Color.BLACK);
@@ -232,43 +244,47 @@ public class LabelsInfo {
     }
     
     public void updateInfo(Drone drone){
-        labelDate.setText("Date: " + drone.date);
-        labelHour.setText("Hour: " + drone.hour);
-        labelTime.setText("Time: " + drone.time);
-        labelLat.setText("Lat: " + String.format("%.8f", drone.gps.lat));
-        labelLng.setText("Lng: " + String.format("%.8f", drone.gps.lng));
-        labelAltRel.setText("Alt Rel: " + String.format("%.1f", drone.barometer.alt_rel));
-        labelAltAbs.setText("Alt Abs: " + String.format("%.1f", drone.barometer.alt_abs));
-        labelVoltageBat.setText("Voltage Bat: " + drone.battery.voltage);
-        labelCurrentBat.setText("Current Bat: " + drone.battery.current);
-        labelLevelBat.setText("Level Bat: " + drone.battery.level + "%");
-        labelPicth.setText("Picth: " + String.format("%.4f", drone.attitude.pitch));
-        labelYaw.setText("Yaw: " + String.format("%.4f", drone.attitude.yaw));
-        labelRoll.setText("Roll: " + String.format("%.4f", drone.attitude.roll));
-        labelVx.setText("Vx: " + String.format("%.2f", drone.velocity.vx));
-        labelVy.setText("Vy: " + String.format("%.2f", drone.velocity.vy));
-        labelVz.setText("Vz: " + String.format("%.2f", drone.velocity.vz));
-        labelHeading.setText("Heading: " + drone.sensorUAV.heading);
-        labelGroundspeed.setText("Groundspeed: " + drone.sensorUAV.groundspeed);
-        labelAirspeed.setText("Airspeed: " + drone.sensorUAV.airspeed);
-        labelGPSFixType.setText("GPS Fix Type: " + drone.gpsinfo.fixType);
-        labelGPSSatelities.setText("GPS Sat: " + drone.gpsinfo.satellitesVisible);
-        labelGPSEph.setText("GPS EPH: " + drone.gpsinfo.eph);
-        labelGPSEpv.setText("GPS EPV: " + drone.gpsinfo.epv);
-        labelMode.setText("Mode: " + drone.statusUAV.mode);
-        labelStatus.setText("Status: " + drone.statusUAV.systemStatus);
-        labelArmed.setText("Armed: " + drone.statusUAV.armed);
-        labelIsArmable.setText("Is Armable: " + drone.statusUAV.isArmable);
-        labelEkfOk.setText("Ekf-Ok: " + drone.statusUAV.ekfOk);
-        labelNextWpt.setText("Netx Wpt: " + drone.nextWaypoint);
-        labelCountWpt.setText("Count Wpt: " + drone.countWaypoint);
-        labelDistToHome.setText("Dist To Home: " + drone.distanceToHome);
-        labelDistToCurrWpt.setText("Dist To Wpt: " + drone.distanceToCurrentWaypoint);
-        labelTypeFailure.setText("Type Fail: " + drone.typeFailure);
-        String dist = drone.sonar.distance == -1 ? "NONE" : drone.sonar.distance+"";
-        labelSonarDistance.setText("Sonar Distance: " + dist);
-        String temp = drone.temperature.temperature == -1 ? "NONE" : drone.temperature.temperature+"";
-        labelTemperature.setText("Temper. Sensor: " + temp);
+        labelDate.setText(String.format("Date: %s", drone.date));
+        labelHour.setText(String.format("Hour: %s", drone.hour));
+        labelTime.setText(String.format("Time: %.1fs", drone.time));
+        labelLat.setText(String.format("Lat: %.8f", drone.gps.lat));
+        labelLng.setText(String.format("Lng: %.8f", drone.gps.lng));
+        labelAltRel.setText(String.format("Alt Rel: %.1fm", drone.barometer.alt_rel));
+        labelAltAbs.setText(String.format("Alt Abs: %.1fm", drone.barometer.alt_abs));
+        labelVoltageBat.setText(String.format("Voltage Bat: %.2fmV", drone.battery.voltage));
+        labelCurrentBat.setText(String.format("Current Bat: %.2fmA*", drone.battery.current));
+        labelLevelBat.setText(String.format("Level Bat: %.2f%s", drone.battery.level, "%"));
+        labelPicth.setText(String.format("Picth: %.4f rad", drone.attitude.pitch));
+        labelYaw.setText(String.format("Yaw: %.4f rad", drone.attitude.yaw));
+        labelRoll.setText(String.format("Roll: %.4f rad", drone.attitude.roll));
+        labelVx.setText(String.format("Vel x: %.2fm/s", drone.velocity.vx));
+        labelVy.setText(String.format("Vel y: %.2fm/s", drone.velocity.vy));
+        labelVz.setText(String.format("Vel z: %.2fm/s", drone.velocity.vz));
+        labelHeading.setText(String.format("Heading: %.0f degree", drone.sensorUAV.heading));
+        labelGroundspeed.setText(String.format("Groundspeed: %.2fm/s", drone.sensorUAV.groundspeed));
+        labelAirspeed.setText(String.format("Airspeed: %.2fm/s", drone.sensorUAV.airspeed));
+        labelGPSFixType.setText(String.format("GPS Fix Type: %d", drone.gpsinfo.fixType));
+        labelGPSSatelities.setText(String.format("GPS Sat: %d", drone.gpsinfo.satellitesVisible));
+        labelGPSEph.setText(String.format("GPS EPH: %d", drone.gpsinfo.eph));
+        labelGPSEpv.setText(String.format("GPS EPV: %d", drone.gpsinfo.epv));
+        labelMode.setText(String.format("Mode: %s", drone.statusUAV.mode));
+        labelStatus.setText(String.format("Status: %s", drone.statusUAV.systemStatus));
+        labelArmed.setText(String.format("Armed: %b", drone.statusUAV.armed));
+        labelIsArmable.setText(String.format("Is Armable: %b", drone.statusUAV.isArmable));
+        labelEkfOk.setText(String.format("Ekf-Ok: %b", drone.statusUAV.ekfOk));
+        labelNextWpt.setText(String.format("Netx Wpt: %d", drone.nextWaypoint));
+        labelCountWpt.setText(String.format("Count Wpt: %d", drone.countWaypoint));
+        String distHome = drone.distanceToHome == -1 ? "NONE" : drone.distanceToHome + "m";
+        labelDistToHome.setText(String.format("Dist To Home: %s", distHome));
+        String distCurrWpt = drone.distanceToCurrentWaypoint == -1 ? "NONE" : drone.distanceToCurrentWaypoint + "m";
+        labelDistToCurrWpt.setText(String.format("Dist To Wpt: %s", distCurrWpt));
+        labelTypeFailure.setText(String.format("Type Fail: %s", drone.typeFailure));
+        labelEstTimeToDoRTL.setText(String.format("Estim. Time RTL: %.1fs", drone.estimatedTimeToDoRTL));
+        labelEstConBatRTL.setText(String.format("Estim. Bat RTL: %.1f%s", drone.estimatedConsumptionBatForRTL, "%"));
+        String distSonar = drone.sonar.distance == -1 ? "NONE" : drone.sonar.distance + "m";
+        labelSonarDistance.setText(String.format("Sonar Distance: %s", distSonar));
+        String temp = drone.temperature.temperature == -1 ? "NONE" : drone.temperature.temperature+"C";
+        labelTemperature.setText(String.format("Temper. Sensor: %s", temp));
     }
     
 }

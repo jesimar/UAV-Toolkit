@@ -30,4 +30,9 @@ public class TypeInputCommand {
     public static final String CMD_SPRAYING = "spraying";    
     public static final String CMD_OPEN_PARACHUTE = "openparachute";
     
+    public static final String CMD_CHANGE_BEHAVIOR = "changebehavior";
+    public static final String CMD_CHANGE_BEHAVIOR_CIRCLE = "changebehcircle";
+    public static final String CMD_CHANGE_BEHAVIOR_TRIANGLE = "changebehtriangle";
+    public static final String CMD_CHANGE_BEHAVIOR_RECTANGLE = "changebehrectangle";
+    
 }

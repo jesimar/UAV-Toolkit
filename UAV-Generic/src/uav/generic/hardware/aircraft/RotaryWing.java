@@ -37,6 +37,8 @@ public class RotaryWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
+        estimatedTimeToDoRTL = 0.0;//in seconds
+        estimatedConsumptionBatForRTL = 0.0;//in percentage
         
         typeFailure = "NONE";
         
@@ -78,6 +80,8 @@ public class RotaryWing extends Drone{
         countWaypoint = 0;
         distanceToHome = 0.0;//in meters
         distanceToCurrentWaypoint = 0.0;//in meters
+        estimatedTimeToDoRTL = 0.0;//in seconds
+        estimatedConsumptionBatForRTL = 0.0;//in percentage
         
         typeFailure = "NONE";
         

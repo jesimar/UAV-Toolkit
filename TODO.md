@@ -6,36 +6,28 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * Incorporar hardware de leds no drone.
 * Incorporar hardware de sonar no drone apontado para baixo.
-* Desenvolver aplicação básica na Edison e Raspberry Pi para acender os leds.
-* Desenvolver aplicação básica na Edison e Raspberry Pi para ler informações do sonar.
-* Construir uma placa com: 2 leds (azul (indica led), vermelho (indica paraquedas)), dois sonares, um termometro, um buzzer. (comprar sensor temperatura).
-* Parametrizar o número de sensores (sonares que temos em arquivo properties) e quais pinos utilizar.
-* Ler parametro pin echo e trig do sonar do arquivo de properties.
+* Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
+* Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sonar.
+
+* Refatorar todo o Código do IFA, MOSA, GCS, S2DK.
+* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
 
 ## Sistema IFA:
 
-* Refatorar todo o Código do IFA, MOSA, GCS, S2DK.
 * Criar versão simplificada do clear simulations dentro do IFA.
-* Implementar um sistema de reação do IFA quando a aeronave começar a perder altitude: por exemplo, se a altura for menor que 1 metro o drone pousa (mas tem que ser a altura do sonar medida por alguns instantes para não pegar ruído).
-* Adicionar simplificador de rotas.
-* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
-* Deu errado RTL -> colocar em uma thread um verificador de RTL o tempo todo.
 
 ## Sistema MOSA:
 
-* Adicionar simplificador de rotas.
 * Adicionar A*.
-* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
-* Deve chamar as rotas standard a partir do ponto onde o drone está localizado.
+* MOSA Adaptativo.
 
 ## Sistema UAV-GCS
 
-* Fazer um método na GCS para obter a Rota (mission) (getMission) e outro para obter um waypoint (acho que talvez seja desnecessário). Em seguida, plotar isso na GCS.
-* Fazer um método na GCS que para a missão e executa um comportamento de andar em circulo (behavior) (definir tal behavior no arquivo de properties (circulo, quadrado ou triangulo) definir também o rario no arquivo). Plotar isso na GCS.
-* Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, por exemplo, para etapa de pulverização. (behavior diferente).
-* Colocar um botão para fazer o clear e copy file.
-* Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
+* Colocar um botão para fazer o clear e copy file.
+* Plotar na GCS as rotas do Behavior
+* Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, por exemplo, para etapa de pulverização. (behavior diferente).
+* Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
 * Colocar marcadores especiais nos Plots (google maps e Plot Mission Márcio) para fotos, vídeo, buzzer, pulverização, waypoints.
 * Pesquisar como executar UAV-GCS (google maps) sem acesso a internet.
 
@@ -49,7 +41,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Geral
 
-* Criar no github o UAV-Embedded
+* Criar no github o UAV-Embedded. Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
 * Corrigir problema câmera raspberry pi (fotos verdes), calibrar melhor o AWB.
 1. Link: https://www.raspberrypi.org/forums/viewtopic.php?t=132944
 2. Link: https://raspberrypi.stackexchange.com/questions/79848/green-image-with-rpi-picamera
@@ -72,8 +64,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
 * Trocar licença de GPL 3.0 para MIT (UAV-Toolkit, UAV-Tools, Path-Replanning).
-* Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
-* Estudar os dois canais de comunicação do AP (canal 1 e canal 2). Ver as características de ambos.
 
 ## Documentação Formal das Falhas no Sistema
 

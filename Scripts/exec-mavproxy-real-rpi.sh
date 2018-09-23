@@ -14,9 +14,9 @@ then
 elif [ $1 == '--help' ]
 then
 	echo "How to use: "
-	echo "    Format: ./exec-mavproxy-cc-real-rpi.sh IP_GCS DEV"
-	echo "    Example: ./exec-mavproxy-cc-real-rpi.sh 192.168.43.124 serial0"
-	echo "    Example: ./exec-mavproxy-cc-real-rpi.sh 192.168.43.124 ttyAMA0"
+	echo "    Format: ./exec-mavproxy-real-rpi.sh IP_GCS DEV"
+	echo "    Example: ./exec-mavproxy-real-rpi.sh 192.168.43.124 serial0"
+	echo "    Example: ./exec-mavproxy-real-rpi.sh 192.168.43.124 ttyAMA0"
 	exit 1
 else
 	IP_GCS=$1

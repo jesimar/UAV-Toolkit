@@ -2,13 +2,16 @@ package uav.gcs.communication;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
+import lib.color.StandardPrints;
 import uav.gcs.planner.CCQSP4m;
 import uav.gcs.planner.HGA4m;
 import uav.gcs.planner.Planner;
@@ -18,6 +21,7 @@ import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
+import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.util.UtilString;
 
 /**
@@ -25,6 +29,7 @@ import uav.generic.util.UtilString;
  */
 public class CommunicationMOSA {
 
+    private final ReaderFileConfig config;
     private Socket socket;
     private PrintWriter output;
     private BufferedReader input;
@@ -36,6 +41,7 @@ public class CommunicationMOSA {
     private boolean isRunningPlanner;
 
     public CommunicationMOSA(Drone drone, String host, int port) {
+        config = ReaderFileConfig.getInstance();
         this.drone = drone;
         this.HOST = host;
         this.PORT = port;
@@ -146,6 +152,10 @@ public class CommunicationMOSA {
             nRoute = 0;
             while (nRoute < size - 1) {
                 String path = v[5] + "routeGeo" + nRoute + ".txt";
+                if (config.hasRouteSimplifier()){
+                    execRouteSimplifier(path, ";");
+                    path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
+                }
                 boolean respFile = readFileRoute(mission, path, nRoute, size);
                 if (!respFile) {
                     sendData("failure");
@@ -167,6 +177,12 @@ public class CommunicationMOSA {
             }
             Mission mission = new Mission();
             String path = v[3] + "routeGeo.txt";
+            
+            if (config.hasRouteSimplifier()){
+                execRouteSimplifier(path, ";");
+                path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
+            }
+            
             boolean respFile = readFileRoute(mission, path);
             if (!respFile) {
                 sendData("failure");
@@ -250,6 +266,45 @@ public class CommunicationMOSA {
 
     public boolean isRunningPlanner() {
         return isRunningPlanner;
+    }
+    
+    private void execRouteSimplifier(String nameRoute, String separator){
+        try {
+            boolean print = true;
+            File f = new File(config.getDirRouteSimplifier());
+            String cmd = "python Route-Simplifier.py " + config.getFactorRouteSimplifier() + 
+                    " " + "../" + nameRoute + " '" + separator + "'";
+            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getErrorStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+            comp.waitFor();
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] execRouteSimplifier()");
+        } catch (InterruptedException ex) {
+            StandardPrints.printMsgWarning("Warning [InterruptedException] execRouteSimplifier()");
+        } 
     }
 
 }

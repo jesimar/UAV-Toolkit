@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.reader.ReaderFileConfig;
 
@@ -25,11 +26,15 @@ public class LEDControl {
             boolean print = true;
             File f = new File(config.getDirLED());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "./turn-on-led";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python turn-on-led.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python turn-on-led.py";//fazer isso aqui ainda
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -54,11 +59,15 @@ public class LEDControl {
             boolean print = true;
             File f = new File(config.getDirLED());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "./turn-off-led";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python turn-off-led.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python turn-off-led.py";//fazer isso aqui ainda
+                }else{
+                    cmd = "./device";
+                }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -83,11 +92,15 @@ public class LEDControl {
             boolean print = true;
             File f = new File(config.getDirLED());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "./blink-led";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python blink-led.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python blink-led.py";//fazer isso aqui ainda
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

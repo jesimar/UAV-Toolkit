@@ -23,10 +23,12 @@ public class PanelPlotMission extends sPanelDraw {
     private static final Color COLOR_BONUS      = new Color(103, 167, 255);
     private static final Color COLOR_ROUTE_IFA  = Color.RED;
     private static final Color COLOR_ROUTE_MOSA = Color.GREEN;
+    private static final Color COLOR_ROUTE_MOSA_SIMP = Color.BLACK;
     private static final Color COLOR_DRONE      = Color.BLUE;
     private final ReaderMap mapIFA;
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
+    private final ReaderRoute routeMOSASimplifier;
     private double pxDrone;
     private double pyDrone;
 
@@ -40,6 +42,7 @@ public class PanelPlotMission extends sPanelDraw {
         mapIFA.read();
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
+        routeMOSASimplifier = new ReaderRoute();
     }
 
     public void setNewDimensions(int width, int height) {
@@ -108,7 +111,7 @@ public class PanelPlotMission extends sPanelDraw {
         }
 
         //Draw Routes
-        if (routeIFA.isReady()){
+        if (routeIFA.isReady3D()){
             g2.setColor(COLOR_ROUTE_IFA);
             for (int i = 0; i < routeIFA.getRoute3D().size(); i++) {
                 g2.fillOval(
@@ -128,7 +131,7 @@ public class PanelPlotMission extends sPanelDraw {
             }
         }
         
-        if (routeMOSA.isReady()){
+        if (routeMOSA.isReady3D()){
             g2.setColor(COLOR_ROUTE_MOSA);
             for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
                 g2.fillOval(
@@ -143,6 +146,25 @@ public class PanelPlotMission extends sPanelDraw {
                             toUnit(routeMOSA.getRoute3D().getPosition3D(i).getY()),
                             toUnit(routeMOSA.getRoute3D().getPosition3D(i + 1).getX()),
                             toUnit(routeMOSA.getRoute3D().getPosition3D(i + 1).getY())
+                    );
+                }
+            }
+        }
+        if (routeMOSASimplifier.isReadyGeo()){
+            g2.setColor(COLOR_ROUTE_MOSA_SIMP);
+            for (int i = 0; i < routeMOSASimplifier.getRoute3D().size(); i++) {
+                g2.fillOval(
+                        toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getX()) - 15,
+                        toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()) - 15,
+                        30,
+                        30
+                );
+                if (i < routeMOSASimplifier.getRoute3D().size() - 1) {
+                    g2.drawLine(
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getX()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getX()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getY())
                     );
                 }
             }
@@ -205,6 +227,25 @@ public class PanelPlotMission extends sPanelDraw {
                         File fileIFA = new File(pathRouteIFA);
                         if (fileIFA.exists()){
                             routeIFA.read(fileIFA);
+                            repaint();
+                            break;
+                        }
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                        String pathSimplifier = "../Modules-Global/Route-Simplifier/output-simplifier.txt";
+                        File fileSimplifier = new File(pathSimplifier);
+                        if (fileSimplifier.exists()){
+                            routeMOSASimplifier.readGeo(fileSimplifier);
                             repaint();
                             break;
                         }

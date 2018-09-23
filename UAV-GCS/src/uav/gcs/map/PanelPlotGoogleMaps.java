@@ -25,12 +25,14 @@ public class PanelPlotGoogleMaps extends JPanel {
     private final String file = "./html/maps.html";
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
+    private final ReaderRoute routeMOSASimplifier;
     private final double lngBase = GCS.pointGeo.getLng();
     private final double latBase = GCS.pointGeo.getLat();
 
     public PanelPlotGoogleMaps() {
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
+        routeMOSASimplifier = new ReaderRoute();
     }
 
     public void init(int width, int height) {
@@ -196,6 +198,38 @@ public class PanelPlotGoogleMaps extends JPanel {
                                         UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition3D(i + 1).getX())
                                     );
                                     api.addLine("#FF0000", 0.8, 2, points);
+                                }
+                            }
+                            break;
+                        }
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                        String pathSimplifier = "../Modules-Global/Route-Simplifier/output-simplifier.txt";
+                        File fileSimplifier = new File(pathSimplifier);
+                        if (fileSimplifier.exists()){
+                            routeMOSASimplifier.readGeo2(fileSimplifier);
+                            for (int i = 0; i < routeMOSASimplifier.getRoute3D().size(); i++) {
+                                if (i + 1 < routeMOSASimplifier.getRoute3D().size()) {
+                                    Point2D points[] = new Point2D[2];
+                                    points[0] = new Point2D.Double(
+                                        routeMOSASimplifier.getRoute3D().getPosition3D(i).getX(),
+                                        routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()
+                                    );
+                                    points[1] = new Point2D.Double(
+                                        routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getX(),
+                                        routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getY()
+                                    );
+                                    api.addLine("#000000", 0.8, 2, points);
                                 }
                             }
                             break;

@@ -2,8 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 29/03/2018
 #Last Update: 29/05/2018
-#Description: Script that runs the path planner HGA4m on PC or CC.
-#Descrição: Script que executa o planejador de missões HGA4m no PC ou no CC.
+#Description: Script that runs the path planner HGA4m on PC or Intel Edison.
+#Descrição: Script que executa o planejador de missões HGA4m no PC ou na Intel Edison.
 
 if [ "$1" = "local" ];
 then

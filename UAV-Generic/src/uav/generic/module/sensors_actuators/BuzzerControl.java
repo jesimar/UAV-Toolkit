@@ -26,9 +26,9 @@ public class BuzzerControl {
             boolean print = true;
             File f = new File(config.getDirBuzzer());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar buzzer-pc.jar";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python buzzer-edison.py " + config.getPinBuzzer();
@@ -59,9 +59,9 @@ public class BuzzerControl {
             boolean print = true;
             File f = new File(config.getDirBuzzer());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar alarm-pc.jar";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python alarm-edison.py " + config.getPinBuzzer();

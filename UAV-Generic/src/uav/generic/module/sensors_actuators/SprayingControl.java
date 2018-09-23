@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.reader.ReaderFileConfig;
 
@@ -25,11 +26,15 @@ public class SprayingControl {
             boolean print = true;
             File f = new File(config.getDirSpraying());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "./open-spraying";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python open-spraying.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python open-spraying.py";//fazer isso aqui ainda
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -54,11 +59,15 @@ public class SprayingControl {
             boolean print = true;
             File f = new File(config.getDirSpraying());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "./close-spraying";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) || 
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python close-spraying.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python close-spraying.py";//fazer isso aqui ainda
+                }else{
+                    cmd = "./device";
+                }
             } 
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

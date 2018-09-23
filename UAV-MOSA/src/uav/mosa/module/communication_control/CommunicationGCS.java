@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.Constants;
+import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.reader.ReaderFileConfig;
 
@@ -25,6 +26,11 @@ public class CommunicationGCS {
 
     private boolean hasReceiveRouteGCS;
     private String routePlannerGCS;
+    
+    private boolean behaviorChanged;
+    private boolean behaviorChangedCircle;
+    private boolean behaviorChangedTriangle;
+    private boolean behaviorChangedRectangle;
     private final ReaderFileConfig config;
 
     /**
@@ -33,6 +39,10 @@ public class CommunicationGCS {
     public CommunicationGCS() {
         config = ReaderFileConfig.getInstance();
         hasReceiveRouteGCS = false;
+        behaviorChanged = false;
+        behaviorChangedCircle = false;
+        behaviorChangedTriangle = false;
+        behaviorChangedRectangle = false;
     }
 
     public void startServerMOSA() {
@@ -69,6 +79,14 @@ public class CommunicationGCS {
                                 if (answer.contains("mission")){
                                     hasReceiveRouteGCS = true;
                                     routePlannerGCS = answer;
+                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR)){
+                                    behaviorChanged = true;
+                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_CIRCLE)){
+                                    behaviorChangedCircle = true;
+                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_TRIANGLE)){
+                                    behaviorChangedTriangle = true;
+                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_RECTANGLE)){
+                                    behaviorChangedRectangle = true;
                                 }
                             }
                         }
@@ -92,6 +110,38 @@ public class CommunicationGCS {
     public boolean hasReceiveRouteGCS() {
         return hasReceiveRouteGCS;
     }
+
+    public boolean isBehaviorChanged() {
+        return behaviorChanged;
+    }
+    
+    public void setBehaviorChanged(boolean behavior) {
+        this.behaviorChanged = behavior;
+    }
+    
+    public boolean isBehaviorChangedCircle() {
+        return behaviorChangedCircle;
+    }
+    
+    public void setBehaviorChangedCircle(boolean behavior) {
+        this.behaviorChangedCircle = behavior;
+    }
+    
+    public boolean isBehaviorChangedTriangle() {
+        return behaviorChangedTriangle;
+    }
+    
+    public void setBehaviorChangedTriangle(boolean behavior) {
+        this.behaviorChangedTriangle = behavior;
+    }
+    
+    public boolean isBehaviorChangedRectangle() {
+        return behaviorChangedRectangle;
+    }
+    
+    public void setBehaviorChangedRectangle(boolean behavior) {
+        this.behaviorChangedRectangle = behavior;
+    }
     
     public String getRoutePlannerGCS(){
         return routePlannerGCS;
@@ -108,4 +158,5 @@ public class CommunicationGCS {
             ex.printStackTrace();
         }
     }
+    
 }

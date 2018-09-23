@@ -2,8 +2,8 @@
 #Author: Jesimar da Silva Arantes
 #Date: 21/02/2018
 #Last Update: 24/08/2018
-#Description: Script that runs MAVProxy software on CC for SITL tests.
-#Descrição: Script que executa o software MAVProxy no CC para testes SITL.
+#Description: Script that runs MAVProxy software on CC for HITL tests.
+#Descrição: Script que executa o software MAVProxy no CC para testes HITL.
 
 if [ -z $1 ]
 then
@@ -12,8 +12,8 @@ then
 elif [ $1 == '--help' ]
 then
 	echo "How to use: "
-	echo "    Format: ./exec-mavproxy-cc-sitl.sh IP_GCS"
-	echo "    Example: ./exec-mavproxy-cc-sitl.sh 192.168.43.124"
+	echo "    Format: ./exec-mavproxy-hitl.sh IP_GCS"
+	echo "    Example: ./exec-mavproxy-hitl.sh 192.168.43.124"
 	exit 1
 else
 	IP_GCS=$1

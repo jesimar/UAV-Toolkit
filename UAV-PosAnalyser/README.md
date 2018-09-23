@@ -6,23 +6,23 @@ Projeto escrito em Java usando a IDE Netbeans para monitoramento da posição do
 
 Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta Scripts):
 
-Forma 1 -> Execução em SITL-PC (PC - Personal Computer):
+Forma 1 -> Execução em SITL (Executado no PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-local.sh        (PC)
+2. ./exec-mavproxy-sitl.sh         (PC)
 3. ./exec-s2dk.sh                  (PC)
 4. ./exec-pos-analyser.sh          (PC)
 
-Forma 2 -> Execução em SITL-CC (CC - Companion Computer):
+Forma 2 -> Execução em HITL (Executado no CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-cc-sitl.sh      (CC)
+2. ./exec-mavproxy-hitl.sh         (CC)
 3. ./exec-s2dk.sh                  (CC)
 4. ./exec-pos-analyser.sh          (CC)
 
-Forma 3 -> Execução no Drone no CC:
+Forma 3 -> Execução REAL_FLIGHT (Executado no Drone no CC):
 
-1. ./exec-mavproxy-cc-real-*.sh    (CC)
+1. ./exec-mavproxy-real-*.sh       (CC)
 2. ./exec-s2dk.sh                  (CC)
 3. ./exec-pos-analyser.sh          (CC)
 

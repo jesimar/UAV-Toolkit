@@ -71,7 +71,7 @@ public class StartModules {
     public void execMAVProxy(JTextArea textArea) {
         try {
             File f = new File("../Scripts/");
-            final Process comp = Runtime.getRuntime().exec("./exec-mavproxy-local.sh", null, f);
+            final Process comp = Runtime.getRuntime().exec("./exec-mavproxy-sitl.sh", null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

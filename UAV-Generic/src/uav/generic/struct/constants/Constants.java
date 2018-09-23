@@ -6,15 +6,17 @@ package uav.generic.struct.constants;
  */
 public class Constants {
     
-    public static final double MAX_ALT_CONTROLLER = 50.0;//in meters
-    public static final double MIN_ALT_CONTROLLER = 1.0;//in meters
+    //EFFICIENCY DRONE SIMULATED
+    public static final double EFFICIENCY_VERTICAL_UP_SIMULATED    = 0.500;//in % of battery/meter
+    public static final double EFFICIENCY_VERTICAL_DOWN_SIMULATED  = 0.450;//in % of battery/meter
+    public static final double EFFICIENCY_HORIZONTAL_NAV_SIMULATED = 0.110;//in % of battery/meter
     
-    public static final double FACTOR_DESLC_CONTROLLER = 3.0;//in meters
+    //EFFICIENCY DRONE REAL (iDroneAlpha)
+    public static final double EFFICIENCY_VERTICAL_UP_REAL    = 0.400;//in % of battery/meter
+    public static final double EFFICIENCY_VERTICAL_DOWN_REAL  = 0.400;//in % of battery/meter
+    public static final double EFFICIENCY_HORIZONTAL_NAV_REAL = 0.068;//in % of battery/meter
     
     public static final double ONE_METER = 0.000009;//one meter in degrees (lat, lng)
-    
-    public static final double HORIZONTAL_ERROR_GPS = 1.0;//in meters
-    public static final double VERTICAL_ERROR_BAROMETER = 0.5;//in meters
     
     public static final int TIME_TO_SLEEP_BETWEEN_MSG = 100;//in milliseconds    
     public static final int TIME_TO_SLEEP_WAITING_SERVER = 1000;//in milliseconds

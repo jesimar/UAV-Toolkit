@@ -8,9 +8,10 @@ Os scripts mais importantes e utilizados são:
 * **dir** -> Script para facilitar a navegação na Intel Edison até o diretório de scripts.
 * **exec-fgfs.sh** -> Executa o simulador de voo FlightGear.
 * **exec-sitl.sh** -> Executa o Dronekit-SITL no computador local. Usado em experimentos SITL.
-* **exec-mavproxy-local.sh** -> Executa o MAVProxy na máquina local. Usado em experimentos SITL.
-* **exec-mavproxy-edison.sh** -> Executa o MAVProxy na Intel Edison. Usado em experimentos com o drone real.
-* **exec-mavproxy-edison-sitl.sh** -> Executa o MAVProxy na Intel Edison para experimentos SITL. Usado em experimentos com o drone real.
+* **exec-mavproxy-sitl.sh** -> Executa o MAVProxy na máquina local. Usado em experimentos SITL.
+* **exec-mavproxy-hitl.sh** -> Executa o MAVProxy no companion computer. Usado em experimentos HITL.
+* **exec-mavproxy-real-edison.sh** -> Executa o MAVProxy na Intel Edison. Usado em experimentos com o drone real.
+* **exec-mavproxy-real-rpi.sh** -> Executa o MAVProxy na Raspberry Pi. Usado em experimentos com o drone real.
 * **exec-s2dk.sh** -> Executa um serviço para prover informações sobre o drone.
 * **exec-ifa.sh** -> Executa o sistema IFA para gerenciamento da segurança em voo.
 * **exec-login-edison.sh** -> Efetua o login na Edison de forma automática. Nota: o computador e a Intel Edison devem estar na mesma rede. OBS: deve-se atualizar o IP do script.

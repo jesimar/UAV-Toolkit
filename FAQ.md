@@ -9,3 +9,9 @@ Resp1: Caso isso aconteça muito provavelmente você possui um sistema de Power 
 Perg2: O meu drone voa para frente mas esta orientado para o lado isso ocorre porque?
 
 Resp2: As vezes percebemos esse efeito em que o drone voa para um lado, mas está orientado para outro. Isso ocorre aparentemente porque foram passados muitos waypoints (com pouco espaço entre eles) e não deu tempo do drone consertar a sua orientação, o drone primeiro preocupa-se em seguir o waypoint não importando a orientação.
+
+Perg3: O drone não está armando na etapa inicial apresentando a mensagem low battery?
+
+Resp3: Tente fazer o arm manual do drone. 
+
+OBS: É sempre bom criar o hábito de ir ao campo e fazer o arm manual, para testar se o piloto automático está tudo ok.

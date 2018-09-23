@@ -33,6 +33,7 @@ import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StateReplanning;
 import uav.generic.util.UtilGeo;
+import uav.generic.util.UtilGeom;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.module.communication_control.CommunicationMOSA;
 import uav.ifa.module.communication_control.CommunicationGCS;
@@ -68,6 +69,14 @@ public class SecurityManager {
     private long timeActual;
 
     private final List<Failure> listOfFailure = new LinkedList<>();
+    
+    private double latHome;
+    private double lngHome;
+    private double altHome;
+    private double altRTL;
+    private double speedUP;
+    private double speedHorizontal;
+    private double speedDN;
 
     /**
      * Class constructor.
@@ -138,6 +147,12 @@ public class SecurityManager {
         configParametersToFlight();             //blocked
 
         dataAcquisition.getParameters();
+        
+        altRTL = drone.getListParameters().getValue("RTL_ALT")/100.0;
+        speedUP = drone.getListParameters().getValue("WPNAV_SPEED_UP")/100.0;
+        speedHorizontal = drone.getListParameters().getValue("WPNAV_SPEED")/100.0;
+        speedDN = drone.getListParameters().getValue("WPNAV_SPEED_DN")/100.0;
+        
 //        dataAcquisition.getHomeLocation();
 
         communicationGCS.startServerIFA();      //Thread
@@ -247,7 +262,10 @@ public class SecurityManager {
         int time = (int) (1000.0 / config.getFreqUpdateDataAP());
         stateMonitoring = StateMonitoring.MONITORING;
         printLogAircraft.println(drone.title());
-
+        dataAcquisition.getAllInfoSensors();
+        latHome = drone.getGPS().lat;
+        lngHome = drone.getGPS().lng;
+        altHome = drone.getBarometer().alt_rel;
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -257,17 +275,19 @@ public class SecurityManager {
                         double timeDiff = (timeActual - timeInit) / 1000.0;
                         drone.setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
-                        if (config.hasPowerModule()
-                                || !config.getOperationMode()
-                                        .equals(TypeOperationMode.REAL_FLIGHT)) {
-                            dataAcquisition.getBattery();
-                        }
                         if (config.hasSonar()) {
                             drone.getSonar().distance = sonar.getDistance();
                         }
                         if (config.hasTemperatureSensor()) {
                             drone.getTemperature().temperature = temperature.getTemperature();
                         }
+                        if (config.hasPowerModule()
+                                || !config.getOperationMode()
+                                        .equals(TypeOperationMode.REAL_FLIGHT)) {
+                            dataAcquisition.getBattery();
+                            checkPossibilityOfRTL();
+                        }
+
                         checkStatusSystem();
 
                         printLogAircraft.println(drone.toString());
@@ -485,5 +505,53 @@ public class SecurityManager {
             ex.printStackTrace();
             System.exit(1);
         }
+    }
+    
+    private void checkPossibilityOfRTL(){
+        double lat = drone.getGPS().lat;
+        double lng = drone.getGPS().lng;
+        double alt = drone.getBarometer().alt_rel;      
+        
+        double distVerticalUP = Math.abs(alt - altRTL);
+        double distHorizontal = UtilGeom.distanceEuclidian(lat, lng, latHome, lngHome)/Constants.ONE_METER;
+        double distVerticalDN = Math.abs(altRTL - altHome);
+        
+        //Velocidade: v = d/t      ->   t = d/v
+        //    t_h = d_h/v_h  (horizontal)
+        //    t_v = d_v/v_v  (vertical)
+        double estimatedTimeForRTLverticalUp = distVerticalUP/speedUP;
+        double estimatedTimeForRTLhorizontal = distHorizontal/speedHorizontal;
+        double estimatedTimeForRTLverticalDn = distVerticalDN/speedDN;
+        
+        double estimatedTimeForRTL = estimatedTimeForRTLverticalUp + estimatedTimeForRTLhorizontal +
+                estimatedTimeForRTLverticalDn;
+        
+        //5: representa (5 segundos) que em meus testes o tempo que leva para o drone 
+        //   desarmar completamente.
+        //3: representa (3 segundos) que em meus testes o tempo que leva para o drone 
+        //   trocar de waypoint.
+        //1.18: representa (18% a mais de tempo) que em meus testes foi a margem que tive 
+        //   que adicionar a estimativa de tempo, pois as mesmas foram baseadas na 
+        //   velocidade máxima e o drone, as vezes, voa em uma velocidade inferior a esta.
+        //OBS: Estes dados foram obtidos em experimentos SITL
+        estimatedTimeForRTL = estimatedTimeForRTL * 1.18 + 5 + 3;
+        drone.setEstimatedTimeToDoRTL(estimatedTimeForRTL);
+        
+        double consumptionBatteryUP;
+        double consumptionBatteryDN;
+        double consumptionBatteryHorizontal;
+        if (config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_REAL;
+            consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_REAL;
+            consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
+        }else{
+            consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_SIMULATED;
+            consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_SIMULATED;
+            consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
+        }
+        double estimatedConsumptionBat   = 
+                consumptionBatteryUP + consumptionBatteryDN +consumptionBatteryHorizontal;
+        
+        drone.setEstimatedConsumptionBatForRTL(estimatedConsumptionBat);  
     }
 }

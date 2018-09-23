@@ -56,7 +56,11 @@ public final class GCS extends JFrame {
     private final JButton btnPathReplanningEmergency;
     private final JButton btnLand;
     private final JButton btnRTL;
-
+    private final JButton btnChangeBehavior;
+    private final JButton btnChangeBehaviorCircle;
+    private final JButton btnChangeBehaviorTriangle;
+    private final JButton btnChangeBehaviorRectangle;
+    
     private JButton btnBuzzer;
     private JButton btnAlarm;
     private JButton btnPicture;
@@ -214,6 +218,50 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnRTL);
+        
+        btnChangeBehavior = new JButton("CHANGE BEHAVIOR");
+        btnChangeBehavior.setPreferredSize(new Dimension(185, 25));
+        btnChangeBehavior.setEnabled(false);
+        btnChangeBehavior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_CHANGE_BEHAVIOR);
+            }
+        });
+        panelLeft.add(btnChangeBehavior);
+        
+        btnChangeBehaviorCircle = new JButton("CHANGE BEHAVIOR CIRCLE");
+        btnChangeBehaviorCircle.setPreferredSize(new Dimension(185, 25));
+        btnChangeBehaviorCircle.setEnabled(false);
+        btnChangeBehaviorCircle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_CHANGE_BEHAVIOR_CIRCLE);
+            }
+        });
+        panelLeft.add(btnChangeBehaviorCircle);
+        
+        btnChangeBehaviorTriangle = new JButton("CHANGE BEHAVIOR TRIANGLE");
+        btnChangeBehaviorTriangle.setPreferredSize(new Dimension(185, 25));
+        btnChangeBehaviorTriangle.setEnabled(false);
+        btnChangeBehaviorTriangle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_CHANGE_BEHAVIOR_TRIANGLE);
+            }
+        });
+        panelLeft.add(btnChangeBehaviorTriangle);
+        
+        btnChangeBehaviorRectangle = new JButton("CHANGE BEHAVIOR RECTANGLE");
+        btnChangeBehaviorRectangle.setPreferredSize(new Dimension(185, 25));
+        btnChangeBehaviorRectangle.setEnabled(false);
+        btnChangeBehaviorRectangle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_CHANGE_BEHAVIOR_RECTANGLE);
+            }
+        });
+        panelLeft.add(btnChangeBehaviorRectangle);
 
         if (config.hasBuzzer()) {
             btnBuzzer = new JButton("BUZZER-TURN-ON");
@@ -479,6 +527,10 @@ public final class GCS extends JFrame {
                             btnPathReplanningEmergency.setEnabled(true);
                             btnLand.setEnabled(true);
                             btnRTL.setEnabled(true);
+                            btnChangeBehavior.setEnabled(true);
+                            btnChangeBehaviorCircle.setEnabled(true);
+                            btnChangeBehaviorTriangle.setEnabled(true);
+                            btnChangeBehaviorRectangle.setEnabled(true);
                             if (config.hasBuzzer()) {
                                 btnBuzzer.setEnabled(true);
                                 btnAlarm.setEnabled(true);

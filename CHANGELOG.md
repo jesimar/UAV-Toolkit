@@ -1,9 +1,19 @@
 # Changelog
 
-## Version v3.1.0 (17/08/2018)
+## Version v4.0.0 (20/09/2018)
 
 ### Features:
 
+* Added in Modules-MOSA RouteStandard4m (circle, triangle, rectangle) (behavior) (MOSA-Adaptive).
+* Renamed method of path replanning Fixed-Route4s to Pre-Planned4s.
+* Updated file log-aircraft.csv with information estTimeToDoRTL and estConsumptionBatRTL.
+* Added the feature of only doing RTL if the amount of battery is enough.
+* Updated file config-global.properties with values of the old class Constants.
+* Added feature in UAV-IFA that verify RTL always (estimated time for RTL, estimated consumption of battery for RTL).
+* Added support UAV-GCS to paint color Route-Simplifier.
+* Added code Route-Simplifier (methods replanning (IFA) not supported this resource).
+* Updated code sonar and temperature sensor to support signal pin by file of properties.
+* Added code to support the temperature sensor in raspberry pi.
 * Added code to support the sonar in raspberry pi.
 * Hardware of the raspberry pi incorporated in the system.
 * Updated code UAV-Mission-Creator to support new format of video and photo-in-sequence.
@@ -17,6 +27,7 @@
 ### Bug Fixes:
 
 * Enable Google Maps feature in UAV-GCS (google maps need the internet to work) (defined by file of properties).
+* Fixed some of the untreated data input combinations on the UAV-IFA.
 
 ## Version v3.0.0 (16/08/2018)
 

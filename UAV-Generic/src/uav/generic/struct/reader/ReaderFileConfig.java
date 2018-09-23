@@ -35,6 +35,10 @@ public class ReaderFileConfig {
     private String dirMission;
     private double altRelMission;
     private double freqUpdateDataAP;
+    private boolean hasRouteSimplifier;
+    private String dirRouteSimplifier;
+    private String factorRouteSimplifier;
+    
     private String dirFiles;
     private String fileGeoBase;
     private String fileFeatureMission;
@@ -56,11 +60,16 @@ public class ReaderFileConfig {
     private String delayPhotoInSequence;
     private boolean hasSonar;
     private String dirSonar;
+    private String pinSonarTrig;
+    private String pinSonarEcho;
     private boolean hasPowerModule;
     private int levelMinimumBattery;
     private boolean hasTemperatureSensor;
     private String dirTemperatureSensor;
     private int levelMaximumTemperature;
+    private String pinTemperatureCLK;
+    private String pinTemperatureCS;
+    private String pinTemperatureSO;
     
     //atuactor
     private boolean hasBuzzer;
@@ -136,7 +145,21 @@ public class ReaderFileConfig {
     private boolean isDynamicFixedRouteMOSA;
     private String fileFixedRouteDynMOSA;
     
-
+    //system 
+    private double maxAltController;
+    private double minAltController;
+    private double displacFactorController;
+    private double horizontalErrorGPS;
+    private double verticalErrorBarometer;
+    
+    //behavior
+    private String dirBehavior;
+    private String typeBehavior;
+    private String discretizationBehavior;
+    private String radiusCircleBehavior;
+    private String baseTriangleBehavior;
+    private String baseRectangleBehavior;
+    
     /**
      * Class constructor.
      */
@@ -161,7 +184,10 @@ public class ReaderFileConfig {
             dirMission            = prop.getProperty("prop.global.mission.dir");
             altRelMission         = Double.parseDouble(prop.getProperty("prop.global.mission.altitude_relative"));
             freqUpdateDataAP      = Double.parseDouble(prop.getProperty("prop.global.freq_update_data_ap"));
-            
+            hasRouteSimplifier    = Boolean.parseBoolean(prop.getProperty("prop.global.has_route_simplifier"));
+            dirRouteSimplifier    = prop.getProperty("prop.route_simplifier.dir");
+            factorRouteSimplifier = prop.getProperty("prop.route_simplifier.factor");
+                                          
             dirFiles              = prop.getProperty("prop.global.dir_files");
             fileFeatureMission    = prop.getProperty("prop.global.file.feature_mission");
             fileGeoBase           = prop.getProperty("prop.global.file.geo_base");
@@ -191,9 +217,14 @@ public class ReaderFileConfig {
             numberPhotoInSequence = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.number");
             delayPhotoInSequence  = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.delay");
             dirSonar              = prop.getProperty("prop.hw.sensor.sonar.dir");
+            pinSonarTrig          = prop.getProperty("prop.hw.sensor.sonar.pin_trig");
+            pinSonarEcho          = prop.getProperty("prop.hw.sensor.sonar.pin_echo");
             levelMinimumBattery   = Integer.parseInt(prop.getProperty("prop.hw.sensor.powermodule.level_min_battery"));
             dirTemperatureSensor  = prop.getProperty("prop.hw.sensor.temperature.dir");
             levelMaximumTemperature = Integer.parseInt(prop.getProperty("prop.hw.sensor.temperature.level_max_temperature"));
+            pinTemperatureCLK     = prop.getProperty("prop.hw.sensor.temperature.pin_clk");
+            pinTemperatureCS      = prop.getProperty("prop.hw.sensor.temperature.pin_cs");
+            pinTemperatureSO      = prop.getProperty("prop.hw.sensor.temperature.pin_so");
             
             //actuators
             dirBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.dir");
@@ -251,6 +282,21 @@ public class ReaderFileConfig {
             isDynamicFixedRouteMOSA   = Boolean.parseBoolean(prop.getProperty("prop.mosa.fixed_route.is_dynamic"));
             fileFixedRouteDynMOSA     = prop.getProperty("prop.mosa.fixed_route.file_waypoints_dyn");
             
+            //system
+            maxAltController          = Double.parseDouble(prop.getProperty("prop.controller.max_alt"));
+            minAltController          = Double.parseDouble(prop.getProperty("prop.controller.min_alt"));
+            displacFactorController   = Double.parseDouble(prop.getProperty("prop.controller.displacement_factor"));
+            horizontalErrorGPS        = Double.parseDouble(prop.getProperty("prop.sensors.gps.error.horizontal"));
+            verticalErrorBarometer    = Double.parseDouble(prop.getProperty("prop.sensors.barometer.error.vertical"));
+            
+            //behavior
+            dirBehavior               = prop.getProperty("prop.behavior.dir");
+            typeBehavior              = prop.getProperty("prop.behavior.type");
+            discretizationBehavior    = prop.getProperty("prop.behavior.discretization");
+            radiusCircleBehavior      = prop.getProperty("prop.behavior.radius_circle");
+            baseTriangleBehavior      = prop.getProperty("prop.behavior.base_triangle");
+            baseRectangleBehavior     = prop.getProperty("prop.behavior.base_rectangle");
+            
             return true;
         } catch (FileNotFoundException ex){     
             StandardPrints.printMsgError2("Error [FileNotFoundException] read()");
@@ -270,7 +316,10 @@ public class ReaderFileConfig {
     public boolean checkReadFields(){
         if (typeCC == null || 
                 (!typeCC.equals(TypeCC.INTEL_EDISON) && 
-                !typeCC.equals(TypeCC.RASPBERRY))){
+                !typeCC.equals(TypeCC.RASPBERRY) &&
+                !typeCC.equals(TypeCC.ODROID) &&
+                !typeCC.equals(TypeCC.BEAGLE_BONE) &&
+                !typeCC.equals(TypeCC.INTEL_GALILEO))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of companion computer not valid");
             return false;
         }
@@ -281,8 +330,8 @@ public class ReaderFileConfig {
             return false;
         }
         if (operationMode == null || 
-                (!operationMode.equals(TypeOperationMode.SITL_LOCAL) &&
-                !operationMode.equals(TypeOperationMode.SITL_CC) &&
+                (!operationMode.equals(TypeOperationMode.SITL) &&
+                !operationMode.equals(TypeOperationMode.HITL) &&
                 !operationMode.equals(TypeOperationMode.REAL_FLIGHT))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of operation mode not valid");
             return false;
@@ -314,7 +363,7 @@ public class ReaderFileConfig {
                 !methodReplanner.equals(TypeReplanner.DE4S) &&
                 !methodReplanner.equals(TypeReplanner.GA_GA_4S) && 
                 !methodReplanner.equals(TypeReplanner.GA_GH_4S) && 
-                !methodReplanner.equals(TypeReplanner.FIXED_ROUTE4s))){
+                !methodReplanner.equals(TypeReplanner.PRE_PLANNED4s))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         }
@@ -338,7 +387,8 @@ public class ReaderFileConfig {
         }
         if (methodPlanner == null || 
                 (!methodPlanner.equals(TypePlanner.HGA4M) &&
-                 !methodPlanner.equals(TypePlanner.CCQSP4M))){
+                 !methodPlanner.equals(TypePlanner.CCQSP4M) && 
+                 !methodPlanner.equals(TypePlanner.A_STAR4M))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         } 
@@ -369,8 +419,8 @@ public class ReaderFileConfig {
             }else if (methodReplanner.equals(TypeReplanner.GA_GH_4S)){
                 typeReplanner = TypeReplanner.GA_GH_4S;
                 dirReplanner = "../Modules-IFA/GA-GH-4s/";
-            }else if (methodReplanner.equals(TypeReplanner.FIXED_ROUTE4s)){
-                typeReplanner = TypeReplanner.FIXED_ROUTE4s;
+            }else if (methodReplanner.equals(TypeReplanner.PRE_PLANNED4s)){
+                typeReplanner = TypeReplanner.PRE_PLANNED4s;
                 dirReplanner = "../Modules-IFA/Fixed-Route4s/";
             }
             if (methodPlanner.equals(TypePlanner.HGA4M)){
@@ -379,6 +429,9 @@ public class ReaderFileConfig {
             }else if (methodPlanner.equals(TypePlanner.CCQSP4M)){
                 typePlanner = TypePlanner.CCQSP4M;
                 dirPlanner = "../Modules-MOSA/CCQSP4m/";
+            }else if (methodPlanner.equals(TypePlanner.A_STAR4M)){
+                typePlanner = TypePlanner.A_STAR4M;
+                dirPlanner = "../Modules-MOSA/A-Star4m/";
             }
             return true;
         } catch (NumberFormatException ex){
@@ -419,6 +472,18 @@ public class ReaderFileConfig {
 
     public double getFreqUpdateDataAP() {
         return freqUpdateDataAP;
+    }
+    
+    public boolean hasRouteSimplifier() {
+        return hasRouteSimplifier;
+    }
+    
+    public String getDirRouteSimplifier() {
+        return dirRouteSimplifier;
+    }
+    
+    public String getFactorRouteSimplifier() {
+        return factorRouteSimplifier;
     }
     
     public String getDirFiles() {
@@ -516,6 +581,14 @@ public class ReaderFileConfig {
         return dirSonar;
     }
     
+    public String getPinSonarTrig() {
+        return pinSonarTrig;
+    }
+    
+    public String getPinSonarEcho() {
+        return pinSonarEcho;
+    }
+    
     public String getDirTemperatureSensor() {
         return dirTemperatureSensor;
     }
@@ -528,6 +601,18 @@ public class ReaderFileConfig {
         return levelMaximumTemperature;
     }
     
+    public String getPinTemperatureCLK() {
+        return pinTemperatureCLK;
+    }
+    
+    public String getPinTemperatureCS() {
+        return pinTemperatureCS;
+    }
+    
+    public String getPinTemperatureSO() {
+        return pinTemperatureSO;
+    }    
+            
     //actuators
     public String getDirBuzzer() {
         return dirBuzzer;
@@ -718,6 +803,52 @@ public class ReaderFileConfig {
     
     public String getFileFixedRouteDynMOSA() {
         return fileFixedRouteDynMOSA;
+    }
+    
+    //System
+    public double getMaxAltController(){
+        return maxAltController;
+    }
+    
+    public double getMinAltController(){
+        return minAltController;
+    }
+    
+    public double getDisplacFactorController(){
+        return displacFactorController;
+    }
+    
+    public double getHorizontalErrorGPS(){
+        return horizontalErrorGPS;
+    }
+    
+    public double getVerticalErrorBarometer(){
+        return verticalErrorBarometer;
+    }
+
+    //Behavior
+    public String getDirBehavior() {
+        return dirBehavior;
+    }
+    
+    public String getTypeBehavior() {
+        return typeBehavior;
+    }
+
+    public String getDiscretizationBehavior() {
+        return discretizationBehavior;
+    }
+
+    public String getRadiusCircleBehavior() {
+        return radiusCircleBehavior;
+    }
+
+    public String getBaseTriangleBehavior() {
+        return baseTriangleBehavior;
+    }
+
+    public String getBaseRectangleBehavior() {
+        return baseRectangleBehavior;
     }
 
 }

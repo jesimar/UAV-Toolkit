@@ -26,9 +26,9 @@ public class CameraControl {
             boolean print = true;
             File f = new File(config.getDirCamera());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar picture-pc.jar";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python picture-rpi.py";
@@ -59,11 +59,11 @@ public class CameraControl {
             boolean print = true;
             File f = new File(config.getDirCamera());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar photo-in-sequence-pc.jar " + 
                             config.getNumberPhotoInSequence() + " " + 
                             config.getDelayPhotoInSequence();
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python photo-in-sequence-rpi.py " + 
@@ -96,9 +96,9 @@ public class CameraControl {
             boolean print = true;
             File f = new File(config.getDirCamera());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar video-pc.jar " + config.getTimeVideo();
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python video-rpi.py " + config.getTimeVideo();

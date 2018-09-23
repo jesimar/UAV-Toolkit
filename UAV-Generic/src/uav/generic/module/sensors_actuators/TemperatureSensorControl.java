@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.reader.ReaderFileConfig;
 
@@ -25,11 +26,16 @@ public class TemperatureSensorControl {
         try {
             File f = new File(config.getDirTemperatureSensor());
             String cmd = "";
-            if (config.getOperationMode().equals(TypeOperationMode.SITL_LOCAL)){
-                cmd = "java -jar temperature.jar";
-            } else if (config.getOperationMode().equals(TypeOperationMode.SITL_CC) ||
+            if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+                cmd = "java -jar temperature-pc.jar";
+            } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
-                cmd = "python temperature.py";
+                if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python temperature-rpi.py " + config.getPinTemperatureCLK() + " "
+                            + config.getPinTemperatureCS() + " " + config.getPinTemperatureSO();
+                }else{
+                    cmd = "./device";
+                }
             }
             final Process comp = Runtime.getRuntime().exec(cmd, null, f);
             Executors.newSingleThreadExecutor().execute(new Runnable() {

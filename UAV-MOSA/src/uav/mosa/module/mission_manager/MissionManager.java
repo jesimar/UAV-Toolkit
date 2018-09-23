@@ -2,7 +2,9 @@ package uav.mosa.module.mission_manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
@@ -15,6 +17,7 @@ import uav.generic.struct.constants.Constants;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.struct.constants.TypeAircraft;
+import uav.generic.struct.constants.TypeBehavior;
 import uav.generic.struct.constants.TypeLocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeOperationMode;
@@ -63,8 +66,8 @@ public class MissionManager {
     private final long timeInit;
     private long timeActual;
     
-    private final double HORIZONTAL_ERROR = Constants.HORIZONTAL_ERROR_GPS;
-    private final double VERTICAL_ERROR = Constants.VERTICAL_ERROR_BAROMETER;
+    private double horizontalErrorGPS;
+    private double verticalErrorBarometer;
         
     /**
      * Class constructor.
@@ -82,6 +85,9 @@ public class MissionManager {
         if (!config.parseToVariables()){
             System.exit(1);
         }
+        
+        horizontalErrorGPS = config.getHorizontalErrorGPS();
+        verticalErrorBarometer = config.getVerticalErrorBarometer();
         
         try{
             pointGeo = UtilGeo.getPointGeo(config.getDirFiles()+config.getFileGeoBase());
@@ -278,6 +284,24 @@ public class MissionManager {
                             actionMakeAVideo();
                             actionPhotoInSequence();
                         }
+                        
+                        if (communicationGCS.isBehaviorChanged()){
+                            actionChangeBehavior();
+                            communicationGCS.setBehaviorChanged(false);
+                        }
+                        if (communicationGCS.isBehaviorChangedCircle()){
+                            actionChangeBehavior("CIRCLE");
+                            communicationGCS.setBehaviorChangedCircle(false);
+                        }
+                        if (communicationGCS.isBehaviorChangedTriangle()){
+                            actionChangeBehavior("TRIANGLE");
+                            communicationGCS.setBehaviorChangedTriangle(false);
+                        }
+                        if (communicationGCS.isBehaviorChangedRectangle()){
+                            actionChangeBehavior("RECTANGLE");
+                            communicationGCS.setBehaviorChangedRectangle(false);
+                        }
+                        
                         //Codigo usado no artigo ICAS 2018 para insercao de falha no MOSA
 //                        if (drone.getTime() > 80){//Tempos testados 70, 80, 92, 102, 122.
 //                            communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
@@ -383,13 +407,13 @@ public class MissionManager {
             double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
-            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+            if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
                 distV = distVActual;
                 index = i;
             }
         }        
-        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+        if (distH < horizontalErrorGPS*Constants.ONE_METER && distV < verticalErrorBarometer){   
             if (wptsBuzzer.size() > 0){
                 wptsBuzzer.removeWaypoint(index);
             }
@@ -412,13 +436,13 @@ public class MissionManager {
             double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
-            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+            if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
                 distV = distVActual;
                 index = i;
             }
         }        
-        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+        if (distH < horizontalErrorGPS*Constants.ONE_METER && distV < verticalErrorBarometer){   
             if (wptsCameraPicture.size() > 0){
                 wptsCameraPicture.removeWaypoint(index);
             }
@@ -440,13 +464,13 @@ public class MissionManager {
             double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
-            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+            if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
                 distV = distVActual;
                 index = i;
             }
         }        
-        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+        if (distH < horizontalErrorGPS*Constants.ONE_METER && distV < verticalErrorBarometer){   
             if (wptsCameraVideo.size() > 0){
                 wptsCameraVideo.removeWaypoint(index);
             }
@@ -468,13 +492,13 @@ public class MissionManager {
             double altDestiny = config.getAltRelMission();            
             double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
-            if (distHActual < distH && distVActual < VERTICAL_ERROR){
+            if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
                 distV = distVActual;
                 index = i;
             }
         }
-        if (distH < HORIZONTAL_ERROR*Constants.ONE_METER && distV < VERTICAL_ERROR){   
+        if (distH < horizontalErrorGPS*Constants.ONE_METER && distV < verticalErrorBarometer){   
             if (wptsCameraPhotoInSeq.size() > 0){
                 wptsCameraPhotoInSeq.removeWaypoint(index);
             }
@@ -483,11 +507,113 @@ public class MissionManager {
         }
     }
     
+    private void actionChangeBehavior(){    
+        String disc = config.getDiscretizationBehavior();
+        String cmd = "";
+        if (config.getTypeBehavior().equals(TypeBehavior.CIRCLE)){
+            String dist = config.getRadiusCircleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " CIRCLE " + dist + " " + disc;
+        }else if (config.getTypeBehavior().equals(TypeBehavior.TRIANGLE)){
+            String dist = config.getBaseTriangleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " TRIANGLE " + dist + " " + disc;
+        }else if (config.getTypeBehavior().equals(TypeBehavior.RECTANGLE)){
+            String dist = config.getBaseRectangleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " RECTANGLE " + dist + " " + disc;
+        }
+        String dir = config.getDirBehavior();
+        try {
+            boolean print = true;
+            File f = new File(dir);
+            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+            comp.waitFor();
+            Mission mission = new Mission();
+            String path = dir + "route-behavior.txt";
+            boolean respFile = decisonMaking.readFileRoute(mission, path);
+            if (!respFile){
+                return;
+            }
+//            mission.printMission();
+            if (mission.getMission().size() > 0){
+                dataAcquisition.setMission(mission);
+            }
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] actionChangeBehavior()");
+        } catch (InterruptedException ex) {
+            StandardPrints.printMsgWarning("Warning [InterruptedException] actionChangeBehavior()");
+        } 
+    }
+    
+    private void actionChangeBehavior(String type){    
+        String disc = config.getDiscretizationBehavior();
+        String cmd = "";
+        if (type.equals(TypeBehavior.CIRCLE)){
+            String dist = config.getRadiusCircleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " CIRCLE " + dist + " " + disc;
+        }else if (type.equals(TypeBehavior.TRIANGLE)){
+            String dist = config.getBaseTriangleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " TRIANGLE " + dist + " " + disc;
+        }else if (type.equals(TypeBehavior.RECTANGLE)){
+            String dist = config.getBaseRectangleBehavior();
+            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
+                    + " " + drone.getBarometer().alt_rel + " RECTANGLE " + dist + " " + disc;
+        }
+        String dir = config.getDirBehavior();
+        try {
+            boolean print = true;
+            File f = new File(dir);
+            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    if (print) {
+                        while (sc.hasNextLine()) {
+                            System.out.println(sc.nextLine());
+                        }
+                    }
+                    sc.close();
+                }
+            });
+            comp.waitFor();
+            Mission mission = new Mission();
+            String path = dir + "route-behavior.txt";
+            boolean respFile = decisonMaking.readFileRoute(mission, path);
+            if (!respFile){
+                return;
+            }
+//            mission.printMission();
+            if (mission.getMission().size() > 0){
+                dataAcquisition.setMission(mission);
+            }
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] actionChangeBehavior()");
+        } catch (InterruptedException ex) {
+            StandardPrints.printMsgWarning("Warning [InterruptedException] actionChangeBehavior()");
+        } 
+    }
+    
     private boolean waypointWasReached(double latDest, double lngDest, double altDest){   
         double distH = UtilGeom.distanceEuclidian(
                 drone.getGPS().lat, drone.getGPS().lng, latDest, lngDest);
         double distV = Math.abs(drone.getBarometer().alt_rel - altDest);
-        if (distV < VERTICAL_ERROR && distH < HORIZONTAL_ERROR * Constants.ONE_METER){
+        if (distV < verticalErrorBarometer && distH < horizontalErrorGPS * Constants.ONE_METER){
             return true;
         }else{
             return false;

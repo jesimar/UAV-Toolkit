@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
-#Last Update: 30/05/2018
+#Last Update: 21/09/2018
 #Description: Script that removes (deletes) a set of files from old missions.
 #Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
@@ -88,5 +88,11 @@ echo "Clear files in Fixed-Route4s [output-simulation.log, route.txt, routeGeo.t
 sudo rm ../Modules-IFA/Fixed-Route4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/Fixed-Route4s/route.txt 2>/dev/null
 sudo rm ../Modules-IFA/Fixed-Route4s/routeGeo.txt 2>/dev/null
+
+echo "Clear files in Route-Simplifier [output-simplifier.txt]"
+sudo rm ../Modules-Global/Route-Simplifier/output-simplifier.txt 2>/dev/null
+
+echo "Clear files in Route-Standard4m [route-behavior.txt]"
+sudo rm ../Modules-MOSA/Route-Standard4m/route-behavior.txt 2>/dev/null
 
 echo "==============================Done================================"

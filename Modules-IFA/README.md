@@ -20,9 +20,9 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de replanejament
 
 * **GA-GH-4s** -> *One Genetic Algorithm and one Greedy Heuristic for security executed in parallel* (Artigo ICTAI 2017) [[Link](https://ieeexplore.ieee.org/document/8372047/)]
 
-* **Fixed-Route4s** -> *Fixed Route for security* (Artigo Journal PLIM 2018) [[Link em Breve]()]
+* **Pre-Planned4s** -> *Route pre-planned for security* (Artigo Journal PLIM 2018) [[Link em Breve]()]
 
-* **Fixed-Route-Static4s** -> *Fixed Route Static for security*
+* **Fixed-Route4s** -> *Fixed Route for security*
 
 ## Arquivos dos Métodos
 
@@ -38,7 +38,7 @@ Em cada uma das pastas dos métodos citados acima (DE4s, GH4s, GA4s, MPGA4s), te
 * config-base.sgl -> Arquivo de configuração do método. Arquivo base de utilização pelo IFA.
 * map.sgl -> Arquivo contendo o mapa da missão.
 
-# Método Fixed-Route-Static4s
+# Método Fixed-Route4s
 
 Para utilizar esse método basta adicionar um arquivo com os waypoints a serem seguidos caso haja falha crítica. 
 

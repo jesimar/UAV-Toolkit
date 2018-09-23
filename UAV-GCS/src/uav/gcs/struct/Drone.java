@@ -1,6 +1,5 @@
 package uav.gcs.struct;
 
-import com.sun.javafx.util.TempState;
 import uav.generic.hardware.sensors.Attitude;
 import uav.generic.hardware.sensors.Barometer;
 import uav.generic.hardware.sensors.Battery;
@@ -25,7 +24,9 @@ public class Drone {
     public int nextWaypoint;
     public int countWaypoint;
     public double distanceToHome;//in meters
-    public double distanceToCurrentWaypoint;//in meters    
+    public double distanceToCurrentWaypoint;//in meters  
+    public double estimatedTimeToDoRTL;//in seconds
+    public double estimatedConsumptionBatForRTL;//in percentage
     public String typeFailure;
     public Battery battery; 
     public GPS gps;
@@ -57,14 +58,15 @@ public class Drone {
                 + "level_bat;pitch;yaw;roll;vx;vy;vz;fixtype;satellitesvisible;"
                 + "eph;epv;heading;groundspeed;airspeed;next_wpt;count_wpt;"
                 + "dist_to_home;dist_to_current_wpt;mode;system-status;armed;"
-                + "is-armable;ekf-ok;type-failure;dist-sonar;temperature-sensor";
+                + "is-armable;ekf-ok;type-failure;est-time-to-do-rtl;est-consumption-bat-rtl;"
+                + "dist-sonar;temperature-sensor";
     }
     
     @Override
     public String toString() {
         return String.format("%s;%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
                 "%.2f;%.2f;%d;%d;%d;%d;%.1f;%.2f;%.2f;%d;%d;%.2f;%.2f;%s;%s;%s;" +
-                "%s;%s;%s;%s;%s", 
+                "%s;%s;%s;%.2f;%.2f;%s;%s", 
                 date, hour, time, gps.lat, gps.lng, barometer.alt_rel, barometer.alt_abs,
                 battery.voltage, battery.current, battery.level, attitude.pitch,
                 attitude.yaw, attitude.roll, velocity.vx, velocity.vy, velocity.vz, 
@@ -72,7 +74,7 @@ public class Drone {
                 sensorUAV.heading, sensorUAV.groundspeed, sensorUAV.airspeed, 
                 nextWaypoint, countWaypoint, distanceToHome, distanceToCurrentWaypoint,
                 statusUAV.mode, statusUAV.systemStatus, statusUAV.armed, 
-                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, sonar.distance, 
-                temperature.temperature);
+                statusUAV.isArmable, statusUAV.ekfOk, typeFailure, estimatedTimeToDoRTL,
+                estimatedConsumptionBatForRTL, sonar.distance, temperature.temperature);
     }
 }
