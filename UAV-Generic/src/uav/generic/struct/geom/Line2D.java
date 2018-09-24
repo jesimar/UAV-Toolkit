@@ -95,5 +95,5 @@ public class Line2D extends Line{
     public String toString(int i) {
         return String.format("%.16g %.16g\n", vetx[i], vety[i]);
     }  
-  
+
 }

@@ -2,11 +2,10 @@ package uav.gcs.planner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
+import uav.generic.struct.thread.RunThread;
 
 /**
  * Classe que modela o planejador da missão do drone evitando obstáculos.
@@ -113,36 +112,10 @@ public abstract class Planner {
     
     boolean execMethod(){
         try {
-            boolean print = false;
-            boolean error = false;
-            File f = new File(dir);
+            boolean isPrint = false;
+            boolean isPrintError = false;
             String cmd = cmdExecPlanner + " local";
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (error) {
-                        while (sc.hasNextLine()) {
-                            System.err.println("err:" + sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
+            RunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
             System.out.println("Warning [IOException] execMethod()");

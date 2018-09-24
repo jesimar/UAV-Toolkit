@@ -44,6 +44,10 @@ public class LineGeo {
         return new PointGeo(vetx[i], vety[i], vetz[i]);
     }
     
+    public PointGeo getPointGeoCenter(){
+        return new PointGeo(getCenterX(), getCenterY(), vetz[0]);
+    }
+    
     public double getCenterX(){
         double cx = 0;
         for (int i = 0; i < vetx.length; i++){

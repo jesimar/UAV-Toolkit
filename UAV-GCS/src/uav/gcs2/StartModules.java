@@ -211,5 +211,45 @@ public class StartModules {
             System.err.println("ERROR: " + ex);
         }
     }
+    
+    public static void execClearSimulations(){
+        try {
+            File f = new File("../Scripts/");
+            final Process comp = Runtime.getRuntime().exec("./clear-simulations.sh", null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    while (sc.hasNextLine()) {
+                        String str = sc.nextLine();                      
+                        System.out.println(str);
+                    }
+                    sc.close();
+                }
+            });
+        } catch (IOException ex) {
+            System.err.println("ERROR: " + ex);
+        }
+    }
+    
+    public static void execCopyFilesResults(){
+        try {
+            File f = new File("../Scripts/");
+            final Process comp = Runtime.getRuntime().exec("./exec-copy-files-results.sh", null, f);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Scanner sc = new Scanner(comp.getInputStream());
+                    while (sc.hasNextLine()) {
+                        String str = sc.nextLine();                      
+                        System.out.println(str);
+                    }
+                    sc.close();
+                }
+            });
+        } catch (IOException ex) {
+            System.err.println("ERROR: " + ex);
+        }
+    }
 
 }

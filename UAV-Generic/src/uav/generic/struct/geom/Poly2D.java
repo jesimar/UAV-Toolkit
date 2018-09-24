@@ -6,24 +6,21 @@ import java.util.List;
  *
  * @author Jesimar S. Arantes
  */
-public class Poly3D extends Poly{
+public class Poly2D extends Poly{
     
     private final String name;         
     private final double vetx[];
     private final double vety[];
-    private final double vetz[];
     private final int npoints;    
     
-    public Poly3D(String name, List<Point3D> listPoint3D){
+    public Poly2D(String name, List<Point2D> listPoint2D){
         this.name = name;
-        this.npoints = listPoint3D.size();
+        this.npoints = listPoint2D.size();
         this.vetx = new double[npoints];
         this.vety = new double[npoints];
-        this.vetz = new double[npoints];
         for (int i = 0; i < npoints; i++){
-            vetx[i] = listPoint3D.get(i).getX();
-            vety[i] = listPoint3D.get(i).getY();
-            vetz[i] = listPoint3D.get(i).getZ();
+            vetx[i] = listPoint2D.get(i).getX();
+            vety[i] = listPoint2D.get(i).getY();
         }
     }
 
@@ -39,10 +36,6 @@ public class Poly3D extends Poly{
         return vety;
     }
     
-    public double[] getVetz() {
-        return vetz;
-    }
-
     public int getNpoints() {
         return npoints;
     }
@@ -65,11 +58,7 @@ public class Poly3D extends Poly{
     
     @Override
     public String toString() {
-        return String.format("%.16g %.16g %.16g\n", getCenterX(), getCenterY(), vetz[0]);
+        return String.format("%.16g %.16g\n", getCenterX(), getCenterY());
     }
-    
-    public String toString(double height) {
-        return String.format("%.16g %.16g %.16g\n", getCenterX(), getCenterY(), height);
-    }  
-    
+ 
 }

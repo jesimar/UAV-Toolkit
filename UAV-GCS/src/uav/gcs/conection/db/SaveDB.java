@@ -1,4 +1,4 @@
-package uav.gcs.conection;
+package uav.gcs.conection.db;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -49,8 +49,7 @@ public class SaveDB {
                                     + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,"
                                     + "?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
                             ps = db.conn.prepareStatement(sql);
-                            String dateHour = new SimpleDateFormat("yyyy-MM-dd")
-                                    .format(new Date());//"yyyy-MM-dd_HH:mm:ss"
+                            String dateHour = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                             ps.setString(1, drone.userEmail);
                             ps.setString(2, "route-" + dateHour);
                             ps.setString(3, drone.date);

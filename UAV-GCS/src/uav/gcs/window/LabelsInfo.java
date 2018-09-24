@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uav.gcs.window;
 
 import java.awt.Color;
@@ -13,7 +8,7 @@ import uav.gcs.struct.Drone;
 
 /**
  *
- * @author jesimar
+ * @author Jesimar S. Arantes
  */
 public class LabelsInfo {
     

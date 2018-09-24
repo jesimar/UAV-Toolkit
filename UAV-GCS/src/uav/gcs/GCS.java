@@ -21,16 +21,16 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.gcs.communication.CommunicationIFA;
-import uav.gcs.conection.SaveDB;
+import uav.gcs.conection.db.SaveDB;
 import uav.gcs.commands.keyboard.KeyboardCommands;
 import uav.gcs.commands.voice.VoiceCommands;
 import uav.gcs.communication.CommunicationMOSA;
-import uav.gcs.map.PanelPlotGoogleMaps;
-import uav.gcs.map.PanelPlotMission;
+import uav.gcs.plotmap.PanelPlotGoogleMaps;
+import uav.gcs.plotmap.PanelPlotMission;
 import uav.gcs.window.LabelsInfo;
+import uav.gcs2.StartModules;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.reader.ReaderFileConfig;
@@ -60,7 +60,7 @@ public final class GCS extends JFrame {
     private final JButton btnChangeBehaviorCircle;
     private final JButton btnChangeBehaviorTriangle;
     private final JButton btnChangeBehaviorRectangle;
-    
+
     private JButton btnBuzzer;
     private JButton btnAlarm;
     private JButton btnPicture;
@@ -108,17 +108,17 @@ public final class GCS extends JFrame {
         if (!config.parseToVariables()) {
             System.exit(1);
         }
-        
+
         execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
-        
-        try{
-            pointGeo = UtilGeo.getPointGeo(config.getDirFiles()+config.getFileGeoBase());
-        }catch (FileNotFoundException ex){
-            StandardPrints.printMsgError2("Error [FileNotFoundException] pointGeo");
+
+        try {
+            pointGeo = UtilGeo.getPointGeo(config.getDirFiles() + config.getFileGeoBase());
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException] pointGeo");
             ex.printStackTrace();
             System.exit(1);
         }
-        
+
         drone = new Drone(config.getUserEmail());
         communicationIFA = new CommunicationIFA(drone, config.getHostIFA(),
                 config.getPortNetworkIFAandGCS());
@@ -175,6 +175,26 @@ public final class GCS extends JFrame {
         labelActions.setForeground(Color.BLACK);
         panelLeft.add(labelActions);
 
+        JButton btnClearSimulations = new JButton("Clear Simulations");
+        btnClearSimulations.setPreferredSize(new Dimension(185, 25));
+        btnClearSimulations.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StartModules.execClearSimulations();
+            }
+        });
+        panelLeft.add(btnClearSimulations);
+
+        JButton btnCopyFilesResults = new JButton("Copy File Results");
+        btnCopyFilesResults.setPreferredSize(new Dimension(185, 25));
+        btnCopyFilesResults.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StartModules.execCopyFilesResults();
+            }
+        });
+        panelLeft.add(btnCopyFilesResults);
+
         btnBadWeather = new JButton("BAD-WEATHER");
         btnBadWeather.setPreferredSize(new Dimension(185, 25));
         btnBadWeather.setEnabled(false);
@@ -218,7 +238,7 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnRTL);
-        
+
         btnChangeBehavior = new JButton("CHANGE BEHAVIOR");
         btnChangeBehavior.setPreferredSize(new Dimension(185, 25));
         btnChangeBehavior.setEnabled(false);
@@ -229,7 +249,7 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnChangeBehavior);
-        
+
         btnChangeBehaviorCircle = new JButton("CHANGE BEHAVIOR CIRCLE");
         btnChangeBehaviorCircle.setPreferredSize(new Dimension(185, 25));
         btnChangeBehaviorCircle.setEnabled(false);
@@ -240,7 +260,7 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnChangeBehaviorCircle);
-        
+
         btnChangeBehaviorTriangle = new JButton("CHANGE BEHAVIOR TRIANGLE");
         btnChangeBehaviorTriangle.setPreferredSize(new Dimension(185, 25));
         btnChangeBehaviorTriangle.setEnabled(false);
@@ -251,7 +271,7 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnChangeBehaviorTriangle);
-        
+
         btnChangeBehaviorRectangle = new JButton("CHANGE BEHAVIOR RECTANGLE");
         btnChangeBehaviorRectangle.setPreferredSize(new Dimension(185, 25));
         btnChangeBehaviorRectangle.setEnabled(false);
@@ -309,7 +329,7 @@ public final class GCS extends JFrame {
                 }
             });
             panelLeft.add(btnVideo);
-            
+
             btnPhotoInSequence = new JButton("CAMERA-PHOTO-IN-SEQ");
             btnPhotoInSequence.setPreferredSize(new Dimension(185, 25));
             btnPhotoInSequence.setEnabled(false);
@@ -421,8 +441,8 @@ public final class GCS extends JFrame {
         panelPlotMission = new PanelPlotMission();
         panelPlotMission.waitingForRoutes();
         panelPlotMission.plotDroneInRealTime(drone);
-        
-        if (config.hasGoogleMaps()){
+
+        if (config.hasGoogleMaps()) {
             panelPlotGoogleMaps = new PanelPlotGoogleMaps();
             panelPlotGoogleMaps.init(width - 200, height - 100);
             try {
@@ -437,10 +457,10 @@ public final class GCS extends JFrame {
 
         tab.add("UAV Data", panelRight);
         tab.add("Plot Simple Map", panelPlotMission);
-        if (config.hasGoogleMaps()){
+        if (config.hasGoogleMaps()) {
             tab.add("Plot Google Maps", panelPlotGoogleMaps);
         }
-        
+
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
@@ -473,7 +493,7 @@ public final class GCS extends JFrame {
         this.add(panelMain);
 
         panelMain.add(tab);
-        
+
         enableComponentsInterface();
 
         this.setSize(width, height);
@@ -486,27 +506,27 @@ public final class GCS extends JFrame {
             }
         });
         this.setVisible(true);
-        
-        SwingUtilities.invokeLater(()->{
+
+        SwingUtilities.invokeLater(() -> {
             tryLookAndFeel("Nimbus");
             SwingUtilities.updateComponentTreeUI(this);
         });
     }
-    
-    public void tryLookAndFeel(String part_name){
+
+    public void tryLookAndFeel(String part_name) {
         UIManager.LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
         int index = -1;
-        for(int i = 0; i < lookAndFeels.length; i++){
-            if(lookAndFeels[i].getName().contains(part_name)){
+        for (int i = 0; i < lookAndFeels.length; i++) {
+            if (lookAndFeels[i].getName().contains(part_name)) {
                 index = i;
             }
         }
-        if (index!=-1) {
+        if (index != -1) {
             this.setLookAndFeel(lookAndFeels[index].getClassName());
         }
     }
-    
-    public void setLookAndFeel(String lookAndFeelds){
+
+    public void setLookAndFeel(String lookAndFeelds) {
         try {
             UIManager.setLookAndFeel(lookAndFeelds);
             SwingUtilities.updateComponentTreeUI(this);
@@ -619,7 +639,7 @@ public final class GCS extends JFrame {
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private void execScript(String cmd) {
         try {
             Process proc = Runtime.getRuntime().exec(cmd);
@@ -632,7 +652,7 @@ public final class GCS extends JFrame {
             while (read.ready()) {
                 System.out.println(read.readLine());
             }
-        }catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
             System.exit(1);
         }

@@ -24,10 +24,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Sistema UAV-GCS
 
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
-* Colocar um botão para fazer o clear e copy file.
 * Plotar na GCS as rotas do Behavior
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, por exemplo, para etapa de pulverização. (behavior diferente).
-* Renomear: Forward -> Norte, Right -> Leste, Left -> Oeste, etc.
 * Colocar marcadores especiais nos Plots (google maps e Plot Mission Márcio) para fotos, vídeo, buzzer, pulverização, waypoints.
 * Pesquisar como executar UAV-GCS (google maps) sem acesso a internet.
 

@@ -28,6 +28,7 @@ public class Drone {
     public double estimatedTimeToDoRTL;//in seconds
     public double estimatedConsumptionBatForRTL;//in percentage
     public String typeFailure;
+    
     public Battery battery; 
     public GPS gps;
     public Barometer barometer;       
@@ -36,8 +37,8 @@ public class Drone {
     public GPSInfo gpsinfo;
     public SensorUAV sensorUAV;
     public StatusUAV statusUAV;
-    public Sonar sonar;
-    public Temperature temperature;
+    public Sonar sonar; //in meters
+    public Temperature temperature;//in degree celsius
 
     public Drone(String userEmail) {
         this.userEmail = userEmail;

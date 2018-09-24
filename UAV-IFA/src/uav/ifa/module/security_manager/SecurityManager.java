@@ -24,7 +24,7 @@ import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeFailure;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.TypeLocalExecPlanner;
+import uav.generic.struct.constants.LocalExecPlanner;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.geom.PointGeo;
@@ -407,7 +407,7 @@ public class SecurityManager {
                             if (config.hasBuzzer()) {
                                 actionTurnOnTheAlarm();
                             }
-                            if (config.getLocalExecReplanner().equals(TypeLocalExecPlanner.ONBOARD)) {
+                            if (config.getLocalExecReplanner().equals(LocalExecPlanner.ONBOARD)) {
                                 decisonMaking.actionToDoSomethingOnboard(listOfFailure.get(0));
                             } else {
                                 decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), communicationGCS);

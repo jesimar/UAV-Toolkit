@@ -9,7 +9,7 @@ import uav.generic.struct.constants.TypeAP;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeAltitudeDecay;
 import uav.generic.struct.constants.TypeCC;
-import uav.generic.struct.constants.TypeLocalExecPlanner;
+import uav.generic.struct.constants.LocalExecPlanner;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeReplanner;
@@ -350,8 +350,8 @@ public class ReaderFileConfig {
             return false;
         }
         if (localExecReplanner == null || 
-                (!localExecReplanner.equals(TypeLocalExecPlanner.ONBOARD) &&
-                 !localExecReplanner.equals(TypeLocalExecPlanner.OFFBOARD))){
+                (!localExecReplanner.equals(LocalExecPlanner.ONBOARD) &&
+                 !localExecReplanner.equals(LocalExecPlanner.OFFBOARD))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of local exec method not valid");
             return false;
         }
@@ -380,8 +380,8 @@ public class ReaderFileConfig {
             return false;
         }
         if (localExecPlanner == null || 
-                (!localExecPlanner.equals(TypeLocalExecPlanner.ONBOARD) &&
-                 !localExecPlanner.equals(TypeLocalExecPlanner.OFFBOARD))){
+                (!localExecPlanner.equals(LocalExecPlanner.ONBOARD) &&
+                 !localExecPlanner.equals(LocalExecPlanner.OFFBOARD))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of local exec method not valid");
             return false;
         }

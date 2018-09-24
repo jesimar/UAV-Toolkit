@@ -1,4 +1,4 @@
-package uav.gcs.conection;
+package uav.gcs.conection.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,11 +9,11 @@ public class MysqlDB {
     public Connection conn = null;
     public boolean status;
     
-    String host = "";
-    String ip = "192.168.205.105";
-    String port = "3306";
-    String user = "root";
-    String pwd = "vertrigo";//"root"
+    String host   = "";
+    String ip     = "192.168.205.105";
+    String port   = "3306";
+    String user   = "root";
+    String pwd    = "vertrigo";//"root"
     String nomeBD = "od";
     
     public MysqlDB(){
@@ -37,12 +37,12 @@ public class MysqlDB {
             conn = DriverManager.getConnection(host);
 	    status = true;
 	    System.out.println("Conection DB create with sucess");
-	} catch (ClassNotFoundException e) {
+	} catch (ClassNotFoundException ex) {
             System.out.println("Exception class not found");
-	    e.printStackTrace();
-	} catch(SQLException e) {
+	    ex.printStackTrace();
+	} catch(SQLException ex) {
             System.out.println("SQL Exception... not found");
-	    e.printStackTrace();
+	    ex.printStackTrace();
 	}
     }
     

@@ -23,11 +23,11 @@ public class Temperature {
         this.temperature = temperature;
     } 
 
-    public void setDistance(double temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
     
-    public void setDistance(String temperature) {
+    public void setTemperature(String temperature) {
         this.temperature = Double.parseDouble(temperature);
     }
 

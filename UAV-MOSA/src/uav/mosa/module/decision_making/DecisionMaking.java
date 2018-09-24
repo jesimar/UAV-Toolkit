@@ -1,12 +1,9 @@
 package uav.mosa.module.decision_making;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.module.data_communication.DataCommunication;
 import uav.generic.hardware.aircraft.Drone;
@@ -15,10 +12,11 @@ import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.Waypoint;
-import uav.generic.struct.constants.LocalCalcMission;
+import uav.generic.struct.constants.LocalExecMission;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.struct.reader.UtilRoute;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.util.UtilString;
 import uav.mosa.module.communication_control.CommunicationGCS;
@@ -62,11 +60,11 @@ public class DecisionMaking {
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
             if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
                 boolean respM = false;
-                if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.GROUND)){
+                if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.GROUND)){
                     respM = sendMissionsToDroneCalcGround();
-                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
+                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.GROUND_AND_AIR)) {
                     respM = sendMissionsToDroneCalcGroundAndAir();
-                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.AIR)) {
+                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.AIR)) {
                     respM = sendMissionsToDroneCalcAir();
                 }
                 if (respM){
@@ -103,11 +101,11 @@ public class DecisionMaking {
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
             if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
                 boolean respM = false;
-                if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.GROUND)){
+                if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.GROUND)){
                     respM = sendMissionsToDroneCalcGroundOffboard(communicationGSC);
-                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.GROUND_AND_AIR)) {
+                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.GROUND_AND_AIR)) {
                     respM = sendMissionsToDroneCalcGroundAndAir();
-                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalCalcMission.AIR)) {
+                }else if (config.getLocalExecProcessingPlannerHGA4m().equals(LocalExecMission.AIR)) {
                     respM = sendMissionsToDroneCalcAir();
                 }
                 if (respM){
@@ -163,7 +161,8 @@ public class DecisionMaking {
         while (nRoute < wptsMission3D.size() - 1){
             String path = config.getDirPlanner() + "routeGeo" + nRoute + ".txt";
             if (config.hasRouteSimplifier()){
-                execRouteSimplifier(path, ";");
+                UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             boolean respFile = readFileRoute(mission, path, nRoute);
@@ -204,7 +203,8 @@ public class DecisionMaking {
             
             String path = config.getDirPlanner() + "routeGeo" + nRoute + ".txt";
             if (config.hasRouteSimplifier()){
-                execRouteSimplifier(path, ";");
+                UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             Mission mission = new Mission();
@@ -259,7 +259,8 @@ public class DecisionMaking {
                 Mission mission = new Mission();
                 String path1 = config.getDirPlanner() + "routeGeo0.txt";
                 if (config.hasRouteSimplifier()){
-                    execRouteSimplifier(path1, ";");
+                    UtilRoute.execRouteSimplifier(path1, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                     path1 = config.getDirRouteSimplifier() + "output-simplifier.txt";               
                 }
                 boolean respFile1 = readFileRoute(mission, path1, 0);
@@ -268,7 +269,8 @@ public class DecisionMaking {
                 }
                 String path2 = config.getDirPlanner() + "routeGeo1.txt";
                 if (config.hasRouteSimplifier()){
-                    execRouteSimplifier(path2, ";");
+                    UtilRoute.execRouteSimplifier(path2, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                     path2 = config.getDirRouteSimplifier() + "output-simplifier.txt";               
                 }
                 boolean respFile2 = readFileRoute(mission, path2, 1);
@@ -282,7 +284,8 @@ public class DecisionMaking {
             }else if (nRoute > 1){
                 String path = config.getDirPlanner() + "routeGeo" + nRoute + ".txt";
                 if (config.hasRouteSimplifier()){
-                    execRouteSimplifier(path, ";");
+                    UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                     path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
                 }
                 Mission mission = new Mission();
@@ -328,7 +331,8 @@ public class DecisionMaking {
         Mission mission = new Mission();
         String path = config.getDirPlanner() + "routeGeo.txt";
         if (config.hasRouteSimplifier()){
-            execRouteSimplifier(path, ";");
+            UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
             path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
         }
         boolean respFile = readFileRoute(mission, path);
@@ -508,44 +512,5 @@ public class DecisionMaking {
             dataAcquisition.setMission(msgRoute);
             return true;
         }
-    }
-    
-    private void execRouteSimplifier(String nameRoute, String separator){
-        try {
-            boolean print = true;
-            File f = new File(config.getDirRouteSimplifier());
-            String cmd = "python Route-Simplifier.py " + config.getFactorRouteSimplifier() + 
-                    " " + "../" + nameRoute + " '" + separator + "'";
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execRouteSimplifier()");
-        } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execRouteSimplifier()");
-        } 
     }
 }

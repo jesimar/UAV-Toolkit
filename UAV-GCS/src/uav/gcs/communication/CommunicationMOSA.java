@@ -2,32 +2,25 @@ package uav.gcs.communication;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.Executors;
-import lib.color.StandardPrints;
 import uav.gcs.planner.CCQSP4m;
 import uav.gcs.planner.HGA4m;
 import uav.gcs.planner.Planner;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypePlanner;
-import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.reader.ReaderFileConfig;
-import uav.generic.util.UtilString;
+import uav.generic.struct.reader.UtilRoute;
 
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationMOSA {
+public class CommunicationMOSA extends Communication{
 
     private final ReaderFileConfig config;
     private Socket socket;
@@ -71,6 +64,7 @@ public class CommunicationMOSA {
         });
     }
 
+    @Override
     public void receiveData() {
         System.out.println("Trying to listen the connection of UAV-MOSA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -102,10 +96,12 @@ public class CommunicationMOSA {
         });
     }
 
+    @Override
     public void sendData(String msg) {
         output.println(msg);
     }
 
+    @Override
     public boolean isConnected() {
         if (input == null) {
             return false;
@@ -114,6 +110,7 @@ public class CommunicationMOSA {
         }
     }
 
+    @Override
     public void close() {
         try {
             output.close();
@@ -153,10 +150,11 @@ public class CommunicationMOSA {
             while (nRoute < size - 1) {
                 String path = v[5] + "routeGeo" + nRoute + ".txt";
                 if (config.hasRouteSimplifier()){
-                    execRouteSimplifier(path, ";");
+                    UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                     path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
                 }
-                boolean respFile = readFileRoute(mission, path, nRoute, size);
+                boolean respFile = UtilRoute.readFileRoute(mission, path, nRoute, size);
                 if (!respFile) {
                     sendData("failure");
                     return;
@@ -164,9 +162,7 @@ public class CommunicationMOSA {
                 nRoute++;
             }
             mission.printMission();
-            Gson gson = new Gson();
-            String jsonMission = gson.toJson(mission);
-            sendData(jsonMission);
+            sendData(new Gson().toJson(mission));
         } else if (v[0].equals(TypePlanner.CCQSP4M)) {
             planner = new CCQSP4m(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
             planner.clearLogs();
@@ -179,132 +175,24 @@ public class CommunicationMOSA {
             String path = v[3] + "routeGeo.txt";
             
             if (config.hasRouteSimplifier()){
-                execRouteSimplifier(path, ";");
+                UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             
-            boolean respFile = readFileRoute(mission, path);
+            boolean respFile = UtilRoute.readFileRoute(mission, path);
             if (!respFile) {
                 sendData("failure");
                 return;
             }
             mission.printMission();
-            Gson gson = new Gson();
-            String jsonMission = gson.toJson(mission);
-            sendData(jsonMission);            
+            sendData(new Gson().toJson(mission));            
         }
         isRunningPlanner = false;
     }
 
-    private boolean readFileRoute(Mission wps, String path, int nRoute, int size) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
-            String sCurrentLine;
-            boolean firstTime = true;
-            double lat = 0.0;
-            double lng = 0.0;
-            double alt = 0.0;
-            while ((sCurrentLine = br.readLine()) != null) {
-                sCurrentLine = UtilString.changeValueSeparator(sCurrentLine);
-                String s[] = sCurrentLine.split(";");
-                lat = Double.parseDouble(s[0]);
-                lng = Double.parseDouble(s[1]);
-                alt = Double.parseDouble(s[2]);
-                if (firstTime && (nRoute == 0 || nRoute == -2)) {
-                    wps.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, alt));
-                    firstTime = false;
-                }
-                wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
-            }
-            if (wps.getMission().size() > 0) {
-                if (nRoute == size - 2) {
-                    wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
-                }
-            }
-            return true;
-        } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: readFileRoute()");
-            return false;
-        } catch (IOException ex) {
-            System.out.println("Warning [IOException]: readFileRoute()");
-            return false;
-        }
-    }
-    
-    private boolean readFileRoute(Mission wps, String path){
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
-            String sCurrentLine;
-            boolean firstTime = true;
-            double lat = 0.0;
-            double lng = 0.0;
-            double alt = 0.0;
-            while ((sCurrentLine = br.readLine()) != null) {
-                sCurrentLine = UtilString.changeValueSeparator(sCurrentLine);
-                String s[] = sCurrentLine.split(";");
-                lat = Double.parseDouble(s[0]);
-                lng = Double.parseDouble(s[1]);
-                alt = Double.parseDouble(s[2]);
-                if (firstTime){
-                    wps.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, alt));
-                    firstTime = false;
-                }
-                wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
-            }
-            if (wps.getMission().size() > 0){
-                wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
-            }
-            return true;
-        } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: readFileRoute()");
-            return false;
-        } catch (IOException ex) {
-            System.out.println("Warning [IOException]: readFileRoute()");
-            return false;
-        }
-    }
-
     public boolean isRunningPlanner() {
         return isRunningPlanner;
-    }
-    
-    private void execRouteSimplifier(String nameRoute, String separator){
-        try {
-            boolean print = true;
-            File f = new File(config.getDirRouteSimplifier());
-            String cmd = "python Route-Simplifier.py " + config.getFactorRouteSimplifier() + 
-                    " " + "../" + nameRoute + " '" + separator + "'";
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execRouteSimplifier()");
-        } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execRouteSimplifier()");
-        } 
     }
 
 }

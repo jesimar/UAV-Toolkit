@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Scanner;
-import lib.color.StandardPrints;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.geom.Position3D;
@@ -74,7 +73,7 @@ public class CCQSP4m extends Planner{
             print3D.close();
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException] copyRoute3D()");
+            System.out.println("Warning [FileNotFoundException] copyRoute3D()");
             return false;
         } 
     }

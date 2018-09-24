@@ -45,7 +45,7 @@ public class Mission3D {
     }
     
     public void printMission(){
-        StandardPrints.printMsgEmph("Mission3D");
+        StandardPrints.printMsgEmph("Mission3D [Size: " + mission.size() + "]");
         for (Position3D wpt: mission){
             StandardPrints.printMsgEmph(wpt.toString());
         }

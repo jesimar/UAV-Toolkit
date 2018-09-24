@@ -2,12 +2,11 @@ package uav.generic.module.sensors_actuators;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.struct.thread.RunThread;
 
 /**
  *
@@ -23,8 +22,6 @@ public class CameraControl {
     
     public void takeAPicture(){
         try {
-            boolean print = true;
-            File f = new File(config.getDirCamera());
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar picture-pc.jar";
@@ -36,19 +33,8 @@ public class CameraControl {
                     cmd = "./device";
                 }
             } 
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
+            boolean print = true;
+            RunThread.singleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
         } 
@@ -56,8 +42,6 @@ public class CameraControl {
     
     public void photoInSequence(){
         try {
-            boolean print = true;
-            File f = new File(config.getDirCamera());
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar photo-in-sequence-pc.jar " + 
@@ -72,29 +56,16 @@ public class CameraControl {
                 }else{
                     cmd = "./device";
                 }
-            } 
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
+            }
+            boolean print = true;
+            RunThread.singleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
+            StandardPrints.printMsgWarning("Warning [IOException] photoInSequence()");
         } 
     }
     
     public void makeAVideo(){
         try {
-            boolean print = true;
-            File f = new File(config.getDirCamera());
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar video-pc.jar " + config.getTimeVideo();
@@ -106,19 +77,8 @@ public class CameraControl {
                     cmd = "./device";
                 }
             } 
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
+            boolean print = true;
+            RunThread.singleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] makeAVideo()");
         } 

@@ -18,7 +18,7 @@ import uav.generic.struct.mission.Mission;
 import uav.generic.struct.reader.ReaderFileConfig;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeBehavior;
-import uav.generic.struct.constants.TypeLocalExecPlanner;
+import uav.generic.struct.constants.LocalExecPlanner;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypePlanner;
@@ -333,7 +333,7 @@ public class MissionManager {
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
                         if (communicationIFA.isStartMission()){
-                            if (config.getLocalExecPlanner().equals(TypeLocalExecPlanner.ONBOARD)){
+                            if (config.getLocalExecPlanner().equals(LocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionToDoSomething();
                             }else{
                                 decisonMaking.actionToDoSomethingOffboard(communicationGCS);

@@ -1,4 +1,4 @@
-package uav.gcs.conection;
+package uav.gcs.conection.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ public class MysqlQuery {
     
     public Connection database = null; 
     public boolean status;
-    public ResultSet rs; // Contem o conjunto de dados retornado por uma consulta SQL
+    public ResultSet rs;  // Contem o conjunto de dados retornado por uma consulta SQL
     public Statement stm; // Controla e executa uma instrucao SQL
 
     public MysqlQuery(Connection db) {
@@ -17,31 +17,37 @@ public class MysqlQuery {
             database = db;
             stm = database.createStatement();
             status = false;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.print("Error create Query!");
         }
     }
     
-    public void open(String sql) { // Utilizado quando deseja acessar os dados da consulta
+    /*
+     * Utilizado quando deseja acessar os dados da consulta
+     */
+    public void open(String sql) {
         try {
             rs = stm.executeQuery(sql);
             status = true;
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             status = false;
             System.out.print("Error exec Query!");
-            e.printStackTrace();
+            ex.printStackTrace();
 	}
     }
     
-    public void execute(String sql) { // Quando a instrucao retorna true ou false
+    /*
+     * Quando a instrução retorna true ou false
+     */
+    public void execute(String sql) {
         try {
             stm.execute(sql);
             status = true;
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             status = false;
             System.out.print("Error exec Query!");
-            e.printStackTrace();
+            ex.printStackTrace();
 	}
     }
     
@@ -54,55 +60,67 @@ public class MysqlQuery {
                 rs.next();
             value = rs.getString(field);
             status = true;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             System.out.println("Field invalid!");
 	}
 	return value;
     }
     
-    public ResultSet result(String sql) { // Utilizado em consultas SELECT
+    /*
+     * Utilizado em consultas SELECT
+     */
+    public ResultSet result(String sql) {
         try {
             rs = stm.executeQuery(sql);
             return rs;
-	} catch (SQLException eSQL) {
-            eSQL.printStackTrace();
+	} catch (SQLException ex) {
+            ex.printStackTrace();
 	}
 	return null;
     }
     
-    public int recordCount() { // Retorna quantas registros a consulta retornou
+    /*
+     * Retorna quantas registros a consulta retornou
+     */
+    public int recordCount() {
         int tot = 0;
 	try {
             rs.first();
             while (rs.next())
                 tot++;
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             status = false;
             System.out.print("Error exec Query!");
-            e.printStackTrace();
+            ex.printStackTrace();
 	}
 	return tot;
     }
     
-    public boolean next() { // Percorrer retorno da instrucao
+    /*
+     * Percorrer retorno da instrução
+     */
+    public boolean next() {
         boolean result = false;
 	try {
             if (rs.next()) {
                 result = true;
             }
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             System.out.print("Error exec Query!");
         }
 	return result;
     }
     
-    public boolean prev() { // Retornar um indice quando esta percorrendo
+    /*
+     * Retornar um indice quando esta percorrendo
+     */
+    public boolean prev() { 
 	boolean result = false;
 	try {
             if (rs.previous()) {
                 result = true;
             }
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             System.out.print("Error exec previous!");
         }
 	return result;
@@ -114,7 +132,7 @@ public class MysqlQuery {
             if (rs.first()) {
                 result = true;
             }
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             System.out.print("Error exec first!");
 	}
 	return result;
@@ -126,7 +144,7 @@ public class MysqlQuery {
             if (rs.last()) {
                 result = true;
             }
-	} catch (SQLException e) {
+	} catch (SQLException ex) {
             System.out.print("Error exec last!");
 	}
 	return result;

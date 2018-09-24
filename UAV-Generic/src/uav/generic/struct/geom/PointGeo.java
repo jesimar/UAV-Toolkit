@@ -50,10 +50,16 @@ public class PointGeo extends Point{
         return "PointGeo{" + "lng=" + lng + ", lat=" + lat + ", alt=" + alt + '}';
     }
 
-    //falta verificar
+    /** 
+     * Método que calcula a distância entre duas coordenadas. Cuidado com o 
+     * retorno do método que não está em metros mas sim em graus. Dessa forma, 
+     * deve-se converter para metros.
+     * @param pointDestine - ponto de destino
+     * @return distância (em graus) entre o ponto atual e o argumento.
+     */
     @Override
-    public double distance(Point point) {
-        PointGeo p = (PointGeo) point;
+    public double distance(Point pointDestine) {
+        PointGeo p = (PointGeo) pointDestine;
         return Math.sqrt((p.lng - lng)*(p.lng - lng) + (p.lat - lat)*(p.lat - lat));
     }
         

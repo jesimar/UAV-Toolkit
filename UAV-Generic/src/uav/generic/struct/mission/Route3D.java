@@ -45,7 +45,7 @@ public class Route3D {
     }
     
     public void printRoute(){
-        StandardPrints.printMsgEmph("Route3D");
+        StandardPrints.printMsgEmph("Route3D [Size: " + route.size() + "]");
         for (Position3D wpt: route){
             StandardPrints.printMsgEmph(wpt.toString());
         }

@@ -6,7 +6,7 @@ package uav.generic.struct.constants;
  */
 public class TypeAP {
     
-    public static final String APM = "APM";
+    public static final String APM     = "APM";
     public static final String PIXHAWK = "PIXHAWK";
     
 }

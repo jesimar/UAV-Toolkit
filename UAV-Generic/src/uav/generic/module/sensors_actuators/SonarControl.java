@@ -24,7 +24,6 @@ public class SonarControl {
     
     public void startSonarSensor(){
         try {
-            File f = new File(config.getDirSonar());
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar sonar-pc.jar";
@@ -37,19 +36,24 @@ public class SonarControl {
                     cmd = "./device";
                 }
             }
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            File file = new File(config.getDirSonar());
+            final Process comp = Runtime.getRuntime().exec(cmd, null, file);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        distance = Double.parseDouble(sc.nextLine());
+                        try{
+                            distance = Double.parseDouble(sc.nextLine());
+                        }catch (NumberFormatException ex){
+                            distance = -1;
+                        }
                     }
                     sc.close();
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] startSonar()");
+            StandardPrints.printMsgWarning("Warning [IOException] startSonarSensor()");
         } 
     }
 

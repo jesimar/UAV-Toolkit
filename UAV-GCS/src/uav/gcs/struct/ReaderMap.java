@@ -1,4 +1,4 @@
-package uav.gcs.map;
+package uav.gcs.struct;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,12 +12,12 @@ public class ReaderMap {
     
     private final String path;
     
-    private double vetorX_NFZ[][];
-    private double vetorY_NFZ[][];
-    private double vetorX_Penalty[][];
-    private double vetorY_Penalty[][];
-    private double vetorX_Bonus[][];
-    private double vetorY_Bonus[][];
+    private double[][] vetX_NFZ;
+    private double[][] vetY_NFZ;
+    private double[][] vetX_Penalty;
+    private double[][] vetY_Penalty;
+    private double[][] vetX_Bonus;
+    private double[][] vetY_Bonus;
     
     private int sizeTotal;
     private int sizeNFZ;
@@ -42,60 +42,60 @@ public class ReaderMap {
                 sc.nextLine();
                 sizeBonus = Integer.parseInt(sc.nextLine());
                 
-                vetorX_NFZ = new double[sizeNFZ][];
-                vetorY_NFZ = new double[sizeNFZ][];
+                vetX_NFZ = new double[sizeNFZ][];
+                vetY_NFZ = new double[sizeNFZ][];
                 
                 for (int i = 0; i < sizeNFZ; i++){
                     sc.nextLine();
                     String valueX = sc.nextLine();
                     String valueY = sc.nextLine();
                     String vX[] = valueX.split(",");
-                    vetorX_NFZ[i] = new double[vX.length];
+                    vetX_NFZ[i] = new double[vX.length];
                     for (int j = 0; j < vX.length; j++){
-                        vetorX_NFZ[i][j] = Double.parseDouble(vX[j]);
+                        vetX_NFZ[i][j] = Double.parseDouble(vX[j]);
                     }
                     String vY[] = valueY.split(",");
-                    vetorY_NFZ[i] = new double[vY.length];
+                    vetY_NFZ[i] = new double[vY.length];
                     for (int j = 0; j < vY.length; j++){
-                        vetorY_NFZ[i][j] = Double.parseDouble(vY[j]);
+                        vetY_NFZ[i][j] = Double.parseDouble(vY[j]);
                     }
                 }
                 
-                vetorX_Penalty = new double[sizePenalty][];
-                vetorY_Penalty = new double[sizePenalty][];
+                vetX_Penalty = new double[sizePenalty][];
+                vetY_Penalty = new double[sizePenalty][];
                 
                 for (int i = 0; i < sizePenalty; i++){
                     sc.nextLine();
                     String valueX = sc.nextLine();
                     String valueY = sc.nextLine();
                     String vX[] = valueX.split(",");
-                    vetorX_Penalty[i] = new double[vX.length];
+                    vetX_Penalty[i] = new double[vX.length];
                     for (int j = 0; j < vX.length; j++){
-                        vetorX_Penalty[i][j] = Double.parseDouble(vX[j]);
+                        vetX_Penalty[i][j] = Double.parseDouble(vX[j]);
                     }
                     String vY[] = valueY.split(",");
-                    vetorY_Penalty[i] = new double[vY.length];
+                    vetY_Penalty[i] = new double[vY.length];
                     for (int j = 0; j < vY.length; j++){
-                        vetorY_Penalty[i][j] = Double.parseDouble(vY[j]);
+                        vetY_Penalty[i][j] = Double.parseDouble(vY[j]);
                     }
                 }
                 
-                vetorX_Bonus = new double[sizeBonus][];
-                vetorY_Bonus = new double[sizeBonus][];
+                vetX_Bonus = new double[sizeBonus][];
+                vetY_Bonus = new double[sizeBonus][];
                 
                 for (int i = 0; i < sizeBonus; i++){
                     sc.nextLine();
                     String valueX = sc.nextLine();
                     String valueY = sc.nextLine();
                     String vX[] = valueX.split(",");
-                    vetorX_Bonus[i] = new double[vX.length];
+                    vetX_Bonus[i] = new double[vX.length];
                     for (int j = 0; j < vX.length; j++){
-                        vetorX_Bonus[i][j] = Double.parseDouble(vX[j]);
+                        vetX_Bonus[i][j] = Double.parseDouble(vX[j]);
                     }
                     String vY[] = valueY.split(",");
-                    vetorY_Bonus[i] = new double[vY.length];
+                    vetY_Bonus[i] = new double[vY.length];
                     for (int j = 0; j < vY.length; j++){
-                        vetorY_Bonus[i][j] = Double.parseDouble(vY[j]);
+                        vetY_Bonus[i][j] = Double.parseDouble(vY[j]);
                     }
                 }
             }
@@ -120,52 +120,52 @@ public class ReaderMap {
         return sizeBonus;
     }
 
-    public double[] getVetorX_NFZ(int i) {
-        return vetorX_NFZ[i];
+    public double[] getVetX_NFZ(int i) {
+        return vetX_NFZ[i];
     }
 
-    public double[] getVetorY_NFZ(int i) {
-        return vetorY_NFZ[i];
+    public double[] getVetY_NFZ(int i) {
+        return vetY_NFZ[i];
     }
 
-    public double[] getVetorX_Penalty(int i) {
-        return vetorX_Penalty[i];
+    public double[] getVetX_Penalty(int i) {
+        return vetX_Penalty[i];
     }
 
-    public double[] getVetorY_Penalty(int i) {
-        return vetorY_Penalty[i];
+    public double[] getVetY_Penalty(int i) {
+        return vetY_Penalty[i];
     }
 
-    public double[] getVetorX_Bonus(int i) {
-        return vetorX_Bonus[i];
+    public double[] getVetX_Bonus(int i) {
+        return vetX_Bonus[i];
     }
 
-    public double[] getVetorY_Bonus(int i) {
-        return vetorY_Bonus[i];
+    public double[] getVetY_Bonus(int i) {
+        return vetY_Bonus[i];
     }
 
-    public double[][] getVetorX_NFZ() {
-        return vetorX_NFZ;
+    public double[][] getVetX_NFZ() {
+        return vetX_NFZ;
     }
 
-    public double[][] getVetorY_NFZ() {
-        return vetorY_NFZ;
+    public double[][] getVetY_NFZ() {
+        return vetY_NFZ;
     }
 
-    public double[][] getVetorX_Penalty() {
-        return vetorX_Penalty;
+    public double[][] getVetX_Penalty() {
+        return vetX_Penalty;
     }
 
-    public double[][] getVetorY_Penalty() {
-        return vetorY_Penalty;
+    public double[][] getVetY_Penalty() {
+        return vetY_Penalty;
     }
 
-    public double[][] getVetorX_Bonus() {
-        return vetorX_Bonus;
+    public double[][] getVetX_Bonus() {
+        return vetX_Bonus;
     }
 
-    public double[][] getVetorY_Bonus() {
-        return vetorY_Bonus;
+    public double[][] getVetY_Bonus() {
+        return vetY_Bonus;
     }
     
 }

@@ -2,8 +2,6 @@ package uav.gcs.communication;
 
 import com.google.gson.Gson;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,17 +14,15 @@ import uav.gcs.replanner.MPGA4s;
 import uav.gcs.replanner.MS4s;
 import uav.gcs.replanner.Replanner;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeReplanner;
-import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
-import uav.generic.util.UtilString;
+import uav.generic.struct.reader.UtilRoute;
 
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationIFA {
+public class CommunicationIFA extends Communication{
 
     private Socket socket;
     private PrintWriter output;
@@ -68,6 +64,7 @@ public class CommunicationIFA {
         });
     }
 
+    @Override
     public void receiveData() {
         System.out.println("Trying to listen the connection of UAV-IFA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -102,10 +99,12 @@ public class CommunicationIFA {
         });
     }
 
+    @Override
     public void sendData(String msg) {
         output.println(msg);
     }
 
+    @Override
     public boolean isConnected() {
         if (input == null) {
             return false;
@@ -113,7 +112,8 @@ public class CommunicationIFA {
             return true;
         }
     }
-
+    
+    @Override
     public void close() {
         try {
             output.close();
@@ -184,8 +184,8 @@ public class CommunicationIFA {
         }else{
             System.out.println("Error: " + v[0]);
             System.out.println("Error: " + answer);
+            return;
         }
-        
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();
         if (!itIsOkExec) {
@@ -194,47 +194,14 @@ public class CommunicationIFA {
         } 
         Mission mission = new Mission();
         String path = v[3] + "routeGeo.txt";
-        boolean resp = readFileRoute(mission, path, 0);
+        boolean resp = UtilRoute.readRoute(mission, path, 0);
         if (!resp) {
             sendData("failure");
             return;
         }
         mission.printMission();
-        Gson gson = new Gson();
-        String jsonMission = gson.toJson(mission);
-        sendData(jsonMission);
+        sendData(new Gson().toJson(mission));
         isRunningReplanner = false;
-    }
-    
-    private boolean readFileRoute(Mission wps, String path, int time) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
-            String sCurrentLine;
-            double lat = 0.0;
-            double lng = 0.0;
-            double alt = 0.0;
-            while ((sCurrentLine = br.readLine()) != null) {
-                sCurrentLine = UtilString.changeValueSeparator(sCurrentLine);
-                String s[] = sCurrentLine.split(";");
-                lat = Double.parseDouble(s[0]);
-                lng = Double.parseDouble(s[1]);
-                alt = Double.parseDouble(s[2]);
-                if (time > 1) {
-                    wps.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
-                }
-                time++;
-            }
-            if (wps.getMission().size() > 0) {
-                wps.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
-            }
-            return true;
-        } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: readFileRoute()");
-            return false;
-        } catch (IOException ex) {
-            System.out.println("Warning [IOException]: readFileRoute()");
-            return false;
-        }
     }
 
     public boolean isRunningReplanner() {

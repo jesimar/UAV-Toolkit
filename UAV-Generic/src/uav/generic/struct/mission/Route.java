@@ -45,7 +45,7 @@ public class Route {
     }
     
     public void printRoute(){
-        StandardPrints.printMsgEmph("Route");
+        StandardPrints.printMsgEmph("Route [Size: " + route.size() + "]");
         for (Waypoint wpt: route){
             StandardPrints.printMsgEmph(wpt.toString());
         }

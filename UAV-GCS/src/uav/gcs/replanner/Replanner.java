@@ -2,9 +2,8 @@ package uav.gcs.replanner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
 import uav.gcs.struct.Drone;
+import uav.generic.struct.thread.RunThread;
 
 /**
  * Classe que modela o replanejador de rota do drone evitando obstáculos.
@@ -59,35 +58,10 @@ public abstract class Replanner {
     
     boolean execMethod() {
         try{
-            boolean print = false;
-            boolean error = false;
-            File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(cmdExecReplanner, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (error) {
-                        while (sc.hasNextLine()) {
-                            System.err.println("err:" + sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
+            boolean isPrint = false;
+            boolean isPrintError = false;
+            String cmd = cmdExecReplanner;
+            RunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
             System.out.println("Warning [IOException] execMethod()");

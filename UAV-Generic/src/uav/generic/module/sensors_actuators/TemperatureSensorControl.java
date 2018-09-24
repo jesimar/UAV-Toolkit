@@ -24,7 +24,6 @@ public class TemperatureSensorControl {
     
     public void startTemperatureSensor(){
         try {
-            File f = new File(config.getDirTemperatureSensor());
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar temperature-pc.jar";
@@ -37,19 +36,24 @@ public class TemperatureSensorControl {
                     cmd = "./device";
                 }
             }
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
+            File file = new File(config.getDirTemperatureSensor());
+            final Process comp = Runtime.getRuntime().exec(cmd, null, file);
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
                     Scanner sc = new Scanner(comp.getInputStream());
                     while (sc.hasNextLine()) {
-                        temperature = Double.parseDouble(sc.nextLine());
+                        try{
+                            temperature = Double.parseDouble(sc.nextLine());
+                        }catch (NumberFormatException ex){
+                            temperature = -1;
+                        }
                     }
                     sc.close();
                 }
             });
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] startSonar()");
+            StandardPrints.printMsgWarning("Warning [IOException] startTemperatureSensor()");
         } 
     }
 
