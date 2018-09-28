@@ -12,7 +12,7 @@ import uav.generic.struct.Waypoint;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.FixedWing;
+import uav.generic.hardware.aircraft.DroneFixedWing;
 
 /**
  * Classe que modela o planejador de rotas HGA4m. 
@@ -83,20 +83,20 @@ public class HGA4m extends Planner{
                 double dx = px3 - px1;
                 double dy = py3 - py1;
                 double norm = Math.sqrt(dx*dx+dy*dy);
-                double vc = drone.getSpeedCruize();
+                double vc = drone.getAttributes().getSpeedCruize();
                 vx2 = dx * vc/norm;
                 vy2 = dy * vc/norm;
             }   
             
             PrintStream print = new PrintStream(new File(dir + "mission-config.sgl"));
             print.println("----------- start state (px py vx vy) -----------");
-            if (drone instanceof FixedWing){
+            if (drone instanceof DroneFixedWing){
                 print.println(px1 + "," + py1 + "," + vx1 + "," + vy1);
             } else {
                 print.println(px1 + "," + py1 + ",0.0,0.0");
             }
             print.println("--------------- end point (px py)---------------");
-            if (drone instanceof FixedWing){
+            if (drone instanceof DroneFixedWing){
                 print.println(px2 + "," + py2 + "," + vx2 + "," + vy2);
             } else {
                 print.println(px2 + "," + py2 + ",0.0,0.0");
@@ -169,7 +169,7 @@ public class HGA4m extends Planner{
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
-                if (!drone.getStatusUAV().armed){
+                if (!drone.getSensors().getStatusUAV().armed){
                     System.exit(1);
                 }
             }

@@ -3,7 +3,7 @@ package uav.gcs.replanner;
 import java.io.File;
 import java.io.IOException;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.thread.RunThread;
+import uav.generic.util.UtilRunThread;
 
 /**
  * Classe que modela o replanejador de rota do drone evitando obstáculos.
@@ -61,13 +61,15 @@ public abstract class Replanner {
             boolean isPrint = false;
             boolean isPrintError = false;
             String cmd = cmdExecReplanner;
-            RunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
+            UtilRunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
-            System.out.println("Warning [IOException] execMethod()");
+            System.err.println("Error [IOException] execMethod()");
+            ex.printStackTrace();
             return false;
         } catch (InterruptedException ex) {
-            System.out.println("Warning [InterruptedException] execMethod()");
+            System.err.println("Error [InterruptedException] execMethod()");
+            ex.printStackTrace();
             return false;
         }
     }   

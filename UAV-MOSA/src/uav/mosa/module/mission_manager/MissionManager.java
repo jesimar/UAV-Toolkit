@@ -2,23 +2,22 @@ package uav.mosa.module.mission_manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Scanner;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_communication.DataCommunication;
-import uav.generic.module.sensors_actuators.BuzzerControl;
-import uav.generic.module.sensors_actuators.CameraControl;
+import uav.generic.module.comm.DataAcquisitionS2DK;
+import uav.generic.module.actuators.BuzzerControl;
+import uav.generic.module.sensors.CameraControl;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.FixedWing;
-import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.hardware.aircraft.DroneFixedWing;
+import uav.generic.hardware.aircraft.DroneRotaryWing;
+import uav.generic.module.comm.DataAcquisition;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
 import uav.generic.struct.constants.TypeAircraft;
-import uav.generic.struct.constants.TypeBehavior;
 import uav.generic.struct.constants.LocalExecPlanner;
+import uav.generic.struct.constants.TypeDataAcquisitionUAV;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypePlanner;
@@ -29,7 +28,8 @@ import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StatePlanning;
-import uav.generic.struct.reader.ReaderFileMission;
+import uav.generic.reader.ReaderFileMission;
+import uav.generic.util.UtilFile;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilGeom;
 import uav.mosa.module.communication_control.CommunicationGCS;
@@ -44,7 +44,7 @@ public class MissionManager {
     
     public static PointGeo pointGeo;
     private final Drone drone;
-    private final DataCommunication dataAcquisition;
+    private final DataAcquisition dataAcquisition;
     private final CommunicationIFA communicationIFA;
     private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
@@ -98,23 +98,30 @@ public class MissionManager {
         }
         
         if (config.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
-            drone = new FixedWing(config.getUavName(), 
+            drone = new DroneFixedWing(config.getUavName(), 
                     config.getUavSpeedCruize(), config.getUavSpeedMax(), 
                     config.getUavMass(), config.getUavPayload(), 
                     config.getUavEndurance());
         } else if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
-            drone = new RotaryWing(config.getUavName(), 
+            drone = new DroneRotaryWing(config.getUavName(), 
                     config.getUavSpeedCruize(), config.getUavSpeedMax(), 
                     config.getUavMass(), config.getUavPayload(), 
                     config.getUavEndurance());
         } else{
-            drone = new RotaryWing("iDroneAlpha");
+            drone = new DroneRotaryWing("iDroneAlpha");
         }
         
-        createFileLogOverhead();
-        this.dataAcquisition = new DataCommunication(drone, "MOSA", 
-                config.getHostS2DK(), config.getPortNetworkS2DK(), 
-                printLogOverhead);
+        printLogOverhead = UtilFile.createFileLog("log-overhead-ifa", ".csv");
+        
+        if (config.getTypeDataAcquisition().equals(TypeDataAcquisitionUAV.DRONEKIT)){
+            this.dataAcquisition = new DataAcquisitionS2DK(drone, "MOSA", 
+                    config.getHostS2DK(), config.getPortNetworkS2DK(), 
+                    printLogOverhead);
+        }else{
+            dataAcquisition = null;
+            System.out.println("Type data acquisition not supported");
+            System.exit(1);
+        }
         this.wptsMission3D = new Mission3D();
         readMission3D();
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition, wptsMission3D); 
@@ -147,10 +154,10 @@ public class MissionManager {
         
         dataAcquisition.getParameters();
         
-        communicationIFA.connectServerIFA();    //blocked        
+        communicationIFA.connectServer();       //blocked        
         communicationIFA.receiveData();         //Thread 
         
-        communicationGCS.startServerMOSA();     //Thread        
+        communicationGCS.startServer();         //Thread        
         communicationGCS.receiveData();         //Thread 
                 
         monitoringAircraft();                   //Thread
@@ -166,31 +173,14 @@ public class MissionManager {
         StandardPrints.printMsgEmph("initialized ..."); 
     }
     
-    private void createFileLogOverhead(){
-        try {
-            int i = 0;
-            File file;
-            do{
-                i++;
-                file = new File("log-overhead-mosa" + i + ".csv");  
-            }while(file.exists());
-            printLogOverhead = new PrintStream(file);
-        } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogOverhead()");
-            ex.printStackTrace();
-            System.exit(1);
-        } catch(Exception ex){
-            StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
-            ex.printStackTrace();
-            System.exit(1);
-        }
-    }
-    
     private void readMission3D(){
         try {
             if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
                 if (config.getTypePlanner().equals(TypePlanner.HGA4M)){
                     String path = config.getDirPlanner() + config.getFileMissionPlannerHGA4m();
+                    ReaderFileMission.mission3D(new File(path), wptsMission3D);
+                }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
+                    String path = config.getDirPlanner() + config.getFileMissionPlannerAStar4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }
@@ -269,7 +259,7 @@ public class MissionManager {
                     while(stateMOSA != StateSystem.DISABLED){
                         timeActual = System.currentTimeMillis();
                         double timeDiff = (timeActual - timeInit)/1000.0;
-                        drone.setTime(timeDiff);
+                        drone.getInfo().setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
                         if (config.hasPowerModule() || 
                                 !config.getOperationMode()
@@ -286,19 +276,19 @@ public class MissionManager {
                         }
                         
                         if (communicationGCS.isBehaviorChanged()){
-                            actionChangeBehavior();
+                            decisonMaking.actionChangeBehavior(config.getTypeBehavior());
                             communicationGCS.setBehaviorChanged(false);
                         }
                         if (communicationGCS.isBehaviorChangedCircle()){
-                            actionChangeBehavior("CIRCLE");
+                            decisonMaking.actionChangeBehavior("CIRCLE");
                             communicationGCS.setBehaviorChangedCircle(false);
                         }
                         if (communicationGCS.isBehaviorChangedTriangle()){
-                            actionChangeBehavior("TRIANGLE");
+                            decisonMaking.actionChangeBehavior("TRIANGLE");
                             communicationGCS.setBehaviorChangedTriangle(false);
                         }
                         if (communicationGCS.isBehaviorChangedRectangle()){
-                            actionChangeBehavior("RECTANGLE");
+                            decisonMaking.actionChangeBehavior("RECTANGLE");
                             communicationGCS.setBehaviorChangedRectangle(false);
                         }
                         
@@ -334,9 +324,9 @@ public class MissionManager {
                     try {
                         if (communicationIFA.isStartMission()){
                             if (config.getLocalExecPlanner().equals(LocalExecPlanner.ONBOARD)){
-                                decisonMaking.actionToDoSomething();
+                                decisonMaking.actionForMissionOnboard();
                             }else{
-                                decisonMaking.actionToDoSomethingOffboard(communicationGCS);
+                                decisonMaking.actionForMissionOffboard(communicationGCS);
                             }
                             break;
                         }
@@ -395,9 +385,9 @@ public class MissionManager {
      * questões relacionados a ordem dos fatos. Por exemplo, Case-III do artigo IROS.
      */  
     private void actionTurnOnTheBuzzer(){   
-        double lat = drone.getGPS().lat;
-        double lng = drone.getGPS().lng;
-        double alt = drone.getBarometer().alt_rel;
+        double lat = drone.getSensors().getGPS().lat;
+        double lng = drone.getSensors().getGPS().lng;
+        double alt = drone.getSensors().getBarometer().alt_rel;
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
@@ -424,9 +414,9 @@ public class MissionManager {
     }
     
     private void actionTakeAPicture(){
-        double lat = drone.getGPS().lat;
-        double lng = drone.getGPS().lng;
-        double alt = drone.getBarometer().alt_rel;        
+        double lat = drone.getSensors().getGPS().lat;
+        double lng = drone.getSensors().getGPS().lng;
+        double alt = drone.getSensors().getBarometer().alt_rel;        
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
@@ -452,9 +442,9 @@ public class MissionManager {
     }
     
     private void actionMakeAVideo(){
-        double lat = drone.getGPS().lat;
-        double lng = drone.getGPS().lng;
-        double alt = drone.getBarometer().alt_rel;        
+        double lat = drone.getSensors().getGPS().lat;
+        double lng = drone.getSensors().getGPS().lng;
+        double alt = drone.getSensors().getBarometer().alt_rel;        
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
@@ -480,9 +470,9 @@ public class MissionManager {
     }
     
     private void actionPhotoInSequence(){
-        double lat = drone.getGPS().lat;
-        double lng = drone.getGPS().lng;
-        double alt = drone.getBarometer().alt_rel;        
+        double lat = drone.getSensors().getGPS().lat;
+        double lng = drone.getSensors().getGPS().lng;
+        double alt = drone.getSensors().getBarometer().alt_rel;        
         double distH = Integer.MAX_VALUE;
         double distV = Integer.MAX_VALUE;
         int index = 0;
@@ -507,112 +497,11 @@ public class MissionManager {
         }
     }
     
-    private void actionChangeBehavior(){    
-        String disc = config.getDiscretizationBehavior();
-        String cmd = "";
-        if (config.getTypeBehavior().equals(TypeBehavior.CIRCLE)){
-            String dist = config.getRadiusCircleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " CIRCLE " + dist + " " + disc;
-        }else if (config.getTypeBehavior().equals(TypeBehavior.TRIANGLE)){
-            String dist = config.getBaseTriangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " TRIANGLE " + dist + " " + disc;
-        }else if (config.getTypeBehavior().equals(TypeBehavior.RECTANGLE)){
-            String dist = config.getBaseRectangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " RECTANGLE " + dist + " " + disc;
-        }
-        String dir = config.getDirBehavior();
-        try {
-            boolean print = true;
-            File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
-            Mission mission = new Mission();
-            String path = dir + "route-behavior.txt";
-            boolean respFile = decisonMaking.readFileRoute(mission, path);
-            if (!respFile){
-                return;
-            }
-//            mission.printMission();
-            if (mission.getMission().size() > 0){
-                dataAcquisition.setMission(mission);
-            }
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] actionChangeBehavior()");
-        } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] actionChangeBehavior()");
-        } 
-    }
-    
-    private void actionChangeBehavior(String type){    
-        String disc = config.getDiscretizationBehavior();
-        String cmd = "";
-        if (type.equals(TypeBehavior.CIRCLE)){
-            String dist = config.getRadiusCircleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " CIRCLE " + dist + " " + disc;
-        }else if (type.equals(TypeBehavior.TRIANGLE)){
-            String dist = config.getBaseTriangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " TRIANGLE " + dist + " " + disc;
-        }else if (type.equals(TypeBehavior.RECTANGLE)){
-            String dist = config.getBaseRectangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getGPS().lat + " " + drone.getGPS().lng 
-                    + " " + drone.getBarometer().alt_rel + " RECTANGLE " + dist + " " + disc;
-        }
-        String dir = config.getDirBehavior();
-        try {
-            boolean print = true;
-            File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
-            Mission mission = new Mission();
-            String path = dir + "route-behavior.txt";
-            boolean respFile = decisonMaking.readFileRoute(mission, path);
-            if (!respFile){
-                return;
-            }
-//            mission.printMission();
-            if (mission.getMission().size() > 0){
-                dataAcquisition.setMission(mission);
-            }
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] actionChangeBehavior()");
-        } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] actionChangeBehavior()");
-        } 
-    }
-    
     private boolean waypointWasReached(double latDest, double lngDest, double altDest){   
         double distH = UtilGeom.distanceEuclidian(
-                drone.getGPS().lat, drone.getGPS().lng, latDest, lngDest);
-        double distV = Math.abs(drone.getBarometer().alt_rel - altDest);
+                drone.getSensors().getGPS().lat, drone.getSensors().getGPS().lng, 
+                latDest, lngDest);
+        double distV = Math.abs(drone.getSensors().getBarometer().alt_rel - altDest);
         if (distV < verticalErrorBarometer && distH < horizontalErrorGPS * Constants.ONE_METER){
             return true;
         }else{

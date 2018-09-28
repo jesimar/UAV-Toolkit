@@ -23,4 +23,6 @@ public class Constants {
     public static final int TIME_TO_SLEEP_WAITING_FOR_AN_ACTION = 100;//in milliseconds
     public static final int TIME_TO_SLEEP_MONITORING_STATE_MACHINE = 100;//in milliseconds
     
+    public static final int TIME_TO_SLEEP_NEXT_FIXED_ROUTE = 20000;//in milliseconds
+    
 }

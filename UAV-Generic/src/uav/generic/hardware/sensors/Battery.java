@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela a bateria do drone.
+ * Classe que modela a bateria do drone (dados obtidos através do power módule).
  * @author Jesimar S. Arantes
  */
 public class Battery {

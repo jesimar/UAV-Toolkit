@@ -2,9 +2,6 @@ package uav.mosa.module.path_planner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
-import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.constants.TypeCC;
 import uav.generic.struct.mission.Mission;
@@ -12,7 +9,8 @@ import uav.generic.struct.mission.Mission3D;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.util.UtilRunThread;
 import uav.mosa.module.mission_manager.MissionManager;
 
 /**
@@ -56,9 +54,8 @@ public abstract class Planner {
     
     boolean execMethod(){
         try {
-            boolean print = false;
-            boolean error = false;
-            File f = new File(dir);
+            boolean isPrint = true;
+            boolean isPrintError = true;
             String cmd = "";
             if (config.getTypePlanner().equals(TypePlanner.HGA4M) || 
                     config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
@@ -73,38 +70,15 @@ public abstract class Planner {
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 cmd = config.getCmdExecPlanner();
             }
-            final Process comp = Runtime.getRuntime().exec(cmd, null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (error) {
-                        while (sc.hasNextLine()) {
-                            System.err.println("err:" + sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
+            UtilRunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execMethod()");
+            System.err.println("Error [IOException] execMethod()");
+            ex.printStackTrace();
             return false;
         } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execMethod()");
+            System.err.println("Error [InterruptedException] execMethod()");
+            ex.printStackTrace();
             return false;
         }
     }

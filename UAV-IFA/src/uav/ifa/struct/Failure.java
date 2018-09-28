@@ -25,12 +25,12 @@ public class Failure {
      * @param typeFailure type of failure occurred
      */
     public Failure(Drone drone, TypeFailure typeFailure) {
-        this.time = drone.getTime();
-        this.lat = drone.getGPS().lat;
-        this.lng = drone.getGPS().lng;
-        this.alt_rel = drone.getBarometer().alt_rel;
-        this.levelBattery = drone.getBattery().level;
-        this.satellitesVisible = drone.getGPSInfo().satellitesVisible;
+        this.time = drone.getInfo().getTime();
+        this.lat = drone.getSensors().getGPS().lat;
+        this.lng = drone.getSensors().getGPS().lng;
+        this.alt_rel = drone.getSensors().getBarometer().alt_rel;
+        this.levelBattery = drone.getSensors().getBattery().level;
+        this.satellitesVisible = drone.getSensors().getGPSInfo().satellitesVisible;
         this.typeFailure = typeFailure;
     }
     

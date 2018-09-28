@@ -1,4 +1,0 @@
-#posicao origem
-0.0;0.0
-#posicao destino
-0.0;10.0

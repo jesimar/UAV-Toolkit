@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
-import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.module.comm.DataAcquisitionS2DK;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.hardware.aircraft.DroneRotaryWing;
+import uav.generic.module.comm.DataAcquisition;
 
 /**
  *
@@ -18,7 +19,7 @@ public final class UAVMonitoring {
     private final long timeInit;
     private long timeActual;
     private final Drone drone;
-    private final DataCommunication dataAcquisition;
+    private final DataAcquisition dataAcquisition;
     private PrintStream printLogAircraft;
        
     public static void main(String[] args) {
@@ -31,8 +32,8 @@ public final class UAVMonitoring {
         
     public UAVMonitoring() {
         timeInit = System.currentTimeMillis();
-        this.drone = new RotaryWing("iDroneAlpha");    
-        this.dataAcquisition = new DataCommunication(drone, "IFA");                
+        this.drone = new DroneRotaryWing("iDroneAlpha");    
+        this.dataAcquisition = new DataAcquisitionS2DK(drone, "IFA");                
     }
     
     public void createFileLogAircraft(){
@@ -61,7 +62,7 @@ public final class UAVMonitoring {
                     try {
                         timeActual = System.currentTimeMillis();
                         double timeDiff = (timeActual - timeInit)/1000.0;
-                        drone.setTime(timeDiff);
+                        drone.getInfo().setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();    
                         System.out.println(drone.toString());
                         printLogAircraft.println(drone.toString());

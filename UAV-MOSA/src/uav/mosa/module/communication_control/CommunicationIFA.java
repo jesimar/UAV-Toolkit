@@ -8,7 +8,9 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.module.comm.Client;
+import uav.generic.module.comm.Communication;
+import uav.generic.reader.ReaderFileConfig;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
@@ -17,12 +19,8 @@ import uav.generic.struct.states.StateCommunication;
  * Classe que faz o controle da comunicação com o sistema IFA.
  * @author Jesimar S. Arantes
  */
-public class CommunicationIFA {
+public class CommunicationIFA extends Communication implements Client{         
     
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;         
-    private StateCommunication stateCommunication;
     private final Drone drone;
     private final ReaderFileConfig config;
     private boolean startMission;
@@ -33,18 +31,19 @@ public class CommunicationIFA {
      */
     public CommunicationIFA(Drone drone){      
         this.drone = drone;
-        stateCommunication = StateCommunication.WAITING;
-        startMission = false;
-        config = ReaderFileConfig.getInstance();
+        this.stateCommunication = StateCommunication.WAITING;
+        this.config = ReaderFileConfig.getInstance();
+        this.startMission = false;
     }
     
-    public void connectServerIFA(){        
+    @Override
+    public void connectServer(){        
         try{
-            StandardPrints.printMsgEmph("connecting in the IFA ...");
+            StandardPrints.printMsgEmph("MOSA connecting in the IFA ...");
             socket = new Socket(config.getHostIFA(), config.getPortNetworkIFAandMOSA());
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
-            StandardPrints.printMsgEmph("MOSA connected in IFA ...");
+            StandardPrints.printMsgEmph("MOSA connected in IFA");
         }catch(IOException ex){
             StandardPrints.printMsgWarning("Warning [IOException] connectClient()");
             ex.printStackTrace();
@@ -52,36 +51,38 @@ public class CommunicationIFA {
         }
     }
     
+    @Override
     public void receiveData(){
         stateCommunication = StateCommunication.LISTENING;
-        StandardPrints.printMsgEmph("listening to the connection with IFA...");
+        StandardPrints.printMsgEmph("MOSA listening to the connection with IFA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable(){            
             @Override
             public void run(){
                 try{
                     while (true){
-                        String answer = input.readLine();
-                        if (answer != null){
-                            StandardPrints.printMsgYellow("Data IFA: " + answer);
-//                            if (answer.contains(TypeMsgCommunication.IFA_MOSA_HOMELOCATION)){
-//                                String home = answer.substring(23);                               
-//                                String h[] = home.split(", ");
-//                                double lat = Double.parseDouble(h[0]);
-//                                double lng = Double.parseDouble(h[1]);
-//                                double alt = Double.parseDouble(h[2]);
-//                                drone.defineHomeLocation(lat, lng, alt);
-//                            } else 
-                            if (answer.equals(TypeMsgCommunication.IFA_MOSA_START)){
-                                startMission = true;
-                                sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
-                            } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
-                                sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
-                                Thread.sleep(100);
-                                System.exit(1);
-                            }
-                        }else{
-                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
-                        }                    
+                        if (input != null){
+                            String answer = input.readLine();
+                            if (answer != null){
+                                StandardPrints.printMsgYellow("Data IFA: " + answer);
+    //                            if (answer.contains(TypeMsgCommunication.IFA_MOSA_HOMELOCATION)){
+    //                                String home = answer.substring(23);                               
+    //                                String h[] = home.split(", ");
+    //                                double lat = Double.parseDouble(h[0]);
+    //                                double lng = Double.parseDouble(h[1]);
+    //                                double alt = Double.parseDouble(h[2]);
+    //                                drone.defineHomeLocation(lat, lng, alt);
+    //                            } else 
+                                if (answer.equals(TypeMsgCommunication.IFA_MOSA_START)){
+                                    startMission = true;
+                                    sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
+                                } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
+                                    sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
+                                    Thread.sleep(100);
+                                    System.exit(1);
+                                }
+                            } 
+                        }
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex){
                     StandardPrints.printMsgError2("Error [InterruptedException] receiveData()");
@@ -94,31 +95,10 @@ public class CommunicationIFA {
                 } 
             }
         });
-    }
-    
-    public void sendData(String msg){
-        output.println(msg);
-    }
-    
-    public StateCommunication getStateCommunication() {
-        return stateCommunication;
-    }      
+    }     
 
     public boolean isStartMission() {
         return startMission;
-    }
-    
-    public void close(){
-        try {
-            output.close();
-            input.close();            
-            socket.close();
-            stateCommunication = StateCommunication.DISABLED;
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] close()");
-            ex.printStackTrace();
-            stateCommunication = StateCommunication.DISABLED;
-        }
     }
 
 }

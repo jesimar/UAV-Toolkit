@@ -1,7 +1,7 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela algumas informações do GPS do drone.
+ * Classe que modela algumas informações do GPS do drone (dados obtidos através do GPS).
  * @author Jesimar S. Arantes
  */
 public class GPSInfo {

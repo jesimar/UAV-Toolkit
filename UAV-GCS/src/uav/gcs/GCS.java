@@ -29,11 +29,12 @@ import uav.gcs.commands.voice.VoiceCommands;
 import uav.gcs.communication.CommunicationMOSA;
 import uav.gcs.plotmap.PanelPlotGoogleMaps;
 import uav.gcs.plotmap.PanelPlotMission;
+import uav.gcs.struct.EnabledResources;
 import uav.gcs.window.LabelsInfo;
-import uav.gcs2.StartModules;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.util.UtilRunScript;
 import uav.generic.util.UtilGeo;
 
 /**
@@ -43,6 +44,8 @@ public final class GCS extends JFrame {
 
     public static PointGeo pointGeo;
     private final JPanel panelTop;
+    private final JPanel panelTopMenu1;
+    private final JPanel panelTopMenu2;
     private final JPanel panelMain;
     private final JPanel panelLeft;
     private final JPanel panelRightStatus;
@@ -70,6 +73,15 @@ public final class GCS extends JFrame {
     private JButton btnBlink;
     private JButton btnSpraying;
     private JButton btnParachute;
+    
+    private JButton btnShowRoutePlanner;
+    private JButton btnShowRouteReplanner;
+    private JButton btnShowRouteSimplifier;
+    private JButton btnShowRouteDrone;
+    private JButton btnShowPositionDrone;
+    private JButton btnShowMarkers;
+    private JButton btnShowMap;
+    private JButton btnMaxDistReached;
 
     private final JButton btnKeyboardCommands;
     private final JButton btnVoiceCommands;
@@ -85,6 +97,7 @@ public final class GCS extends JFrame {
 
     private final Drone drone;
     private final ReaderFileConfig config;
+    private final EnabledResources enabledResources;
     private final CommunicationIFA communicationIFA;
     private final CommunicationMOSA communicationMOSA;
 
@@ -99,6 +112,7 @@ public final class GCS extends JFrame {
     public GCS() {
         Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
+        enabledResources = EnabledResources.getInstance();
         if (!config.read()) {
             System.exit(1);
         }
@@ -120,10 +134,8 @@ public final class GCS extends JFrame {
         }
 
         drone = new Drone(config.getUserEmail());
-        communicationIFA = new CommunicationIFA(drone, config.getHostIFA(),
-                config.getPortNetworkIFAandGCS());
-        communicationMOSA = new CommunicationMOSA(drone, config.getHostMOSA(),
-                config.getPortNetworkMOSAandGCS());
+        communicationIFA = new CommunicationIFA(drone);
+        communicationMOSA = new CommunicationMOSA(drone);
         keyboard = new KeyboardCommands(communicationIFA);
         voice = new VoiceCommands(communicationIFA);
         if (config.hasDB()) {
@@ -138,6 +150,19 @@ public final class GCS extends JFrame {
         panelTop.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelTop.setBackground(new Color(166, 207, 255));
         panelTop.setVisible(true);
+        
+        panelTopMenu1 = new JPanel();
+        panelTopMenu1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelTopMenu1.setBackground(new Color(95, 161, 255));
+        panelTopMenu1.setVisible(true);
+        
+        panelTopMenu2 = new JPanel();
+        panelTopMenu2.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelTopMenu2.setBackground(new Color(95, 161, 255));
+        panelTopMenu2.setVisible(true);
+        
+        panelTop.add(panelTopMenu1);
+        panelTop.add(panelTopMenu2);
 
         JButton btnAbout = new JButton("About");
         btnAbout.setPreferredSize(new Dimension(120, 25));
@@ -147,7 +172,7 @@ public final class GCS extends JFrame {
                 showAbout();
             }
         });
-        panelTop.add(btnAbout);
+        panelTopMenu1.add(btnAbout);
 
         JButton btnExit = new JButton("Exit");
         btnExit.setPreferredSize(new Dimension(120, 25));
@@ -157,7 +182,87 @@ public final class GCS extends JFrame {
                 System.exit(0);
             }
         });
-        panelTop.add(btnExit);
+        panelTopMenu1.add(btnExit);
+        
+        btnShowRoutePlanner = new JButton("Show Route Planner");
+        btnShowRoutePlanner.setPreferredSize(new Dimension(170, 25));
+        btnShowRoutePlanner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showRoutePlanner = !enabledResources.showRoutePlanner;
+            }
+        });
+        panelTopMenu2.add(btnShowRoutePlanner);
+        
+        btnShowRouteReplanner = new JButton("Show Route Replanner");
+        btnShowRouteReplanner.setPreferredSize(new Dimension(170, 25));
+        btnShowRouteReplanner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showRouteReplanner = !enabledResources.showRouteReplanner;
+            }
+        });
+        panelTopMenu2.add(btnShowRouteReplanner);
+        
+        btnShowRouteSimplifier = new JButton("Show Route Simplifier");
+        btnShowRouteSimplifier.setPreferredSize(new Dimension(170, 25));
+        btnShowRouteSimplifier.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showRouteSimplifier = !enabledResources.showRouteSimplifier;
+            }
+        });
+        panelTopMenu2.add(btnShowRouteSimplifier);
+        
+        btnShowRouteDrone = new JButton("Show Route Drone");
+        btnShowRouteDrone.setPreferredSize(new Dimension(170, 25));
+        btnShowRouteDrone.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showRouteDrone = !enabledResources.showRouteDrone;
+            }
+        });
+        panelTopMenu2.add(btnShowRouteDrone);
+        
+        btnShowPositionDrone = new JButton("Show Position Drone");
+        btnShowPositionDrone.setPreferredSize(new Dimension(170, 25));
+        btnShowPositionDrone.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showPositionDrone = !enabledResources.showPositionDrone;
+            }
+        });
+        panelTopMenu2.add(btnShowPositionDrone);
+        
+        btnShowMarkers = new JButton("Show Markers");
+        btnShowMarkers.setPreferredSize(new Dimension(170, 25));
+        btnShowMarkers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showMarkers = !enabledResources.showMarkers;
+            }
+        });
+        panelTopMenu2.add(btnShowMarkers);
+        
+        btnShowMap = new JButton("Show Map");
+        btnShowMap.setPreferredSize(new Dimension(170, 25));
+        btnShowMap.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showMap = !enabledResources.showMap;
+            }
+        });
+        panelTopMenu2.add(btnShowMap);
+        
+        btnMaxDistReached = new JButton("Show Max Dist Reached");
+        btnMaxDistReached.setPreferredSize(new Dimension(170, 25));
+        btnMaxDistReached.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledResources.showMaxDistReached = !enabledResources.showMaxDistReached;
+            }
+        });
+        panelTopMenu2.add(btnMaxDistReached);
 
         panelMain = new JPanel();
         panelMain.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -180,7 +285,7 @@ public final class GCS extends JFrame {
         btnClearSimulations.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StartModules.execClearSimulations();
+                UtilRunScript.execClearSimulations();
             }
         });
         panelLeft.add(btnClearSimulations);
@@ -190,7 +295,7 @@ public final class GCS extends JFrame {
         btnCopyFilesResults.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StartModules.execCopyFilesResults();
+                UtilRunScript.execCopyFilesResults();
             }
         });
         panelLeft.add(btnCopyFilesResults);
@@ -416,10 +521,10 @@ public final class GCS extends JFrame {
         });
         panelLeft.add(btnVoiceCommands);
 
-        communicationIFA.connectServerIFA();
+        communicationIFA.connectServer();
         communicationIFA.receiveData();
 
-        communicationMOSA.connectServerMOSA();
+        communicationMOSA.connectServer();
         communicationMOSA.receiveData();
 
         if (config.hasDB()) {
@@ -428,14 +533,14 @@ public final class GCS extends JFrame {
 
         panelRightStatus = new JPanel();
         panelRightStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelRightStatus.setBackground(new Color(95, 161, 255));
+        panelRightStatus.setBackground(new Color(230, 230, 230));
         panelRightStatus.setVisible(true);
 
         tab = new JTabbedPane();
 
         panelRight = new JPanel();
         panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelRight.setBackground(new Color(85, 141, 255));
+        panelRight.setBackground(new Color(255, 255, 255));
         panelRight.setVisible(true);
 
         panelPlotMission = new PanelPlotMission();
@@ -624,6 +729,8 @@ public final class GCS extends JFrame {
     public void setSize(int width, int height) {
         super.setSize(width, height);
         panelTop.setPreferredSize(new Dimension(width - 30, 70));
+        panelTopMenu1.setPreferredSize(new Dimension(140, 62));
+        panelTopMenu2.setPreferredSize(new Dimension(width - 140 - 20 - 30, 62));
         panelMain.setPreferredSize(new Dimension(width - 30, height - 110));
         panelLeft.setPreferredSize(new Dimension(200, height - 120));
         panelRightStatus.setPreferredSize(new Dimension(width - 30 - 200 - 20 - 20, 50));

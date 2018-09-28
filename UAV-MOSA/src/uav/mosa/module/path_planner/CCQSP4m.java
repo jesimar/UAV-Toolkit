@@ -93,7 +93,7 @@ public class CCQSP4m extends Planner{
             }
             if (countLines == 0){
                 StandardPrints.printMsgWarning("Route-Empty");
-                if (!drone.getStatusUAV().armed){
+                if (!drone.getSensors().getStatusUAV().armed){
                     System.exit(1);
                 }
             }

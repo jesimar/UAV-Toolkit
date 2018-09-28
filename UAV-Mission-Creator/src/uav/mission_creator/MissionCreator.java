@@ -12,6 +12,7 @@ import uav.mission_creator.file.ReaderFileConfigMission;
 import uav.mission_creator.file.PrinterFrontier;
 import uav.mission_creator.file.PrinterMapSGL_NFZ;
 import uav.mission_creator.file.PrinterMapSGL_IFA;
+import uav.mission_creator.file.PrinterMapSGL_NFZ_AStar;
 import uav.mission_creator.file.PrinterMissionSGL_CCQSP;
 import uav.mission_creator.file.PrinterPointsFailure;
 import uav.mission_creator.file.ReaderKML;
@@ -38,7 +39,8 @@ public class MissionCreator {
         Mission mission = new Mission();
         createFilePreProcessor();
         readerKML(mission);
-        createFileSGL_NFZ(mission);        
+        createFileSGL_NFZ(mission); 
+        createFileSGL_NFZ_AStar(mission);
         createFileSGL_Full(mission);
         createFileMissionCCQSP4m(mission);
         createFileGeoBase(mission);      
@@ -76,6 +78,14 @@ public class MissionCreator {
         PrinterMapSGL_NFZ mapNFZ = new PrinterMapSGL_NFZ(fileMapNFZ, mission);
         mapNFZ.printer();
         System.out.println("--------End PrinterMapSGL NFZ--------");
+    }
+    
+    private void createFileSGL_NFZ_AStar(Mission mission){
+        System.out.println("--------Begin PrinterMapSGL NFZ AStar--------");
+        File fileMapAstar = new File(config.getDirRouteKML() + "map-nfz-astar.sgl");
+        PrinterMapSGL_NFZ_AStar map = new PrinterMapSGL_NFZ_AStar(fileMapAstar, mission);
+        map.printer();
+        System.out.println("--------End PrinterMapSGL NFZ AStar--------");
     }
     
     private void createFileSGL_Full(Mission mission){

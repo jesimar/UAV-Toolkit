@@ -5,58 +5,59 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.sensors_actuators.BuzzerControl;
-import uav.generic.module.sensors_actuators.CameraControl;
-import uav.generic.module.sensors_actuators.LEDControl;
-import uav.generic.module.sensors_actuators.ParachuteControl;
-import uav.generic.module.sensors_actuators.SprayingControl;
+import uav.generic.module.actuators.BuzzerControl;
+import uav.generic.module.sensors.CameraControl;
+import uav.generic.module.actuators.LEDControl;
+import uav.generic.module.actuators.ParachuteControl;
+import uav.generic.module.actuators.SprayingControl;
+import uav.generic.module.comm.Communication;
+import uav.generic.module.comm.Server;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.reader.ReaderFileConfig;
-import uav.ifa.module.decision_making.DecisionMaking;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.struct.states.StateCommunication;
+import uav.ifa.module.decision_making.Controller;
 
 /**
  * Classe que faz o controle da comunicação com GCS.
  * @author Jesimar S. Arantes
  */
-public class CommunicationGCS {
+public class CommunicationGCS extends Communication implements Server{
     
     private ServerSocket server;
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
-
+    private final ReaderFileConfig config;
+    private final Drone drone;
+    private final Controller controller;
     private boolean hasFailure;
     private boolean hasFailureBadWeather;
     private boolean hasReceiveRouteGCS;
     private String routeReplannerGCS;
     private String typeAction;
-    private final ReaderFileConfig config;
-    private final Drone drone;
-    private final DecisionMaking decisonMaking;
+    
 
     /**
      * Class contructor.
      * @param drone instance of the drone
-     * @param decisonMaking instance of the DecisionMaking
+     * @param controller instance of the DecisionMaking
      */
-    public CommunicationGCS(Drone drone, DecisionMaking decisonMaking) {
+    public CommunicationGCS(Drone drone, Controller controller) {
         this.drone = drone;
-        this.decisonMaking = decisonMaking;
-        config = ReaderFileConfig.getInstance();
-        hasFailure = false;
-        hasFailureBadWeather = false;
-        hasReceiveRouteGCS = false;
-        typeAction = "";
+        this.controller = controller;
+        this.stateCommunication = StateCommunication.WAITING;
+        this.config = ReaderFileConfig.getInstance();
+        this.hasFailure = false;
+        this.hasFailureBadWeather = false;
+        this.hasReceiveRouteGCS = false;
+        this.typeAction = "";
     }
 
-    public void startServerIFA() {
-        StandardPrints.printMsgEmph("waiting a connection to UAV-GCS ...");
+    @Override
+    public void startServer() {
+        StandardPrints.printMsgEmph("IFA waiting the connection to UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -65,17 +66,20 @@ public class CommunicationGCS {
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     output = new PrintWriter(socket.getOutputStream(), true);
-                    StandardPrints.printMsgEmph("GCS connected in IFA ...");
+                    StandardPrints.printMsgEmph("IFA connected in UAV-GCS");
                 } catch (IOException ex) {
-                    StandardPrints.printMsgWarning("Warning [IOException] startServerGCS()");
+                    StandardPrints.printMsgWarning("Warning [IOException] startServer()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
 
+    @Override
     public void receiveData() {
-        StandardPrints.printMsgEmph("listening to the connection of UAV-GCS ...");
+        stateCommunication = StateCommunication.LISTENING;
+        StandardPrints.printMsgEmph("IFA listening to the connection with UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -125,27 +129,44 @@ public class CommunicationGCS {
                                 } else if (answer.equals(TypeInputCommand.CMD_OPEN_PARACHUTE)){
                                     ParachuteControl parachute = new ParachuteControl();
                                     parachute.open();
-                                } else if (answer.contains("mission")){
+                                } else if (answer.contains(TypeInputCommand.CMD_MISSION)){
                                     hasReceiveRouteGCS = true;
                                     routeReplannerGCS = answer;
                                 } else if (answer.contains("cmd: ")){
-                                    decisonMaking.interpretCommand(answer);
+                                    controller.interpretCommand(answer);
                                 }
                             }
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
-                    
+                    stateCommunication = StateCommunication.DISABLED;
                 } catch (IOException ex) {
-                    
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
+
+    @Override
+    public void close() {
+        super.close();
+        try {
+            server.close();
+            stateCommunication = StateCommunication.DISABLED;
+        } catch (IOException ex) {
+            System.err.println("Warning [IOException] close()");
+            ex.printStackTrace();
+            stateCommunication = StateCommunication.DISABLED;
+        } catch (Exception ex) {
+            System.err.println("Warning [Exception] close()");
+            ex.printStackTrace();
+            stateCommunication = StateCommunication.DISABLED;
+        }
+    }
     
     public void sendDataDrone() {
-        StandardPrints.printMsgEmph("sending data to the connection of UAV-GCS ...");
+        StandardPrints.printMsgEmph("IFA sending data drone to UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -157,17 +178,12 @@ public class CommunicationGCS {
                         Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
-                    StandardPrints.printMsgWarning("Warning [InterruptedException] sendData()");
+                    StandardPrints.printMsgWarning("Warning [InterruptedException] sendDataDrone()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 } 
             }
         });
-    }
-    
-    public void sendDataReplannerInGCS(String attributes){
-        if (output != null){
-            output.println(TypeMsgCommunication.IFA_GCS_REPLANNER + attributes);
-        }
     }
     
     public boolean hasFailure(){
@@ -189,16 +205,5 @@ public class CommunicationGCS {
     public String getTypeAction(){
         return typeAction;
     }
-
-    public void close() {
-        try {
-            output.close();
-            input.close();
-            socket.close();
-            server.close();
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] close()");
-            ex.printStackTrace();
-        }
-    }
+    
 }

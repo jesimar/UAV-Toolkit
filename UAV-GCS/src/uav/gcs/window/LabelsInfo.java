@@ -47,6 +47,8 @@ public class LabelsInfo {
     private final JLabel labelTypeFailure;
     private final JLabel labelEstTimeToDoRTL;
     private final JLabel labelEstConBatRTL;
+    private final JLabel labelEstMaxDist;
+    private final JLabel labelEstMaxTime;
     private final JLabel labelSonarDistance;
     private final JLabel labelTemperature;
 
@@ -226,6 +228,16 @@ public class LabelsInfo {
         labelEstConBatRTL.setForeground(Color.BLACK);
         panel.add(labelEstConBatRTL);
         
+        this.labelEstMaxDist = new JLabel("Estim. Max Dist: ");
+        labelEstMaxDist.setPreferredSize(new Dimension(160, 20));
+        labelEstMaxDist.setForeground(Color.BLACK);
+        panel.add(labelEstMaxDist);
+        
+        this.labelEstMaxTime = new JLabel("Estim. Max Time: ");
+        labelEstMaxTime.setPreferredSize(new Dimension(160, 20));
+        labelEstMaxTime.setForeground(Color.BLACK);
+        panel.add(labelEstMaxTime);
+        
         this.labelSonarDistance = new JLabel("Sonar Distance: ");
         labelSonarDistance.setPreferredSize(new Dimension(160, 20));
         labelSonarDistance.setForeground(Color.BLACK);
@@ -276,6 +288,8 @@ public class LabelsInfo {
         labelTypeFailure.setText(String.format("Type Fail: %s", drone.typeFailure));
         labelEstTimeToDoRTL.setText(String.format("Estim. Time RTL: %.1fs", drone.estimatedTimeToDoRTL));
         labelEstConBatRTL.setText(String.format("Estim. Bat RTL: %.1f%s", drone.estimatedConsumptionBatForRTL, "%"));
+        labelEstMaxDist.setText(String.format("Estim. Max Dist: %.1fm", drone.estimatedMaxDistReached));
+        labelEstMaxTime.setText(String.format("Estim. Max Time: %.1fs", drone.estimatedMaxTimeFlight));
         String distSonar = drone.sonar.distance == -1 ? "NONE" : drone.sonar.distance + "m";
         labelSonarDistance.setText(String.format("Sonar Distance: %s", distSonar));
         String temp = drone.temperature.temperature == -1 ? "NONE" : drone.temperature.temperature+"C";

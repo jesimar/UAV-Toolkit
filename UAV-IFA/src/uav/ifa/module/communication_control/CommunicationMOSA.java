@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.module.comm.Communication;
+import uav.generic.module.comm.Server;
+import uav.generic.reader.ReaderFileConfig;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
@@ -18,13 +19,10 @@ import uav.generic.struct.states.StateCommunication;
  * Classe que faz o controle da comunicação com o sistema MOSA.
  * @author Jesimar S. Arantes
  */
-public class CommunicationMOSA {
+public class CommunicationMOSA extends Communication implements Server{
     
     private ServerSocket server;
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
-    private StateCommunication stateCommunication;
+    
     private final Drone drone;    
     private final ReaderFileConfig config;
     private boolean mosaDisabled;
@@ -35,29 +33,31 @@ public class CommunicationMOSA {
      */
     public CommunicationMOSA(Drone drone) {
         this.drone = drone;
-        stateCommunication = StateCommunication.WAITING;
-        mosaDisabled = false;
-        config = ReaderFileConfig.getInstance();
+        this.stateCommunication = StateCommunication.WAITING;
+        this.mosaDisabled = false;
+        this.config = ReaderFileConfig.getInstance();
     }
 
-    public void startServerIFA() {
+    @Override
+    public void startServer() {
         try {
-            StandardPrints.printMsgEmph("waiting a connection from MOSA ...");
+            StandardPrints.printMsgEmph("IFA waiting the connection to MOSA ...");
             server = new ServerSocket(config.getPortNetworkIFAandMOSA());
             socket = server.accept();//wait the connection
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
-            StandardPrints.printMsgEmph("MOSA connected in IFA ...");
+            StandardPrints.printMsgEmph("IFA connected in MOSA");
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] startServerIFA()");
+            StandardPrints.printMsgWarning("Warning [IOException] startServer()");
             ex.printStackTrace();
             stateCommunication = StateCommunication.DISABLED;
         }
     }
 
+    @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
-        StandardPrints.printMsgEmph("listening to the connection with MOSA...");
+        StandardPrints.printMsgEmph("IFA listening to the connection with MOSA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -72,18 +72,15 @@ public class CommunicationMOSA {
 //                                            drone.getHomeLocation().string());
                                     sendData(TypeMsgCommunication.IFA_MOSA_START);
                                 } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STARTED)){
-                                    //Não precisa fazer nada
+                                    //No need to do anything
                                 } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_STOPPED)){
-                                    //Não precisa fazer nada
+                                    //No need to do anything
                                 } else if (answer.equals(TypeMsgCommunication.MOSA_IFA_DISABLED)){
                                     mosaDisabled = true;
                                 }
-                            } else {
-                                Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                             }
-                        } else {
-                            Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
-                        }
+                        } 
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
                     StandardPrints.printMsgWarning("Warning [InterruptedException] receiveData()");
@@ -98,30 +95,25 @@ public class CommunicationMOSA {
         });
     }
 
-    public void sendData(String msg) {
-        output.println(msg);
-    }
-    
-    public StateCommunication getStateCommunication() {
-        return stateCommunication;
-    } 
-
-    public boolean isMosaDisabled() {
-        return mosaDisabled;
-    }
-
+    @Override
     public void close() {
+        super.close();
         try {
-            output.close();
-            input.close();
-            socket.close();
             server.close();
             stateCommunication = StateCommunication.DISABLED;
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] close()");
+            System.err.println("Warning [IOException] close()");
+            ex.printStackTrace();
+            stateCommunication = StateCommunication.DISABLED;
+        } catch (Exception ex) {
+            System.err.println("Warning [Exception] close()");
             ex.printStackTrace();
             stateCommunication = StateCommunication.DISABLED;
         }
+    }
+
+    public boolean isMosaDisabled() {
+        return mosaDisabled;
     }
 
 }

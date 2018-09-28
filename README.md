@@ -28,17 +28,20 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 * **Figures** -> Pasta contendo um conjunto de figuras utilizada na documentação. [[Figures](./Figures/)]
 * **Instances** -> Conjunto de arquivos de instâncias de mapas artificiais e reais utilizados nos experimentos. [[Instances](./Instances/)]
 * **Libs** -> Bibliotecas utilizadas nos projetos aqui descritos. [[Libs](./Libs/)]
+* **Missions** -> Pasta contendo as missões utilizadas pelo sistemas UAV-Mission-Creator, UAV-IFA e UAV-MOSA. [[Missions](./Missions/)]
 * **Missions-Google-Earth** -> Agrupa um conjunto de missões feitas usando o software Google Earth. [[Missions-Google-Earth](./Missions-Google-Earth/)]
 * **Modules-Global** -> Agrupa um conjunto de código para acionar os sensores e atuadores. [[Modules-Global](./Modules-Global/)]
 * **Modules-IFA** -> Agrupa um conjunto de algoritmos usados pelo sistema IFA. [[Modules-IFA](./Modules-IFA/)]
 * **Modules-MOSA** -> Agrupa um conjunto de algoritmos usados pelo sistema MOSA. [[Modules-MOSA](./Modules-MOSA/)]
+* **Results** -> Pasta em que serão armazenados os resultados das simulações, caso se copie os resultados. [[Results](./Results/)]
 * **Scripts** -> Agrupa um conjunto de scripts utilizados para facilitar a execução de experimentos. [[Scripts](./Scripts/)]
 * **UAV-GCS** -> Projeto em Java que gerenciamento/controle/acompanhamento do voo autonomo usando o MOSA e IFA. [[UAV-GCS](./UAV-GCS/)]
 * **UAV-Generic** -> Projeto em Java que contém estruturas genéricas ao sistema MOSA e IFA. [[UAV-Generic](./UAV-Generic/)]
 * **UAV-IFA** -> Projeto em Java para gerenciamento da segurança em voo. [[UAV-IFA](./UAV-IFA/)]
-* **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo. [[UAV-MOSA](./UAV-MOSA/)]
+* **UAV-Manager** -> Projeto em Java contendo o gerenciador de instalação e execução de todo o ambiente UAV-Toolkit. [[UAV-Manager](./UAV-Manager/)]
 * **UAV-Mission-Creator** -> Projeto em Java que auxilia a criar missões e mapas usando o Google Earth. [[UAV-Mission-Creator](./UAV-Mission-Creator/)]
 * **UAV-Monitoring** -> Projeto em Java para monitoramento dos sensores e informações da aeronave. [[UAV-Monitoring](./UAV-Monitoring/)]
+* **UAV-MOSA** -> Projeto em Java para gerenciamento da missão em voo. [[UAV-MOSA](./UAV-MOSA/)]
 * **UAV-PosAnalyser** -> Projeto em Java para monitoramento da posição da aeronave. [[UAV-PosAnalyser](./UAV-PosAnalyser/)]
 * **UAV-S2DK** -> Código em python que provê serviços de acesso a informações do drone através do dronekit. [[UAV-S2DK](./UAV-S2DK/)]
 * **UAV-Tests** -> Projeto em Java para execução de testes das funcionalidades do UAV-S2DK. [[UAV-Tests](./UAV-Tests/)]
@@ -49,46 +52,49 @@ Nesse projeto podemos encontrar os seguintes diretórios:
 
 **Arquiteturas suportadas:**
 
-| Arquitetura x86                                                     | Arquitetura ARM                                         |
-|---------------------------------------------------------------------|---------------------------------------------------------|
-| ![](./Figures/logo-architecture-x86.png)                            | ![](./Figures/logo-architecture-arm.png)                |
-| Testado com 64 bits no Intel i3, i7 (PC), Intel Atom (Intel Edison) | Testado com 64 bits no ARMv7 (Raspberry Pi 2)           |
-| Ainda não testado em x86 32 bits                                    | Ainda não testado em ARM 32 bits                        |
+| Arquitetura x86 x64                                            | Arquitetura ARM                                          |
+|----------------------------------------------------------------|----------------------------------------------------------|
+| ![](./Figures/logo-architecture-x86.png)                       | ![](./Figures/logo-architecture-arm.png)                 |
+| Testado CPU: Intel i3, i7 (no PC) (64 bits)                    | Testado CPU: ARM Cortex-A7 (RPi 2) (32 bits)             |
+| Testado CPU: Intel Core i7-8750H Coffee Lake (no PC) (64 bits) | Testado CPU: ARM Cortex-A53 (RPi 3) (64 bits)            |
+| Testado CPU: Intel Atom (Intel Edison)                         | Testado CPU: ARM Cortex-A8 (BB Black Wireless) (64 bits) |
 
 OBS: A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Apenas os módulos que irão ser executados em voo podem ser instalados. Os planejadores que utilizam a biblioteca CPLEX não são suportados.
 
 **Sistemas operacionais suportados:**
 
-| Linux                            | Windows                            | Mac OS                         |
-|----------------------------------|------------------------------------|--------------------------------|
-| ![](./Figures/logo-os-linux.png) | ![](./Figures/logo-os-windows.png) | ![](./Figures/logo-os-mac.png) |
-| Testado com Ubuntu e Manjaro     | Testado com Windows 10             | Ainda não testado              |
+| Linux                                            | Windows                            | Mac OS                         |
+|--------------------------------------------------|------------------------------------|--------------------------------|
+| ![](./Figures/logo-os-linux.png)                 | ![](./Figures/logo-os-windows.png) | ![](./Figures/logo-os-mac.png) |
+| Testado SO: Ubuntu 16.04, 17.04, 18.04 e Manjaro | Testado SO: Windows 10             | Testado SO: N/A                |
 
 **Companion Computers suportados:**
 
-| Intel Edison                      | Raspberry Pi                    | BeagleBone Green                    | Odroid 
-|-----------------------------------|---------------------------------|-------------------------------------|-----------------------------------|
-| ![](./Figures/logo-cc-edison.png) | ![](./Figures/logo-cc-rpi.png)  | ![](./Figures/logo-cc-bb-green.png) | ![](./Figures/logo-cc-odroid.png) |
-| Testado com SO Yocto Linux        | Testado com SO Raspbian e RPi 2 | Ainda não testado                   | Ainda não testado                 |
+| Intel Edison                      | Raspberry Pi                       | BeagleBone                                | Odroid                            |
+|-----------------------------------|------------------------------------|-------------------------------------------|-----------------------------------|
+| ![](./Figures/logo-cc-edison.png) | ![](./Figures/logo-cc-rpi.png)     | ![](./Figures/logo-cc-bb-black.png)       | ![](./Figures/logo-cc-odroid.png) |
+| Testado SO: Yocto Linux           | Testado SO: Raspbian               | Testado SO: Debian                        | Testado SO: N/A                   |
+| Testado Modelo: Intel Edison      | Testado Modelo: RPi 2, 3           | Testado Modelo: BB Black Wireless         | Testado Modelo: N/A               |
 
 Outros CC suportados:
 
 * Intel Galileo (ainda não testado)
-* BeagleBone Black (ainda não testado)
+* Raspberry Pi Zero (ainda não testado)
 
 **Pilotos automáticos suportados:**
 
-| APM                            | Pixhawk                            |
-|--------------------------------|------------------------------------|
-| ![](./Figures/logo-ap-apm.png) | ![](./Figures/logo-ap-pixhawk.png) |
-| Testado com APM v2.8           | Testado com Pixhawk v1.0           |
+| APM                             | Pixhawk                             |
+|---------------------------------|-------------------------------------|
+| ![](./Figures/logo-ap-apm.png)  | ![](./Figures/logo-ap-pixhawk.png)  |
+| Testado Modelo: APM v2.8        | Testado Modelo: Pixhawk v1.0        |
 
 **VANTs suportados:**
 
 | Quadricóptero                            | Hexacóptero                              | Asa Fixa                                |
 |------------------------------------------|------------------------------------------|-----------------------------------------|
 | ![](./Figures/logo-drone-quadcopter.png) | ![](./Figures/logo-drone-hexacopter.png) | ![](./Figures/logo-drone-fixedwing.png) |
-| Testado com iDroneAlpha                  | Ainda não testado                        | Ainda não testado (Ararinha)            |
+| Testado Modelo: Quadricóptero em X       | Testado Modelo: N/A                      | Testado Modelo: N/A                     |
+| Nome: iDroneAlpha                        | Nome: N/A (Drone Simões)                 | Nome: N/A  (Ararinha)                   |
 
 **Softwares básicos necessários para execução:**
 
@@ -260,13 +266,13 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
 } 
 ```
 
-## Contributors
+## Contribuidores
 
 Os principais contribuidores desse projeto podem ser encontrados [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/AUTHORS)
 
 ## Changelog
 
-A versão do ChangeLog pode ser acessado [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/CHANGELOG.md). 
+As principais modificações do sistema podem ser acessadas [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/CHANGELOG.md). 
 
 ## Licença
 

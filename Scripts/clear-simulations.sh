@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
-#Last Update: 21/09/2018
+#Last Update: 27/09/2018
 #Description: Script that removes (deletes) a set of files from old missions.
 #Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
@@ -35,6 +35,13 @@ sudo rm ../Modules-MOSA/CCQSP4m/routeGeo* 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/log_error.txt 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/output.txt 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/instance.err 2>/dev/null
+
+echo "Clear files in AStar4m [output.txt goals.txt output-simulation.log route3D* routeGeo*]"
+sudo rm ../Modules-MOSA/A-Star4m/output.txt 2>/dev/null
+sudo rm ../Modules-MOSA/A-Star4m/goals.txt 2>/dev/null
+sudo rm ../Modules-MOSA/A-Star4m/output-simulation.log 2>/dev/null
+sudo rm ../Modules-MOSA/A-Star4m/route3D* 2>/dev/null
+sudo rm ../Modules-MOSA/A-Star4m/routeGeo* 2>/dev/null
 
 echo "Clear files in MPGA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 sudo rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null

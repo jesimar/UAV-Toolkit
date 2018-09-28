@@ -22,7 +22,12 @@ public class TypeMsgCommunication {
     
     //Mensagem em que IFA diz a GCS alguma informação.
     public static final String IFA_GCS_INFO               = "IFA->GCS[INFO]";
-    public static final String IFA_GCS_PLANNER            = "IFA->GCS[PLANNER]";
     public static final String IFA_GCS_REPLANNER          = "IFA->GCS[REPLANNER]";
+    
+    //Mensagem em que MOSA diz a GCS alguma informação.
+    public static final String MOSA_GCS_PLANNER            = "MOSA->GCS[PLANNER]";
+    
+    //Mensagem generica usada por todo o sistema.
+    public static final String UAV_ROUTE_FAILURE            = "uav-route-failure";
     
 }

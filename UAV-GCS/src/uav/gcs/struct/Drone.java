@@ -18,15 +18,17 @@ import uav.generic.hardware.sensors.Velocity;
 public class Drone {
     
     public String userEmail;
-    public String date;//yyyy/MM/dd
-    public String hour;//HH:mm:ss
-    public double time;//in seconds
+    public String date;                                //yyyy/MM/dd
+    public String hour;                                //HH:mm:ss
+    public double time;                                //in seconds
     public int nextWaypoint;
     public int countWaypoint;
-    public double distanceToHome;//in meters
-    public double distanceToCurrentWaypoint;//in meters  
-    public double estimatedTimeToDoRTL;//in seconds
-    public double estimatedConsumptionBatForRTL;//in percentage
+    public double distanceToHome;                      //in meters
+    public double distanceToCurrentWaypoint;           //in meters  
+    public double estimatedTimeToDoRTL;                //in seconds
+    public double estimatedConsumptionBatForRTL;       //in percentage
+    public double estimatedMaxDistReached;             //in meters
+    public double estimatedMaxTimeFlight;              //in seconds
     public String typeFailure;
     
     public Battery battery; 
@@ -37,8 +39,8 @@ public class Drone {
     public GPSInfo gpsinfo;
     public SensorUAV sensorUAV;
     public StatusUAV statusUAV;
-    public Sonar sonar; //in meters
-    public Temperature temperature;//in degree celsius
+    public Sonar sonar;                                //in meters
+    public Temperature temperature;                    //in degree celsius
 
     public Drone(String userEmail) {
         this.userEmail = userEmail;
@@ -60,14 +62,14 @@ public class Drone {
                 + "eph;epv;heading;groundspeed;airspeed;next_wpt;count_wpt;"
                 + "dist_to_home;dist_to_current_wpt;mode;system-status;armed;"
                 + "is-armable;ekf-ok;type-failure;est-time-to-do-rtl;est-consumption-bat-rtl;"
-                + "dist-sonar;temperature-sensor";
+                + "est-max-dist;est-max-time;dist-sonar;temperature-sensor";
     }
     
     @Override
     public String toString() {
         return String.format("%s;%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
                 "%.2f;%.2f;%d;%d;%d;%d;%.1f;%.2f;%.2f;%d;%d;%.2f;%.2f;%s;%s;%s;" +
-                "%s;%s;%s;%.2f;%.2f;%s;%s", 
+                "%s;%s;%s;%.2f;%.2f;%.2f;%.2f;%s;%s", 
                 date, hour, time, gps.lat, gps.lng, barometer.alt_rel, barometer.alt_abs,
                 battery.voltage, battery.current, battery.level, attitude.pitch,
                 attitude.yaw, attitude.roll, velocity.vx, velocity.vy, velocity.vz, 
@@ -76,6 +78,7 @@ public class Drone {
                 nextWaypoint, countWaypoint, distanceToHome, distanceToCurrentWaypoint,
                 statusUAV.mode, statusUAV.systemStatus, statusUAV.armed, 
                 statusUAV.isArmable, statusUAV.ekfOk, typeFailure, estimatedTimeToDoRTL,
-                estimatedConsumptionBatForRTL, sonar.distance, temperature.temperature);
+                estimatedConsumptionBatForRTL, estimatedMaxDistReached, 
+                estimatedMaxTimeFlight, sonar.distance, temperature.temperature);
     }
 }

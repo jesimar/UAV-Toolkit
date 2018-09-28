@@ -1,0 +1,14 @@
+<start state: px,py,vx,vy>
+ 0.0 0.0
+<chance constraints: n, ...values...>
+1
+0.04
+<events:n>
+0
+<temporal constraints: n, ...(eS,eE,lb,ub)...>
+1
+0	-1	0.0	60.0
+<episodes: n, ...(name,type,c,eS,eE,<Ra:|I|,|O|,...I...,...O...>)...> #I = |N|,...<N>... #N = |C|,...<C>...
+-1
+<convex regions(C)>
+0

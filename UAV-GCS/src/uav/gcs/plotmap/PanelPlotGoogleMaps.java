@@ -19,7 +19,7 @@ import uav.gcs.struct.Drone;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilGeo;
 
 /**
@@ -36,6 +36,7 @@ public class PanelPlotGoogleMaps extends JPanel {
     private ReaderMap map;
     private final double lngBase = GCS.pointGeo.getLng();
     private final double latBase = GCS.pointGeo.getLat();
+    private boolean firstTime = true;
 
     public PanelPlotGoogleMaps() {
         config = ReaderFileConfig.getInstance();
@@ -293,8 +294,6 @@ public class PanelPlotGoogleMaps extends JPanel {
             });
         }
     }
-
-    boolean firstTime = true;
 
     public void plotDroneInRealTime(Drone drone) {
         Executors.newSingleThreadExecutor().execute(new Runnable() {

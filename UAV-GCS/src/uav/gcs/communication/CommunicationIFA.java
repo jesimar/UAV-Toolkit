@@ -1,5 +1,6 @@
 package uav.gcs.communication;
 
+import uav.generic.module.comm.Communication;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,50 +15,49 @@ import uav.gcs.replanner.MPGA4s;
 import uav.gcs.replanner.MS4s;
 import uav.gcs.replanner.Replanner;
 import uav.gcs.struct.Drone;
+import uav.generic.module.comm.Client;
+import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypeReplanner;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.reader.UtilRoute;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.util.UtilRoute;
+import uav.generic.struct.states.StateCommunication;
 
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationIFA extends Communication{
+public class CommunicationIFA extends Communication implements Client{    
 
-    private Socket socket;
-    private PrintWriter output;
-    private BufferedReader input;    
-
-    private final Drone drone;
-    private final String HOST;
-    private final int PORT;
-    
+    private final ReaderFileConfig config;
+    private final Drone drone;    
     private boolean isRunningReplanner;
 
-    public CommunicationIFA(Drone drone, String host, int port) {
+    public CommunicationIFA(Drone drone) {
         this.drone = drone;
-        this.HOST = host;
-        this.PORT = port;
+        this.stateCommunication = StateCommunication.WAITING;
+        this.config = ReaderFileConfig.getInstance();
         this.isRunningReplanner = false;
     }
 
-    public void connectServerIFA() {
-        System.out.println("Trying connect with IFA");
+    @Override
+    public void connectServer() {
+        System.out.println("UAV-GCS trying connect with IFA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         Thread.sleep(1000);
-                        socket = new Socket(HOST, PORT);
+                        socket = new Socket(config.getHostIFA(), config.getPortNetworkIFAandGCS());
                         output = new PrintWriter(socket.getOutputStream(), true);
                         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        System.out.println("UAV GCS connected in IFA ...");
+                        System.out.println("UAV-GCS connected in IFA");
                         break;
                     } catch (IOException ex) {
-
+                        stateCommunication = StateCommunication.DISABLED;
                     } catch (InterruptedException ex) {
-
+                        stateCommunication = StateCommunication.DISABLED;
                     }
                 }
             }
@@ -66,7 +66,8 @@ public class CommunicationIFA extends Communication{
 
     @Override
     public void receiveData() {
-        System.out.println("Trying to listen the connection of UAV-IFA ...");
+        stateCommunication = StateCommunication.LISTENING;
+        System.out.println("UAV-GCS trying to listen the connection of IFA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -83,46 +84,24 @@ public class CommunicationIFA extends Communication{
                                     replannerInGCS(answer);
                                 } 
                             }
-                            Thread.sleep(100);
-                        } else {
-                            Thread.sleep(500);
-                        }
+                        } 
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
                     System.out.println("Warning [InterruptedException] receiveData()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 } catch (IOException ex) {
                     System.out.println("Warning [IOException] receiveData()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
-
-    @Override
-    public void sendData(String msg) {
-        output.println(msg);
-    }
-
-    @Override
-    public boolean isConnected() {
-        if (input == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
     
-    @Override
-    public void close() {
-        try {
-            output.close();
-            input.close();
-            socket.close();
-        } catch (IOException ex) {
-            System.out.println("Warning [IOException] close()");
-            ex.printStackTrace();
-        }
+    public boolean isRunningReplanner() {
+        return isRunningReplanner;
     }
 
     private void readInfoIFA(String answer) {
@@ -162,8 +141,10 @@ public class CommunicationIFA extends Communication{
         drone.typeFailure = v[32];
         drone.estimatedTimeToDoRTL = Double.parseDouble(v[33]);
         drone.estimatedConsumptionBatForRTL = Double.parseDouble(v[34]);
-        drone.sonar.distance = v[35].equals("NONE") ? -1.0 : Double.parseDouble(v[35]);
-        drone.temperature.temperature = v[36].equals("NONE") ? -1.0 : Double.parseDouble(v[36]);
+        drone.estimatedMaxDistReached = Double.parseDouble(v[35]);
+        drone.estimatedMaxTimeFlight = Double.parseDouble(v[36]);
+        drone.sonar.distance = v[37].equals("NONE") ? -1.0 : Double.parseDouble(v[37]);
+        drone.temperature.temperature = v[38].equals("NONE") ? -1.0 : Double.parseDouble(v[38]);
     }
 
     private void replannerInGCS(String answer) {
@@ -184,28 +165,27 @@ public class CommunicationIFA extends Communication{
         }else{
             System.out.println("Error: " + v[0]);
             System.out.println("Error: " + answer);
+            isRunningReplanner = false;
             return;
         }
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();
         if (!itIsOkExec) {
-            sendData("failure");
+            sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+            isRunningReplanner = false;
             return;
         } 
         Mission mission = new Mission();
         String path = v[3] + "routeGeo.txt";
-        boolean resp = UtilRoute.readRoute(mission, path, 0);
+        boolean resp = UtilRoute.readFileRouteIFA(mission, path, 2);
         if (!resp) {
-            sendData("failure");
+            sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+            isRunningReplanner = false;
             return;
         }
         mission.printMission();
         sendData(new Gson().toJson(mission));
         isRunningReplanner = false;
-    }
-
-    public boolean isRunningReplanner() {
-        return isRunningReplanner;
     }
         
 }

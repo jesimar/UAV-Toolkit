@@ -5,7 +5,7 @@ import java.io.IOException;
 import uav.gcs.struct.Drone;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.thread.RunThread;
+import uav.generic.util.UtilRunThread;
 
 /**
  * Classe que modela o planejador da missão do drone evitando obstáculos.
@@ -19,7 +19,7 @@ public abstract class Planner {
     final Mission3D mission3D;
     final Mission missionGeo;
     
-    String fileWaypointsMission;//used in planner hga4m
+    String fileWaypointsMission;//used in planner hga4m and astar4m
     String sizeWpt;//used in planner hga4m
     final String dirFiles;//global
     final String fileGeoBase;//global
@@ -27,7 +27,7 @@ public abstract class Planner {
     final String altitudeFlight;//local
     String time;//local - used in planner hga4m
     String waypoint;//local - used in planner ccqsp4m
-    final String delta;//local
+    String delta;//local - used in planner hga4m and ccqsp4m
     String maxVel;//local - used in planner hga4m
     String maxCtrl;//local - used in planner hga4m
     String speedCruize;//local - used in planner hga4m
@@ -100,6 +100,31 @@ public abstract class Planner {
         this.missionGeo = new Mission();
     }
     
+    /**
+     * Class constructor - Used in AStar4m
+     * @param drone instance of the aircraft
+     * @param fileWaypointsMission
+     * @param dirFiles
+     * @param fileGeoBase
+     * @param dirPlanner
+     * @param cmdExecPlanner
+     * @param altitudeFlight
+     */
+    public Planner(Drone drone, String fileWaypointsMission, String dirFiles, 
+            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
+            String altitudeFlight) {
+        this.drone = drone; 
+        this.fileWaypointsMission = fileWaypointsMission;
+        this.dirFiles = dirFiles;
+        this.fileGeoBase = fileGeoBase;
+        this.dir = dirPlanner;
+        this.cmdExecPlanner = cmdExecPlanner;
+        this.altitudeFlight = altitudeFlight;      
+        this.waypointsMission = new Mission3D();
+        this.mission3D = new Mission3D();
+        this.missionGeo = new Mission();
+    }
+    
     public abstract void clearLogs();
     
     public Mission3D getMission3D(){
@@ -115,13 +140,15 @@ public abstract class Planner {
             boolean isPrint = false;
             boolean isPrintError = false;
             String cmd = cmdExecPlanner + " local";
-            RunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
+            UtilRunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
-            System.out.println("Warning [IOException] execMethod()");
+            System.err.println("Error [IOException] execMethod()");
+            ex.printStackTrace();
             return false;
         } catch (InterruptedException ex) {
-            System.out.println("Warning [InterruptedException] execMethod()");
+            System.err.println("Error [InterruptedException] execMethod()");
+            ex.printStackTrace();
             return false;
         }
     }

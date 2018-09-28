@@ -2,12 +2,10 @@ package uav.ifa.module.path_replanner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.concurrent.Executors;
-import lib.color.StandardPrints;
 import uav.generic.hardware.aircraft.Drone;
 import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.util.UtilRunThread;
 import uav.ifa.module.security_manager.SecurityManager;
 
 /**
@@ -42,41 +40,18 @@ public abstract class Replanner {
     
     boolean execMethod() {
         try{
-            boolean print = false;
-            boolean error = false;
-            File f = new File(dir);
-            final Process comp = Runtime.getRuntime().exec(config.getCmdExecReplanner(), null, f);
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getInputStream());
-                    if (print) {
-                        while (sc.hasNextLine()) {
-                            System.out.println(sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            Executors.newSingleThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    Scanner sc = new Scanner(comp.getErrorStream());
-                    if (error) {
-                        while (sc.hasNextLine()) {
-                            System.err.println("err:" + sc.nextLine());
-                        }
-                    }
-                    sc.close();
-                }
-            });
-            comp.waitFor();
+            boolean isPrint = false;
+            boolean isPrintError = false;
+            String cmd = config.getCmdExecReplanner();
+            UtilRunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);            
             return true;
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] execMethod()");
+            System.err.println("Error [IOException] execMethod()");
+            ex.printStackTrace();
             return false;
         } catch (InterruptedException ex) {
-            StandardPrints.printMsgWarning("Warning [InterruptedException] execMethod()");
+            System.err.println("Error [InterruptedException] execMethod()");
+            ex.printStackTrace();
             return false;
         }
     }   

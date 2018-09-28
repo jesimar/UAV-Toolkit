@@ -1,5 +1,5 @@
 //Authors: Rafael Farias Pinho and Jesimar da Silva Arantes
-//Date: 24/08/2018
+//Date: 01/07/2018
 //Last Update: 24/08/2018
 //Description: Code that calculates route using algorithm A *
 //Descricao: Código que calcula rota usando o algoritmo A*
@@ -9,8 +9,18 @@
 #include <float.h>
 #include <math.h>
 
-#define map_size_rows 101
-#define map_size_cols 101
+#define TRUE 0
+#define FALSE 1
+#define debug FALSE
+#define dim_x_min -100
+#define dim_x_max 100
+#define dim_y_min -100
+#define dim_y_max 100
+#define dim_x_total 201
+#define dim_y_total 201
+
+#define map_size_rows 201
+#define map_size_cols 201
 
 //Struct that defines a point in the map
 struct point2D{
@@ -66,8 +76,8 @@ point2D readPositionStart(FILE *file){
 	}
 	pointStart.x = strtof(line, &pend);
 	pointStart.y = strtof(pend, NULL);
-	pointStart.x = (pointStart.x + 5) * 10;
-	pointStart.y = (pointStart.y) * 10;
+	pointStart.x = pointStart.x + 100;
+	pointStart.y = pointStart.y + 100;
 	return pointStart;
 }
 
@@ -88,69 +98,81 @@ point2D readPositionGoal(FILE *file){
 	}
 	pointGoal.x = strtof(line, &pend);
 	pointGoal.y = strtof(pend, NULL);
-	pointGoal.x = (pointGoal.x + 5) * 10;
-	pointGoal.y = (pointGoal.y) * 10;
+	pointGoal.x = pointGoal.x + 100;
+	pointGoal.y = pointGoal.y + 100;
 	return pointGoal;
 }
 
 //function that gets the points of the obstacles
-void readObstacles(FILE* file, obstacle* obst, int* num_obstacles){
+void readObstacles(FILE* file, obstacle* obst, int num_obstacles){
 	char line[100];
 	char *pend;
-	int count = 0, l=0;
+	int l=0;
 	while(!feof(file)){
 		fgets(line, 100, file);
-		if(count == 1 || count == 2 + obst[l-1].number_of_sides){
-			obst[l].number_of_sides = atoi(line);
-			for(int i = 0; i < obst[l].number_of_sides; i++){
-				fgets(line,100,file);
-				int j = 0;
-				while(line[j] != '\0'){
-					if(line[j] == ';'){
-						line [j] = ' ';
-					}
-					j++;
-				}
-				obst[l].point[i].x = strtof(line, &pend);
-				obst[l].point[i].y = strtof(pend, NULL);
-			}
-			count += obst[l].number_of_sides;
-			l++;
-		} else{
-			count++;
+		if(feof(file)){
+			break;
 		}
+		fgets(line, 100, file);
+		if(feof(file)){
+			break;
+		}
+		obst[l].number_of_sides = atoi(line);
+		for(int i = 0; i < obst[l].number_of_sides; i++){
+			fgets(line, 100, file);
+			int j = 0;
+			while(line[j] != '\0'){
+				if(line[j] == ';'){
+					line[j] = ' ';
+				}
+				j++;
+			}
+			obst[l].point[i].x = strtof(line, &pend);
+			obst[l].point[i].y = strtof(pend, NULL);
+		}
+		l++;
 	}
 	rewind(file);
-	printf("Number of Obstacles = %d\n", *num_obstacles);
-	for(int l = 0; l < *num_obstacles; l++){
-		printf("  Obstacle ID:%d\n", l);
-		for(int i = 0; i < obst[l].number_of_sides; i++){
-			printf("    (x; y) = (%f; %f)\n", obst[l].point[i].x, obst[l].point[i].y);
+	if (debug == TRUE){
+		printf("Number of Obstacles = %d\n", num_obstacles);
+		for(int l = 0; l < num_obstacles; l++){
+			printf("  Obstacle ID: %d\n", l);
+			printf("  Lado: %d\n", obst[l].number_of_sides);
+			for(int i = 0; i < obst[l].number_of_sides; i++){
+				printf("    (x; y) = (%f; %f)\n", obst[l].point[i].x, obst[l].point[i].y);
+			}
 		}
 	}
 }
 
 //function that draws the obstacles in the map
-void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int* num_obstacles){
+void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int num_obstacles){
 	for (int i = 0; i < map_size_rows; i++){
 		for(int j = 0; j < map_size_cols; j++){
 			map[i][j] = 0;
 		}
 	}
-	int obsx[20], obsy[20];
-	for(int k = 0; k < *num_obstacles; k++){
-		for(int n = 0; n < obst[k].number_of_sides; n++){
-			obsx[n] = (int)(obst[k].point[n].x);
-			obsy[n] = (int)(obst[k].point[n].y);
-			obsx[n] = (obsx[n] + 5) * 10;
-			obsy[n] = obsy[n] * 10;
-			/* imprime os valores das coordenadas dos obstaculos sendo feitas as devidas correcoes para a matriz */
-			//printf("inteiros(x=%d    y=%d)\n",obsx[n],obsy[n]);
+	
+	int obsx[100], obsy[100];
+	for(int i = 0; i < num_obstacles; i++){
+		if (debug == TRUE){
+			printf("i = %d\n", i);
+			printf("  l = %d\n", obst[i].number_of_sides);
 		}
-		/* draws each side of the first obstacle one by one, then it repeats the process to nest one*/
-		for(int l = 0; l < obst[k].number_of_sides; l++){
+		for(int j = 0; j < obst[i].number_of_sides; j++){
+			obsx[j] = (int)(obst[i].point[j].x);
+			obsy[j] = (int)(obst[i].point[j].y);
+			obsx[j] = obsx[j] + 100;
+			obsy[j] = obsy[j] + 100;
+			if (debug == TRUE){//imprime os valores das coordenadas dos obstaculos sendo feitas as devidas correcoes para a matriz
+				printf("    inteiros(j=%d    x=%d    y=%d)\n", j, obsx[j], obsy[j]);
+			}
+		}
+		
+		//draws each side of the first obstacle one by one, then it repeats the process to nest one
+		for(int l = 0; l < obst[i].number_of_sides; l++){
 			int prox = l + 1;
-			if(l == obst[k].number_of_sides - 1){
+			if(l == obst[i].number_of_sides - 1){
 				prox = 0;
 			}
 			if(obsx[l] <= obsx[prox] && obsy[l] <= obsy[prox]){
@@ -177,7 +199,6 @@ void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int* num_o
 						}
 					}
 				}
-
 			} else if(obsx[l] >= obsx[prox] && obsy[l] >= obsy[prox]){
 				for(int abs = obsx[l]; abs >= obsx[prox]; abs--){
 					for(int ord=obsy[l]; ord>= obsy[prox]; ord--){
@@ -187,14 +208,14 @@ void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int* num_o
 					}
 				}
 			}
-		}
+		} 
 	}
 }
 
 void printMap(char map[map_size_rows][map_size_cols], int p_len, int *path){
-		for (int i = map_size_rows - 1 ; i >= 0; i--) {
+	for (int i = 0 ; i < map_size_rows; i++) {
 		for (int j = 0; j < map_size_cols; j++) {
-			if (map[i][j]) {
+			if (map[i][j] == 1) {
 				putchar('o');
 			} else {
 				int b = 0;
@@ -203,10 +224,10 @@ void printMap(char map[map_size_rows][map_size_cols], int p_len, int *path){
 						b++;
 					}
 				}
-				if (b) {
-					putchar('x');
-				} else {
+				if (b == 0) {
 					putchar('.');
+				} else {
+					putchar('x');
 				}
 			}
 		}
@@ -252,9 +273,19 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 	}
 
 	/* index of start stop */
-	int s = ((int)(pointStart.x)+1)*(int)(pointStart.y+1);
+	//int s = ((int)(pointStart.x)+1)*(int)(pointStart.y+1);
+	int s = dim_x_total * (pointStart.y - 1) + (pointStart.x);
+	if (debug == TRUE){
+		printf("valor s = %d\n", s);
+	}
+	
 	/* index of finish stop */
-	int e = s_len - (map_size_rows-(int)(pointGoal.x))*(map_size_cols-(int)(pointGoal.y));
+	//int e = s_len - (map_size_rows-(int)(pointGoal.x))*(map_size_cols-(int)(pointGoal.y));
+	int e = dim_x_total * (pointGoal.y - 1) + (pointGoal.x);
+	if (debug == TRUE){
+		printf("valor e = %d\n", e);
+		printf("valor s_len = %d\n", s_len);
+	}
 
 	for (int i = 0; i < s_len; i++) {
 		stops[i].h = sqrt(pow(stops[e].row - stops[i].row, 2) + pow(stops[e].col - stops[i].col, 2));
@@ -361,9 +392,12 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 		printf("IMPOSSIBLE\n");
 	} else {
 		printf("path cost is %d:\n", p_len);
+		FILE* outputroute = fopen("output.txt", "w");
 		for (int i = p_len - 1; i >= 0; i--) {
-			printf("(%1.0f, %1.0f)\n", stops[path[i]].col, stops[path[i]].row);
+			printf("(x, y) = (%1.0f, %1.0f)\n", stops[path[i]].col, stops[path[i]].row);
+			fprintf(outputroute, "%.2f;%0.2f\n", stops[path[i]].col, stops[path[i]].row);
 		}
+		fclose(outputroute);
 		printMap(map, p_len, path);
 	}
 
@@ -378,8 +412,6 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 }
 
 int main(){
-	obstacle obst[2];
-	int count = 0, aux;
 	int num_obstacles = 0;
 	char line[100];
 
@@ -388,35 +420,42 @@ int main(){
 	point2D pointGoal = readPositionGoal(fileGoals);
 	fclose(fileGoals);
 
-	FILE *fileObstacles = fopen("obstaculos2.txt","r");
+	FILE *fileObstacles = fopen("map-nfz-astar.sgl","r");
+	
 	//in this part fileObstacles the code, is defined the number of obstacles
 	while(!feof(fileObstacles)){
 		fgets(line, 100, fileObstacles);
-		if(count != 0){
-			aux = atoi(line);
-			num_obstacles = num_obstacles + 1;
-			for(int x = 0; x <= aux; x++){
-				fgets(line, 100, fileObstacles);
-				if(feof(fileObstacles)){
-					break;
-				}
+		if(feof(fileObstacles)){
+			break;
+		}
+		fgets(line, 100, fileObstacles);
+		if(feof(fileObstacles)){
+			break;
+		}
+		int aux = atoi(line);
+		num_obstacles = num_obstacles + 1;
+		for(int n = 0; n < aux; n++){
+			fgets(line, 100, fileObstacles);
+			if(feof(fileObstacles)){
+				break;
 			}
-		} else{
-			count++;
 		}
 	}
+	
+	obstacle obst[num_obstacles];
 
 	rewind(fileObstacles);
-
+	int max_points_poly = 100;
 	for(int x = 0; x < num_obstacles; x++){
-		obst[x].point = (point2D*) malloc(20 * sizeof(point2D));
+		obst[x].point = (point2D*) malloc(max_points_poly * sizeof(point2D));
 	}
-	readObstacles(fileObstacles, obst, &num_obstacles);
+	readObstacles(fileObstacles, obst, num_obstacles);
 	fclose(fileObstacles);
 	
 	char map[map_size_rows][map_size_cols];
-	fill_map(map, obst, &num_obstacles);
-
+	
+	
+	fill_map(map, obst, num_obstacles);
 	a_star(map, pointStart, pointGoal);
 	
 	return 0;

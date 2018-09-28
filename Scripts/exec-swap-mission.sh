@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 13/02/2018
-#Last Update: 21/08/2018
+#Last Update: 27/09/2018
 #Description: Script that does the swap mission files to be executed automatically.
 #Descrição: Script que troca os arquivos da missão a ser executada de forma automática.
 
@@ -47,5 +47,9 @@ cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/. 2>/dev/null
 
 echo "copy file mission_ccqsp.sgl to CCQSP4m in MOSA"
 cp ../$DIR_FILES/mission_ccqsp.sgl ../Modules-MOSA/CCQSP4m/. 2>/dev/null
+
+echo "copy file map-nfz-astar.sgl and waypointsMission.txt to A-Star4m in MOSA"
+cp ../$DIR_FILES/map-nfz-astar.sgl ../Modules-MOSA/A-Star4m/. 2>/dev/null
+cp ../$DIR_FILES/waypointsMission.txt ../Modules-MOSA/A-Star4m/. 2>/dev/null
 
 echo "====================done==================="

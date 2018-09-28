@@ -1,42 +1,43 @@
 package uav.ifa.module.security_manager;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_communication.DataCommunication;
-import uav.generic.module.sensors_actuators.BuzzerControl;
-import uav.generic.hardware.aircraft.FixedWing;
+import uav.generic.module.comm.DataAcquisitionS2DK;
+import uav.generic.module.actuators.BuzzerControl;
+import uav.generic.hardware.aircraft.DroneFixedWing;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.RotaryWing;
-import uav.generic.module.sensors_actuators.SonarControl;
-import uav.generic.module.sensors_actuators.TemperatureSensorControl;
+import uav.generic.hardware.aircraft.DroneRotaryWing;
+import uav.generic.module.comm.DataAcquisition;
+import uav.generic.module.sensors.SonarControl;
+import uav.generic.module.sensors.TemperatureSensorControl;
 import uav.generic.struct.Parameter;
-import uav.generic.struct.reader.ReaderFileConfig;
-import uav.generic.struct.reader.ReaderFileConfigParam;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfigParam;
 import uav.generic.struct.constants.TypeAircraft;
 import uav.generic.struct.constants.TypeFailure;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.LocalExecPlanner;
+import uav.generic.struct.constants.TypeDataAcquisitionUAV;
 import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.geom.PointGeo;
+import uav.generic.util.UtilFile;
 import uav.generic.struct.states.StateCommunication;
 import uav.generic.struct.states.StateSystem;
 import uav.generic.struct.states.StateMonitoring;
 import uav.generic.struct.states.StateReplanning;
+import uav.generic.util.UtilRunScript;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilGeom;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.module.communication_control.CommunicationMOSA;
 import uav.ifa.module.communication_control.CommunicationGCS;
+import uav.ifa.module.decision_making.Controller;
 import uav.ifa.struct.Failure;
 
 /**
@@ -48,10 +49,11 @@ public class SecurityManager {
 
     public static PointGeo pointGeo;
     private final Drone drone;
-    private final DataCommunication dataAcquisition;
+    private final DataAcquisition dataAcquisition;
     private final CommunicationMOSA communicationMOSA;
     private final CommunicationGCS communicationGCS;
     private final DecisionMaking decisonMaking;
+    private final Controller controller;
 
     private final ReaderFileConfig config;
     private final ReaderFileConfigParam configParam;
@@ -96,7 +98,7 @@ public class SecurityManager {
         }
         this.configParam = ReaderFileConfigParam.getInstance();
 
-        execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
+        UtilRunScript.execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
         
         try {
             pointGeo = UtilGeo.getPointGeo(config.getDirFiles() + config.getFileGeoBase());
@@ -107,33 +109,47 @@ public class SecurityManager {
         }
         
         if (config.getTypeAircraft().equals(TypeAircraft.FIXED_WING)) {
-            drone = new FixedWing(config.getUavName(),
+            drone = new DroneFixedWing(config.getUavName(),
                     config.getUavSpeedCruize(), config.getUavSpeedMax(),
                     config.getUavMass(), config.getUavPayload(),
                     config.getUavEndurance());
         } else if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)) {
-            drone = new RotaryWing(config.getUavName(),
+            drone = new DroneRotaryWing(config.getUavName(),
                     config.getUavSpeedCruize(), config.getUavSpeedMax(),
                     config.getUavMass(), config.getUavPayload(),
                     config.getUavEndurance());
         } else {
-            drone = new RotaryWing("iDroneAlpha");
+            drone = new DroneRotaryWing("iDroneAlpha");
+        }
+        
+        printLogOverhead = UtilFile.createFileLog("log-overhead-ifa", ".csv");
+        printLogAircraft = UtilFile.createFileLog("log-aircraft", ".csv");
+   
+        if (config.getTypeDataAcquisition().equals(TypeDataAcquisitionUAV.DRONEKIT)){
+            this.dataAcquisition = new DataAcquisitionS2DK(
+                    drone, "IFA", config.getHostS2DK(),
+                    config.getPortNetworkS2DK(), printLogOverhead);
+        }else{
+            dataAcquisition = null;
+            System.out.println("Type data acquisition not supported");
+            System.exit(1);
         }
 
-        createFileLogOverhead();
-        this.dataAcquisition = new DataCommunication(
-                drone, "IFA", config.getHostS2DK(),
-                config.getPortNetworkS2DK(), printLogOverhead);
         this.decisonMaking = new DecisionMaking(drone, dataAcquisition);
+        this.controller = new Controller(drone, dataAcquisition);
         this.communicationMOSA = new CommunicationMOSA(drone);
-        this.communicationGCS = new CommunicationGCS(drone, decisonMaking);
+        this.communicationGCS = new CommunicationGCS(drone, controller);
 
         if (config.hasSonar()) {
-            startSonarSensor();
+            StandardPrints.printMsgEmph("turn on the sonar sensor");
+            sonar = new SonarControl();
+            sonar.startSonarSensor();
         }
 
         if (config.hasTemperatureSensor()) {
-            startTemperatureSensor();
+            StandardPrints.printMsgEmph("turn on the temperature sensor");
+            temperature = new TemperatureSensorControl();
+            temperature.startTemperatureSensor();
         }
 
         stateSystem = StateSystem.INITIALIZING;
@@ -142,24 +158,23 @@ public class SecurityManager {
 
     public void init() {
         StandardPrints.printMsgEmph("initializing ...");
-        createFileLogAircraft();                //blocked
         waitingForTheServer();                  //blocked
         configParametersToFlight();             //blocked
 
         dataAcquisition.getParameters();
         
-        altRTL = drone.getListParameters().getValue("RTL_ALT")/100.0;
-        speedUP = drone.getListParameters().getValue("WPNAV_SPEED_UP")/100.0;
-        speedHorizontal = drone.getListParameters().getValue("WPNAV_SPEED")/100.0;
-        speedDN = drone.getListParameters().getValue("WPNAV_SPEED_DN")/100.0;
+        altRTL = drone.getInfo().getListParameters().getValue("RTL_ALT")/100.0;
+        speedUP = drone.getInfo().getListParameters().getValue("WPNAV_SPEED_UP")/100.0;
+        speedHorizontal = drone.getInfo().getListParameters().getValue("WPNAV_SPEED")/100.0;
+        speedDN = drone.getInfo().getListParameters().getValue("WPNAV_SPEED_DN")/100.0;
         
 //        dataAcquisition.getHomeLocation();
 
-        communicationGCS.startServerIFA();      //Thread
+        communicationGCS.startServer();         //Thread
         communicationGCS.receiveData();         //Thread
 
         if (!config.getSystemExecIFA().equals(TypeSystemExecIFA.CONTROLLER)) {
-            communicationMOSA.startServerIFA(); //blocked
+            communicationMOSA.startServer();    //blocked
             communicationMOSA.receiveData();    //Thread        
         }
         monitoringAircraft();                   //Thread
@@ -174,53 +189,12 @@ public class SecurityManager {
         timeInit = System.currentTimeMillis();
     }
 
-    private void createFileLogOverhead() {
-        try {
-            int i = 0;
-            File file;
-            do {
-                i++;
-                file = new File("log-overhead-ifa" + i + ".csv");
-            } while (file.exists());
-            printLogOverhead = new PrintStream(file);
-        } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogOverhead()");
-            ex.printStackTrace();
-            System.exit(1);
-        } catch (Exception ex) {
-            StandardPrints.printMsgError2("Error [Exception]: createFileLogOverhead()");
-            ex.printStackTrace();
-            System.exit(1);
-        }
-    }
-
-    private void createFileLogAircraft() {
-        StandardPrints.printMsgEmph("create file log aircraft ...");
-        try {
-            int i = 0;
-            File file;
-            do {
-                i++;
-                file = new File("log-aircraft" + i + ".csv");
-            } while (file.exists());
-            printLogAircraft = new PrintStream(file);
-        } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgError2("Error [FileNotFoundException]: createFileLogAircraft()");
-            ex.printStackTrace();
-            System.exit(1);
-        } catch (Exception ex) {
-            StandardPrints.printMsgError2("Error [Exception]: createFileLogAircraft()");
-            ex.printStackTrace();
-            System.exit(1);
-        }
-    }
-
     private void waitingForTheServer() {
         StandardPrints.printMsgEmph("waiting for the server ...");
         try {
             boolean serverIsRunning = dataAcquisition.serverIsRunning();
             while (!serverIsRunning) {
-                StandardPrints.printMsgWarning("waiting for the server uav-services-dronekit...");
+                StandardPrints.printMsgWarning("waiting for the server uav-s2dk...");
                 Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_SERVER);
                 serverIsRunning = dataAcquisition.serverIsRunning();
             }
@@ -263,9 +237,9 @@ public class SecurityManager {
         stateMonitoring = StateMonitoring.MONITORING;
         printLogAircraft.println(drone.title());
         dataAcquisition.getAllInfoSensors();
-        latHome = drone.getGPS().lat;
-        lngHome = drone.getGPS().lng;
-        altHome = drone.getBarometer().alt_rel;
+        latHome = drone.getSensors().getGPS().lat;
+        lngHome = drone.getSensors().getGPS().lng;
+        altHome = drone.getSensors().getBarometer().alt_rel;
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -273,20 +247,20 @@ public class SecurityManager {
                     while (stateSystem != StateSystem.DISABLED) {
                         timeActual = System.currentTimeMillis();
                         double timeDiff = (timeActual - timeInit) / 1000.0;
-                        drone.setTime(timeDiff);
+                        drone.getInfo().setTime(timeDiff);
                         dataAcquisition.getAllInfoSensors();
                         if (config.hasSonar()) {
-                            drone.getSonar().distance = sonar.getDistance();
+                            drone.getSensors().getSonar().distance = sonar.getDistance();
                         }
                         if (config.hasTemperatureSensor()) {
-                            drone.getTemperature().temperature = temperature.getTemperature();
+                            drone.getSensors().getTemperature().temperature = temperature.getTemperature();
                         }
                         if (config.hasPowerModule()
                                 || !config.getOperationMode()
                                         .equals(TypeOperationMode.REAL_FLIGHT)) {
                             dataAcquisition.getBattery();
                             checkPossibilityOfRTL();
-                        }
+                        }                        
 
                         checkStatusSystem();
 
@@ -317,78 +291,78 @@ public class SecurityManager {
                 && !hasFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BASED_INSERT_FAILURE));
             decisonMaking.setTypeAction(communicationGCS.getTypeAction());
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE));
-            StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE));
+            StandardPrints.printMsgError("FAIL BASED INSERT FAILURE -> Time: " + drone.getInfo().getTime());
         }
         if (communicationGCS.hasFailureBadWeather()
                 && !hasFailure(TypeFailure.FAIL_BAD_WEATHER)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BAD_WEATHER));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BAD_WEATHER));
-            StandardPrints.printMsgError("FAIL BAD WEATHER -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BAD_WEATHER));
+            StandardPrints.printMsgError("FAIL BAD WEATHER -> Time: " + drone.getInfo().getTime());
         }
         if (config.hasPowerModule()
-                && drone.getBattery().level < config.getLevelMinimumBattery()
+                && drone.getSensors().getBattery().level < config.getLevelMinimumBattery()
                 && !hasFailure(TypeFailure.FAIL_LOW_BATTERY)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_LOW_BATTERY));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
-            StandardPrints.printMsgError("FAIL LOW BATTERY -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
+            StandardPrints.printMsgError("FAIL LOW BATTERY -> Time: " + drone.getInfo().getTime());
         }
         if (config.hasTemperatureSensor()
-                && drone.getTemperature().temperature > config.getLevelMaximumTemperature()
+                && drone.getSensors().getTemperature().temperature > config.getLevelMaximumTemperature()
                 && !hasFailure(TypeFailure.FAIL_BATTERY_OVERHEATING)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BATTERY_OVERHEATING));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY_OVERHEATING));
-            StandardPrints.printMsgError("FAIL BATTERY OVERHEATING -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY_OVERHEATING));
+            StandardPrints.printMsgError("FAIL BATTERY OVERHEATING -> Time: " + drone.getInfo().getTime());
         }
-        if (drone.getGPSInfo().fixType != 3
+        if (drone.getSensors().getGPSInfo().fixType != 3
                 && !hasFailure(TypeFailure.FAIL_GPS)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_GPS));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_GPS));
-            StandardPrints.printMsgError("FAIL GPS -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_GPS));
+            StandardPrints.printMsgError("FAIL GPS -> Time: " + drone.getInfo().getTime());
         }
 
         //insercao de falha no IFA para testes em artigo ICAS 2018
-//        if (drone.getTime() >= 103){//remover isso apos artigo ICAS
+//        if (drone.getInfo().getTime() >= 103){//remover isso apos artigo ICAS
 //            stateSystem = StateSystem.DISABLED;
 //        }
         if (stateSystem == StateSystem.DISABLED
                 && !hasFailure(TypeFailure.FAIL_SYSTEM_IFA)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_IFA));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_IFA));
-            StandardPrints.printMsgError("FAIL IFA -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_IFA));
+            StandardPrints.printMsgError("FAIL IFA -> Time: " + drone.getInfo().getTime());
         }
         if ((communicationMOSA.getStateCommunication() == StateCommunication.DISABLED
                 || communicationMOSA.isMosaDisabled())
                 && !hasFailure(TypeFailure.FAIL_SYSTEM_MOSA)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_SYSTEM_MOSA));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_MOSA));
-            StandardPrints.printMsgError("FAIL MOSA -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_SYSTEM_MOSA));
+            StandardPrints.printMsgError("FAIL MOSA -> Time: " + drone.getInfo().getTime());
         }
-//        if (configGlobal.hasMotorRotationSensor()
+//        if (config.hasMotorRotationSensor()
 //                && drone.getMotorFailure()
 //                && !hasFailure(TypeFailure.FAIL_ENGINE)) {
 //            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_ENGINE));
-//            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_ENGINE));
-//            StandardPrints.printMsgError("FAIL ENGINE -> Time: " + drone.getTime());
+//            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_ENGINE));
+//            StandardPrints.printMsgError("FAIL ENGINE -> Time: " + drone.getInfo().getTime());
 //        }
         //Descomentar quando for virar produto
-//        if (drone.getStatusUAV().systemStatus.equals("CRITICAL")
+//        if (drone.getSensors().getStatusUAV().systemStatus.equals("CRITICAL")
 //                && !hasFailure(TypeFailure.FAIL_AP_CRITICAL)) {
 //            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_CRITICAL));
-//            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_CRITICAL));
-//            StandardPrints.printMsgError("FAIL AP CRITICAL -> Time: " + drone.getTime());
+//            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_CRITICAL));
+//            StandardPrints.printMsgError("FAIL AP CRITICAL -> Time: " + drone.getInfo().getTime());
 //        }
-        if (drone.getStatusUAV().systemStatus.equals("EMERGENCY")
+        if (drone.getSensors().getStatusUAV().systemStatus.equals("EMERGENCY")
                 && !hasFailure(TypeFailure.FAIL_AP_EMERGENCY)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_EMERGENCY));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_EMERGENCY));
-            StandardPrints.printMsgError("FAIL AP EMERGENCY -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_EMERGENCY));
+            StandardPrints.printMsgError("FAIL AP EMERGENCY -> Time: " + drone.getInfo().getTime());
         }
-        if (drone.getStatusUAV().systemStatus.equals("POWEROFF")
+        if (drone.getSensors().getStatusUAV().systemStatus.equals("POWEROFF")
                 && !hasFailure(TypeFailure.FAIL_AP_POWEROFF)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_POWEROFF));
-            drone.setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_POWEROFF));
-            StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: " + drone.getTime());
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_POWEROFF));
+            StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: " + drone.getInfo().getTime());
         }
     }
 
@@ -402,15 +376,17 @@ public class SecurityManager {
                 while (stateSystem != StateSystem.DISABLED) {
                     try {
                         //Melhorar verificacao para ver se a aeronave esta voando.
-                        if (drone.getStatusUAV().armed && hasFailure()) {
+                        if (drone.getSensors().getStatusUAV().armed && hasFailure()) {
                             communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
                             if (config.hasBuzzer()) {
-                                actionTurnOnTheAlarm();
+                                StandardPrints.printMsgEmph("turn on the alarm");
+                                BuzzerControl buzzer = new BuzzerControl();
+                                buzzer.turnOnAlarm();
                             }
                             if (config.getLocalExecReplanner().equals(LocalExecPlanner.ONBOARD)) {
-                                decisonMaking.actionToDoSomethingOnboard(listOfFailure.get(0));
+                                decisonMaking.actionForSafetyOnboard(listOfFailure.get(0));
                             } else {
-                                decisonMaking.actionToDoSomethingOffboard(listOfFailure.get(0), communicationGCS);
+                                decisonMaking.actionForSafetyOffboard(listOfFailure.get(0), communicationGCS);
                             }
                             break;
                         }
@@ -420,7 +396,7 @@ public class SecurityManager {
                     }
                 }
                 if (stateSystem == StateSystem.DISABLED) {
-                    if (drone.getStatusUAV().armed && hasFailure()) {
+                    if (drone.getSensors().getStatusUAV().armed && hasFailure()) {
                         if (config.hasParachute()) {
                             decisonMaking.openParachute();
                         }
@@ -470,47 +446,11 @@ public class SecurityManager {
     private boolean hasFailure() {
         return listOfFailure.size() > 0;
     }
-
-    private void actionTurnOnTheAlarm() {
-        StandardPrints.printMsgEmph("turn on the alarm");
-        BuzzerControl buzzer = new BuzzerControl();
-        buzzer.turnOnAlarm();
-    }
-
-    private void startSonarSensor() {
-        StandardPrints.printMsgEmph("turn on the sonar sensor");
-        sonar = new SonarControl();
-        sonar.startSonarSensor();
-    }
-
-    private void startTemperatureSensor() {
-        StandardPrints.printMsgEmph("turn on the temperature sensor");
-        temperature = new TemperatureSensorControl();
-        temperature.startTemperatureSensor();
-    }
-
-    private void execScript(String cmd) {
-        try {
-            Process proc = Runtime.getRuntime().exec(cmd);
-            BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            try {
-                proc.waitFor();
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-            while (read.ready()) {
-                System.out.println(read.readLine());
-            }
-        }catch (IOException ex){
-            ex.printStackTrace();
-            System.exit(1);
-        }
-    }
     
     private void checkPossibilityOfRTL(){
-        double lat = drone.getGPS().lat;
-        double lng = drone.getGPS().lng;
-        double alt = drone.getBarometer().alt_rel;      
+        double lat = drone.getSensors().getGPS().lat;
+        double lng = drone.getSensors().getGPS().lng;
+        double alt = drone.getSensors().getBarometer().alt_rel;      
         
         double distVerticalUP = Math.abs(alt - altRTL);
         double distHorizontal = UtilGeom.distanceEuclidian(lat, lng, latHome, lngHome)/Constants.ONE_METER;
@@ -535,23 +475,32 @@ public class SecurityManager {
         //   velocidade máxima e o drone, as vezes, voa em uma velocidade inferior a esta.
         //OBS: Estes dados foram obtidos em experimentos SITL
         estimatedTimeForRTL = estimatedTimeForRTL * 1.18 + 5 + 3;
-        drone.setEstimatedTimeToDoRTL(estimatedTimeForRTL);
+        drone.getInfo().setEstimatedTimeToDoRTL(estimatedTimeForRTL);
         
         double consumptionBatteryUP;
         double consumptionBatteryDN;
         double consumptionBatteryHorizontal;
+        
+        double estMaxDist;
+        
         if (config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
             consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_REAL;
             consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_REAL;
             consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
+            estMaxDist = speedHorizontal * drone.getSensors().getBattery().level/Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
         }else{
             consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_SIMULATED;
             consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_SIMULATED;
             consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
+            estMaxDist = speedHorizontal * drone.getSensors().getBattery().level/Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
         }
         double estimatedConsumptionBat   = 
                 consumptionBatteryUP + consumptionBatteryDN +consumptionBatteryHorizontal;
         
-        drone.setEstimatedConsumptionBatForRTL(estimatedConsumptionBat);  
+        drone.getInfo().setEstimatedConsumptionBatForRTL(estimatedConsumptionBat);  
+        
+        double estMaxTime = estMaxDist/speedHorizontal;
+        drone.getInfo().setEstimatedMaxDistReached(estMaxDist);
+        drone.getInfo().setEstimatedMaxTimeFlight(estMaxTime);
     }
 }

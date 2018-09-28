@@ -36,10 +36,10 @@ public class MILP4s extends Replanner{
     @Override
     public boolean updateFileConfig() { 
         try {
-            double px = UtilGeo.convertGeoToX(pointGeo, drone.getGPS().lng);
-            double py = UtilGeo.convertGeoToY(pointGeo, drone.getGPS().lat);
+            double px = UtilGeo.convertGeoToX(pointGeo, drone.getSensors().getGPS().lng);
+            double py = UtilGeo.convertGeoToY(pointGeo, drone.getSensors().getGPS().lat);
             double vel = 1.5;//drone.getSensorUAV().groundspeed;
-            int head = (int)drone.getSensorUAV().heading;
+            int head = (int)drone.getSensors().getSensorUAV().heading;
             int heading = UtilGeo.convertAngleAviationToAngleMath(head);
             double angle = Math.toRadians(heading);//Math.atan2(vy, vx);             
             //double vx = drone.getVelocity().vx;
@@ -74,7 +74,7 @@ public class MILP4s extends Replanner{
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);        
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
-            double h = drone.getBarometer().alt_rel;
+            double h = drone.getSensors().getBarometer().alt_rel;
             int qtdWpt = UtilIO.getLineNumber(new File(dir + nameFileRoute3D));
             double frac = h/qtdWpt;
             int countLines = 0;

@@ -10,10 +10,13 @@ import java.util.concurrent.Executors;
 import marte.swing.graphics.pkg2d.navigation.sPanelDraw;
 import uav.gcs.GCS;
 import uav.gcs.struct.Drone;
+import uav.gcs.struct.EnabledResources;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.struct.geom.Position3D;
+import uav.generic.struct.mission.Route3D;
 import uav.generic.util.UtilGeo;
 
 /**
@@ -30,18 +33,26 @@ public class PanelPlotMission extends sPanelDraw {
     private static final Color COLOR_ROUTE_IFA = Color.RED;
     private static final Color COLOR_ROUTE_MOSA = Color.GREEN;
     private static final Color COLOR_ROUTE_MOSA_SIMP = Color.BLACK;
+    private static final Color COLOR_ROUTE_DRONE = Color.GRAY;
     private static final Color COLOR_DRONE = Color.BLUE;
+    private static final Color COLOR_MAX_DIST = new Color(0, 255, 0, 50);
     private final ReaderFileConfig config;
+    private final EnabledResources enabledResources;
+    
     private ReaderMap map;
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
     private final ReaderRoute routeMOSASimplifier;
+    private final Route3D routeDrone;
     private double pxDrone;
     private double pyDrone;
+    private double maxDistReached;
+    private boolean printDrone = false;
 
     public PanelPlotMission() {
         super(Color.WHITE);
         config = ReaderFileConfig.getInstance();
+        enabledResources = EnabledResources.getInstance();
         String pathMap = config.getDirFiles() + "map-full.sgl";
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
             map = new ReaderMap(pathMap);
@@ -50,6 +61,7 @@ public class PanelPlotMission extends sPanelDraw {
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
         routeMOSASimplifier = new ReaderRoute();
+        routeDrone = new Route3D();
     }
 
     public void setNewDimensions(int width, int height) {
@@ -98,7 +110,7 @@ public class PanelPlotMission extends sPanelDraw {
     @Override
     protected void paintDynamicScene(Graphics2D g2) {
         //Draw Map
-        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER) && enabledResources.showMap){
             g2.setColor(COLOR_NFZ);
             for (int i = 0; i < map.getSizeNFZ(); i++) {
                 g2.fillPolygon(
@@ -123,7 +135,7 @@ public class PanelPlotMission extends sPanelDraw {
         }
 
         //Draw Routes
-        if (routeIFA.isReady()) {
+        if (routeIFA.isReady() && enabledResources.showRouteReplanner) {
             g2.setColor(COLOR_ROUTE_IFA);
             for (int i = 0; i < routeIFA.getRoute3D().size(); i++) {
                 g2.fillOval(
@@ -143,7 +155,7 @@ public class PanelPlotMission extends sPanelDraw {
             }
         }
 
-        if (routeMOSA.isReady()) {
+        if (routeMOSA.isReady() && enabledResources.showRoutePlanner) {
             g2.setColor(COLOR_ROUTE_MOSA);
             for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
                 g2.fillOval(
@@ -162,7 +174,7 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             }
         }
-        if (routeMOSASimplifier.isReady()) {
+        if (routeMOSASimplifier.isReady() && enabledResources.showRouteSimplifier) {
             g2.setColor(COLOR_ROUTE_MOSA_SIMP);
             for (int i = 0; i < routeMOSASimplifier.getRoute3D().size(); i++) {
                 g2.fillOval(
@@ -181,8 +193,35 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             }
         }
-        g2.setColor(COLOR_DRONE);
-        g2.fillOval(toUnit(pxDrone) - 30, toUnit(pyDrone) - 30, 60, 60);
+        if (enabledResources.showRouteDrone) {
+            g2.setColor(COLOR_ROUTE_DRONE);
+            for (int i = 0; i < routeDrone.size(); i++) {
+                g2.fillOval(
+                        toUnit(routeDrone.getPosition3D(i).getX()) - 15,
+                        toUnit(routeDrone.getPosition3D(i).getY()) - 15,
+                        30,
+                        30
+                );
+                if (i < routeDrone.size() - 1) {
+                    g2.drawLine(
+                            toUnit(routeDrone.getPosition3D(i).getX()),
+                            toUnit(routeDrone.getPosition3D(i).getY()),
+                            toUnit(routeDrone.getPosition3D(i + 1).getX()),
+                            toUnit(routeDrone.getPosition3D(i + 1).getY())
+                    );
+                }
+            }
+        }
+        if (enabledResources.showPositionDrone && printDrone){
+            g2.setColor(COLOR_DRONE);
+            g2.fillOval(toUnit(pxDrone) - 30, toUnit(pyDrone) - 30, 60, 60);
+        }
+        if (enabledResources.showMaxDistReached && printDrone){
+            g2.setColor(COLOR_MAX_DIST);
+            g2.fillOval(toUnit(pxDrone) - toUnit(maxDistReached)/2, 
+                    toUnit(pyDrone) - toUnit(maxDistReached)/2, 
+                    toUnit(maxDistReached), toUnit(maxDistReached));
+        }
     }
 
     public static int toUnit(double value) {
@@ -309,8 +348,15 @@ public class PanelPlotMission extends sPanelDraw {
                 while (true) {
                     try {
                         Thread.sleep(500);
-                        pxDrone = UtilGeo.convertGeoToX(GCS.pointGeo, drone.gps.lng);
-                        pyDrone = UtilGeo.convertGeoToY(GCS.pointGeo, drone.gps.lat);
+                        double latDrone = drone.gps.lat;
+                        double lngDrone = drone.gps.lng;
+                        if (latDrone != 0.0 && lngDrone != 0) {
+                            pxDrone = UtilGeo.convertGeoToX(GCS.pointGeo, lngDrone);
+                            pyDrone = UtilGeo.convertGeoToY(GCS.pointGeo, latDrone);
+                            maxDistReached = drone.estimatedMaxDistReached;
+                            routeDrone.addPosition3D(new Position3D(pxDrone, pyDrone, 0));
+                            printDrone = true;
+                        }
                         repaint();
                     } catch (InterruptedException ex) {
 

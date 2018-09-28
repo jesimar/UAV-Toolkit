@@ -9,7 +9,7 @@ import uav.gcs.struct.Drone;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.geom.PointGeo;
 import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.reader.ReaderFileMission;
+import uav.generic.reader.ReaderFileMission;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 

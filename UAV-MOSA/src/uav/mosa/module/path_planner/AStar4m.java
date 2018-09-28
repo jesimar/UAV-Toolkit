@@ -27,84 +27,87 @@ public class AStar4m extends Planner{
         super(drone, waypointsMission);
     }   
     
-//    public boolean execMission() {
-//        boolean itIsOkUpdate = updateFileConfig();     
-//        boolean itIsOkExec   = execMethod();
-//        boolean itIsOkCopy   = copyRoute3D();
-//        boolean itIsOkParse  = parseRoute3DtoGeo();
-//        return itIsOkUpdate && itIsOkExec && itIsOkCopy && itIsOkParse;
-//    }
-//    
-//    public boolean updateFileConfig() {
-//        try {
-//            File src_instance = new File(dir + "instance-base");
-//            File dst_instance = new File(dir + "instance");
-//            String delta = config.getDeltaPlannerCCQSP4m();
-//            String qtdWpt = config.getWaypointsPlannerCCQSP4m();
-//            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
-//                    qtdWpt, 298, qtdWpt, 299);
-//            return true;
-//        } catch (FileNotFoundException ex) {
-//            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
-//            return false;
-//        }
-//    }
-//    
-//    public boolean copyRoute3D(){
-//        try {
-//            File fileRoute3D = new File(dir + "route3D.txt");
-//            PrintStream print3D = new PrintStream(fileRoute3D);
-//            Scanner readRoute3D = new Scanner(new File(dir + "output.txt"));
-//            readRoute3D.nextInt();
-//            double h = config.getAltRelMission();  
-//            while(readRoute3D.hasNext()){
-//                double x = readRoute3D.nextDouble();
-//                double y = readRoute3D.nextDouble();
-//                readRoute3D.nextInt();
-//                print3D.println(x + ";" + y + ";" + h);
-//            }
-//            readRoute3D.close();
-//            print3D.close();
-//            return true;
-//        } catch (FileNotFoundException ex) {
-//            StandardPrints.printMsgWarning("Warning [FileNotFoundException] copyRoute3D()");
-//            return false;
-//        } 
-//    }
-//    
-//    public boolean parseRoute3DtoGeo(){
-//        try {
-//            String nameFileRoute3D =  "output.txt";
-//            String nameFileRouteGeo = "routeGeo.txt";
-//            File fileRouteGeo = new File(dir + nameFileRouteGeo);
-//            PrintStream printGeo = new PrintStream(fileRouteGeo);
-//            Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
-//            int countLines = 0;
-//            readRoute3D.nextInt();
-//            double h = config.getAltRelMission();            
-//            while(readRoute3D.hasNext()){
-//                double x = readRoute3D.nextDouble();
-//                double y = readRoute3D.nextDouble();
-//                readRoute3D.nextInt();
-//                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
-//                mission3D.addPosition3D(new Position3D(x, y, h));
-//                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pointGeo, x, y, h)));
-//                countLines++;
-//            }
-//            if (countLines == 0){
-//                StandardPrints.printMsgWarning("Route-Empty");
-//                if (!drone.getStatusUAV().armed){
-//                    System.exit(1);
-//                }
-//            }
-//            readRoute3D.close();
-//            printGeo.close();
-//            return true;
-//        } catch (FileNotFoundException ex) {
-//            StandardPrints.printMsgWarning("Warning [FileNotFoundException] parseRoute3DtoGeo()");
-//            return false;
-//        } 
-//    }
+    public boolean execMission(int i) {
+        boolean itIsOkpathAB = definePathAB(i); 
+        boolean itIsOkExec   = execMethod();
+        boolean itIsOkCopy   = copyRoute3D(i);
+        boolean itIsOkParse  = parseRoute3DtoGeo(i);
+        return itIsOkpathAB && itIsOkExec && itIsOkCopy && itIsOkParse;
+    }
+    
+    private boolean definePathAB(int i) {
+        try {
+            Position3D p1 = waypointsMission.getPosition3D(i);
+            Position3D p2 = waypointsMission.getPosition3D(i+1); 
+            PrintStream print = new PrintStream(new File(dir + "goals.txt"));
+            print.println("#position start");
+            print.println(p1.getX() + ";" + p1.getY());
+            print.println("#position goal");
+            print.println(p2.getX() + ";" + p2.getY());
+            print.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: definePathAB()");
+            return false;
+        } 
+    }
+    
+    public boolean copyRoute3D(int i){
+        try {
+            File fileRoute3D = new File(dir + "route3D" + i + ".txt");
+            PrintStream print3D = new PrintStream(fileRoute3D);
+            Scanner readRoute3D = new Scanner(new File(dir + "output.txt"));
+            double h = config.getAltRelMission();  
+            while(readRoute3D.hasNext()){
+                String line = readRoute3D.next();
+                String str[] = line.split(";");
+                double x = Double.parseDouble(str[0]);
+                double y = Double.parseDouble(str[1]);
+                print3D.println(x + ";" + y + ";" + h);
+            }
+            readRoute3D.close();
+            print3D.close();
+            new File(dir + "output.txt").delete(); 
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException] copyRoute3D()");
+            return false;
+        } 
+    }
+    
+    public boolean parseRoute3DtoGeo(int i){ 
+        try {
+            String nameFileRoute3D =  "route3D" + i + ".txt";
+            String nameFileRouteGeo = "routeGeo" + i + ".txt";
+            File fileRouteGeo = new File(dir + nameFileRouteGeo);
+            PrintStream printGeo = new PrintStream(fileRouteGeo);
+            Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
+            int countLines = 0;
+            double h = config.getAltRelMission();            
+            while(readRoute3D.hasNext()){
+                String line = readRoute3D.next();
+                String str[] = line.split(";");
+                double x = Double.parseDouble(str[0]);
+                double y = Double.parseDouble(str[1]);
+                printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
+                mission3D.addPosition3D(new Position3D(x, y, h));
+                missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pointGeo, x, y, h)));
+                countLines++;
+            }
+            if (countLines == 0){
+                StandardPrints.printMsgWarning("Route-Empty");
+                if (!drone.getSensors().getStatusUAV().armed){
+                    System.exit(1);
+                }
+            }
+            readRoute3D.close();
+            printGeo.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException] parseRoute3DtoGeo()");
+            return false;
+        } 
+    }
     
     @Override
     public void clearLogs() {

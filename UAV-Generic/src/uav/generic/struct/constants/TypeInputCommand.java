@@ -17,6 +17,7 @@ public class TypeInputCommand {
     public static final String CMD_ROTATE = "rotate";
     public static final String CMD_QUIT = "quit";
     
+    public static final String CMD_MISSION = "mission";
     public static final String CMD_RTL = "rtl";
     public static final String CMD_BAD_WEATHER = "bad-weather";
     public static final String CMD_EMERGENCY_LANDING = "emergencylanding";

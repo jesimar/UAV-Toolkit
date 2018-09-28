@@ -1,5 +1,6 @@
 package uav.gcs.communication;
 
+import uav.generic.module.comm.Communication;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,57 +8,54 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
+import uav.gcs.planner.AStar4m;
 import uav.gcs.planner.CCQSP4m;
 import uav.gcs.planner.HGA4m;
 import uav.gcs.planner.Planner;
 import uav.gcs.struct.Drone;
+import uav.generic.module.comm.Client;
+import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.constants.TypePlanner;
 import uav.generic.struct.mission.Mission;
-import uav.generic.struct.reader.ReaderFileConfig;
-import uav.generic.struct.reader.UtilRoute;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.util.UtilRoute;
+import uav.generic.struct.states.StateCommunication;
 
 /**
  * @author Jesimar S. Arantes
  */
-public class CommunicationMOSA extends Communication{
+public class CommunicationMOSA extends Communication implements Client{
 
     private final ReaderFileConfig config;
-    private Socket socket;
-    private PrintWriter output;
-    private BufferedReader input;
-
     private final Drone drone;
-    private final String HOST;
-    private final int PORT;
-
     private boolean isRunningPlanner;
 
-    public CommunicationMOSA(Drone drone, String host, int port) {
-        config = ReaderFileConfig.getInstance();
+    public CommunicationMOSA(Drone drone) {
         this.drone = drone;
-        this.HOST = host;
-        this.PORT = port;
+        this.stateCommunication = StateCommunication.WAITING;
+        this.config = ReaderFileConfig.getInstance();
         this.isRunningPlanner = false;
     }
 
-    public void connectServerMOSA() {
-        System.out.println("Trying connect with MOSA");
+    @Override
+    public void connectServer() {
+        System.out.println("UAV-GCS trying connect with MOSA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         Thread.sleep(1000);
-                        socket = new Socket(HOST, PORT);
+                        socket = new Socket(config.getHostMOSA(), config.getPortNetworkMOSAandGCS());
                         output = new PrintWriter(socket.getOutputStream(), true);
                         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        System.out.println("UAV GCS connected in MOSA ...");
+                        System.out.println("UAV-GCS connected in MOSA");
                         break;
                     } catch (IOException ex) {
-
+                        stateCommunication = StateCommunication.DISABLED;
                     } catch (InterruptedException ex) {
-
+                        stateCommunication = StateCommunication.DISABLED;
                     }
                 }
             }
@@ -66,7 +64,8 @@ public class CommunicationMOSA extends Communication{
 
     @Override
     public void receiveData() {
-        System.out.println("Trying to listen the connection of UAV-MOSA ...");
+        stateCommunication = StateCommunication.LISTENING;
+        System.out.println("UAV-GCS trying to listen the connection of MOSA ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -75,51 +74,29 @@ public class CommunicationMOSA extends Communication{
                         if (input != null) {
                             String answer = input.readLine();
                             if (answer != null) {
-                                if (answer.contains(TypeMsgCommunication.IFA_GCS_PLANNER)) {
-                                    answer = answer.substring(17);
+                                if (answer.contains(TypeMsgCommunication.MOSA_GCS_PLANNER)) {
+                                    answer = answer.substring(18);
                                     plannerInGCS(answer);
                                 }
                             }
-                            Thread.sleep(100);
-                        } else {
-                            Thread.sleep(500);
-                        }
+                        } 
+                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
                     System.out.println("Warning [InterruptedException] receiveData()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 } catch (IOException ex) {
                     System.out.println("Warning [IOException] receiveData()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
-
-    @Override
-    public void sendData(String msg) {
-        output.println(msg);
-    }
-
-    @Override
-    public boolean isConnected() {
-        if (input == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void close() {
-        try {
-            output.close();
-            input.close();
-            socket.close();
-        } catch (IOException ex) {
-            System.out.println("Warning [IOException] close()");
-            ex.printStackTrace();
-        }
+    
+    public boolean isRunningPlanner() {
+        return isRunningPlanner;
     }
 
     private void plannerInGCS(String answer) {
@@ -137,7 +114,8 @@ public class CommunicationMOSA extends Communication{
                 System.out.println("route: " + nRoute);
                 boolean respMission = ((HGA4m) planner).execMission(nRoute);
                 if (!respMission) {
-                    sendData("failure");
+                    sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                    isRunningPlanner = false;
                     return;
                 }
                 nRoute++;
@@ -154,9 +132,10 @@ public class CommunicationMOSA extends Communication{
                             config.getFactorRouteSimplifier(), ";");
                     path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
                 }
-                boolean respFile = UtilRoute.readFileRoute(mission, path, nRoute, size);
+                boolean respFile = UtilRoute.readFileRouteMOSA(mission, path, nRoute, size);
                 if (!respFile) {
-                    sendData("failure");
+                    sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                    isRunningPlanner = false;
                     return;
                 }
                 nRoute++;
@@ -168,7 +147,8 @@ public class CommunicationMOSA extends Communication{
             planner.clearLogs();
             boolean respMission = ((CCQSP4m) (planner)).execMission();
             if (!respMission) {
-                sendData("failure");
+                sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                isRunningPlanner = false;
                 return;
             }
             Mission mission = new Mission();
@@ -180,19 +160,54 @@ public class CommunicationMOSA extends Communication{
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             
-            boolean respFile = UtilRoute.readFileRoute(mission, path);
+            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
             if (!respFile) {
-                sendData("failure");
+                sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                isRunningPlanner = false;
                 return;
             }
             mission.printMission();
             sendData(new Gson().toJson(mission));            
-        }
+        } else if (v[0].equals(TypePlanner.A_STAR4M)) {
+            planner = new AStar4m(drone, v[1], v[3], v[4], v[5], v[6], v[7]);
+            planner.clearLogs();
+            int size = Integer.parseInt(v[2]);
+            boolean finish = false;
+            int nRoute = 0;
+            while (nRoute < size - 1 && !finish) {
+                System.out.println("route: " + nRoute);
+                boolean respMission = ((AStar4m) planner).execMission(nRoute);
+                if (!respMission) {
+                    sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                    isRunningPlanner = false;
+                    return;
+                }
+                nRoute++;
+                if (nRoute == size - 1) {
+                    finish = true;
+                }
+            }
+            Mission mission = new Mission();
+            nRoute = 0;
+            while (nRoute < size - 1) {
+                String path = v[5] + "routeGeo" + nRoute + ".txt";
+                if (config.hasRouteSimplifier()){
+                    UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
+                    path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
+                }
+                boolean respFile = UtilRoute.readFileRouteMOSA(mission, path, nRoute, size);
+                if (!respFile) {
+                    sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                    isRunningPlanner = false;
+                    return;
+                }
+                nRoute++;
+            }
+            mission.printMission();
+            sendData(new Gson().toJson(mission));
+        } 
         isRunningPlanner = false;
-    }
-
-    public boolean isRunningPlanner() {
-        return isRunningPlanner;
     }
 
 }

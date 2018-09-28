@@ -5,24 +5,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
+import uav.generic.module.comm.Communication;
+import uav.generic.module.comm.Server;
 import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.reader.ReaderFileConfig;
+import uav.generic.reader.ReaderFileConfig;
+import uav.generic.struct.states.StateCommunication;
 
 /**
  * Classe que faz o controle da comunicação com GCS.
  * @author Jesimar S. Arantes
  */
-public class CommunicationGCS {
+public class CommunicationGCS extends Communication implements Server{
     
     private ServerSocket server;
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
 
     private boolean hasReceiveRouteGCS;
     private String routePlannerGCS;
@@ -37,16 +35,18 @@ public class CommunicationGCS {
      * Class contructor.
      */
     public CommunicationGCS() {
-        config = ReaderFileConfig.getInstance();
-        hasReceiveRouteGCS = false;
-        behaviorChanged = false;
-        behaviorChangedCircle = false;
-        behaviorChangedTriangle = false;
-        behaviorChangedRectangle = false;
+        this.stateCommunication = StateCommunication.WAITING;
+        this.config = ReaderFileConfig.getInstance();
+        this.hasReceiveRouteGCS = false;
+        this.behaviorChanged = false;
+        this.behaviorChangedCircle = false;
+        this.behaviorChangedTriangle = false;
+        this.behaviorChangedRectangle = false;
     }
 
-    public void startServerMOSA() {
-        StandardPrints.printMsgEmph("waiting a connection to UAV-GCS ...");
+    @Override
+    public void startServer() {
+        StandardPrints.printMsgEmph("MOSA waiting the connection to UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -55,17 +55,20 @@ public class CommunicationGCS {
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     output = new PrintWriter(socket.getOutputStream(), true);
-                    StandardPrints.printMsgEmph("GCS connected in MOSA ...");
+                    StandardPrints.printMsgEmph("MOSA connected in UAV-GCS");
                 } catch (IOException ex) {
-                    StandardPrints.printMsgWarning("Warning [IOException] startServerGCS()");
+                    StandardPrints.printMsgWarning("Warning [IOException] startServer()");
                     ex.printStackTrace();
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
 
+    @Override
     public void receiveData() {
-        StandardPrints.printMsgEmph("listening to the connection of UAV-GCS ...");
+        stateCommunication = StateCommunication.LISTENING;
+        StandardPrints.printMsgEmph("MOSA listening to the connection with UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -76,7 +79,7 @@ public class CommunicationGCS {
                             if (answer != null) {
                                 StandardPrints.printMsgYellow("Data: " + answer);
                                 answer = answer.toLowerCase();
-                                if (answer.contains("mission")){
+                                if (answer.contains(TypeInputCommand.CMD_MISSION)){
                                     hasReceiveRouteGCS = true;
                                     routePlannerGCS = answer;
                                 }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR)){
@@ -93,17 +96,28 @@ public class CommunicationGCS {
                         Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
                     }
                 } catch (InterruptedException ex) {
-                    
+                    stateCommunication = StateCommunication.DISABLED;
                 } catch (IOException ex) {
-                    
+                    stateCommunication = StateCommunication.DISABLED;
                 }
             }
         });
     }
     
-    public void sendDataPlannerInGCS(String attributes){
-        if (output != null){
-            output.println(TypeMsgCommunication.IFA_GCS_PLANNER + attributes);
+    @Override
+    public void close() {
+        super.close();
+        try {
+            server.close();
+            stateCommunication = StateCommunication.DISABLED;
+        } catch (IOException ex) {
+            System.err.println("Warning [IOException] close()");
+            ex.printStackTrace();
+            stateCommunication = StateCommunication.DISABLED;
+        } catch (Exception ex) {
+            System.err.println("Warning [Exception] close()");
+            ex.printStackTrace();
+            stateCommunication = StateCommunication.DISABLED;
         }
     }
 
@@ -145,18 +159,6 @@ public class CommunicationGCS {
     
     public String getRoutePlannerGCS(){
         return routePlannerGCS;
-    }
-
-    public void close() {
-        try {
-            output.close();
-            input.close();
-            socket.close();
-            server.close();
-        } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] close()");
-            ex.printStackTrace();
-        }
     }
     
 }

@@ -6,12 +6,13 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.data_communication.DataCommunication;
+import uav.generic.module.comm.DataAcquisitionS2DK;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
 import uav.generic.struct.Waypoint;
 import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.RotaryWing;
+import uav.generic.hardware.aircraft.DroneRotaryWing;
+import uav.generic.module.comm.DataAcquisition;
 import uav.generic.struct.Heading;
 import uav.generic.struct.Parameter;
 import uav.generic.struct.constants.TypeAngle;
@@ -27,7 +28,7 @@ public class Tests {
     private long timeActual;
     private final ReaderFileConfig config;
     private final Drone drone;
-    private final DataCommunication dataAcquisition;
+    private final DataAcquisition dataAcquisition;
     
     private PrintStream printLogAircraft;        
     
@@ -44,8 +45,8 @@ public class Tests {
         if (!config.read()){
             System.exit(0);
         }
-        drone = new RotaryWing("iDroneAlpha");
-        dataAcquisition = new DataCommunication(drone, "IFA");
+        drone = new DroneRotaryWing("iDroneAlpha");
+        dataAcquisition = new DataAcquisitionS2DK(drone, "IFA");
     }
     
     public void init() {
@@ -315,7 +316,7 @@ public class Tests {
                     while(true){
                         timeActual = System.currentTimeMillis();
                         double timeDiff = (timeActual - timeInit)/1000.0;
-                        drone.setTime(timeDiff);
+                        drone.getInfo().setTime(timeDiff);
 //                        dataAcquisition.getAllInfoSensors();
                         dataAcquisition.getGPS();
                         dataAcquisition.getBarometer();

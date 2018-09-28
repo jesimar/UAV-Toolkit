@@ -9,8 +9,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
 * Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sonar.
 
-* Refatorar todo o Código do IFA, MOSA, GCS, S2DK.
-* Melhorar o código evitando acoplamento e coesão do código em Java (trabalhar com interfaces e abstrações).
+* Comentar todo o Código do IFA, MOSA, GCS, S2DK.
 
 ## Sistema IFA:
 
@@ -18,14 +17,15 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema MOSA:
 
-* Adicionar A*.
 * MOSA Adaptativo.
 
 ## Sistema UAV-GCS
 
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
 * Plotar na GCS as rotas do Behavior
-* Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, por exemplo, para etapa de pulverização. (behavior diferente).
+* Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
+		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 
+		por exemplo, para etapa de pulverização. (behavior diferente).
 * Colocar marcadores especiais nos Plots (google maps e Plot Mission Márcio) para fotos, vídeo, buzzer, pulverização, waypoints.
 * Pesquisar como executar UAV-GCS (google maps) sem acesso a internet.
 

@@ -4,6 +4,11 @@
 
 ### Features:
 
+* Added path planner A* in UAV-MOSA (onboard and offboard).
+* Added UAV-GCS buttons resources that enable plots in mission of drone.
+* Added feature maximun distance reached based in battery and speed average of drone.
+* Added feature maximun time of flight based in battery of drone.
+* Update all code (refactored UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Generic).
 * Added in Modules-MOSA RouteStandard4m (circle, triangle, rectangle) (behavior) (MOSA-Adaptive).
 * Renamed method of path replanning Fixed-Route4s to Pre-Planned4s.
 * Updated file log-aircraft.csv with information estTimeToDoRTL and estConsumptionBatRTL.
