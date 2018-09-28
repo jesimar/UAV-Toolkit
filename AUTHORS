@@ -5,13 +5,13 @@ Jesimar da Silva Arantes (PhD Student)
 Main developer and idealizer.
 jesimar.arantes@gmail.com
 
-Márcio da Silva Arantes (Researcher)
-Developer of some secondary modules (UAV-Manager, module HGA4m and CCQSP4m).
-marcio.da.silva.arantes@gmail.com
-
 Veronica Vannini (PhD Student)
 Has supported the development of some hardwares/software modules (module buzzer.py to raspberry pi).
 vee.vannini@gmail.com 
+
+Márcio da Silva Arantes (Researcher)
+Developer of some secondary modules (UAV-Manager, module HGA4m and CCQSP4m).
+marcio.da.silva.arantes@gmail.com
 
 André Missaglia (Undergraduate Student)
 Developer of some secondary modules (first version UAV-S2DK).
@@ -25,6 +25,10 @@ Rafael Farias Pinho (Undergraduate Student)
 Developer of some secondary modules (first version Route-Simplifier and A-Star).
 rafaelfpinho@usp.br
 
+Fabiano Cavalheiro Paulelli (Undergraduate Student)
+Assisted in the development of the project in its first version.
+fabiano.paulelli@usp.br 
+
 Eduardo do Valle Simões (Professor)
 Supervisor of technical aspects of hardware.
 simoes@icmc.usp.br
@@ -35,4 +39,4 @@ onofre.trindade.junior@gmail.com
 
 Claudio Fabiano Motta Toledo (Professor)
 Project supervisor.
-toledocfm@gmail.com 
+claudio@icmc.usp.br 

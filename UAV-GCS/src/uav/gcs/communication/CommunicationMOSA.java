@@ -76,7 +76,11 @@ public class CommunicationMOSA extends Communication implements Client{
                             if (answer != null) {
                                 if (answer.contains(TypeMsgCommunication.MOSA_GCS_PLANNER)) {
                                     answer = answer.substring(18);
+                                    long timeInit = System.currentTimeMillis();
                                     plannerInGCS(answer);
+                                    long timeFinal = System.currentTimeMillis();
+                                    long time = timeFinal - timeInit;
+                                    System.out.println("Time in Planning (ms): " + time);
                                 }
                             }
                         } 
@@ -145,7 +149,11 @@ public class CommunicationMOSA extends Communication implements Client{
         } else if (v[0].equals(TypePlanner.CCQSP4M)) {
             planner = new CCQSP4m(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
             planner.clearLogs();
+            long timeInit = System.currentTimeMillis();
             boolean respMission = ((CCQSP4m) (planner)).execMission();
+            long timeFinal = System.currentTimeMillis();
+            long time = timeFinal - timeInit;
+            System.out.println("Time in Planning execMission (ms): " + time);
             if (!respMission) {
                 sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
                 isRunningPlanner = false;

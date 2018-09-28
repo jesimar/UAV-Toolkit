@@ -81,4 +81,47 @@ public class Drone {
                 estimatedConsumptionBatForRTL, estimatedMaxDistReached, 
                 estimatedMaxTimeFlight, sonar.distance, temperature.temperature);
     }
+    
+    public void readInfoIFA(String answer) {
+        String v[] = answer.split(";");
+        date = v[0];
+        hour = v[1];
+        time = Double.parseDouble(v[2]);
+        gps.lat = Double.parseDouble(v[3]);
+        gps.lng = Double.parseDouble(v[4]);
+        barometer.alt_rel = Double.parseDouble(v[5]);
+        barometer.alt_abs = Double.parseDouble(v[6]);
+        battery.voltage = Double.parseDouble(v[7]);
+        battery.current = Double.parseDouble(v[8]);
+        battery.level = Double.parseDouble(v[9]);
+        attitude.pitch = Double.parseDouble(v[10]);
+        attitude.yaw = Double.parseDouble(v[11]);
+        attitude.roll = Double.parseDouble(v[12]);
+        velocity.vx = Double.parseDouble(v[13]);
+        velocity.vy = Double.parseDouble(v[14]);
+        velocity.vz = Double.parseDouble(v[15]);
+        gpsinfo.fixType = Integer.parseInt(v[16]);
+        gpsinfo.satellitesVisible = Integer.parseInt(v[17]);
+        gpsinfo.eph = Integer.parseInt(v[18]);
+        gpsinfo.epv = Integer.parseInt(v[19]);
+        sensorUAV.heading = Double.parseDouble(v[20]);
+        sensorUAV.groundspeed = Double.parseDouble(v[21]);
+        sensorUAV.airspeed = Double.parseDouble(v[22]);
+        nextWaypoint = Integer.parseInt(v[23]);
+        countWaypoint = Integer.parseInt(v[24]);
+        distanceToHome = Double.parseDouble(v[25]);
+        distanceToCurrentWaypoint = Double.parseDouble(v[26]);
+        statusUAV.mode = v[27];
+        statusUAV.systemStatus = v[28];
+        statusUAV.armed = Boolean.parseBoolean(v[29]);
+        statusUAV.isArmable = Boolean.parseBoolean(v[30]);
+        statusUAV.ekfOk = Boolean.parseBoolean(v[31]);
+        typeFailure = v[32];
+        estimatedTimeToDoRTL = Double.parseDouble(v[33]);
+        estimatedConsumptionBatForRTL = Double.parseDouble(v[34]);
+        estimatedMaxDistReached = Double.parseDouble(v[35]);
+        estimatedMaxTimeFlight = Double.parseDouble(v[36]);
+        sonar.distance = v[37].equals("NONE") ? -1.0 : Double.parseDouble(v[37]);
+        temperature.temperature = v[38].equals("NONE") ? -1.0 : Double.parseDouble(v[38]);
+    }
 }

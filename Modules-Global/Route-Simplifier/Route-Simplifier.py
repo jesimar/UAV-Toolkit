@@ -92,7 +92,13 @@ if __name__ == "__main__":
 	name_file_output = "output-simplifier.txt"
 	arq = open_file(name_file_input)
 	arq_split = split_vector(arq, separator)
-	#print arq_split
 	final_route = route_simplifier(arq_split)
-	#print final_route
 	print_results(name_file_output, final_route, separator)
+	
+	# prints to debug
+	#print arq_split
+	#print final_route
+	
+	print 'Route-Simplifier -> initial size: %d lines' % len(arq)
+	print 'Route-Simplifier -> final size: %d lines' % len(final_route)
+	print 'Route-Simplifier -> optimization factor: %.2f times' % ((float)(len(arq))/len(final_route))

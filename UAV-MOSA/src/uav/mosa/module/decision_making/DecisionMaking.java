@@ -172,7 +172,7 @@ public class DecisionMaking {
     }
         
     private boolean sendMissionBasedPlannerHGA4mCalcGroundOnboard() {
-        long timeInit1 = System.currentTimeMillis();
+        long timeInit = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground");
         planner = new HGA4m(drone, wptsMission3D);
         planner.clearLogs();  
@@ -218,9 +218,9 @@ public class DecisionMaking {
             resp = dataAcquisition.setMission(mission);
         }
         
-        long timeFinal1 = System.currentTimeMillis();
-        long time1 = timeFinal1 - timeInit1;
-        StandardPrints.printMsgEmph("Time in Missions (ms): " + time1);
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time);
         return resp;
     }
     
@@ -481,6 +481,8 @@ public class DecisionMaking {
     
     private boolean sendMissionBasedPlannerCCQSP4mOffboard(
             CommunicationGCS communicationGCS) {
+        
+        long timeInit = System.currentTimeMillis();
         String attributes = config.getTypePlanner() 
                 + ";" + config.getDirFiles() 
                 + ";" + config.getFileGeoBase()
@@ -492,12 +494,15 @@ public class DecisionMaking {
         communicationGCS.sendData(TypeMsgCommunication.MOSA_GCS_PLANNER + attributes);
         do {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1);//AUMENTAR UM POUCO DEPOIS -> fazendo teste de velocidade de comunicação
             } catch (InterruptedException ex) {
 
             }
         } while (!communicationGCS.hasReceiveRouteGCS());
         String msgRoute = communicationGCS.getRoutePlannerGCS();
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgBlue("Time in Planner :> (ms): " + time);
         if (msgRoute.equals(TypeMsgCommunication.UAV_ROUTE_FAILURE)) {
             System.out.println("Route GCS [Failure]: " + msgRoute);
             return false;

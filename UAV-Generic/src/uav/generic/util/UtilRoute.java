@@ -8,7 +8,6 @@ import java.io.IOException;
 import uav.generic.struct.Waypoint;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.struct.mission.Mission;
-import uav.generic.util.UtilString;
 
 /**
  *

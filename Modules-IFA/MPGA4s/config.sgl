@@ -5,7 +5,7 @@
 --------------- Time Step (dt) ---------------
 1
 --------------- Initial State [Xinit (px, py, vel, ang)] ---------------
-6.278440657057304 -11.177638248703403 1.5 0.05235987755982988
+3269.755625001576 -329.2612748236537 1.5 3.839724354387525
 ------- Maximum Velocity (metro/s) [Terminal] [Asa Fixa 30.5555] [Asa Rotativa 3.0]-------
 3.0
 ------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------

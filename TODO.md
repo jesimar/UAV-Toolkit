@@ -13,8 +13,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema IFA:
 
-* Criar versão simplificada do clear simulations dentro do IFA.
-
 ## Sistema MOSA:
 
 * MOSA Adaptativo.

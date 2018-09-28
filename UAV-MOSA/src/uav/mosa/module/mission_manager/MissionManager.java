@@ -161,16 +161,20 @@ public class MissionManager {
         communicationGCS.receiveData();         //Thread 
                 
         monitoringAircraft();                   //Thread
-        waitingForAnAction();                   //Thread                            
+        waitingForAnActionOfMission();          //Thread                            
         monitoringStateMachine();               //Thread
         
         stateMOSA = StateSystem.INITIALIZED;
         try{//Aguarda para ter certeza que IFA terminou tambem de inicializar
             Thread.sleep(1000);
-        }catch (InterruptedException ex){ }
-        
+        }catch (InterruptedException ex){ 
+            
+        }
         communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_INITIALIZED);
         StandardPrints.printMsgEmph("initialized ..."); 
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit; 
+        StandardPrints.printMsgBlue("Time to Initialize MOSA (ms): " + time);
     }
     
     private void readMission3D(){
@@ -315,19 +319,23 @@ public class MissionManager {
         });
     }   
         
-    private void waitingForAnAction() {
-        StandardPrints.printMsgEmph("waiting for an action");
+    private void waitingForAnActionOfMission() {
+        StandardPrints.printMsgEmph("waiting for an action of mission");
         Executors.newSingleThreadExecutor().execute(new Runnable(){            
             @Override
             public void run(){
                 while(stateMOSA != StateSystem.DISABLED){
                     try {
                         if (communicationIFA.isStartMission()){
+                            long timeInit = System.currentTimeMillis();        
                             if (config.getLocalExecPlanner().equals(LocalExecPlanner.ONBOARD)){
                                 decisonMaking.actionForMissionOnboard();
                             }else{
                                 decisonMaking.actionForMissionOffboard(communicationGCS);
                             }
+                            long timeFinal = System.currentTimeMillis();
+                            long time = timeFinal - timeInit;
+                            StandardPrints.printMsgBlue("Time for Action Mission (ms): " + time);
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);

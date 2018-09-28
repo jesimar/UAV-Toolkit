@@ -181,7 +181,7 @@ public class SecurityManager {
 
         communicationGCS.sendDataDrone();       //Thread
 
-        waitingForAnAction();                   //Thread                
+        waitingForAnActionOfEmergency();                   //Thread                
         monitoringStateMachine();               //Thread
 
         stateSystem = StateSystem.INITIALIZED;
@@ -368,8 +368,8 @@ public class SecurityManager {
 
     //melhorar: por enquanto esta tratando apenas a primeira falha.
     //melhorar: o sistema so tenta planejar algo sobre a 1 falha encontrada.
-    private void waitingForAnAction() {
-        StandardPrints.printMsgEmph("waiting for an action");
+    private void waitingForAnActionOfEmergency() {
+        StandardPrints.printMsgEmph("waiting for an action of emergency");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -377,6 +377,7 @@ public class SecurityManager {
                     try {
                         //Melhorar verificacao para ver se a aeronave esta voando.
                         if (drone.getSensors().getStatusUAV().armed && hasFailure()) {
+                            long timeInit = System.currentTimeMillis();        
                             communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
                             if (config.hasBuzzer()) {
                                 StandardPrints.printMsgEmph("turn on the alarm");
@@ -388,6 +389,9 @@ public class SecurityManager {
                             } else {
                                 decisonMaking.actionForSafetyOffboard(listOfFailure.get(0), communicationGCS);
                             }
+                            long timeFinal = System.currentTimeMillis();
+                            long time = timeFinal - timeInit;
+                            StandardPrints.printMsgBlue("Time for Action Emergency (ms): " + time);
                             break;
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_WAITING_FOR_AN_ACTION);

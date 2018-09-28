@@ -78,10 +78,14 @@ public class CommunicationIFA extends Communication implements Client{
                             if (answer != null) {
                                 if (answer.contains(TypeMsgCommunication.IFA_GCS_INFO)) {
                                     answer = answer.substring(14);
-                                    readInfoIFA(answer);
+                                    drone.readInfoIFA(answer);
                                 } else if (answer.contains(TypeMsgCommunication.IFA_GCS_REPLANNER)) {
                                     answer = answer.substring(19);
+                                    long timeInit = System.currentTimeMillis();
                                     replannerInGCS(answer);
+                                    long timeFinal = System.currentTimeMillis();
+                                    long time = timeFinal - timeInit;
+                                    System.out.println("Time in Replanning (ms): " + time);
                                 } 
                             }
                         } 
@@ -102,49 +106,6 @@ public class CommunicationIFA extends Communication implements Client{
     
     public boolean isRunningReplanner() {
         return isRunningReplanner;
-    }
-
-    private void readInfoIFA(String answer) {
-        String v[] = answer.split(";");
-        drone.date = v[0];
-        drone.hour = v[1];
-        drone.time = Double.parseDouble(v[2]);
-        drone.gps.lat = Double.parseDouble(v[3]);
-        drone.gps.lng = Double.parseDouble(v[4]);
-        drone.barometer.alt_rel = Double.parseDouble(v[5]);
-        drone.barometer.alt_abs = Double.parseDouble(v[6]);
-        drone.battery.voltage = Double.parseDouble(v[7]);
-        drone.battery.current = Double.parseDouble(v[8]);
-        drone.battery.level = Double.parseDouble(v[9]);
-        drone.attitude.pitch = Double.parseDouble(v[10]);
-        drone.attitude.yaw = Double.parseDouble(v[11]);
-        drone.attitude.roll = Double.parseDouble(v[12]);
-        drone.velocity.vx = Double.parseDouble(v[13]);
-        drone.velocity.vy = Double.parseDouble(v[14]);
-        drone.velocity.vz = Double.parseDouble(v[15]);
-        drone.gpsinfo.fixType = Integer.parseInt(v[16]);
-        drone.gpsinfo.satellitesVisible = Integer.parseInt(v[17]);
-        drone.gpsinfo.eph = Integer.parseInt(v[18]);
-        drone.gpsinfo.epv = Integer.parseInt(v[19]);
-        drone.sensorUAV.heading = Double.parseDouble(v[20]);
-        drone.sensorUAV.groundspeed = Double.parseDouble(v[21]);
-        drone.sensorUAV.airspeed = Double.parseDouble(v[22]);
-        drone.nextWaypoint = Integer.parseInt(v[23]);
-        drone.countWaypoint = Integer.parseInt(v[24]);
-        drone.distanceToHome = Double.parseDouble(v[25]);
-        drone.distanceToCurrentWaypoint = Double.parseDouble(v[26]);
-        drone.statusUAV.mode = v[27];
-        drone.statusUAV.systemStatus = v[28];
-        drone.statusUAV.armed = Boolean.parseBoolean(v[29]);
-        drone.statusUAV.isArmable = Boolean.parseBoolean(v[30]);
-        drone.statusUAV.ekfOk = Boolean.parseBoolean(v[31]);
-        drone.typeFailure = v[32];
-        drone.estimatedTimeToDoRTL = Double.parseDouble(v[33]);
-        drone.estimatedConsumptionBatForRTL = Double.parseDouble(v[34]);
-        drone.estimatedMaxDistReached = Double.parseDouble(v[35]);
-        drone.estimatedMaxTimeFlight = Double.parseDouble(v[36]);
-        drone.sonar.distance = v[37].equals("NONE") ? -1.0 : Double.parseDouble(v[37]);
-        drone.temperature.temperature = v[38].equals("NONE") ? -1.0 : Double.parseDouble(v[38]);
     }
 
     private void replannerInGCS(String answer) {
