@@ -1,4 +1,4 @@
-package uav.mosa.module.communication_control;
+package uav.mosa.module.communication;
 
 import java.io.BufferedReader;
 import java.io.IOException;

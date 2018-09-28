@@ -35,8 +35,8 @@ import uav.generic.util.UtilRunScript;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilGeom;
 import uav.ifa.module.decision_making.DecisionMaking;
-import uav.ifa.module.communication_control.CommunicationMOSA;
-import uav.ifa.module.communication_control.CommunicationGCS;
+import uav.ifa.module.communication.CommunicationMOSA;
+import uav.ifa.module.communication.CommunicationGCS;
 import uav.ifa.module.decision_making.Controller;
 import uav.ifa.struct.Failure;
 

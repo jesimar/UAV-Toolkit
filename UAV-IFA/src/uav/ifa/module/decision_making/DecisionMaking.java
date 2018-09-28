@@ -16,7 +16,7 @@ import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilRoute;
 import uav.generic.struct.states.StateReplanning;
-import uav.ifa.module.communication_control.CommunicationGCS;
+import uav.ifa.module.communication.CommunicationGCS;
 import uav.ifa.module.path_replanner.DE4s;
 import uav.ifa.module.path_replanner.PrePlanned4s;
 import uav.ifa.module.path_replanner.GA4s;

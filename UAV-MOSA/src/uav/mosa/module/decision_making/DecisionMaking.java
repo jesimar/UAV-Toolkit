@@ -18,7 +18,7 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilRoute;
 import uav.generic.struct.states.StatePlanning;
 import uav.generic.util.UtilRunThread;
-import uav.mosa.module.communication_control.CommunicationGCS;
+import uav.mosa.module.communication.CommunicationGCS;
 import uav.mosa.module.path_planner.AStar4m;
 import uav.mosa.module.path_planner.CCQSP4m;
 import uav.mosa.module.path_planner.HGA4m;

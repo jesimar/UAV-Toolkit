@@ -32,8 +32,8 @@ import uav.generic.reader.ReaderFileMission;
 import uav.generic.util.UtilFile;
 import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilGeom;
-import uav.mosa.module.communication_control.CommunicationGCS;
-import uav.mosa.module.communication_control.CommunicationIFA;
+import uav.mosa.module.communication.CommunicationGCS;
+import uav.mosa.module.communication.CommunicationIFA;
 import uav.mosa.module.decision_making.DecisionMaking;
 
 /**
