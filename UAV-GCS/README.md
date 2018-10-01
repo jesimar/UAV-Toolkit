@@ -57,10 +57,6 @@ Abaixo encontra-se duas telas com a GUI do sistema em execução.
 |--------------------------------------|---------------------------------------|----------------------------------------|
 | ![](../Figures/uav-gcs1.png)         | ![](../Figures/uav-gcs2.png)          | ![](../Figures/uav-gcs3.png)           |
 
-| Tela com diversos dados do UAV       | Tela com plot da missão na Graphics2D | Tela com plot da missão no Google Maps |
-|--------------------------------------|---------------------------------------|----------------------------------------|
-| ![](../Figures/uav-gcs1n.png)         | ![](../Figures/uav-gcs2n.png)          | ![](../Figures/uav-gcs3n.png)           |
-
 OBS: O sistema de plot na Graphics2D e do Google Maps são invertidos, com impacto apenas visual.
 
 Abaixo encontra-se um print da saída na linha de comando dessa aplicação contendo alguns logs também importantes.

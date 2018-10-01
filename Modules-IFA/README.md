@@ -58,3 +58,18 @@ Um arquivo com rota fixa possui o seguinte formato: "latitude;longitude;altitude
 -22.005962146467080;-47.898669722712306;0.0
 ```
 
+## Síntese: 
+
+Abaixo encontra-se uma tabela sintetizando os principais módulos do IFA.
+
+| Característica             | HGA4m                    | CCQSP4m                  | A-Star4m                 | Route-Standard4m         | Fixed-Route4m            |
+|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| Estratégia                 | AG + Grafo Visibilidade + PLIM | PLIM               | Heurística               | Estratégia Própria       | Rota já Pronta           |
+| Módelo PLIM                | Sim                      | Sim                      | Não                      | Não                      | Não                      |
+| Linguagem                  | Java                     | Java                     | C                        | C                        | N/A                      |
+| Tempo Processamento        | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)|
+| Dependência de Libs        | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
+| Dependência de Arquitetura | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    |
+| Faz o desvio de obstáculos | Sim                      | Sim                      | Sim                      | Não                      | Não                      |
+| Alocação do Risco          | Sim                      | Sim                      | Não                      | Não                      | Não                      |
+| Imagem                     | ![](../Figures/hga.png)  | ![](../Figures/ccqsp.png)| ![](../Figures/astar.png)|![](../Figures/rstand.png)| ![](../Figures/fixed.png)|
