@@ -44,7 +44,3 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Linguagem                   | Python         | Python ou C         | Python           | Python        |               |               |               | Python              |
 | Módulo que usa              | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
 | Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
-
-| Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
-|-----------------------------|----------------|---------------------|------------------|---------------|---------------|---------------|---------------|---------------------|
-| Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
