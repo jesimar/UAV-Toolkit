@@ -37,7 +37,7 @@ Este diretório também possui dois arquivos de configuração que são:
 Abaixo encontra-se uma tabela sintetizando os principais módulos presentes nessa pasta e suas características.
 
 | Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
-|-----------------------------|----------------|----------- ---------|------------------|---------------|---------------|---------------|---------------|---------------------|
+|-----------------------------|----------------|---------------------|------------------|---------------|---------------|---------------|---------------|---------------------|
 | Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
 | Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    |               |               |               | N/A                 |
 | Dependência de Bibliotecas  | RPi.GPIO       | RPi.GPIO e WiringPi | picamera         | mraa          |               |               |               | Não tem             |
@@ -46,5 +46,5 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
 
 | Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
-|-----------------------------|----------------|----------- ---------|------------------|---------------|---------------|---------------|---------------|---------------------|
+|-----------------------------|----------------|---------------------|------------------|---------------|---------------|---------------|---------------|---------------------|
 | Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
