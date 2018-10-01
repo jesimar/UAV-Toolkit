@@ -19,13 +19,16 @@ Para executar este código deve-se executar o seguinte script (localizados na pa
 
 Abaixo encontra-se três telas com a GUI do sistema em execução.
 
-| Tela de Instalação do Sistema  | Tela de Execução do Sistema   | Tela com Sistema em Execução  |
-|--------------------------------|-------------------------------|-------------------------------|
-| ![](../Figures/uav-gcs1.png)   | ![](../Figures/uav-gcs2.png)  | ![](../Figures/uav-gcs3.png)  |
+| Tela de Instalação do Sistema    | Tela de Execução do Sistema      | Tela com Sistema em Execução     |
+|----------------------------------|----------------------------------|----------------------------------|
+| ![](../Figures/uav-manager1.png) | ![](../Figures/uav-manager2.png) | ![](../Figures/uav-manager3.png) |
 
 ## Arquivos de Entrada
 
-No diretório /UAV-Toolkit/UAV-Manager/ existe um arquivo de propriedades (manager.properties), em que se é definido alguns parâmetros de execução de forma automática (não alterar esse arquivo).
+No diretório /UAV-Toolkit/UAV-Manager/ existe um arquivo de propriedades (manager.properties), em que é definido alguns parâmetros de execução de forma automática.
+
+:warning: **OBS:** Não alterar esse arquivo.
+
 Abaixo estão os principais parâmetros que influenciam o UAV-Manager.
 
 ```
