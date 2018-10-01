@@ -42,5 +42,5 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    |               |               |               | N/A                 |
 | Dependência de Bibliotecas  | RPi.GPIO       | RPi.GPIO e WiringPi | picamera         | mraa          |               |               |               | Não tem             |
 | Linguagem                   | Python         | Python ou C         | Python           | Python        |               |               |               | Python              |
-| Módulo que usa              | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
+| Aplicação que Utiliza       | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
 | Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
