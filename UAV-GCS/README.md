@@ -6,20 +6,20 @@ O projeto foi escrito em Java usando a IDE Netbeans.
 
 ## Instalação
 
-Não necessita de instalação basta baixar o projeto em seu computador e usar. 
-Necessita ter o Java JRE instalado uma vez que é uma aplicação Java.
+Não necessita de instalação, basta baixar o projeto em seu computador e usar. 
+Necessita apenas ter o Java JRE instalado uma vez que é uma aplicação Java.
 
 ## Como Executar
 
 Existem três formas diferentes de executar o sistema que são: 
 
-* SITL - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulado.
-* HITL - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone é simulado, mas os sensores são reais.
-* REAL_FLIGH - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
+* **SITL** - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulado.
+* **HITL** - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone é simulado, mas os sensores são reais.
+* **REAL_FLIGH** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
 
-Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts):
+Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts/):
 
-Forma 1 -> Execução em SITL (Executado no PC - Personal Computer):
+**Forma 1** -> Execução em SITL (Executado no PC - Personal Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-sitl.sh         (PC)
@@ -28,7 +28,7 @@ Forma 1 -> Execução em SITL (Executado no PC - Personal Computer):
 5. ./exec-gcs.sh                   (PC)
 6. ./exec-mosa.sh                  (PC)
 
-Forma 2 -> Execução em HITL (Executado no PC e CC - Companion Computer):
+**Forma 2** -> Execução em HITL (Executado no PC e CC - Companion Computer):
 
 1. ./exec-sitl.sh                  (PC)
 2. ./exec-mavproxy-hitl.sh         (CC)
@@ -37,7 +37,7 @@ Forma 2 -> Execução em HITL (Executado no PC e CC - Companion Computer):
 5. ./exec-ifa.sh                   (CC)
 6. ./exec-mosa.sh                  (CC)
 
-Forma 3 -> Execução REAL_FLIGHT (Executado no PC e CC com Drone real):
+**Forma 3** -> Execução REAL_FLIGHT (Executado no PC e CC com Drone real):
 
 1. ./exec-mavproxy-real-*.sh       (CC)
 2. ./exec-s2dk.sh                  (CC)
@@ -45,9 +45,9 @@ Forma 3 -> Execução REAL_FLIGHT (Executado no PC e CC com Drone real):
 4. ./exec-ifa.sh                   (CC)
 5. ./exec-mosa.sh                  (CC)
 
-OBS: Deve-se executar cada um desses scripts em um terminal diferente.
+! OBS: Deve-se executar cada um desses scripts em um terminal diferente.
 
-OBS: Você pode abrir/executar também uma outra estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
+OBS: Você pode abrir/executar também uma outra estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.!
 
 ## Interface do Sistema
 
@@ -114,4 +114,4 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 | ![](../Figures/keyboard-commands.png)  |  ![](../Figures/voice-commands.png) |
 
 
-OBS: Para a utilização de Keyboard-Commands e Voice-Commands é recomendado mudar o sistema para o modo CONTROLLER no arquivo config-global.properties.
+! OBS: Para a utilização de Keyboard-Commands e Voice-Commands é recomendado mudar o sistema para o modo CONTROLLER no arquivo config-global.properties.

@@ -10,8 +10,8 @@ Os principais documentos aqui presentes são:
 
 A documentação de código também pode ser encontrada na pasta:
 
-* **/JavaDoc/UAV-IFA/** -> Contém a documentação dos sistemas [[UAV-IFA](JavaDoc/UAV-IFA/index.html)].
-* **/JavaDoc/UAV-IFA/** -> Contém a documentação dos sistemas [[UAV-MOSA](JavaDoc/UAV-MOSA/index.html)].
-* **/JavaDoc/UAV-IFA/** -> Contém a documentação dos sistemas [[UAV-GCS](JavaDoc/UAV-GCS/index.html)].
-* **/JavaDoc/UAV-IFA/** -> Contém a documentação dos sistemas [[UAV-Generic](JavaDoc/UAV-Generic/index.html)].
-* **/JavaDoc/UAV-IFA/** -> Contém a documentação dos sistemas [[UAV-Mission-Creator](JavaDoc/UAV-Mission-Creator/index.html)].
+* **/JavaDoc/UAV-IFA/** -> Contém a documentação do sistema [[UAV-IFA](JavaDoc/UAV-IFA/index.html)].
+* **/JavaDoc/UAV-IFA/** -> Contém a documentação do sistema [[UAV-MOSA](JavaDoc/UAV-MOSA/index.html)].
+* **/JavaDoc/UAV-IFA/** -> Contém a documentação do sistema [[UAV-GCS](JavaDoc/UAV-GCS/index.html)].
+* **/JavaDoc/UAV-IFA/** -> Contém a documentação do sistema [[UAV-Generic](JavaDoc/UAV-Generic/index.html)].
+* **/JavaDoc/UAV-IFA/** -> Contém a documentação do sistema [[UAV-Mission-Creator](JavaDoc/UAV-Mission-Creator/index.html)].

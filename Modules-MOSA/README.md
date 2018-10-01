@@ -46,7 +46,7 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos do MOSA.
 | Módelo PLIM                | Sim                      | Sim                      | Não                      | Não                      | Não                      |
 | Linguagem                  | Java                     | Java                     | C                        | C                        | N/A                      |
 | Tempo Processamento        | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)|
-| Dependência de Libs        | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
+| Dependência de Bibliotecas | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
 | Dependência de Arquitetura | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    |
 | Faz o desvio de obstáculos | Sim                      | Sim                      | Sim                      | Não                      | Não                      |
 | Alocação do Risco          | Sim                      | Sim                      | Não                      | Não                      | Não                      |
