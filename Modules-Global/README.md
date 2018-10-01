@@ -44,3 +44,32 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Linguagem                   | Python         | Python ou C         | Python           | Python        |               |               |               | Python              |
 | Aplicação que Utiliza       | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
 | Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
+
+| Característica              | Sonar          | Temperature    | Camera                           | Buzzer                   | LED           | Parachute     | Spraying      | Route-Simplifier    |
+|-----------------------------|----------------|----------------|----------------------------------|--------------------------|---------------|---------------|---------------|---------------------|
+| Tem versão PC               | Sim (Simulado) | Sim (Simulado) | Sim (Print Screen e Vídeo Tela)  | Sim (Usa o buzzer do PC) | Não           | Não           | Não           | N/A                 |
+
+| Característica              | Camera             | Camera                     | Camera           |
+|-----------------------------|--------------------|----------------------------|------------------|
+| Tipo de Ação                | Retirar Foto       | Retirar Fotos em Sequência | Fazer Vídeo      | 
+| Código para Raspberry Pi    | picture-rpi.py     | photo-in-sequence-rpi.py   | video-rpi.py     |
+| Código para PC              | picture-pc.jar     | photo-in-sequence-pc.jar   | video-pc.jar     |
+
+| Característica              | Buzzer                  | Buzzer                       |
+|-----------------------------|-------------------------|------------------------------|
+| Tipo de Ação                | Aciona um Beep (Buzzer) | Aciona vários Beeps (Alarme) |
+| Código para Edison          | buzzer-edison.py        | alarm-edison.py              |
+| Código para PC              | buzzer-pc.jar           | alarm-pc.jar                 |
+
+| Característica              | Sonar                  | 
+|-----------------------------|------------------------|
+| Tipo de Ação                | Calcula Distância      |
+| Código para Raspberry Pi    | sonar-rpi.py           |
+| Código para PC              | sonar-pc.jar           |
+
+| Característica              | Temperature            | 
+|-----------------------------|------------------------|
+| Tipo de Ação                | Calcula a Temperatura  |
+| Código para Raspberry Pi    | temperature-rpi.py     |
+| Código para Raspberry Pi    | temperature-rpi.c      |
+| Código para PC              | temperature-pc.jar     |
