@@ -48,4 +48,3 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
 |-----------------------------|----------------|----------- ---------|------------------|---------------|---------------|---------------|---------------|---------------------|
 | Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
-| Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    |               |               |               | N/A                 |
