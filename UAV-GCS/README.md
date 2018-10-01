@@ -119,3 +119,5 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 
 
 {c:orange}OBS: Para a utilização de Keyboard-Commands e Voice-Commands é recomendado mudar o sistema para o modo CONTROLLER no arquivo config-global.properties.{/c} 
+
+Vamos ilustrar com um gravatinha : bowtie :  e com uma setinha : arrow_left : 
