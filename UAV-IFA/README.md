@@ -1,42 +1,73 @@
 # UAV-IFA
 
-Projeto escrito em Java usando a IDE Netbeans para monitoramento da segurança em voo do drone  através da implementação do sistema *In-Flight Awareness* (IFA) [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
+O UAV-IFA é uma implementação para monitoramento da segurança em voo do drone através da implementação do sistema *In-Flight Awareness* (IFA) [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-03122015-105313/pt-br.php)].
+
+O projeto foi escrito em Java usando a IDE Netbeans.
+
+## Instalação
+
+Não necessita de instalação, basta baixar o projeto em seu computador e usar. 
+Necessita apenas ter o Java JRE instalado uma vez que é uma aplicação Java.
 
 ## Como Executar
 
-Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta Scripts):
+Existem três formas diferentes de executar o sistema que são: 
 
-Forma 1 -> Execução em SITL (Executado no PC - Personal Computer):
+* **SITL** - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulado.
+* **HITL** - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone é simulado, mas os sensores são reais.
+* **REAL_FLIGH** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
 
-1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-sitl.sh         (PC)
-3. ./exec-s2dk.sh                  (PC)
-4. ./exec-ifa.sh                   (PC)
+Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts/):
 
-Forma 2 -> Execução em HITL (Executado no CC - Companion Computer):
+* **Forma 1** -> Execução em SITL (Executado no PC - Personal Computer):
 
-1. ./exec-sitl.sh                  (PC)
-2. ./exec-mavproxy-hitl.sh         (CC)
-3. ./exec-s2dk.sh                  (CC)
-4. ./exec-ifa.sh                   (CC)
+   1. ./exec-sitl.sh                  (PC)
+   2. ./exec-mavproxy-sitl.sh         (PC)
+   3. ./exec-s2dk.sh                  (PC)
+   4. ./exec-ifa.sh                   (PC)
 
-Forma 3 -> Execução REAL_FLIGHT (Executado no Drone no CC):
+* **Forma 2** -> Execução em HITL (Executado no PC e CC - Companion Computer):
 
-1. ./exec-mavproxy-real-*.sh       (CC)
-2. ./exec-s2dk.sh                  (CC)
-3. ./exec-ifa.sh                   (CC)
+   1. ./exec-sitl.sh                  (PC)
+   2. ./exec-mavproxy-hitl.sh         (CC)
+   3. ./exec-s2dk.sh                  (CC)
+   4. ./exec-ifa.sh                   (CC)
 
-OBS: Deve-se executar cada um desses scripts em um terminal diferente.
+* **Forma 3** -> Execução REAL_FLIGHT (Executado no PC e CC com Drone real):
 
-OBS: Para que a aeronave faça algo efetivamente deve-se executar também o sistema MOSA.
+   1. ./exec-mavproxy-real-*.sh       (CC)
+   2. ./exec-s2dk.sh                  (CC)
+   3. ./exec-ifa.sh                   (CC)
 
-OBS: Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
+:warning: **OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
+
+:warning: **OBS:** Para que a aeronave faça algo efetivamente deve-se executar também o sistema MOSA.
+
+:warning: **OBS:** Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
+
+## Interface do Sistema
+
+Esta aplicação não possui interface gráfica. Abaixo encontra-se um print da saída na linha de comando dessa aplicação contendo alguns logs importantes.
 
 ![](./Figures/exec-ifa.png)
 
 ## Arquivos de Entrada
 
-No diretório /Modules-Global/ tem-se um arquivo de propriedades (config-global.properties), em que se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
+No diretório /UAV-Toolkit/Modules-Global/ tem-se um arquivo de propriedades (config-global.properties), em que se define que tipo algoritmo será executado em caso de falha crítica entre outras configurações do sistema IFA.
+
+Abaixo estão os principais parâmetros do sistema IFA (existem outros parâmetros usados). 
+
+```
+prop.ifa.global.system_exec=REPLANNER
+
+prop.ifa.replanner.local_exec=ONBOARD
+prop.ifa.replanner.method=MPGA4s
+prop.ifa.replanner.cmd_exec=./exec-replanner.sh
+prop.ifa.replanner.time_exec=1.0
+prop.ifa.replanner.number_waypoints=30
+prop.ifa.replanner.delta=0.01
+prop.ifa.replanner.type_altitude_decay=CONSTANT
+```
 
 ## Arquivos de Saída
 
@@ -54,7 +85,7 @@ Time-in-GET(ms);/get-distance-to-home/;60
 Time-in-GET(ms);/get-all-sensors/;44
 ```
 
-Este arquivo contém basicamente três campos o tipo de comando, o nome do comando e o tempo gasto (overhead) em milissegundos para concluir o comando.
+Este arquivo contém basicamente três campos o tipo de comando, o nome do comando e o tempo gasto (overhead) em milissegundos (ms) para concluir o comando.
 
 Um outro arquivo de saída gerado é o log-aircraft*.csv que também utiliza o formato CSV e possui o seguinte aspecto:
 

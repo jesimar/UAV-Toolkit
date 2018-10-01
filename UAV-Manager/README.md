@@ -1,6 +1,6 @@
-# UAV-GCS
+# UAV-Manager
 
-O UAV-GCS é um Estação de Controle em Solo, ou ainda, uma Ground Control Station (GCS) para acompanhamento/visualização/interação com o piloto automático e os sistemas MOSA e IFA.
+O UAV-Manager é um Estação de Controle em Solo, ou ainda, uma Ground Control Station (GCS) para acompanhamento/visualização/interação com o piloto automático e os sistemas MOSA e IFA.
 
 O projeto foi escrito em Java usando a IDE Netbeans.
 

@@ -4,13 +4,13 @@ Este diretório é responsável por agrupar um conjunto de algoritmos usados pel
 
 Os algoritmos seguintes estão sendo utilizados como algoritmos de replanejamento de rotas pelo IFA.
 
-* **DE4s** -> *Differential Evolution for security*
+* **DE4s** -> *Differential Evolution for security*  [[Link em Breve]()]
 
 * **GH4s** -> *Greedy Heuristic for security* (Artigo IJAIT 2017) [[Link](http://www.worldscientific.com/doi/abs/10.1142/S0218213017600089)]
 
 * **GA4s** -> *Genetic Algorithm for security* (Artigo IJAIT 2017) [[Link](http://www.worldscientific.com/doi/abs/10.1142/S0218213017600089)]
 
-* **MS4s** ->  *MultiStart for security*
+* **MS4s** ->  *MultiStart for security* [[Link em Breve]()]
 
 * **MILP4s** ->  *Mixed Integer Linear Programming for security* (Artigo Journal PLIM 2018) [[Link em Breve]()]
 
@@ -42,7 +42,7 @@ Em cada uma das pastas dos métodos citados acima (DE4s, GH4s, GA4s, MPGA4s), te
 
 Para utilizar esse método basta adicionar um arquivo com os waypoints a serem seguidos caso haja falha crítica. 
 
-Um arquivo com rota fixa possui o seguinte formato: "latitude;longitude;altitude"
+Um arquivo com rota fixa possui o seguinte formato para cada linha: "latitude;longitude;altitude"
 
 ```
 -22.005933559084500;-47.898553832061054;3.0
@@ -60,30 +60,32 @@ Um arquivo com rota fixa possui o seguinte formato: "latitude;longitude;altitude
 
 ## Síntese: 
 
-Abaixo encontra-se uma tabela sintetizando os principais módulos do IFA.
+Abaixo encontram-se duas tabela sintetizando os principais módulos do IFA e suas características.
 
-| Característica             | MPGA4s                  | GA4s                     | DE4s                     | GH4s                     | MS4s                     |
-|----------------------------|-------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| Estratégia                 | Metaheurística          | Metaheurística           | Metaheurística           | Heurística               | Heurística               |
-| Módelo PLIM                | Não                     | Não                      | Não                      | Não                      | Não                      |
-| Processadores usados       | Um                      | Um                       | Um                       | Um                       | Um                       |
-| Tempo Processamento        | Rápido (~0.5 a 2 seg)   | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    |
-| Dependência de Bibliotecas | Não tem                 | Não tem                  | Não tem                  | Não tem                  | Não tem                  |
-| Dependência de Arquitetura | Todas que rodam Java    | Todas que rodam Java     | Todas que rodam Java     | Todas que rodam Java     | Todas                    |
-| Faz o desvio de obstáculos | Sim                     | Sim                      | Sim                      | Sim                      | Sim                      |
-| Alocação do Risco          | Sim                     | Sim                      | Sim                      | Não                      | Não                      |
-| Linguagem                  | Java                    | Java                     | Java                     | Java                     | Java                     |
-| Imagem                   | ![](../Figures/mpga4s.png)| ![](../Figures/ga4s.png) | ![](../Figures/de4s.png) | ![](../Figures/gh4s.png) | ![](../Figures/ms4s.png) |
+| Característica             | MPGA4s                    | GA4s                     | DE4s                     | GH4s                     | MS4s                     |
+|----------------------------|---------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| Estratégia                 | Metaheurística            | Metaheurística           | Metaheurística           | Heurística               | Heurística               |
+| Módelo PLIM                | Não                       | Não                      | Não                      | Não                      | Não                      |
+| Núcleos da CPU usados      | Um                        | Um                       | Um                       | Um                       | Um                       |
+| Tempo de Processamento     | Rápido (~0.5 a 2 seg)     | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    |
+| Dependência de Bibliotecas | Não tem                   | Não tem                  | Não tem                  | Não tem                  | Não tem                  |
+| Dependência de Arquitetura | Todas que rodam Java      | Todas que rodam Java     | Todas que rodam Java     | Todas que rodam Java     | Todas                    |
+| Faz o desvio de obstáculos | Sim                       | Sim                      | Sim                      | Sim                      | Sim                      |
+| Alocação do Risco          | Sim                       | Sim                      | Sim                      | Não                      | Não                      |
+| Linguagem                  | Java                      | Java                     | Java                     | Java                     | Java                     |
+| Local de Execução          | Onboard/Offboard          | Onboard/Offboard         | Onboard/Offboard         | Onboard/Offboard         | Onboard/Offboard         |
+| Imagem                     | ![](../Figures/mpga4s.png)| ![](../Figures/ga4s.png) | ![](../Figures/de4s.png) | ![](../Figures/gh4s.png) | ![](../Figures/ms4s.png) |
 
-| Característica             | GA-GA-4s                | GA-GH-4s                 | Pre-Planned4s            | Fixed-Route4s            | MILP4s                   |
-|----------------------------|-------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| Estratégia                 | Metaheurística          | Metaheurística           | Determinística           | Determinística           | Programação Matemática   |
-| Módelo PLIM                | Não                     | Não                      | Não                      | Não                      | Sim                      |
-| Processadores usados       | Dois                    | Dois                     | Um                       | Um                       | Um                       |
-| Tempo Processamento        | Rápido (~0.5 a 2 seg)   | Rápido (~0.5 a 2 seg)    | (~0.5 a 2 seg)           | Super Rápido (<0.001 seg)| Super Lento (>30 seg até 10 minutos) |
-| Dependência de Bibliotecas | Não tem                 | Não tem                  | Não tem                  | Não tem                  | CPLEX                    |
-| Dependência de Arquitetura | Todas que rodam Java    | Todas que rodam Java     | Todas                    | Todas                    | Apenas x86 e x64         |
-| Faz o desvio de obstáculos | Sim                     | Sim                      | Sim                      | Não                      | Sim                      |
-| Alocação do Risco          | Sim                     | Sim                      | Sim                      | Não                      | Sim                      |
-| Linguagem                  | Java                    | Java                     | Java                     | N/A                      | Java                     |
-| Imagem                  | ![](../Figures/ga-ga4s.png)| ![](../Figures/ga-gh4s.png) | ![](../Figures/pre-planned4s.png) | ![](../Figures/fixed-route4s.png) | ![](../Figures/milp4s.png) |
+| Característica             | GA-GA-4s                   | GA-GH-4s                 | Pre-Planned4s            | Fixed-Route4s            | MILP4s                   |
+|----------------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| Estratégia                 | Metaheurística             | Metaheurística           | Determinística           | Determinística           | Programação Matemática   |
+| Módelo PLIM                | Não                        | Não                      | Não                      | Não                      | Sim                      |
+| Núcleos da CPU usados      | Dois                       | Dois                     | Um                       | Um                       | Um                       |
+| Tempo de Processamento     | Rápido (~0.5 a 2 seg)      | Rápido (~0.5 a 2 seg)    | (~0.5 a 2 seg)           | Super Rápido (<0.001 seg)| Super Lento (>30 seg até 10 minutos) |
+| Dependência de Bibliotecas | Não tem                    | Não tem                  | Não tem                  | Não tem                  | CPLEX                    |
+| Dependência de Arquitetura | Todas que rodam Java       | Todas que rodam Java     | Todas                    | Todas                    | Apenas x86 e x64         |
+| Faz o desvio de obstáculos | Sim                        | Sim                      | Sim                      | Não                      | Sim                      |
+| Alocação do Risco          | Sim                        | Sim                      | Sim                      | Não                      | Sim                      |
+| Linguagem                  | Java                       | Java                     | Java                     | N/A                      | Java                     |
+| Local de Execução          | Onboard                    | Onboard                  | Onboard                  | Onboard                  | Onboard                  |
+| Imagem                     | ![](../Figures/ga-ga4s.png)| ![](../Figures/ga-gh4s.png) | ![](../Figures/pre-planned4s.png) | ![](../Figures/fixed-route4s.png) | ![](../Figures/milp4s.png) |

@@ -8,7 +8,7 @@ Os diretórios a seguir contém códigos utilizados pelo sistema IFA.
 * **Parachute** -> Código responsável por acionar o paraquedas do drone após ocorrer uma falha crítica. 
 * **Sonar** -> Código responsável por fazer leituras de distância do drone até o solo.
 * **LED** -> Código responsável por acionar ou apagar alguns LEDs do drone.
-* **TemperatureSensor** -> Código responsável por pegar dados do sonar para correção da altitude do drone em caso de baixa altitude.
+* **Temperature** -> Código responsável por pegar dados do sensor de temperatura para verificação de superaquecimento do drone.
 
 Os diretórios a seguir contém códigos utilizados pelo sistema MOSA.
 
@@ -31,3 +31,16 @@ Este diretório também possui dois arquivos de configuração que são:
 
 * **config-global.properties** -> Arquivo usado pelos sistemas MOSA, IFA, GCS, S2DK para descrever os aspectos gerais da missão/segurança.
 * **config-param.properties** -> Arquivo usado pelo sistema IFA para calibrar os parâmetros de voo do Piloto Automático.
+
+## Síntese: 
+
+Abaixo encontra-se uma tabela sintetizando os principais módulos presentes nessa pasta e suas características.
+
+| Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
+|-----------------------------|----------------|----------- ---------|------------------|---------------|---------------|---------------|---------------|---------------------|
+| Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
+| Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    | -             | -             | -             | -                   |
+| Dependência de Bibliotecas  | RPi.GPIO       | RPi.GPIO e WiringPi | picamera         | mraa          | -             | -             | -             | Não tem             |
+| Linguagem                   | Python         | Python ou C         | Python           | Python        | -             | -             | -             | Python              |
+| Módulo que usa              | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
+| Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |

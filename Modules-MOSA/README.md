@@ -38,16 +38,17 @@ Estas rotas default (circle, triangle, rectangle) foram geradas pelo algoritmo R
 
 ## Síntese: 
 
-Abaixo encontra-se uma tabela sintetizando os principais módulos do MOSA.
+Abaixo encontra-se uma tabela sintetizando os principais módulos do MOSA e suas características.
 
-| Característica             | HGA4m                    | CCQSP4m                  | A-Star4m                 | Route-Standard4m         | Fixed-Route4m            |
-|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| Estratégia                 | Metaheurística + Grafo Visibilidade + Programação Matemática | Programação Matemática  | Heurística               | Determinística           | Não tem                  |
-| Módelo PLIM                | Sim                      | Sim                      | Não                      | Não                      | Não                      |
-| Tempo Processamento        | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)|
-| Dependência de Bibliotecas | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
-| Dependência de Arquitetura | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    |
-| Faz o desvio de obstáculos | Sim                      | Sim                      | Sim                      | Não                      | Não                      |
-| Alocação do Risco          | Sim                      | Sim                      | Não                      | Não                      | Não                      |
-| Linguagem                  | Java                     | Java                     | C                        | C                        | N/A                      |
-| Imagem                     | ![](../Figures/hga.png)  | ![](../Figures/ccqsp.png)| ![](../Figures/astar.png)|![](../Figures/rstand.png)| ![](../Figures/fixed.png)|
+| Característica                   | HGA4m                    | CCQSP4m                  | A-Star4m                 | Route-Standard4m         | Fixed-Route4m            |
+|----------------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| Estratégia                       | Metaheurística + Grafo Visibilidade + Programação Matemática | Programação Matemática  | Heurística               | Determinística           | Não tem                  |
+| Módelo PLIM                      | Sim                      | Sim                      | Não                      | Não                      | Não                      |
+| Tempo de Processamento           | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)|
+| Dependência de Bibliotecas       | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
+| Dependência de Arquitetura       | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    |
+| Faz o desvio de obstáculos       | Sim                      | Sim                      | Sim                      | Não                      | Não                      |
+| Alocação do Risco                | Sim                      | Sim                      | Não                      | Não                      | Não                      |
+| Linguagem                        | Java                     | Java                     | C                        | C                        | N/A                      |
+| Local de Execução                | Onboard/Offboard         | Onboard/Offboard         | Onboard/Offboard         | Onboard                  | Onboard                  |
+| Imagem                           | ![](../Figures/hga.png)  | ![](../Figures/ccqsp.png)| ![](../Figures/astar.png)|![](../Figures/rstand.png)| ![](../Figures/fixed.png)|
