@@ -1,0 +1,11 @@
+uav.gcs
+uav.gcs.commands.keyboard
+uav.gcs.commands.voice
+uav.gcs.communication
+uav.gcs.conection.db
+uav.gcs.planner
+uav.gcs.plotmap
+uav.gcs.replanner
+uav.gcs.struct
+uav.gcs.window
+uav.gcs2

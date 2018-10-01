@@ -9,17 +9,26 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilRunThread;
 
 /**
- *
+ * The class models the spraying control to do mission.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class SprayingControl {
     
     private final ReaderFileConfig config;
 
+    /**
+     * Class constructor.
+     * @since version 4.0.0
+     */
     public SprayingControl() {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Starts spraying on the plantation
+     * @since version 4.0.0
+     */
     public void openSpraying(){
         try {
             String cmd = "";
@@ -34,12 +43,16 @@ public class SprayingControl {
                 }
             } 
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirSpraying()), print);            
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirSpraying()), print);            
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
+            StandardPrints.printMsgWarning("Warning [IOException] openSpraying()");
         } 
     }
     
+    /**
+     * Stop spraying on the plantation
+     * @since version 4.0.0
+     */
     public void closeSpraying(){
         try {
             String cmd = "";
@@ -54,9 +67,9 @@ public class SprayingControl {
                 }
             } 
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirSpraying()), print);
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirSpraying()), print);
         } catch (IOException ex) {
-            StandardPrints.printMsgWarning("Warning [IOException] makeAVideo()");
+            StandardPrints.printMsgWarning("Warning [IOException] closeSpraying()");
         } 
     }
 }

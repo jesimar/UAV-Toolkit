@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de locais de execução do planejador.
+ * The class models the types of path planner/replanner execution locations.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class LocalExecPlanner {
    

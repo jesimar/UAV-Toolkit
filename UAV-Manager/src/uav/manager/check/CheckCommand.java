@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uav.manager.check;
 
 import java.io.File;
@@ -13,10 +8,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- *
- * @author Marcio
+ * @author Marcio S. Arantes
+ * @see version 3.0.0
  */
 public abstract class CheckCommand implements Check<Boolean>{
+    
     public final String command;
     private final File dir;
     private final long timeout;
@@ -28,6 +24,7 @@ public abstract class CheckCommand implements Check<Boolean>{
         this.timeout = timeout;
         this.exitOk = exitOk;
     }
+    
     public abstract boolean checkStream(InputStream stream);
     @Override
     public void check(Consumer<Boolean> consumer) {

@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela o GPS do drone (dados obtidos através do GPS).
- * @author jesimar
+ * The class models drone GPS (data obtained via GPS).
+ * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class GPS {
     
@@ -11,6 +12,7 @@ public class GPS {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public GPS() {
         
@@ -20,6 +22,7 @@ public class GPS {
      * Class constructor.
      * @param lat latitude coordinete [-90; +90] degrees
      * @param lng longitude coordinete [-180; +180] degres
+     * @since version 2.0.0
      */
     public GPS(double lat, double lng) {
         this.lat = lat;
@@ -29,6 +32,7 @@ public class GPS {
     /**
      * Converts line in JSON format to latitude and longitude values.
      * @param line FORMAT: {"gps": [-22.0059726, -47.8986881]}
+     * @since version 2.0.0
      */
     public void parserInfoGPS(String line) {
         try{
@@ -41,6 +45,12 @@ public class GPS {
         }
     }
     
+    /**
+     * Update the info the latitude and longitude
+     * @param lat latitude coordinete [-90; +90] degrees
+     * @param lng longitude coordinete [-180; +180] degres
+     * @since version 2.0.0
+     */
     public void updateGPS(String lat, String lng){
         try{
             this.lat = Double.parseDouble(lat);        
@@ -50,10 +60,20 @@ public class GPS {
         }
     }
 
+    /**
+     * Set the value of latitude
+     * @param lat the value of latitude
+     * @since version 2.0.0
+     */
     public void setLat(double lat) {
         this.lat = lat;
     }
 
+    /**
+     * Set the value of longitude
+     * @param lng the value of longitude
+     * @since version 2.0.0
+     */
     public void setLng(double lng) {
         this.lng = lng;
     }

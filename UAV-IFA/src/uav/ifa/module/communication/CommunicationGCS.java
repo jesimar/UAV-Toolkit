@@ -23,8 +23,11 @@ import uav.generic.struct.states.StateCommunication;
 import uav.ifa.module.decision_making.Controller;
 
 /**
- * Classe que faz o controle da comunicação com GCS.
+ * The class controls communication with GCS.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * @see Communication
+ * @see Server
  */
 public class CommunicationGCS extends Communication implements Server{
     
@@ -43,6 +46,7 @@ public class CommunicationGCS extends Communication implements Server{
      * Class contructor.
      * @param drone instance of the drone
      * @param controller instance of the DecisionMaking
+     * @since version 2.0.0
      */
     public CommunicationGCS(Drone drone, Controller controller) {
         this.drone = drone;
@@ -55,6 +59,10 @@ public class CommunicationGCS extends Communication implements Server{
         this.typeAction = "";
     }
 
+    /**
+     * Start the server
+     * @since version 4.0.0
+     */
     @Override
     public void startServer() {
         StandardPrints.printMsgEmph("IFA waiting the connection to UAV-GCS ...");
@@ -76,6 +84,10 @@ public class CommunicationGCS extends Communication implements Server{
         });
     }
 
+    /**
+     * Treats the data to be received
+     * @since version 2.0.0
+     */
     @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
@@ -148,6 +160,10 @@ public class CommunicationGCS extends Communication implements Server{
         });
     }
 
+    /**
+     * Close the communication
+     * @since version 2.0.0
+     */
     @Override
     public void close() {
         super.close();
@@ -165,6 +181,10 @@ public class CommunicationGCS extends Communication implements Server{
         }
     }
     
+    /**
+     * Sends data from sensors and aircraft to GCS.
+     * @since version 3.0.0
+     */
     public void sendDataDrone() {
         StandardPrints.printMsgEmph("IFA sending data drone to UAV-GCS ...");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -185,7 +205,7 @@ public class CommunicationGCS extends Communication implements Server{
             }
         });
     }
-    
+        
     public boolean hasFailure(){
         return hasFailure;
     }

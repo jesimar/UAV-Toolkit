@@ -3,8 +3,9 @@ package uav.generic.struct;
 import lib.color.StandardPrints;
 
 /**
- * Classe que modela os valores de parâmetros enviados em formato JSON.
+ * The class models the parameter values transmitted in JSON format.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class ParameterJSON {
     
@@ -25,6 +26,7 @@ public class ParameterJSON {
     /**
      * Class constructor.
      * @param parameter objetct parameter
+     * @since version 2.0.0
      */
     public ParameterJSON(Parameter parameter){
         this.parameter = parameter;
@@ -34,15 +36,25 @@ public class ParameterJSON {
      * Class constructor.
      * @param key attribute (name of parameter)
      * @param value value of key attribute
+     * @since version 2.0.0
      */
     public ParameterJSON(String key, double value){
         this.parameter = new Parameter(key, value);        
     }
     
+    /**
+     * Gets a paramter.
+     * @return the parameter
+     * @since version 2.0.0
+     */
     public Parameter getParameter(){
         return this.parameter;
     }
     
+    /**
+     * Print the parameter info.
+     * @since version 2.0.0
+     */
     public void printParameter(){
         StandardPrints.printMsgEmph("Parameter");        
         StandardPrints.printMsgEmph(parameter.toString());

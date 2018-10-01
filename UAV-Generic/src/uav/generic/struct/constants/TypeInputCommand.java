@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de comando de entrada.
+ * The class models the types of input commands.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeInputCommand {
     

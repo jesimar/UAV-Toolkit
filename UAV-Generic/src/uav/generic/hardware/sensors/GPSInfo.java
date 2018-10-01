@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela algumas informações do GPS do drone (dados obtidos através do GPS).
+ * The class models some drone GPS information (data obtained through GPS).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class GPSInfo {
     
@@ -13,6 +14,7 @@ public class GPSInfo {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public GPSInfo() {
         
@@ -24,6 +26,7 @@ public class GPSInfo {
      * @param num_sat number of visible satellites
      * @param eph GPS horizontal dilution of position (HDOP)
      * @param epv GPS vertical   dilution of position (VDOP)
+     * @since version 2.0.0
      */
     public GPSInfo(int fix, int num_sat, int eph, int epv) {
         this.fixType = fix;
@@ -35,6 +38,7 @@ public class GPSInfo {
     /**
      * Converts line in JSON format to fixtype, num_sat, eph and epv values.
      * @param line FORMAT: {"gpsinfo": [3, 10, 121, 65535]}
+     * @since version 2.0.0
      */
     public void parserInfoGPSInfo(String line) {
         try{
@@ -49,6 +53,11 @@ public class GPSInfo {
         }
     } 
     
+    /**
+     * Set the value of fix type
+     * @param fixType the value of fix type
+     * @since version 2.0.0
+     */
     public void setFixType(String fixType) {
         try{
             this.fixType = Integer.parseInt(fixType);
@@ -57,10 +66,20 @@ public class GPSInfo {
         }
     }
 
+    /**
+     * Set the value of fix type
+     * @param fixType the value of fix type
+     * @since version 2.0.0
+     */
     public void setFixType(int fixType) {
         this.fixType = fixType;
     }
     
+    /**
+     * Set the number of satellites visible
+     * @param satellitesVisible the number of satellites visible
+     * @since version 2.0.0
+     */
     public void setSatellitesVisible(String satellitesVisible) {
         try{
             this.satellitesVisible = Integer.parseInt(satellitesVisible);
@@ -69,10 +88,20 @@ public class GPSInfo {
         }
     }
 
+    /**
+     * Set the number of satellites visible
+     * @param satellitesVisible the number of satellites visible
+     * @since version 2.0.0
+     */
     public void setSatellitesVisible(int satellitesVisible) {
         this.satellitesVisible = satellitesVisible;
     }
 
+    /**
+     * Set the eph
+     * @param eph the eph
+     * @since version 2.0.0
+     */
     public void setEPH(String eph) {
         try{
             this.eph = Integer.parseInt(eph);
@@ -81,10 +110,20 @@ public class GPSInfo {
         }
     }
 
+    /**
+     * Set the eph
+     * @param eph the eph
+     * @since version 2.0.0
+     */
     public void setEPH(int eph) {
         this.eph = eph;
     }
     
+    /**
+     * Set the epv
+     * @param epv the epv
+     * @since version 2.0.0
+     */
     public void setEPV(String epv) {
         try{
             this.epv = Integer.parseInt(epv);
@@ -93,6 +132,11 @@ public class GPSInfo {
         }
     }
 
+    /**
+     * Set the epv
+     * @param epv the epv
+     * @since version 2.0.0
+     */
     public void setEPV(int epv) {
         this.epv = epv;
     }    

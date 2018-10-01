@@ -13,6 +13,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+//===============================DEFINES================================
+
 #define TRUE 1
 #define FALSE 0
 
@@ -50,7 +52,7 @@ double convertXtoLongitude(double lonBase, double latBase, double x);
 
 //==============================FUNCTIONS===============================
 
-//./uav-routes-standard lat lng alt type dist discretization
+//FORMAT to RUN: ./uav-routes-standard lat lng alt type dist discretization
 int main(int argc, char **argv){
 	lat = atof(argv[1]);
 	lng = atof(argv[2]);

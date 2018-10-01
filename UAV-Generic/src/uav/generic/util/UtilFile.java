@@ -6,16 +6,18 @@ import java.io.PrintStream;
 import lib.color.StandardPrints;
 
 /**
- *
+ * Class with feature set with file manipulation.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class UtilFile {
     
     /**
-     * 
-     * @param name - name of file
-     * @param extension - extension of file [.csv or .txt]
-     * @return 
+     * Create a file log.
+     * @param name name of file
+     * @param extension extension of file [.csv or .txt]
+     * @return the File created.
+     * @since version 4.0.0
      */
     public static PrintStream createFileLog(String name, String extension) {
         StandardPrints.printMsgEmph("create file log: " + name + extension + " ...");

@@ -6,6 +6,7 @@ import uav.generic.struct.geom.Position3D;
 /**
  * Class with util methods on string.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class UtilString {
     
@@ -13,6 +14,7 @@ public class UtilString {
      * Method that change the type of separator.
      * @param line - Any line
      * @return a line with the separator ";" without "\t", "; ", ", ", ",", " ".
+     * @since version 1.0.0
      */
     public static String changeValueSeparator(String line){
         line = line.replace("\t", ";");
@@ -27,6 +29,7 @@ public class UtilString {
      * Method that return the type of separator.
      * @param separator - String {"space", "tab", "semicolon", "comma", "barn"}
      * @return Type of separator.
+     * @since version 1.0.0
      */
     public static String defineSeparator(String separator){
         switch (separator) {
@@ -50,6 +53,7 @@ public class UtilString {
      * @param line content the line
      * @param separator - Any separator i.e: ";", ",", "\t", "; ", ", ", ...
      * @return the object Position2D.
+     * @since version 1.0.0
      */
     public static Position2D split2D(String line, String separator){
         String v[] = line.split(separator);
@@ -61,6 +65,7 @@ public class UtilString {
      * @param line content the line
      * @param separator - String {"space", "tab", "semicolon", "comma", "barn"}
      * @return the object Position3D.
+     * @since version 1.0.0
      */
     public static Position3D split3D(String line, String separator){
         String v[] = line.split(separator);

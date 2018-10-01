@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 /**
  * Class with utils methods on Geometry.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class UtilGeom {    
     
@@ -13,6 +14,7 @@ public class UtilGeom {
      * Calc the center X of the polygon.
      * @param poly the object polygon
      * @return the center x of the polygon.
+     * @since version 1.0.0
      */
     public static double centerXPoly(Polygon poly){
         double sumX = 0;
@@ -26,6 +28,7 @@ public class UtilGeom {
      * Calc the center Y of the polygon.
      * @param poly the object polygon
      * @return the center y of the polygon.
+     * @since version 1.0.0
      */
     public static double centerYPoly(Polygon poly){
         double sumY = 0;
@@ -39,6 +42,7 @@ public class UtilGeom {
      * Calc the center X of the polygon using the objetct Point2D.
      * @param poly a vector of points that represent the polygon
      * @return the center x of the polygon.
+     * @since version 1.0.0
      */
     public static double centerXPoly(Point2D poly[]){
         double sumX = 0;        
@@ -52,6 +56,7 @@ public class UtilGeom {
      * Calc the center Y of the polygon using the objetct Point2D.
      * @param poly a vector of points that represent the polygon
      * @return the center y of the polygon.
+     * @since version 1.0.0
      */
     public static double centerYPoly(Point2D poly[]){
         double sumY = 0;        
@@ -67,6 +72,7 @@ public class UtilGeom {
      * @param x the position x.
      * @param y the position y.
      * @return the euclidian distante.
+     * @since version 1.0.0
      */
     public static double distPointToCenter(Point2D poly[], double x, double y){
         double x1 = centerXPoly(poly);
@@ -81,6 +87,7 @@ public class UtilGeom {
      * @param x2 coordinate x of second point.
      * @param y2 coordinate y of second point.
      * @return the euclidian distance.
+     * @since version 1.0.0
      */
     public static double distanceEuclidian(double x1, double y1, double x2, double y2){
         return Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2) * (y1 - y2));

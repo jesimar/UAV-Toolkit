@@ -5,8 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- *
- * @author Jesimar Arantes
+ * The class that reads the map file
+ * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class ReaderMap {
     
@@ -24,10 +25,19 @@ public class ReaderMap {
     private int sizePenalty;
     private int sizeBonus;
 
+    /**
+     * Class constructor.
+     * @param pathFile the path of map
+     * @since version 4.0.0
+     */
     public ReaderMap(String pathFile) {
         path = pathFile;
     }
     
+    /**
+     * Method that reads the map file.
+     * @since version 4.0.0
+     */
     public void read(){
         File file = new File(path);
         try {

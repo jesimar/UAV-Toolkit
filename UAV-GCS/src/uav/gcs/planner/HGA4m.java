@@ -14,48 +14,62 @@ import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilIO;
 
 /**
- * Classe que modela o planejador de rotas HGA4m. 
+ * The class models the path planner HGA4m. 
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
+ * @see Planner
  */
 public class HGA4m extends Planner{
     
     /**
-     * Class constructor
+     * Class constructor - Used in HGA4m
      * @param drone instance of the aircraft
-     * @param fileWaypointsMission
-     * @param sizeWpt
-     * @param dirFiles
-     * @param fileGeoBase
-     * @param dirPlanner
-     * @param cmdExecPlanner
-     * @param altitudeFlight
-     * @param time
-     * @param delta
-     * @param maxVel
-     * @param maxCtrl
-     * @param cruizeSpeed
-     * @param typeWing
+     * @param fileWaypointsMission file with waypoints of mission
+     * @param numberRoutes number of routes
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirPlanner planner directory
+     * @param cmdExecPlanner command to exec the planner
+     * @param altitudeFlight flight altitude cruising
+     * @param time processing time
+     * @param delta delta parameter/risk allocation
+     * @param maxVel maximum speed
+     * @param maxCtrl maximum control
+     * @param speedCruize cruise speed
+     * @param typeAircraft type of aircraft
+     * @since version 3.0.0
      */
-    public HGA4m(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles, 
+    public HGA4m(Drone drone, String fileWaypointsMission, String numberRoutes, String dirFiles, 
             String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
             String altitudeFlight, String time, String delta, 
-            String maxVel, String maxCtrl, String cruizeSpeed, String typeWing) {
-        super(drone, fileWaypointsMission, sizeWpt, dirFiles, fileGeoBase, dirPlanner, 
+            String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
+        super(drone, fileWaypointsMission, numberRoutes, dirFiles, fileGeoBase, dirPlanner, 
                 cmdExecPlanner, altitudeFlight, time, delta, maxVel, 
-                maxCtrl, cruizeSpeed, typeWing);
+                maxCtrl, speedCruize, typeAircraft);
         readMission3D();
     }   
     
+    /**
+     * Read the mission with Cartesian coordinates.
+     * @since version 3.0.0
+     */
     private void readMission3D(){
         try {
             String path = dir + fileWaypointsMission;
             ReaderFileMission.mission3D(new File(path), waypointsMission);
         } catch (FileNotFoundException ex) {
-            System.err.println("Warning [FileNotFoundException] readMission()");
+            System.err.println("Warning [FileNotFoundException] readMission3D()");
             ex.printStackTrace();
         }
     }
     
+    /**
+     * Execute the mission
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     public boolean execMission(int i) {
         boolean itIsOkUpdate = updateFileConfig(i);
         boolean itIsOkpathAB = definePathAB(i);        
@@ -65,12 +79,19 @@ public class HGA4m extends Planner{
         return itIsOkUpdate && itIsOkpathAB && itIsOkExec && itIsOkRoute && itIsOkParse;
     }
     
+    /**
+     * Updates the configuration file used by the method.
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     public boolean updateFileConfig(int i) {
         try {
-            double px1 = waypointsMission.getPosition3D(i).getX();
-            double py1 = waypointsMission.getPosition3D(i).getY();
-            double px2 = waypointsMission.getPosition3D(i+1).getX();
-            double py2 = waypointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition(i).getX();
+            double py1 = waypointsMission.getPosition(i).getY();
+            double px2 = waypointsMission.getPosition(i+1).getX();
+            double py2 = waypointsMission.getPosition(i+1).getY();
             double dx = px2 - px1;
             double dy = py2 - py1;
             //distancia entre os pontos com uma margem de seguranca
@@ -91,17 +112,25 @@ public class HGA4m extends Planner{
     
     private double vx1 = 0.0;
     private double vy1 = 0.0;
+    
+    /**
+     * Define the path between two points (i.e. A and B).
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     private boolean definePathAB(int i) {
         try {
-            double px1 = waypointsMission.getPosition3D(i).getX();
-            double py1 = waypointsMission.getPosition3D(i).getY();
-            double px2 = waypointsMission.getPosition3D(i+1).getX();
-            double py2 = waypointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition(i).getX();
+            double py1 = waypointsMission.getPosition(i).getY();
+            double px2 = waypointsMission.getPosition(i+1).getX();
+            double py2 = waypointsMission.getPosition(i+1).getY();
             double vx2 = 0;
             double vy2 = 0;
             if (i < waypointsMission.size() - 2){
-                double px3 = waypointsMission.getPosition3D(i+2).getX();
-                double py3 = waypointsMission.getPosition3D(i+2).getY();
+                double px3 = waypointsMission.getPosition(i+2).getX();
+                double py3 = waypointsMission.getPosition(i+2).getY();
                 double dx = px3 - px1;
                 double dy = py3 - py1;
                 double norm = Math.sqrt(dx*dx+dy*dy);
@@ -136,6 +165,13 @@ public class HGA4m extends Planner{
         } 
     }  
     
+    /**
+     * Creates a final route file
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     private boolean createFileFinalRoute(int i) {
         try {
             File src = new File(dir + "output-simulation.log");
@@ -170,11 +206,18 @@ public class HGA4m extends Planner{
         }
     }
     
+    /**
+     * Converts the route in Cartesian coordinates to geographic coordinates 
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     public boolean parseRoute3DtoGeo(int i){
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
             String nameFileRouteGeo = "routeGeo" + i + ".txt";
-            PointGeo pGeoBase = UtilGeo.getPointGeo(dirFiles + fileGeoBase);
+            PointGeo pGeoBase = UtilGeo.getPointGeoBase(dirFiles + fileGeoBase);
             File fileRouteGeo = new File(dir + nameFileRouteGeo);
             PrintStream printGeo = new PrintStream(fileRouteGeo);
             Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
@@ -186,7 +229,7 @@ public class HGA4m extends Planner{
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 printGeo.println(UtilGeo.parseToGeo(pGeoBase, x, y, h, ";"));
-                mission3D.addPosition3D(new Position3D(x, y, h));
+                mission3D.addPosition(new Position3D(x, y, h));
                 missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pGeoBase, x, y, h)));
                 countLines++;
             }
@@ -205,6 +248,10 @@ public class HGA4m extends Planner{
         } 
     }
     
+    /**
+     * Clears log files generated by method
+     * @since version 3.0.0
+     */
     @Override
     public void clearLogs() {
         UtilIO.deleteFile(new File(dir), ".log");
@@ -213,7 +260,13 @@ public class HGA4m extends Planner{
         new File(dir + "log_error.txt").delete(); 
     }
     
-    public String getTimeExec(int i) {
+    /**
+     * Get the time to exec the i-th route
+     * @param i the i-th index of the route
+     * @return the processing time the i-th route
+     * @since version 3.0.0
+     */
+    private String getTimeExec(int i) {
         if (!time.contains("[")){
             return time;
         }else{

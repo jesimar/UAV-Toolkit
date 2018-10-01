@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uav.manager;
 
 import java.awt.Color;
@@ -49,10 +44,11 @@ import uav.manager.os.DetectOS;
 import uav.manager.os.ServicesOS;
 
 /**
- *
- * @author Marcio
+ * @author Marcio S. Arantes
+ * @see version 3.0.0
  */
 public class UAVManager {
+    
     private static final Color BACKGROUNDS[] = new Color[]{
         new Color(228, 215, 197),
         new Color(218, 191, 221),
@@ -94,8 +90,7 @@ public class UAVManager {
     
     private final Properties properties;
     private int selected = 0;
-    
-    
+        
     private final Find<File> finder;
     private final TriConsumer<File,String,String> saver;
     private final ServicesOS os;
@@ -127,8 +122,7 @@ public class UAVManager {
         iconCmd = new ImageIcon(new ImageIcon("./resources/run.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconStop = new ImageIcon(new ImageIcon("./resources/stop.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconSave = new ImageIcon(new ImageIcon("./resources/save_icon.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
-        
-        
+                
         this.windows = new sFrame("UAV Manager"){
             @Override
             public void Config(int w, int h) {
@@ -139,8 +133,7 @@ public class UAVManager {
                 panelBtms.Config(w-50, 48);
             }
         };
-        
-        
+                
         this.fileChooser = new JFileChooser();
         this.fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         this.fileChooser.setMultiSelectionEnabled(false);
@@ -165,10 +158,7 @@ public class UAVManager {
             panel.setVisible(false);
         }
         panels[0].setVisible(true);
-        
-        
-        
-        
+       
         panelBtms = new sPanel(new FlowLayout(FlowLayout.RIGHT, WGAP, HGAP), new Color(0, 0, 0, 0));
         JButton btmBack = new JButton(iconBack);
         btmBack.addActionListener((e)->{
@@ -190,8 +180,7 @@ public class UAVManager {
         });
         panelBtms.add(btmBack);
         panelBtms.add(btmNext);
-        
-        
+
         for(sPanel panel : panels){
             this.windows.add(panel);
         }
@@ -304,8 +293,7 @@ public class UAVManager {
             label.setPreferredSize(new Dimension(150, 30));
             command.setPreferredSize(new Dimension(w-165-30-btmCmd.getPreferredSize().width-btmSave.getPreferredSize().width, 40));
         }
-        
-        
+
     }
     private class SITLPanel extends sPanel{
         private final LogoPanel panelLogo;
@@ -345,8 +333,7 @@ public class UAVManager {
             this.panelLogo = new LogoPanel(logo, background);
             this.labelTitle = new JLabel("Software-In-The-Loop", SwingConstants.CENTER);
             this.labelTitle.setFont(FONT_TITLE);
-            
-            
+
             this.add(labelTitle);
             for(PanelCommand cmd : commands){
                 this.add(cmd);
@@ -383,10 +370,8 @@ public class UAVManager {
                     }
                 }
             );
-            
         }
-        
-        
+
         @Override
         public void Config(int w, int h) {
             setPreferredSize(new Dimension(w, h));
@@ -460,6 +445,7 @@ public class UAVManager {
             //description.setPreferredSize(new Dimension(w-12, 32));
         }
     }
+    
     private class CheckPanel extends sPanel{
         private final boolean module_sitl_pc;
         private final boolean module_sitl_cc;
@@ -556,6 +542,7 @@ public class UAVManager {
             return validate.getIcon()==iconOk;
         }
     }
+    
     private class LogoPanel extends sPanel{
         private final ImageIcon logo;
         public LogoPanel(ImageIcon logo, Color background) {
@@ -573,7 +560,8 @@ public class UAVManager {
 
             g.drawImage(logo.getImage(), (int)(diffW/2), (int)(diffH/2), (int)(logo.getIconWidth()*factor), (int)(logo.getIconHeight()*factor), null);
         }
-    };   
+    }; 
+    
     private class InstallPanel extends sPanel{
         
         private final LogoPanel panelLogo;
@@ -747,8 +735,6 @@ public class UAVManager {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        // TODO code application logic here
-        
         ServicesOS os = DetectOS.detect();
         
         UAVManager manager = new UAVManager("./manager.properties", os); 
@@ -759,7 +745,5 @@ public class UAVManager {
             manager.python(result);
         });*/
     }
-
-    
     
 }

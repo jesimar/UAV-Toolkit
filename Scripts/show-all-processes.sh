@@ -14,7 +14,6 @@ ps -All | grep s2dk
 ps -All | grep ifa
 ps -All | grep mosa
 ps -All | grep uav-tests
-ps -All | grep insert-failure
 ps -All | grep gcs
 
 echo "=============================================="

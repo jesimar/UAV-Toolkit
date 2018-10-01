@@ -16,8 +16,11 @@ import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- * Classe que faz o controle da comunicação com o sistema MOSA.
+ * The class controls communication with MOSA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * @see Communication
+ * @see Server
  */
 public class CommunicationMOSA extends Communication implements Server{
     
@@ -30,6 +33,7 @@ public class CommunicationMOSA extends Communication implements Server{
     /**
      * Class constructor
      * @param drone instance of the aircraft
+     * @since version 2.0.0
      */
     public CommunicationMOSA(Drone drone) {
         this.drone = drone;
@@ -38,6 +42,10 @@ public class CommunicationMOSA extends Communication implements Server{
         this.config = ReaderFileConfig.getInstance();
     }
 
+    /**
+     * Start the server
+     * @since version 4.0.0
+     */
     @Override
     public void startServer() {
         try {
@@ -54,6 +62,10 @@ public class CommunicationMOSA extends Communication implements Server{
         }
     }
 
+    /**
+     * Treats the data to be received
+     * @since version 2.0.0
+     */
     @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
@@ -95,6 +107,10 @@ public class CommunicationMOSA extends Communication implements Server{
         });
     }
 
+    /**
+     * Close the communication
+     * @since version 2.0.0
+     */
     @Override
     public void close() {
         super.close();
@@ -112,6 +128,12 @@ public class CommunicationMOSA extends Communication implements Server{
         }
     }
 
+    /**
+     * Is MOSA disabled
+     * @return {@code true} if MOSa is disabled
+     *         {@code false} otherwise
+     * @since version 2.0.0
+     */
     public boolean isMosaDisabled() {
         return mosaDisabled;
     }

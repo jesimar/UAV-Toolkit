@@ -7,8 +7,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
+ * The class reads the properties file
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class ReaderFileConfigMission {
 
@@ -27,6 +28,12 @@ public class ReaderFileConfigMission {
     private final Properties prop = new Properties();
     private final InputStream input = new FileInputStream("./config-mission.properties");
 
+    /**
+     * Class constructor.
+     * @throws FileNotFoundException
+     * @throws IOException 
+     * @since version 3.0.0
+     */
     public ReaderFileConfigMission() throws FileNotFoundException, IOException {
         prop.load(input);
         dirRouteKML = prop.getProperty("prop.mission_creator.dir"); 

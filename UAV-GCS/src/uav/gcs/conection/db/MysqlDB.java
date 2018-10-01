@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class used to make communication with MySQL database
+ * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ */
 public class MysqlDB {
     
     public Connection conn = null;

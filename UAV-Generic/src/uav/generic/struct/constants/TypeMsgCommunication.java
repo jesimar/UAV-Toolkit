@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de mensagem de comunicação.
+ * The class models the types of communication messages available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeMsgCommunication {
     
@@ -25,9 +26,9 @@ public class TypeMsgCommunication {
     public static final String IFA_GCS_REPLANNER          = "IFA->GCS[REPLANNER]";
     
     //Mensagem em que MOSA diz a GCS alguma informação.
-    public static final String MOSA_GCS_PLANNER            = "MOSA->GCS[PLANNER]";
+    public static final String MOSA_GCS_PLANNER           = "MOSA->GCS[PLANNER]";
     
     //Mensagem generica usada por todo o sistema.
-    public static final String UAV_ROUTE_FAILURE            = "uav-route-failure";
+    public static final String UAV_ROUTE_FAILURE          = "uav-route-failure";
     
 }

@@ -29,9 +29,9 @@ import uav.ifa.module.path_replanner.Replanner;
 import uav.ifa.struct.Failure;
 
 /**
- * Classe que faz as tomadas de decisão do sistema IFA.
- *
+ * The class makes the decision making of the IFA system.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class DecisionMaking {
 
@@ -44,9 +44,9 @@ public class DecisionMaking {
 
     /**
      * Class constructor.
-     *
      * @param drone instance of the aircraft
      * @param dataAcquisition object to send commands to drone
+     * @since version 1.0.0
      */
     public DecisionMaking(Drone drone, DataAcquisition dataAcquisition) {
         this.drone = drone;
@@ -55,6 +55,11 @@ public class DecisionMaking {
         this.config = ReaderFileConfig.getInstance();
     }
 
+    /**
+     * Action to run an security strategy onboard.
+     * @param failure type of failure occurred
+     * @since version 4.0.0
+     */
     public void actionForSafetyOnboard(Failure failure) {
         stateReplanning = StateReplanning.REPLANNING;
         boolean resp;
@@ -230,6 +235,12 @@ public class DecisionMaking {
         stateReplanning = StateReplanning.READY;
     }
     
+    /**
+     * Action to run an security strategy offboard.
+     * @param failure type of failure occurred
+     * @param communicationGCS the communication with the GCS.
+     * @since version 4.0.0
+     */
     public void actionForSafetyOffboard(Failure failure, CommunicationGCS communicationGCS) {
         stateReplanning = StateReplanning.REPLANNING;
         boolean resp;
@@ -405,9 +416,11 @@ public class DecisionMaking {
     }
 
     /**
-     * Este comando é responsável por fazer o disparo do paraquedas. 
-     * Melhorar no futuro: Deve-se desarmar o motor e entao abrir o paraquedas.
-     * @return 
+     * Action to open the parachute.
+     * TO DO: Deve-se desarmar o motor e entao abrir o paraquedas.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     public boolean openParachute() {
         StandardPrints.printMsgEmph("decison making -> open parachute");
@@ -425,27 +438,31 @@ public class DecisionMaking {
     }
     
     /**
-     * Define o tipo de ação executada pelo sistema de decisão do IFA [CMD_MPGA,
-     * CMD_LAND, CMD_RTL].
-     *
-     * @param action representa a ação a ser executada.
+     * Defines the type of action performed by the IFA decision system.
+     * Possible values: [CMD_EMERGENCY_LANDING, CMD_LAND, CMD_RTL].
+     * @param action represents the action to be performed
+     * @since version 1.1.0
      */
     public void setTypeAction(String action) {
         this.typeAction = action;
     }
 
     /**
-     * Retorna o estado do planejador [WAITING, REPLANNING, READY, DISABLED].
-     *
-     * @return estado do planejador.
+     * Returns the state of the planner.
+     * Possible values: [WAITING, REPLANNING, READY, DISABLED].
+     * @return the state of the planner
+     * @since version 1.0.0
      */
     public StateReplanning getStateReplanning() {
         return stateReplanning;
     }
     
     /**
-     * Este comando chama o algoritmo de pouso emergencial caso algo dê errado
-     * então o paraquedas é disparado.
+     * Run the emergency landing algorithm in case something goes wrong, 
+     * then the parachute is opened [Onboard].
+     * @return {@code true} if success,
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean execEmergencyLandingOnboard() {
         boolean resp = sendMissionEmergencyBasedReplannerOnboard();
@@ -460,11 +477,11 @@ public class DecisionMaking {
     }
 
     /**
-     * Este comando calcula uma rota de pouso emergencial usando algum algoritmo
-     * configurado para isso, então passa a nova rota para o AutoPilot.
-     *
-     * @return true - se ocorrer tudo bem.
-     * <br> false - caso contrário.
+     * This command calculates an emergency landing route using some algorithm 
+     * configured for this, then passes the new route to AutoPilot [Onboard].
+     * @return {@code true} if success,
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean sendMissionEmergencyBasedReplannerOnboard() {
         double navSpeed = drone.getInfo().getListParameters().getValue("WPNAV_SPEED");
@@ -524,6 +541,13 @@ public class DecisionMaking {
         return true;
     }
     
+    /**
+     * Run the emergency landing algorithm in case something goes wrong, 
+     * then the parachute is opened [Offboard]
+     * @return {@code true} if success,
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean execEmergencyLandingOffboard(CommunicationGCS communicationGCS) {
         boolean resp = sendMissionEmergencyBasedReplannerOffboard(communicationGCS);
         if (!resp) {
@@ -536,6 +560,14 @@ public class DecisionMaking {
         return resp;
     }
 
+    /**
+     * This command calculates an emergency landing route using some algorithm 
+     * configured for this, then passes the new route to AutoPilot [Offboard].
+     * @param communicationGCS the communication with the GCS
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionEmergencyBasedReplannerOffboard(CommunicationGCS communicationGCS) {
         double navSpeed = drone.getInfo().getListParameters().getValue("WPNAV_SPEED");
         dataAcquisition.setNavigationSpeed(navSpeed/10);
@@ -571,8 +603,11 @@ public class DecisionMaking {
     }
     
     /**
-     * Funciona no modo Onboard e Offboard.
-     * @return 
+     * Send emergency route based fixed route to autopilot.
+     * Note: Same method to Onboard and Offboard mode.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean sendMissionEmergencyBasedFixedRoute() {
         StandardPrints.printMsgEmph("decison making -> fixed route");
@@ -590,10 +625,13 @@ public class DecisionMaking {
     }
 
     /**
-     * Este comando guia a aeronave até a posição especificada e então pousa
-     * verticalmente quando o veículo eh um multi-rotor.
-     * @param lat latitude da região onde ocorrerá o pouso.
-     * @param lng longitude da região onde ocorrerá o pouso.
+     * This command guides the aircraft to the specified position and then lands 
+     * vertically when the vehicle is a multi-rotor.
+     * @param lat latitude where you want to land
+     * @param lng longitude where you want to land
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean sendLand(double lat, double lng) {
         StandardPrints.printMsgEmph("decison making -> land");
@@ -602,8 +640,10 @@ public class DecisionMaking {
     }
 
     /**
-     * Este comando pousa a aeronave verticalmente no local em que a aeronave
-     * estava quando esse comando foi chamado.
+     * This command lands the aircraft vertically where it is.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean sendLandVertical() {
         StandardPrints.printMsgEmph("decison making -> land vertical");
@@ -612,9 +652,12 @@ public class DecisionMaking {
     }
 
     /**
-     * Este comando faz a aeronave voltar ao ponto de lançamento, para isso a
-     * aeronave primeiramente sobe até a altitude RTL_ALT então volta ao local
-     * de lançamento e por fim pousa na vertical quando é um multi-rotor.
+     * This command causes the aircraft Return To Launch, so the aircraft first 
+     * climbs to the altitude RTL_ALT, then returns to the launch site and finally 
+     * lands vertically when it is a multi-rotor.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     private boolean sendRTL() {
         if (config.hasPowerModule()

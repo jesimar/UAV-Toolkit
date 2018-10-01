@@ -5,20 +5,31 @@ import java.awt.event.KeyListener;
 import uav.gcs.communication.CommunicationIFA;
 
 /**
- *
+ * The class that listens to the key pressed.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class Keyboard implements KeyListener {
     
     private final CommunicationIFA communicationIFA;
 
+    /**
+     * Class constructor
+     * @param communicationIFA the communication with IFA
+     * @since version 3.0.0
+     */
     public Keyboard(CommunicationIFA communicationIFA) {
         this.communicationIFA = communicationIFA;
     }
 
+    /**
+     * Performs an action based on the key pressed.
+     * @param keyEvent key-based event
+     * @since version 3.0.0
+     */
     @Override
-    public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
+    public void keyPressed(KeyEvent keyEvent) {
+        switch (keyEvent.getKeyCode()) {
             case KeyEvent.VK_ENTER:
                 System.out.println("CMD: takeoff");
                 communicationIFA.sendData("CMD: takeoff");
@@ -57,12 +68,12 @@ public class Keyboard implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent keyEvent) {
         // to do
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent keyEvent) {
         // to do
     }
 }

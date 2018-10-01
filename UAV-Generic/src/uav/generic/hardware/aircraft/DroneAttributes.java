@@ -1,8 +1,9 @@
 package uav.generic.hardware.aircraft;
 
 /**
- *
+ * The class synthesizes a set of drone attributes.
  * @author Jesimar S. Arantes.
+ * @since version 4.0.0
  */
 public class DroneAttributes {
     
@@ -13,9 +14,23 @@ public class DroneAttributes {
     private double payload;     //in kg
     private double endurance;   //in seconds
 
+    /**
+     * Class constructor.
+     * @since 4.0.0
+     */
     public DroneAttributes() {
     }
 
+    /**
+     * Class constructor.
+     * @param nameAircraft the name of aircraft
+     * @param speedCruize the speed cruize
+     * @param speedMax the maximum speed of aircraft
+     * @param mass the mass of aircraft
+     * @param payload the mass of payload
+     * @param endurance the endurance of vehicle
+     * @since 4.0.0
+     */
     public DroneAttributes(String nameAircraft, double speedCruize, 
             double speedMax, double mass, double payload, double endurance) {
         this.nameAircraft = nameAircraft;

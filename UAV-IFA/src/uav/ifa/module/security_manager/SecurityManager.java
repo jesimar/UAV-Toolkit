@@ -41,9 +41,9 @@ import uav.ifa.module.decision_making.Controller;
 import uav.ifa.struct.Failure;
 
 /**
- * Classe que gerencia a segurança da aeronave durante toda a missão.
- *
+ * The class manages the safety of the aircraft during the mission.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class SecurityManager {
 
@@ -82,6 +82,7 @@ public class SecurityManager {
 
     /**
      * Class constructor.
+     * @since version 1.0.0
      */
     public SecurityManager() {
         timeInit = System.currentTimeMillis();
@@ -101,7 +102,7 @@ public class SecurityManager {
         UtilRunScript.execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
         
         try {
-            pointGeo = UtilGeo.getPointGeo(config.getDirFiles() + config.getFileGeoBase());
+            pointGeo = UtilGeo.getPointGeoBase(config.getDirFiles() + config.getFileGeoBase());
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgError2("Error [FileNotFoundException] pointGeo");
             ex.printStackTrace();
@@ -156,6 +157,10 @@ public class SecurityManager {
         stateMonitoring = StateMonitoring.WAITING;
     }
 
+    /**
+     * Initializes the system
+     * @since version 1.0.0
+     */
     public void init() {
         StandardPrints.printMsgEmph("initializing ...");
         waitingForTheServer();                  //blocked
@@ -189,6 +194,11 @@ public class SecurityManager {
         timeInit = System.currentTimeMillis();
     }
 
+    /**
+     * Wait for the server to start
+     * @since version 1.0.0
+     * @see DataAcquisition#serverIsRunning() 
+     */
     private void waitingForTheServer() {
         StandardPrints.printMsgEmph("waiting for the server ...");
         try {
@@ -210,6 +220,10 @@ public class SecurityManager {
         }
     }
 
+    /**
+     * Configure the parameters to flight
+     * @since version 1.0.0
+     */
     private void configParametersToFlight() {
         StandardPrints.printMsgEmph("config parameters to flight ...");
         try {
@@ -231,6 +245,12 @@ public class SecurityManager {
         }
     }
 
+    /**
+     * Thread that monitors all the sensors and data of the aircraft and makes the 
+     * activation of the safety devices (emergency route, RLT, open parachute, alarm).
+     * @since version 1.0.0
+     * @see DataAcquisition#getAllInfoSensors()
+     */
     private void monitoringAircraft() {
         StandardPrints.printMsgEmph("monitoring aircraft");
         int time = (int) (1000.0 / config.getFreqUpdateDataAP());
@@ -262,7 +282,7 @@ public class SecurityManager {
                             checkPossibilityOfRTL();
                         }                        
 
-                        checkStatusSystem();
+                        checkSystemStatus();
 
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
@@ -273,20 +293,24 @@ public class SecurityManager {
                     ex.printStackTrace();
                     printLogAircraft.close();
                     stateMonitoring = StateMonitoring.DISABLED;
-                    checkStatusSystem();
+                    checkSystemStatus();
                 } catch (Exception ex) {
                     StandardPrints.printMsgError2("Error [Exception] monitoringAircraft()");
                     ex.printStackTrace();
                     stateMonitoring = StateMonitoring.DISABLED;
-                    checkStatusSystem();
+                    checkSystemStatus();
                 }
             }
         });
     }
 
-    //Adicionar ao sistema as seguintes falhas somente se o drone estiver voando 
-    //caso contrario isso nao faz sentido.
-    private void checkStatusSystem() {
+    /**
+     * Check the system status (if the system is working).
+     * TO DO: Adicionar as falhas somente se o drone estiver voando, caso 
+     * contrário, isso não faz sentido.
+     * @since version 1.0.0
+     */
+    private void checkSystemStatus() {
         if (communicationGCS.hasFailure()
                 && !hasFailure(TypeFailure.FAIL_BASED_INSERT_FAILURE)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_BASED_INSERT_FAILURE));
@@ -366,8 +390,13 @@ public class SecurityManager {
         }
     }
 
-    //melhorar: por enquanto esta tratando apenas a primeira falha.
-    //melhorar: o sistema so tenta planejar algo sobre a 1 falha encontrada.
+    /**
+     * Thread waiting for an emergency action.
+     * TO DO: O sistema trata apenas a primeira falha, fazer o tratamento de falhas consecutivas.
+     * TO DO: Melhorar verificação para ver se a aeronave esta voando.
+     * @since version 4.0.0
+     * @see DecisionMaking
+     */
     private void waitingForAnActionOfEmergency() {
         StandardPrints.printMsgEmph("waiting for an action of emergency");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -375,7 +404,6 @@ public class SecurityManager {
             public void run() {
                 while (stateSystem != StateSystem.DISABLED) {
                     try {
-                        //Melhorar verificacao para ver se a aeronave esta voando.
                         if (drone.getSensors().getStatusUAV().armed && hasFailure()) {
                             long timeInit = System.currentTimeMillis();        
                             communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
@@ -410,6 +438,10 @@ public class SecurityManager {
         });
     }
 
+    /**
+     * Thread that monitors state machines.
+     * @since version 1.0.0
+     */
     private void monitoringStateMachine() {
         StandardPrints.printMsgEmph("monitoring the state machine");
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -438,6 +470,12 @@ public class SecurityManager {
         });
     }
 
+    /**
+     * Check if has a specific failure.
+     * @return {@code true} if has failure
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     private boolean hasFailure(TypeFailure failure) {
         for (Failure fail : listOfFailure) {
             if (fail.getTypeFailure() == failure) {
@@ -447,10 +485,28 @@ public class SecurityManager {
         return false;
     }
 
+    /**
+     * Check if has a failure.
+     * @return {@code true} if has failure
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     private boolean hasFailure() {
         return listOfFailure.size() > 0;
     }
     
+    /**
+     * Check the possibility of doing RTL.
+     * Calculate also: Estimated Time For RTL
+     *                 Estimated Consumption Battery
+     *                 Estimated Maximum Distance Reached
+     *                 Estimated Maximum Time to Flight
+     * Equations: 
+     *     speed: v = d/t    ->    t = d/v
+     *         t_h = d_h/v_h    (horizontal)
+     *         t_v = d_v/v_v    (vertical)
+     * @since version 4.0.0
+     */
     private void checkPossibilityOfRTL(){
         double lat = drone.getSensors().getGPS().lat;
         double lng = drone.getSensors().getGPS().lng;
@@ -460,9 +516,6 @@ public class SecurityManager {
         double distHorizontal = UtilGeom.distanceEuclidian(lat, lng, latHome, lngHome)/Constants.ONE_METER;
         double distVerticalDN = Math.abs(altRTL - altHome);
         
-        //Velocidade: v = d/t      ->   t = d/v
-        //    t_h = d_h/v_h  (horizontal)
-        //    t_v = d_v/v_v  (vertical)
         double estimatedTimeForRTLverticalUp = distVerticalUP/speedUP;
         double estimatedTimeForRTLhorizontal = distHorizontal/speedHorizontal;
         double estimatedTimeForRTLverticalDn = distVerticalDN/speedDN;

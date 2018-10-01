@@ -1,20 +1,22 @@
 package uav.generic.struct.states;
 
 /**
- * Classe que modela os possíveis estados do sistema como um todo.
+ * The class models the possible states of the system.
  * @author Jesimar S. Arantes
+ * @since  version 2.0.0
  */
 public enum StateSystem {
     
     INITIALIZING, INITIALIZED, DISABLED;
     
     /**
-     * Método que obtem o modo de operação do sistema.
-     * @param mode - state of system {INITIALIZING, INITIALIZED, DISABLED}.
+     * Returns the operating state of the system.
+     * @param state state of system {INITIALIZING, INITIALIZED, DISABLED}.
      * @return {0, 1, 2, -1}.
+     * @since version 4.0.0
      */
-    public static int getMode(StateSystem mode){
-        switch (mode) {
+    public static int getState(StateSystem state){
+        switch (state) {
             case INITIALIZING:
                 return 0;
             case INITIALIZED:

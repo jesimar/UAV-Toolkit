@@ -1,8 +1,10 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de sistemas executados pelo IFA.
+ * Class that models the types of systems executed by IFA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * 
  */
 public class TypeSystemExecIFA {
     

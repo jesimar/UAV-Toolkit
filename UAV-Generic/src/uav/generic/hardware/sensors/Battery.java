@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela a bateria do drone (dados obtidos através do power módule).
+ * The class models drone battery (data obtained through power module).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Battery {
         
@@ -12,6 +13,7 @@ public class Battery {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public Battery() {
         
@@ -22,6 +24,7 @@ public class Battery {
      * @param voltage voltage in the battery
      * @param current current in the battery
      * @param level level of the battery
+     * @since version 2.0.0
      */
     public Battery(double voltage, double current, double level) {
         this.voltage = voltage;
@@ -32,6 +35,7 @@ public class Battery {
     /**
      * Converts line in JSON format to voltage, current and level values.
      * @param line FORMAT: {"bat": [12.587, 0.0, 100]}
+     * @since version 2.0.0
      */
     public void parserInfoBattery(String line) {
         try{
@@ -45,6 +49,13 @@ public class Battery {
         }
     } 
     
+    /**
+     * Update the info the voltage, current and level
+     * @param voltage voltage in the battery
+     * @param current current in the battery
+     * @param level level of the battery
+     * @since version 2.0.0
+     */
     public void updateBattery(String voltage, String current, String level){
         try{
             this.voltage = Double.parseDouble(voltage);
@@ -55,14 +66,29 @@ public class Battery {
         }
     }
 
+    /**
+     * Set the voltage
+     * @param voltage the voltage
+     * @since version 2.0.0
+     */
     public void setVoltage(double voltage) {
         this.voltage = voltage;
     }
 
+    /**
+     * Set the current
+     * @param current the current
+     * @since version 2.0.0
+     */
     public void setCurrent(double current) {
         this.current = current;
     }
 
+    /**
+     * Set the level
+     * @param level the level
+     * @since version 2.0.0
+     */
     public void setLevel(double level) {
         this.level = level;
     }        

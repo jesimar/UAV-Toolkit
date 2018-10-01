@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela o sensor de velocidade do drone.
+ * The class models the drone speed sensor.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Velocity {
     
@@ -12,6 +13,7 @@ public class Velocity {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public Velocity() {
         
@@ -22,6 +24,7 @@ public class Velocity {
      * @param vx velocity on the x axis (in m/s)
      * @param vy velocity on the y axis (in m/s)
      * @param vz velocity on the z axis (in m/s)
+     * @since version 2.0.0
      */
     public Velocity(double vx, double vy, double vz) {
         this.vx = vx;
@@ -32,6 +35,7 @@ public class Velocity {
     /**
      * Converts line in JSON format to vx, vy and vz values.
      * @param line FORMAT: {"vel": [-0.02, -0.05, 0.0]}
+     * @since version 2.0.0
      */
     public void parserInfoVelocity(String line) {
         try{
@@ -45,6 +49,13 @@ public class Velocity {
         }
     } 
     
+    /**
+     * Update the velocity value.
+     * @param vx the velocity x
+     * @param vy the velocity y
+     * @param vz the velocity z
+     * @since version 2.0.0
+     */
     public void updateVelocity(String vx, String vy, String vz) {
         try{
             this.vx = Double.parseDouble(vx);        
@@ -55,18 +66,38 @@ public class Velocity {
         }
     }
 
+    /**
+     * Set the velocity x
+     * @param vx the velocity x
+     * @since version 2.0.0
+     */
     public void setVx(double vx) {
         this.vx = vx;
     }
 
+    /**
+     * Set the velocity y
+     * @param vy the velocity y
+     * @since version 2.0.0
+     */
     public void setVy(double vy) {
         this.vy = vy;
     }
 
+    /**
+     * Set the velocity z
+     * @param vz the velocity z
+     * @since version 2.0.0
+     */
     public void setVz(double vz) {
         this.vz = vz;
     }
     
+    /**
+     * Gets a string with value: "Velocity{" + "vx=" + vx + ", vy=" + vy + ", vz=" + vz + '}'.
+     * @return a string with value:  "Velocity{" + "vx=" + vx + ", vy=" + vy + ", vz=" + vz + '}'
+     * @since version 2.0.0
+     */
     @Override
     public String toString() {
         return "Velocity{" + "vx=" + vx + ", vy=" + vy + ", vz=" + vz + '}';

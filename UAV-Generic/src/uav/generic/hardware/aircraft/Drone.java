@@ -4,8 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Classe que modela uma aeronave.
+ * The class models an aircraft/drone.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public abstract class Drone {
     
@@ -13,18 +14,38 @@ public abstract class Drone {
     DroneSensors sensors;
     DroneInfo info;
 
+    /**
+     * Gets the attributes of drone
+     * @return the attributes of drone
+     * @since version 4.0.0
+     */
     public DroneAttributes getAttributes() {
         return attributes;
     }
 
+    /**
+     * Gets the sensors of drone
+     * @return the sensors of drone
+     * @since version 4.0.0
+     */
     public DroneSensors getSensors() {
         return sensors;
     }
 
+    /**
+     * Gets the info of drone
+     * @return the info of drone
+     * @since version 4.0.0
+     */
     public DroneInfo getInfo() {
         return info;
     }
     
+    /**
+     * Gets the string with title of attributes of drone
+     * @return the string with title of attributes of drone
+     * @since version 2.0.0
+     */
     public String title(){
         return "date;hour;time;lat;lng;alt-rel;alt-abs;voltage-bat;current-bat;"
                 + "level-bat;pitch;yaw;roll;vel-x;vel-y;vel-z;fix-type;satellites-visible;"
@@ -34,6 +55,11 @@ public abstract class Drone {
                 + "est-max-dist;est-max-time;dist-sonar;temperature-sensor";
     }
     
+    /**
+     * Gets the string with value of attributes of drone
+     * @return the string with value of attributes of drone
+     * @since version 2.0.0
+     */
     @Override
     public String toString() {
         String dateHour = new SimpleDateFormat("yyyy/MM/dd;HH:mm:ss").format(new Date());

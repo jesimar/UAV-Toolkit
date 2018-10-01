@@ -12,18 +12,28 @@ import javax.swing.JPanel;
 import uav.gcs.communication.CommunicationIFA;
 
 /**
- *
+ * The class that controls the drone using voice commands.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class VoiceCommands {
     
     private JFrame frame;
     private final CommunicationIFA communicationIFA;
 
+    /**
+     * Class constructor
+     * @param communicationIFA the communication with IFA
+     * @since version 3.0.0
+     */
     public VoiceCommands(CommunicationIFA communicationIFA) {
         this.communicationIFA = communicationIFA;
     }
     
+    /**
+     * Opens a new graphical interface for input with voice commands
+     * @since version 3.0.0
+     */
     public void openTheWindow(){
         frame = new JFrame("CMDs VOICE");
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -64,6 +74,10 @@ public class VoiceCommands {
         frame.add(panel);
     }
     
+    /**
+     * The method is listening to microphone.
+     * @since version 3.0.0
+     */
     public void listenerTheSpeech(){
         SpeechInterface.init("lib", false, true, "./lib", "commands");
         System.out.println("Speech the Commands: ");

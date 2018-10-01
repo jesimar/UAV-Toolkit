@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de aeronaves possíveis.
+ * The class models the types of aircraft available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeAircraft {
    

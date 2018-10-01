@@ -21,8 +21,14 @@ import uav.generic.struct.WaypointJSON;
 import uav.generic.hardware.aircraft.Drone;
 
 /**
- * Classe que modela toda a comunicação do sistema MOSA e IFA com o UAV-S2DK usando DroneKit.
+ * The class models all MOSA and IFA system communication with Autopilot.
+ * Using the UAV-S2DK that use the DroneKit.
  * @author Jesimar S. Arantes
+ * @see    uav.generic.module.comm.DataAcquisition
+ * @see    uav.generic.module.comm.HTTPRequest
+ * @since version 4.0.0
+ * @see DataAcquisition
+ * @see HTTPRequest
  */
 public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
     
@@ -35,6 +41,7 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
      * Class constructor.
      * @param drone object drone
      * @param uavSource IFA or MOSA
+     * @since version 4.0.0
      */
     public DataAcquisitionS2DK(Drone drone, String uavSource) {
         this.drone = drone;
@@ -52,6 +59,7 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
      * @param host ip of UAV-S2DK
      * @param port network port used in UAV-S2DK
      * @param overhead file to print informations overhead
+     * @since version 4.0.0
      */
     public DataAcquisitionS2DK(Drone drone, String uavSource, String host, int port, 
             PrintStream overhead) {
@@ -63,6 +71,12 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         this.PROTOCOL = "http://";
     } 
     
+    /**
+     * Verifies if the S2DK server is running
+     * @return {@code true} if server if running
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean serverIsRunning() {        
         try {
@@ -81,20 +95,44 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }        
     }
         
+    /**
+     * Send a waypoint to the autopilot.
+     * Note: first clear the mission and then add the new waypoint
+     * @param waypoint the waypoint to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
-    public boolean setWaypoint(Waypoint wp) {
+    public boolean setWaypoint(Waypoint waypoint) {
         Gson gson = new Gson();
-        String jsonWaypoint = gson.toJson(new WaypointJSON(wp));
+        String jsonWaypoint = gson.toJson(new WaypointJSON(waypoint));
         return POST("/set-waypoint/", jsonWaypoint);
     }
     
+    /**
+     * Send a waypoint to the autopilot.
+     * Note: add the new waypoint in the end of the mission
+     * @param waypoint the waypoint to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
-    public boolean appendWaypoint(Waypoint wp) {
+    public boolean appendWaypoint(Waypoint waypoint) {
         Gson gson = new Gson();
-        String jsonWaypoint = gson.toJson(new WaypointJSON(wp));
+        String jsonWaypoint = gson.toJson(new WaypointJSON(waypoint));
         return POST("/append-waypoint/", jsonWaypoint); 
     }
     
+    /**
+     * Send a mission to the autopilot.
+     * Note: first clear the mission and then add the new mission
+     * @param mission the mission to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean setMission(Mission mission) {
         Gson gson = new Gson();
@@ -102,11 +140,27 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         return POST("/set-mission/", jsonMission);
     }
     
+    /**
+     * Send a mission to the autopilot.
+     * Note: first clear the mission and then add the new mission
+     * @param missionJson the mission in JSON to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean setMission(String missionJson) {
         return POST("/set-mission/", missionJson);
     }
     
+    /**
+     * Send a mission to the autopilot.
+     * Note: add the new mission in the end of the mission
+     * @param mission the mission to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean appendMission(Mission mission) {
         Gson gson = new Gson();
@@ -114,25 +168,26 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         return POST("/append-mission/", jsonMission);
     }
     
+    /**
+     * Send a mission to the autopilot.
+     * Note: add the new mission in the end of the mission
+     * @param missionJson the mission JSON to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean appendMission(String missionJson) {
         return POST("/append-mission/", missionJson);
     }
     
-    @Override
-    public boolean setVelocity(double velocity) {
-        Gson gson = new Gson();
-        String jsonVelocity = gson.toJson(velocity);
-        return POST("/set-velocity/", jsonVelocity);
-    }
-    
-    @Override
-    public boolean setParameter(Parameter parameter) {
-        Gson gson = new Gson();
-        String jsonParameter = gson.toJson(new ParameterJSON(parameter));
-        return POST("/set-parameter/", jsonParameter);
-    }
-    
+    /**
+     * Send a new heading to the autopilot.
+     * @param heading the heading to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean setHeading(Heading heading) {
         Gson gson = new Gson();
@@ -140,6 +195,13 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         return POST("/set-heading/", jsonHeading);
     }
     
+    /**
+     * Send a new flight mode to the autopilot.
+     * @param mode the flight mode to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean setMode(String mode) {
         Gson gson = new Gson();
@@ -147,6 +209,28 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         return POST("/set-mode/", jsonMode);
     }
     
+    /**
+     * Send a new parameter to the autopilot.
+     * @param parameter the parameter to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    @Override
+    public boolean setParameter(Parameter parameter) {
+        Gson gson = new Gson();
+        String jsonParameter = gson.toJson(new ParameterJSON(parameter));
+        return POST("/set-parameter/", jsonParameter);
+    }
+    
+    /**
+     * Send a new parameter to the autopilot.
+     * @param key the key of parameter to be changed
+     * @param value the value of parameter to changed
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean setParameter(String key, double value){
         Parameter param = new Parameter(key, value);
@@ -154,15 +238,37 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
     }
     
     /**
-     * Este comando troca a velocidade de navegação da aeronave.
-     * @param value novo valor de velocidade de navegação em cm/s.
-     * @return true if correct change. false otherwise.
+     * Send a new velocity to the autopilot.
+     * Note: change the value airspeed and groundspeed.
+     * @param velocity the velocity to be sent to the autopilot
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    @Override
+    public boolean setVelocity(double velocity) {
+        Gson gson = new Gson();
+        String jsonVelocity = gson.toJson(velocity);
+        return POST("/set-velocity/", jsonVelocity);
+    }
+    
+    /**
+     * This command changes the navigation speed of the aircraft.
+     * Note: change the parameter value WPNAV_SPEED.
+     * @param value the new value of navegation speed in cm/s
+     * @return {@code true} if this operation was a success
+     *         {@code false} otherwise
+     * @since version 4.0.0
      */
     @Override
     public boolean setNavigationSpeed(double value){
         return setParameter("WPNAV_SPEED", value);
     }
     
+    /**
+     * Get the location of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getLocation() {
         String gps = GET("/get-gps/");
@@ -178,6 +284,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         StandardPrints.printMsgEmph3(msg);
     }
     
+    /**
+     * Get the GPS coordinates of GPS Sensor
+     * @since version 4.0.0
+     */
     @Override
     public void getGPS() {
         String gps = GET("/get-gps/");        
@@ -187,6 +297,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the barometer of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getBarometer() {
         String barometer = GET("/get-barometer/");        
@@ -196,6 +310,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the battery of power module sensor
+     * @since version 4.0.0
+     */
     @Override
     public void getBattery() {
         String battery = GET("/get-battery/");          
@@ -205,6 +323,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the attitude of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getAttitude() {
         String attitude = GET("/get-attitude/");
@@ -214,6 +336,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the velocity of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getVelocity() {
         String velocity = GET("/get-velocity/");        
@@ -222,7 +348,11 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
             StandardPrints.printMsgEmph3(velocity);
         }
     }        
-            
+          
+    /**
+     * Get the heading of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getHeading() {
         String heading = GET("/get-heading/");          
@@ -232,6 +362,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the groundspeed of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getGroundSpeed() {
         String groundspeed = GET("/get-groundspeed/");            
@@ -241,6 +375,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the airspeed of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getAirSpeed() {
         String airspeed = GET("/get-airspeed/");
@@ -250,6 +388,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the GPS info of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getGPSInfo() {
         String gpsinfo = GET("/get-gpsinfo/");        
@@ -259,6 +401,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the flight mode of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getMode() {
         String mode = GET("/get-mode/");
@@ -268,6 +414,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the system status of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getSystemStatus() {
         String systemStatus = GET("/get-system-status/");        
@@ -277,6 +427,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the Armed status of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getArmed() {
         String armed = GET("/get-armed/");
@@ -286,6 +440,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }    
     
+    /**
+     * Get the IsArmable status of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getIsArmable() {
         String isArmable = GET("/get-is-armable/");
@@ -295,6 +453,10 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }        
 
+    /**
+     * Get the EKF-OK status of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getEkfOk() {
         String ekfOk = GET("/get-ekf-ok/");
@@ -304,55 +466,79 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
     
+    /**
+     * Get the next waypoint of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getNextWaypoint() {
         String nextWaypoint = GET("/get-next-waypoint/");
-        drone.getInfo().parserNextWaypoint(nextWaypoint); 
+        drone.getInfo().parserInfoNextWaypoint(nextWaypoint); 
         if (debug){
             StandardPrints.printMsgEmph3(nextWaypoint);
         }
     }
     
+    /**
+     * Get the count of waypoint of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getCountWaypoint() {
         String countWaypoint = GET("/get-count-waypoint/");
-        drone.getInfo().parserCountWaypoint(countWaypoint); 
+        drone.getInfo().parserInfoCountWaypoint(countWaypoint); 
         if (debug){
             StandardPrints.printMsgEmph3(countWaypoint);
         }
     }
     
+    /**
+     * Get the distance to waypoint current of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getDistanceToWptCurrent() {
         String distToWptCur = GET("/get-distance-to-waypoint-current/");
-        drone.getInfo().parserDistanceToCurrentWaypoint(distToWptCur); 
+        drone.getInfo().parserInfoDistanceToCurrentWaypoint(distToWptCur); 
         if (debug){
             StandardPrints.printMsgEmph3(distToWptCur);
         }
     }
     
+    /**
+     * Get the distance to home of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getDistanceToHome() {
         String distToHome = GET("/get-distance-to-home/");
-        drone.getInfo().parserDistanceToHome(distToHome);
+        drone.getInfo().parserInfoDistanceToHome(distToHome);
         if (debug){
             StandardPrints.printMsgEmph3(distToHome);
         }
     }
     
+    /**
+     * Get the home location of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getHomeLocation() {
         String homeLocation = GET("/get-home-location/");
-        drone.getInfo().defineHomeLocation(homeLocation);       
+        drone.getInfo().parserInfoHomeLocation(homeLocation);       
         if (debug){
             StandardPrints.printMsgEmph3(homeLocation);
         }
     }
     
+    /**
+     * Get the parameters of autopilot
+     * @since version 4.0.0
+     */
     @Override
     public void getParameters() {
         String parameters = GET("/get-parameters/");
-        drone.getInfo().defineListParameters(parameters);
+        drone.getInfo().parserInfoListParameters(parameters);
         if (debug){
             StandardPrints.printMsgEmph3(parameters);
         }
@@ -364,6 +550,7 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
      * {"all-sensors": [-22.0059333, -47.8987082, 0.07, 870.0, 0.009657, 2.025, 
      * 0.004823, 116, 0.0, 0.0, 3, 10, 121, 65535, [0.0, -0.31, 0.01], 0, 0, 
      * 0.16173128321728691, null, "STABILIZE", "STANDBY", false, true, true]} 
+     * @since version 4.0.0
      */
     @Override
     public void getAllInfoSensors() {
@@ -395,6 +582,13 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         drone.getSensors().getStatusUAV().setEkfOk(v[25]);
     } 
     
+    /**
+     * Method that makes a POST request
+     * @param urlPost the URL to the POST
+     * @param jsonMsg the message in JSON to the POST
+     * @return {@code true} if success {@code false} otherwise
+     * @since version 4.0.0
+     */
     @Override
     public boolean POST(String urlPost, String jsonMsg){
         try {
@@ -436,6 +630,12 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         }
     }
            
+    /**
+     * Method that makes a GET request
+     * @param urlGet the URL to the GET
+     * @return the content of GET
+     * @since version 4.0.0
+     */
     @Override
     public String GET(String urlGet) {
         String inputLine = "";

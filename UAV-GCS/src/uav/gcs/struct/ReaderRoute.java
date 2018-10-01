@@ -10,18 +10,28 @@ import uav.generic.util.UtilGeo;
 import uav.generic.util.UtilString;
 
 /**
- *
- * @author Jesimar Arantes
+ * The class that reads the route file
+ * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class ReaderRoute {
 
     private final Route3D route = new Route3D();
     private boolean isReady = false;
     
+    /**
+     * Class constructor.
+     * @since version 4.0.0
+     */
     public ReaderRoute() {
 
     }
     
+    /**
+     * Method that reads the route file
+     * @param file the file of route
+     * @since version 4.0.0
+     */
     public void read(File file){
         try {
             Scanner sc = new Scanner(file);
@@ -34,9 +44,9 @@ public class ReaderRoute {
                 pos[1] = Double.parseDouble(v[1]);
                 if (v.length == 3){
                     pos[2] = Double.parseDouble(v[2]);
-                    route.addPosition3D(new Position3D(pos[0], pos[1], pos[2]));
+                    route.addPosition(new Position3D(pos[0], pos[1], pos[2]));
                 }else{
-                    route.addPosition3D(new Position3D(pos[0], pos[1], 0));
+                    route.addPosition(new Position3D(pos[0], pos[1], 0));
                 }
             }
             isReady = true;
@@ -45,6 +55,11 @@ public class ReaderRoute {
         }
     }
     
+    /**
+     * Method that reads the route file
+     * @param file the file of route
+     * @since version 4.0.0
+     */
     public void readGeo(File file){
         try {
             Scanner sc = new Scanner(file);
@@ -59,9 +74,9 @@ public class ReaderRoute {
                 pos[0] = UtilGeo.convertGeoToY(GCS.pointGeo, pos[0]);
                 if (v.length == 3){
                     pos[2] = Double.parseDouble(v[2]);
-                    route.addPosition3D(new Position3D(pos[1], pos[0], pos[2]));
+                    route.addPosition(new Position3D(pos[1], pos[0], pos[2]));
                 }else{
-                    route.addPosition3D(new Position3D(pos[1], pos[0], 0));
+                    route.addPosition(new Position3D(pos[1], pos[0], 0));
                 }
             }
             isReady = true;
@@ -70,6 +85,11 @@ public class ReaderRoute {
         }
     }
     
+    /**
+     * Method that reads the route file
+     * @param file the file of route
+     * @since version 4.0.0
+     */
     public void readHGA(File file){
         try {
             Scanner sc = new Scanner(file);
@@ -79,7 +99,7 @@ public class ReaderRoute {
                 pos[1] = sc.nextDouble();
                 sc.nextDouble();
                 sc.nextDouble();
-                route.addPosition3D(new Position3D(pos[0], pos[1], 0));
+                route.addPosition(new Position3D(pos[0], pos[1], 0));
             }
             isReady = true;
         } catch (FileNotFoundException ex) {

@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de modo de operação possíveis.
+ * The class models the types of operation mode available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeOperationMode {
    

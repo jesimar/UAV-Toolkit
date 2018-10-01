@@ -7,10 +7,12 @@ import uav.generic.struct.constants.Constants;
 import uav.generic.struct.constants.TypeInputCommand;
 import uav.generic.struct.constants.TypeWaypoint;
 import uav.generic.reader.ReaderFileConfig;
+import uav.ifa.module.communication.CommunicationGCS;
 
 /**
- *
+ * The class receives data from the keyboard or voice control and sends it to the drone.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class Controller {
     
@@ -18,12 +20,24 @@ public class Controller {
     private final DataAcquisition dataAcquisition;
     private final ReaderFileConfig config;
     
+    /**
+     * Class constructor.
+     * @param drone instance of the aircraft
+     * @param dataAcquisition object to send commands to drone
+     * @since version 4.0.0
+     */
     public Controller(Drone drone, DataAcquisition dataAcquisition) {
         this.drone = drone;
         this.dataAcquisition = dataAcquisition;
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Method that interprets the received command and sends an action to the drone.
+     * @param cmd the command to send an action to the drone
+     * @since version 4.0.0
+     * @see CommunicationGCS#receiveData()
+     */
     public void interpretCommand(String cmd) {
         double factor = config.getDisplacFactorController();
         double oneMeter = Constants.ONE_METER;

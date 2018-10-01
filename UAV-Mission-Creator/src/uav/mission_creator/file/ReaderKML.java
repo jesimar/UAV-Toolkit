@@ -14,19 +14,30 @@ import uav.mission_creator.struct.geom.PointGeo;
 import uav.mission_creator.struct.geom.PolyGeo;
 
 /**
- *
+ * The class reads the kml file
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class ReaderKML {
 
     private final Mission mission;
     private final File file;
     
+    /**
+     * Class constructor.
+     * @param file
+     * @param mission 
+     * @since version 3.0.0
+     */
     public ReaderKML(File file, Mission mission){
         this.file = file;
         this.mission = mission;
     }
     
+    /**
+     * Reads kml file
+     * @since version 3.0.0
+     */
     public void reader() {
         SAXBuilder builder = new SAXBuilder();
         try {

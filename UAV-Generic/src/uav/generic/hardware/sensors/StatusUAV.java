@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela o status do drone (mode, systemstatus, armed, isArmable, ekfOk).
+ * The class models drone status (mode, systemstatus, armed, isArmable, ekfOk).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class StatusUAV {
     
@@ -26,12 +27,14 @@ public class StatusUAV {
     *     POWEROFF: System just initialized its power-down sequence, will shut down now.
     */
     public String systemStatus;
+    
     public boolean armed;
     public boolean isArmable;    
     public boolean ekfOk;
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public StatusUAV() {
         
@@ -44,6 +47,7 @@ public class StatusUAV {
      * @param armed drone is armed
      * @param isArmable drone is Armable
      * @param ekfOk Extended Kalman Filter is Ok
+     * @since version 2.0.0
      */
     public StatusUAV(String mode, String systemStatus, boolean armed, 
             boolean isArmable, boolean ekfOk) {
@@ -57,6 +61,7 @@ public class StatusUAV {
     /**
      * Converts line in JSON format to mode values.
      * @param line FORMAT: {"mode": "STABILIZE"}
+     * @since version 2.0.0
      */
     public void parserInfoMode(String line) {
         try{
@@ -70,6 +75,7 @@ public class StatusUAV {
     /**
      * Converts line in JSON format to systemStatus values.
      * @param line FORMAT: {"system-status": "STANDBY"}
+     * @since version 2.0.0
      */
     public void parserInfoSystemStatus(String line) {
         try{
@@ -83,6 +89,7 @@ public class StatusUAV {
     /**
      * Converts line in JSON format to armed values.
      * @param line FORMAT: {"armed": false}
+     * @since version 2.0.0
      */
     public void parserInfoArmed(String line) {
         try{
@@ -96,6 +103,7 @@ public class StatusUAV {
     /**
      * Converts line in JSON format to isArmable values.
      * @param line FORMAT: {"is-armable": true}
+     * @since version 2.0.0
      */
     public void parserInfoIsArmable(String line) {
         try{
@@ -109,6 +117,7 @@ public class StatusUAV {
     /**
      * Converts line in JSON format to ekfOk values.
      * @param line FORMAT: {"ekf-ok": true}
+     * @since version 2.0.0
      */
     public void parserInfoEkfOk(String line) {
         try{
@@ -119,14 +128,29 @@ public class StatusUAV {
         }
     }
 
+    /**
+     * Set the mode of flight
+     * @param mode the mode of flight
+     * @since version 2.0.0
+     */
     public void setMode(String mode) {
         this.mode = mode;
     }
     
+    /**
+     * Set the system status
+     * @param systemStatus the system status
+     * @since version 2.0.0
+     */
     public void setSystemStatus(String systemStatus) {
         this.systemStatus = systemStatus;
     }
     
+    /**
+     * Set the status Armed
+     * @param armed the status Armed
+     * @since version 2.0.0
+     */
     public void setArmed(String armed) {
         try{
             this.armed = Boolean.parseBoolean(armed);
@@ -135,10 +159,20 @@ public class StatusUAV {
         }
     }
 
+    /**
+     * Set the status Armed
+     * @param armed the status Armed
+     * @since version 2.0.0
+     */
     public void setArmed(boolean armed) {
         this.armed = armed;
     }
     
+    /**
+     * Set the status IsArmable
+     * @param isArmable the status IsArmable
+     * @since version 2.0.0
+     */
     public void setIsArmable(String isArmable) {
         try{
             this.isArmable = Boolean.parseBoolean(isArmable);
@@ -147,10 +181,20 @@ public class StatusUAV {
         }
     }
 
+    /**
+     * Set the status IsArmable
+     * @param isArmable the status IsArmable
+     * @since version 2.0.0
+     */
     public void setIsArmable(boolean isArmable) {
         this.isArmable = isArmable;
     }   
     
+    /**
+     * Set the status ekfOk
+     * @param ekfOk the status ekfOk
+     * @since version 2.0.0
+     */
     public void setEkfOk(String ekfOk) {
         try{
             this.ekfOk = Boolean.parseBoolean(ekfOk);
@@ -159,6 +203,11 @@ public class StatusUAV {
         }
     }
 
+    /**
+     * Set the status ekfOk
+     * @param ekfOk the status ekfOk
+     * @since version 2.0.0
+     */
     public void setEkfOk(boolean ekfOk) {
         this.ekfOk = ekfOk;
     }    

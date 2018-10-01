@@ -12,8 +12,9 @@ import uav.generic.hardware.sensors.Temperature;
 import uav.generic.hardware.sensors.Velocity;
 
 /**
- *
+ * The class synthesizes a set of drone sensors.
  * @author Jesimar S. Arantes.
+ * @since version 4.0.0
  */
 public class DroneSensors {
     
@@ -28,6 +29,10 @@ public class DroneSensors {
     Sonar sonar;
     Temperature temperature;
 
+    /**
+     * Class constructor.
+     * @since 4.0.0
+     */
     public DroneSensors() {
         battery = new Battery();
         gps = new GPS();        

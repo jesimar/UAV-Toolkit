@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de softare utilizados na aquisição de dados do UAV.
+ * The class models the types of tools used to data acquisition of UAV.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class TypeDataAcquisitionUAV {
     

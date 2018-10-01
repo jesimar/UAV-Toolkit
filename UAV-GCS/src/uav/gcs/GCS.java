@@ -7,10 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import javax.swing.JButton;
@@ -38,7 +35,9 @@ import uav.generic.util.UtilRunScript;
 import uav.generic.util.UtilGeo;
 
 /**
+ * The class used to instantiate/start GCS.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public final class GCS extends JFrame {
 
@@ -105,10 +104,19 @@ public final class GCS extends JFrame {
     private final KeyboardCommands keyboard;
     private final VoiceCommands voice;
 
+    /**
+     * Method main that start the GCS System.
+     * @param args not used
+     * @since version 2.0.0
+     */
     public static void main(String[] args) {
         GCS gcs = new GCS();
     }
 
+    /**
+     * Class constructor.
+     * @since version 2.0.0
+     */
     public GCS() {
         Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
@@ -123,10 +131,10 @@ public final class GCS extends JFrame {
             System.exit(1);
         }
 
-        execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
+        UtilRunScript.execScript("../Scripts/exec-swap-mission.sh " + config.getDirMission());
 
         try {
-            pointGeo = UtilGeo.getPointGeo(config.getDirFiles() + config.getFileGeoBase());
+            pointGeo = UtilGeo.getPointGeoBase(config.getDirFiles() + config.getFileGeoBase());
         } catch (FileNotFoundException ex) {
             System.err.println("Error [FileNotFoundException] pointGeo");
             ex.printStackTrace();
@@ -618,28 +626,10 @@ public final class GCS extends JFrame {
         });
     }
 
-    public void tryLookAndFeel(String part_name) {
-        UIManager.LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
-        int index = -1;
-        for (int i = 0; i < lookAndFeels.length; i++) {
-            if (lookAndFeels[i].getName().contains(part_name)) {
-                index = i;
-            }
-        }
-        if (index != -1) {
-            this.setLookAndFeel(lookAndFeels[index].getClassName());
-        }
-    }
-
-    public void setLookAndFeel(String lookAndFeelds) {
-        try {
-            UIManager.setLookAndFeel(lookAndFeelds);
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
-        }
-    }
-
+    /**
+     * Enable components on GUI
+     * @since version 2.0.0
+     */
     private void enableComponentsInterface() {
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -686,7 +676,7 @@ public final class GCS extends JFrame {
                                 labelIsRunningPathReplanner.setText("Run Replanner: False");
                                 labelIsRunningPathReplanner.setForeground(Color.RED);
                             }
-                            labelsInfo.updateInfo(drone);
+                            labelsInfo.updateInfoGUI(drone);
                         } else {
                             labelIsConnectedIFA.setText("Connected IFA: False");
                             labelIsConnectedIFA.setForeground(Color.RED);
@@ -724,6 +714,19 @@ public final class GCS extends JFrame {
             }
         });
     }
+    
+    /**
+     * Shows the message about the program
+     * @since version 2.0.0
+     */
+    public void showAbout() {
+        String msgAbout = "Program: UAV-GCS\n"
+                + "Author: Jesimar da Silva Arantes\n"
+                + "Version: 4.0.0\n"
+                + "Date: 30/09/2018";
+        JOptionPane.showMessageDialog(null, msgAbout, "About",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 
     @Override
     public void setSize(int width, int height) {
@@ -737,31 +740,27 @@ public final class GCS extends JFrame {
         panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
         panelPlotMission.setNewDimensions(width - 30 - 200 - 20, height - 120);
     }
-
-    public void showAbout() {
-        String msgAbout = "Program: UAV-GCS\n"
-                + "Author: Jesimar da Silva Arantes\n"
-                + "Version: 3.0.0\n"
-                + "Date: 21/08/2018";
-        JOptionPane.showMessageDialog(null, msgAbout, "About",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void execScript(String cmd) {
-        try {
-            Process proc = Runtime.getRuntime().exec(cmd);
-            BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            try {
-                proc.waitFor();
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+    
+    public void tryLookAndFeel(String part_name) {
+        UIManager.LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
+        int index = -1;
+        for (int i = 0; i < lookAndFeels.length; i++) {
+            if (lookAndFeels[i].getName().contains(part_name)) {
+                index = i;
             }
-            while (read.ready()) {
-                System.out.println(read.readLine());
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            System.exit(1);
+        }
+        if (index != -1) {
+            this.setLookAndFeel(lookAndFeels[index].getClassName());
         }
     }
+
+    public void setLookAndFeel(String lookAndFeelds) {
+        try {
+            UIManager.setLookAndFeel(lookAndFeelds);
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        }
+    }
+
 }

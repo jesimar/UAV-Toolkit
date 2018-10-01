@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela as direções possíveis para se virar o drone.
+ * The class models the types of behavior available.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class TypeBehavior {
     

@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de modo de voo do piloto automático disponíveis.
+ * The class models the types of autopilot flight modes available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeMode {
     

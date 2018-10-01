@@ -3,8 +3,9 @@ package uav.generic.struct.geom;
 import java.util.List;
 
 /**
- * Classe concreta que implementa uma linha 2D.
+ * Concrete class that implements a 2D line.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Line2D extends Line{
     
@@ -42,22 +43,48 @@ public class Line2D extends Line{
         }
     }
 
+    /**
+     * Gets the name of the line
+     * @return the name of the line
+     * @since version 2.0.0
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the value of vector x
+     * @return the value of vector x
+     * @since version 2.0.0
+     */
     public double[] getVetx() {
         return vetx;
     }
 
+    /**
+     * Gets the value of vector y
+     * @return the value of vector y
+     * @since version 2.0.0
+     */
     public double[] getVety() {
         return vety;
     }
     
+    /**
+     * Gets the i-th point 2D
+     * @param i index of the point
+     * @return the i-th point of the vector.
+     * @since version 2.0.0
+     */
     public Point2D getPoint2D(int i){
         return new Point2D(vetx[i], vety[i]);
     }
     
+    /**
+     * Gets the central value on the x-axis
+     * @return the central value on the x-axis
+     * @since version 2.0.0
+     */
     public double getCenterX(){
         double cx = 0;
         for (int i = 0; i < vetx.length; i++){
@@ -66,6 +93,11 @@ public class Line2D extends Line{
         return cx/vetx.length;
     }
     
+    /**
+     * Gets the central value on the y-axis
+     * @return the central value on the y-axis
+     * @since version 2.0.0
+     */
     public double getCenterY(){
         double cy = 0;
         for (int i = 0; i < vety.length; i++){
@@ -74,6 +106,11 @@ public class Line2D extends Line{
         return cy/vety.length;
     }
     
+    /**
+     * Converts the vector x into a string of a line
+     * @return line with vector x 
+     * @since version 2.0.0
+     */
     public String toStringVetX() {
         String s = "";
         for (int i = 0; i < vetx.length - 1; i++){
@@ -83,6 +120,11 @@ public class Line2D extends Line{
         return s;
     } 
     
+    /**
+     * Converts the vector y into a string of a line
+     * @return line with vector y
+     * @since version 2.0.0
+     */
     public String toStringVetY() {
         String s = "";
         for (int i = 0; i < vety.length - 1; i++){
@@ -92,6 +134,12 @@ public class Line2D extends Line{
         return s;
     } 
     
+    /**
+     * Gets a string with the i-th point of the line
+     * @param i index of the point
+     * @return the string with value of points x, y
+     * @since version 2.0.0
+     */
     public String toString(int i) {
         return String.format("%.16g %.16g\n", vetx[i], vety[i]);
     }  

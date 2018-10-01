@@ -16,8 +16,11 @@ import uav.generic.struct.constants.TypeMsgCommunication;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- * Classe que faz o controle da comunicação com o sistema IFA.
+ * The class controls communication with IFA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * @see Communication
+ * @see Client
  */
 public class CommunicationIFA extends Communication implements Client{         
     
@@ -28,6 +31,7 @@ public class CommunicationIFA extends Communication implements Client{
     /**
      * Class constructor
      * @param drone instance of the aircraft
+     * @since version 2.0.0
      */
     public CommunicationIFA(Drone drone){      
         this.drone = drone;
@@ -36,6 +40,10 @@ public class CommunicationIFA extends Communication implements Client{
         this.startMission = false;
     }
     
+    /**
+     * Connect with the server
+     * @since version 4.0.0
+     */
     @Override
     public void connectServer(){        
         try{
@@ -51,6 +59,10 @@ public class CommunicationIFA extends Communication implements Client{
         }
     }
     
+    /**
+     * Treats the data to be received
+     * @since version 2.0.0
+     */
     @Override
     public void receiveData(){
         stateCommunication = StateCommunication.LISTENING;

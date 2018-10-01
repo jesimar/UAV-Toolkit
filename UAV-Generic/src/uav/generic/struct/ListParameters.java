@@ -4,8 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Classe que agrupa todos os parâmetros do piloto automático.
+ * The class contains a list with all autopilot parameters.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class ListParameters {
     
@@ -14,6 +15,7 @@ public class ListParameters {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public ListParameters() {
         this.listParameter = new LinkedList<>();        
@@ -24,8 +26,9 @@ public class ListParameters {
      * @param parameters FORMAT: {"parameters": "Key:RC7_REV Value:1.0; ... 
      * Key:WPNAV_LOIT_SPEED Value:500.0; Key:WPNAV_RADIUS Value:200.0; 
      * Value:0.699999988079; ... Key:BATT_CURR_PIN Value:12.0; "}
+     * @since version 4.0.0
      */
-    public void parseInfoParameters(String parameters) {
+    public void parserInfoListParameters(String parameters) {
         parameters = parameters.substring(16, parameters.length() - 4);       
         parameters = parameters.replace("Key:", "");
         parameters = parameters.replace("Value:", "");
@@ -38,10 +41,16 @@ public class ListParameters {
         }
     }   
     
-    public double getValue(String nome){
+    /**
+     * Gets the value based in a parameter name.
+     * @param parameterName the parameter name
+     * @return the value of parameter
+     * @since version 2.0.0
+     */ 
+    public double getValue(String parameterName){
         double value = ERROR;
         for (Parameter param : listParameter){
-            if (param.getKey().equals(nome)){
+            if (param.getKey().equals(parameterName)){
                 value = param.getValue();
             }
         }

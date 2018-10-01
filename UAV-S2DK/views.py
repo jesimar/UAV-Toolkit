@@ -270,8 +270,9 @@ def setMode(request):
 
 '''
 Comando que define a velocidade limite de voo.
-Os valores permitidos devem estar dentro do intervalo dado a seguir. Valores fora sao ignorados.
+Os valores permitidos devem estar dentro do intervalo dado a seguir.
 0 m/s < velocidade < 20 m/s
+Valores fora sao ignorados.
 '''
 def setVelocity(request):
     velocity = request['body']

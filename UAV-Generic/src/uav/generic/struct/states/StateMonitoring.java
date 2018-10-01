@@ -1,20 +1,22 @@
 package uav.generic.struct.states;
 
 /**
- * Classe que modela os possíveis estados do monitoramento do drone.
+ * The class models the possible states of UAV monitoring.
  * @author Jesimar S. Arantes
+ * @since  version 2.0.0
  */
 public enum StateMonitoring {
     
     WAITING, MONITORING, DISABLED;
     
     /**
-     * Método que obtem o modo de operação do monitoramento.
-     * @param mode - state of monitoring {WAITING, MONITORING, DISABLED}.
+     * Returns the operating state of the monitoring
+     * @param state state of monitoring {WAITING, MONITORING, DISABLED}.
      * @return {0, 1, 2, -1}.
+     * @since version 4.0.0
      */
-    public static int getMode(StateMonitoring mode){
-        switch (mode) {
+    public static int getState(StateMonitoring state){
+        switch (state) {
             case WAITING:
                 return 0;
             case MONITORING:

@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de sistemas executados pelo MOSA.
+ * Class that models the types of systems executed by MOSA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeSystemExecMOSA {
     

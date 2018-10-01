@@ -8,8 +8,9 @@ import uav.generic.struct.mission.Mission3D;
 import uav.generic.util.UtilRunThread;
 
 /**
- * Classe que modela o planejador da missão do drone evitando obstáculos.
+ * Class models mission planner of drone avoiding obstacles.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public abstract class Planner {
     
@@ -19,44 +20,45 @@ public abstract class Planner {
     final Mission3D mission3D;
     final Mission missionGeo;
     
-    String fileWaypointsMission;//used in planner hga4m and astar4m
-    String sizeWpt;//used in planner hga4m
-    final String dirFiles;//global
-    final String fileGeoBase;//global
-    final String cmdExecPlanner;//local
-    final String altitudeFlight;//local
-    String time;//local - used in planner hga4m
-    String waypoint;//local - used in planner ccqsp4m
-    String delta;//local - used in planner hga4m and ccqsp4m
-    String maxVel;//local - used in planner hga4m
-    String maxCtrl;//local - used in planner hga4m
-    String speedCruize;//local - used in planner hga4m
-    String typeAircraft;//local - used in planner hga4m
+    String fileWaypointsMission;   //used in planner hga4m and astar4m
+    String sizeWpt;                //used in planner hga4m
+    final String dirFiles;         //global
+    final String fileGeoBase;      //global
+    final String cmdExecPlanner;   //local
+    final String altitudeFlight;   //local
+    String time;                   //local - used in planner hga4m
+    String waypoint;               //local - used in planner ccqsp4m
+    String delta;                  //local - used in planner hga4m and ccqsp4m
+    String maxVel;                 //local - used in planner hga4m
+    String maxCtrl;                //local - used in planner hga4m
+    String speedCruize;            //local - used in planner hga4m
+    String typeAircraft;           //local - used in planner hga4m
 
     /**
      * Class constructor - Used in HGA4m
      * @param drone instance of the aircraft
      * @param fileWaypointsMission
-     * @param sizeWpt
-     * @param dirFiles
-     * @param fileGeoBase
-     * @param dirPlanner
-     * @param cmdExecPlanner
-     * @param altitudeFlight
-     * @param time
-     * @param delta
-     * @param maxVel
-     * @param maxCtrl
-     * @param speedCruize
-     * @param typeAircraft
+     * @param numberRoutes number of routes
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirPlanner planner directory
+     * @param cmdExecPlanner command to exec the planner
+     * @param altitudeFlight flight altitude cruising
+     * @param time processing time
+     * @param delta delta parameter/risk allocation
+     * @param maxVel maximum speed
+     * @param maxCtrl maximum control
+     * @param speedCruize cruise speed
+     * @param typeAircraft type of aircraft
+     * @since version 3.0.0
      */
-    public Planner(Drone drone, String fileWaypointsMission, String sizeWpt, String dirFiles,
-            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
-            String altitudeFlight, String time, String delta, 
+    public Planner(Drone drone, String fileWaypointsMission, String numberRoutes, 
+            String dirFiles, String fileGeoBase, String dirPlanner, 
+            String cmdExecPlanner, String altitudeFlight, String time, String delta, 
             String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
         this.drone = drone; 
         this.fileWaypointsMission = fileWaypointsMission;
-        this.sizeWpt = sizeWpt;
+        this.sizeWpt = numberRoutes;
         this.dirFiles = dirFiles;
         this.fileGeoBase = fileGeoBase;
         this.dir = dirPlanner;
@@ -76,17 +78,18 @@ public abstract class Planner {
     /**
      * Class constructor - Used in CCQSP4m
      * @param drone instance of the aircraft
-     * @param dirFiles
-     * @param fileGeoBase
-     * @param dirPlanner
-     * @param cmdExecPlanner
-     * @param altitudeFlight
-     * @param waypoint
-     * @param delta
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirPlanner planner directory
+     * @param cmdExecPlanner command to exec the planner
+     * @param altitudeFlight flight altitude cruising
+     * @param waypoint amount of waypoint used
+     * @param delta delta parameter/risk allocation
+     * @since version 3.0.0
      */
-    public Planner(Drone drone, String dirFiles,
-            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
-            String altitudeFlight, String waypoint, String delta) {
+    public Planner(Drone drone, String dirFiles, String fileGeoBase, 
+            String dirPlanner, String cmdExecPlanner, String altitudeFlight, 
+            String waypoint, String delta) {
         this.drone = drone;
         this.dirFiles = dirFiles;
         this.fileGeoBase = fileGeoBase;
@@ -103,12 +106,13 @@ public abstract class Planner {
     /**
      * Class constructor - Used in AStar4m
      * @param drone instance of the aircraft
-     * @param fileWaypointsMission
-     * @param dirFiles
-     * @param fileGeoBase
-     * @param dirPlanner
-     * @param cmdExecPlanner
-     * @param altitudeFlight
+     * @param fileWaypointsMission waypoints of the mission
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirPlanner planner directory
+     * @param cmdExecPlanner command to exec the planner
+     * @param altitudeFlight flight altitude cruising
+     * @since version 4.0.0
      */
     public Planner(Drone drone, String fileWaypointsMission, String dirFiles, 
             String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
@@ -125,22 +129,42 @@ public abstract class Planner {
         this.missionGeo = new Mission();
     }
     
+    /**
+     * Clears log files generated by method
+     * @since version 3.0.0
+     */
     public abstract void clearLogs();
     
+    /**
+     * Get the mission Cartesian coordinates.
+     * @return the mission3D
+     * @since version 3.0.0
+     */
     public Mission3D getMission3D(){
         return mission3D;
     }
     
+    /**
+     * Get the mission in geographical coordinates.
+     * @return the missionGeo
+     * @since version 3.0.0
+     */
     public Mission getMissionGeo(){
         return missionGeo;
     }
     
+    /**
+     * Method that runs the path planner.
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 3.0.0
+     */
     boolean execMethod(){
         try {
             boolean isPrint = false;
             boolean isPrintError = false;
             String cmd = cmdExecPlanner + " local";
-            UtilRunThread.dualSingleThread(cmd, new File(dir), isPrint, isPrintError);
+            UtilRunThread.dualSingleThreadWaitFor(cmd, new File(dir), isPrint, isPrintError);
             return true;
         } catch (IOException ex) {
             System.err.println("Error [IOException] execMethod()");

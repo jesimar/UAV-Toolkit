@@ -9,7 +9,9 @@ import uav.gcs.communication.CommunicationIFA;
 import uav.gcs.struct.Drone;
 
 /**
+ * Class used to send data to Database (Oracle Drone)
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class SaveDB {
     

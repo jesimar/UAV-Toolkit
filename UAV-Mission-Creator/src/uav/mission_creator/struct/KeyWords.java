@@ -1,8 +1,9 @@
 package uav.mission_creator.struct;
 
 /**
- * A seguinte lista de comandos eh definida no software Google Earth
+ * The following list of commands is defined in the Google Earth software.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class KeyWords {
     

@@ -9,17 +9,27 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilRunThread;
 
 /**
- *
+ * The class models the parachute control to give greater security to the aircraft
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class ParachuteControl {
     
     private final ReaderFileConfig config;
 
+    /**
+     * Class constructor.
+     * @since version 4.0.0
+     */
     public ParachuteControl() {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Open the parachute based type of operation mode and on the connected device
+     * @return {@code true} if success {@code false} otherwise
+     * @since version 4.0.0
+     */
     public boolean open(){
         try {
             String cmd = "";
@@ -34,7 +44,7 @@ public class ParachuteControl {
                 }
             } 
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirParachute()), print);
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirParachute()), print);
             return true;
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] open()");

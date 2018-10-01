@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de companion computer possíveis de serem utilizados.
+ * The class models the types of companion computer that can be used.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class TypeCC {
     

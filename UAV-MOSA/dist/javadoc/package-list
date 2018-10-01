@@ -1,0 +1,5 @@
+uav.mosa
+uav.mosa.module.communication
+uav.mosa.module.decision_making
+uav.mosa.module.mission_manager
+uav.mosa.module.path_planner

@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os locais onde serão feitos o processamento de rota.
+ * The class models the locations where route processing is done.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class LocalExecMission {
     

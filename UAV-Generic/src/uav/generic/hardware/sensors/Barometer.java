@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
-* Classe que modela o barômetro do drone (relative altitude, absolute altitude).
+ * The class models the drone barometer (relative altitude, absolute altitude).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Barometer {
     
@@ -11,6 +12,7 @@ public class Barometer {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public Barometer() {
         
@@ -20,6 +22,7 @@ public class Barometer {
      * Class constructor.
      * @param alt_rel relative altitude 
      * @param alt_abs absolute altitude
+     * @since version 2.0.0
      */
     public Barometer(double alt_rel, double alt_abs) {
         this.alt_rel = alt_rel;
@@ -29,6 +32,7 @@ public class Barometer {
     /**
      * Converts line in JSON format to relative altitude and absolute altitude values.
      * @param line FORMAT: {"barometer": [0.0, 870.0]}
+     * @since version 2.0.0
      */
     public void parserInfoBarometer(String line) {
         try{
@@ -41,6 +45,12 @@ public class Barometer {
         }
     }
     
+    /**
+     * Update the info the relative altitude and absolute altitude.
+     * @param alt_rel relative altitude 
+     * @param alt_abs absolute altitude
+     * @since version 2.0.0
+     */
     public void updateBarometer(String alt_rel, String alt_abs){
         try{
             this.alt_rel = Double.parseDouble(alt_rel);
@@ -50,10 +60,20 @@ public class Barometer {
         }
     }
 
+    /**
+     * Set the relative altitude
+     * @param alt_rel the relative altitude
+     * @since version 2.0.0
+     */
     public void setAltRel(double alt_rel) {
         this.alt_rel = alt_rel;
     }   
     
+    /**
+     * Set the absolute altitude
+     * @param alt_abs the absolute altitude
+     * @since version 2.0.0
+     */
     public void setAltAbs(double alt_abs) {
         this.alt_abs = alt_abs;
     } 

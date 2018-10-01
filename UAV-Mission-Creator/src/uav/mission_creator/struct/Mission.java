@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * The class is responsible for storing the contents of the mission.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Mission {
     
@@ -23,6 +24,10 @@ public class Mission {
     private final List<Poly3D> listPoly3D = new ArrayList<>();
     private PointGeo pointBase;
     
+    /**
+     * Class constructor.
+     * @since version 2.0.0
+     */
     public Mission(){
         
     }

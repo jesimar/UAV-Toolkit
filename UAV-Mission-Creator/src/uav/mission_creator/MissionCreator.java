@@ -1,41 +1,47 @@
 package uav.mission_creator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.Locale;
 import uav.generic.util.UtilString;
 import uav.mission_creator.struct.Mission;
-import uav.mission_creator.file.PreProcessorKML;
 import uav.mission_creator.file.ReaderFileConfigMission;
-import uav.mission_creator.file.PrinterFrontier;
-import uav.mission_creator.file.PrinterMapSGL_NFZ;
-import uav.mission_creator.file.PrinterMapSGL_IFA;
-import uav.mission_creator.file.PrinterMapSGL_NFZ_AStar;
-import uav.mission_creator.file.PrinterMissionSGL_CCQSP;
-import uav.mission_creator.file.PrinterPointsFailure;
 import uav.mission_creator.file.ReaderKML;
+import uav.mission_creator.file.SaveFile;
 
 /**
- *
+ * Main class that starts the Mission Creator system.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class MissionCreator {
 
     private final ReaderFileConfigMission config;
+    private final SaveFile save;
         
-    public static void main(String[] args) throws FileNotFoundException, IOException {        
+    /**
+     * Method main that start the MOSA System.
+     * @param args not used
+     * @throws java.io.IOException
+     * @since version 3.0.0
+     */
+    public static void main(String[] args) throws IOException {        
         Locale.setDefault(Locale.ENGLISH);
         MissionCreator main = new MissionCreator();
         main.exec();
     }
 
+    /**
+     * Class constructor.
+     * @throws IOException 
+     * @since version 3.0.0
+     */
     public MissionCreator() throws IOException {
         config = new ReaderFileConfigMission();
+        save = new SaveFile();
     }
     
-    public void exec() throws FileNotFoundException{
+    public void exec() {
         Mission mission = new Mission();
         createFilePreProcessor();
         readerKML(mission);
@@ -58,8 +64,7 @@ public class MissionCreator {
         System.out.println("--------Begin PreProcessor--------");        
         File inFile = new File(config.getDirRouteKML() + config.getFileRouteKML());
         File outFile = new File(config.getDirRouteKML()+"new"+config.getFileRouteKML());
-        PreProcessorKML preProcessor = new PreProcessorKML(inFile, outFile);
-        preProcessor.preProcessor();        
+        save.printerPreProcessorKML(inFile, outFile);        
         System.out.println("--------End PreProcessor--------");
     }
     
@@ -75,98 +80,64 @@ public class MissionCreator {
     private void createFileSGL_NFZ(Mission mission){
         System.out.println("--------Begin PrinterMapSGL NFZ--------");
         File fileMapNFZ = new File(config.getDirRouteKML() + config.getFileMapNFZ());
-        PrinterMapSGL_NFZ mapNFZ = new PrinterMapSGL_NFZ(fileMapNFZ, mission);
-        mapNFZ.printer();
+        save.printerMapSGL_NFZ(fileMapNFZ, mission);
         System.out.println("--------End PrinterMapSGL NFZ--------");
     }
     
     private void createFileSGL_NFZ_AStar(Mission mission){
         System.out.println("--------Begin PrinterMapSGL NFZ AStar--------");
         File fileMapAstar = new File(config.getDirRouteKML() + "map-nfz-astar.sgl");
-        PrinterMapSGL_NFZ_AStar map = new PrinterMapSGL_NFZ_AStar(fileMapAstar, mission);
-        map.printer();
+        save.printerMapSGL_NFZ_AStar(fileMapAstar, mission);
         System.out.println("--------End PrinterMapSGL NFZ AStar--------");
     }
     
     private void createFileSGL_Full(Mission mission){
         System.out.println("--------Begin PrinterMapSGL Full--------");
         File fileMapFull = new File(config.getDirRouteKML() + config.getFileMapFull());
-        PrinterMapSGL_IFA mapFull = new PrinterMapSGL_IFA(fileMapFull, mission);
-        mapFull.printer();
+        save.printerMapSGL_IFA(fileMapFull, mission);
         System.out.println("--------End PrinterMapSGL Full--------");
     }
     
     private void createFileMissionCCQSP4m(Mission mission){
         System.out.println("--------Begin Printer MissionCCQSP4m--------");
         File fileMissionCCQSP = new File(config.getDirRouteKML() + config.getFileMissionCCQSP());
-        PrinterMissionSGL_CCQSP missionCCQSP = new PrinterMissionSGL_CCQSP(
-                fileMissionCCQSP, mission);
-        missionCCQSP.printer();
+        save.printerMissionSGL_CCQSP(fileMissionCCQSP, mission);
         System.out.println("--------End Printer MissionCCQSP4m--------");
     }
     
-    private void createFileGeoBase(Mission mission) throws FileNotFoundException{
+    private void createFileGeoBase(Mission mission){
         System.out.println("--------Begin GeoBase--------");
         String sep = UtilString.defineSeparator(config.getSeparatorGeoBaseOut());
         File fileGeoBase = new File(config.getDirRouteKML() + config.getFileGeoBaseOut());
-        PrintStream print = new PrintStream(fileGeoBase);
-        print.println("#longitude latitude altitude");
-        print.println(mission.getPointBase().getLng() + sep + 
-                      mission.getPointBase().getLat() + sep +
-                      mission.getPointBase().getAlt());
-        print.close();
+        save.printerGeoBase(fileGeoBase, mission, sep);
         System.out.println("--------End GeoBase--------");
     }
     
-    private void createFileWaypoints3D(Mission mission) throws FileNotFoundException{
+    private void createFileWaypoints3D(Mission mission){
         System.out.println("--------Begin WaypointsMission3D--------");
         File fileMission = new File(config.getDirRouteKML() + config.getFileWaypointsMission());
-        PrintStream printWptsMission = new PrintStream(fileMission);
-        printWptsMission.print(mission.getWaypoints3D());
-        printWptsMission.close();
+        save.printerWaypoints3D(fileMission, mission);
         System.out.println("--------End WaypointsMission3D--------");
     }
     
-    private void createFileFeaturesMission(Mission mission) throws FileNotFoundException{
+    private void createFileFeaturesMission(Mission mission) {
         System.out.println("--------Begin FeaturesMission--------");
         File fileFeatures = new File(config.getDirRouteKML() + config.getFileFeatureMission());
-        PrintStream printFeaturesMission = new PrintStream(fileFeatures);
-        
-        printFeaturesMission.print("Waypoints Mission\n");
-        printFeaturesMission.print(mission.getWaypointsMissionGeo());
-        
-        printFeaturesMission.print("Waypoints Buzzer\n");
-        printFeaturesMission.print(mission.getWaypointsBuzzer());
-        
-        printFeaturesMission.print("Waypoints Camera Picture\n");
-        printFeaturesMission.print(mission.getWaypointsCameraPicture());
-        
-        printFeaturesMission.print("Waypoints Camera Video\n");
-        printFeaturesMission.print(mission.getWaypointsCameraVideo());
-        
-        printFeaturesMission.print("Waypoints Camera Photo In Sequence\n");
-        printFeaturesMission.print(mission.getWaypointsCameraPhotoInSequence());
-        
-        printFeaturesMission.print("Waypoints Spraying\n");
-        printFeaturesMission.print(mission.getWaypointsSpraying());
-        
-        printFeaturesMission.close();
+        save.printerFeaturesMission(fileFeatures, mission);
         System.out.println("--------End FeaturesMission--------");
     }
     
     private void createFileWaypointsFrontier(Mission mission){
         System.out.println("--------Begin PrinterFrontier--------");
         File fileMapFrontier = new File(config.getDirRouteKML()  + "map-frontier.sgl");
-        PrinterFrontier mapFrontier = new PrinterFrontier(fileMapFrontier, mission);
-        mapFrontier.printer();
+        save.printerFrontier(fileMapFrontier, mission);
         System.out.println("--------End PrinterFrontier--------");
     }
     
     private void createPointsFailure(Mission mission){
         System.out.println("--------Begin Pontos de Falha--------");
         File fileFailure = new File(config.getDirRouteKML() + "pontos_de_falha.txt");
-        PrinterPointsFailure printerFailure = new PrinterPointsFailure(fileFailure, mission);
-        printerFailure.printer();
+        save.printerPointsFailure(fileFailure, mission);
         System.out.println("--------End Pontos de Falha--------");
     }
     

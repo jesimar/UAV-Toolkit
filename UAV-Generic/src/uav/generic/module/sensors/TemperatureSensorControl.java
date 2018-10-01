@@ -10,18 +10,27 @@ import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.reader.ReaderFileConfig;
 
 /**
- *
+ * The class models the temperature sensor control to get the temperature of environment.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class TemperatureSensorControl {
     
     private final ReaderFileConfig config;
     private double temperature = -1.0;
 
+    /**
+     * Class constructor.
+     * @since version 4.0.0
+     */
     public TemperatureSensorControl() {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Starts the temperature sensor based type of operation mode and on the connected device
+     * @since version 4.0.0
+     */
     public void startTemperatureSensor(){
         try {
             String cmd = "";
@@ -57,6 +66,11 @@ public class TemperatureSensorControl {
         } 
     }
 
+    /**
+     * Gets the temperature based on temperature sensor (in celsius degree)
+     * @return the temperature
+     * @since version 4.0.0
+     */ 
     public double getTemperature() {
         return temperature;
     }

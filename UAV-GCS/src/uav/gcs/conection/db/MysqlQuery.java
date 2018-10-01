@@ -5,6 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ */
 public class MysqlQuery {
     
     public Connection database = null; 

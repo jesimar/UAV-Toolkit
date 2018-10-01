@@ -1,13 +1,19 @@
-//Authors: Rafael Farias Pinho and Jesimar da Silva Arantes
-//Date: 01/07/2018
-//Last Update: 24/08/2018
-//Description: Code that calculates route using algorithm A *
-//Descricao: Código que calcula rota usando o algoritmo A*
+/**
+* Authors: Rafael Farias Pinho and Jesimar da Silva Arantes
+* Date: 01/07/2018
+* Last Update: 24/09/2018
+* Description: Code that calculates route using algorithm A*
+* Descricao: Código que calcula rota usando o algoritmo A*
+*/
+
+//============================USED LIBRARIES============================
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
 #include <math.h>
+
+//===============================DEFINES================================
 
 #define TRUE 0
 #define FALSE 1
@@ -22,39 +28,55 @@
 #define map_size_rows 201
 #define map_size_cols 201
 
-//Struct that defines a point in the map
+//=========================STRUCTS and TYPEDEF==========================
+
+/*
+ * Struct that defines a point in the map
+ */
 struct point2D{
 	float x;
 	float y;
 }typedef point2D;
 
-//struct that defines a obstacle
+/*
+ * struct that defines a obstacle
+ */
 struct obstacle{
 	int number_of_sides;
 	point2D* point;
 }typedef obstacle;
 
-/* description of graph node */
+/* 
+ * description of graph node 
+ */
 struct stop{
 	double col, row;
-	/* array of indexes of routes from this stop to neighbors in array of all routes */
+	//array of indexes of routes from this stop to neighbors in array of all routes
 	int *n;
 	int n_len;
 	double f, g, h;
 	int from;
 };
 
-int ind[map_size_rows][map_size_cols];
-
-/* description of route between two nodes */
+/* 
+ * description of route between two nodes 
+ */
 struct route {
-	/* route has only one direction! */
-	int x; /* index of stop in array of all stops of src of this route */
-	int y; /* index of stop in array of all stops of dst of this route */
+	//route has only one direction!
+	int x; //index of stop in array of all stops of src of this route
+	int y; //index of stop in array of all stops of dst of this route
 	double d;
 };
 
-//function that returns the beginning point
+//===========================GLOBAL VARIABLES===========================
+
+int ind[map_size_rows][map_size_cols];
+
+//==============================FUNCTIONS===============================
+
+/*
+ * function that returns the beginning point
+ */
 point2D readPositionStart(FILE *file){
 	char line[100];
 	char *pend;
@@ -81,7 +103,9 @@ point2D readPositionStart(FILE *file){
 	return pointStart;
 }
 
-//function that returns the final point
+/*
+ * function that returns the final point
+ */
 point2D readPositionGoal(FILE *file){
 	char line[100];
 	char* pend;
@@ -103,7 +127,9 @@ point2D readPositionGoal(FILE *file){
 	return pointGoal;
 }
 
-//function that gets the points of the obstacles
+/*
+ * function that gets the points of the obstacles
+ */
 void readObstacles(FILE* file, obstacle* obst, int num_obstacles){
 	char line[100];
 	char *pend;
@@ -145,7 +171,9 @@ void readObstacles(FILE* file, obstacle* obst, int num_obstacles){
 	}
 }
 
-//function that draws the obstacles in the map
+/*
+ * function that draws the obstacles in the map
+ */
 void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int num_obstacles){
 	for (int i = 0; i < map_size_rows; i++){
 		for(int j = 0; j < map_size_cols; j++){
@@ -272,14 +300,14 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 		}
 	}
 
-	/* index of start stop */
+	//index of start stop
 	//int s = ((int)(pointStart.x)+1)*(int)(pointStart.y+1);
 	int s = dim_x_total * (pointStart.y - 1) + (pointStart.x);
 	if (debug == TRUE){
 		printf("valor s = %d\n", s);
 	}
 	
-	/* index of finish stop */
+	//index of finish stop
 	//int e = s_len - (map_size_rows-(int)(pointGoal.x))*(map_size_cols-(int)(pointGoal.y));
 	int e = dim_x_total * (pointGoal.y - 1) + (pointGoal.x);
 	if (debug == TRUE){

@@ -1,20 +1,22 @@
 package uav.generic.struct.states;
 
 /**
- * Classe que modela os possíveis estados do sistema de comunicação.
+ * The class models the possible states of the communication system.
  * @author Jesimar S. Arantes
+ * @since  version 2.0.0
  */
 public enum StateCommunication {
     
     WAITING, LISTENING, DISABLED;
     
     /**
-     * Método que obtem o modo de operação do sistema de comunicação.
-     * @param mode - state of communication {WAITING, LISTENING, DISABLED}.
+     * Returns the operating state of the communication system.
+     * @param state state of communication {WAITING, LISTENING, DISABLED}.
      * @return {0, 1, 2, -1}.
+     * @since version 4.0.0
      */
-    public static int getMode(StateCommunication mode){
-        switch (mode) {
+    public static int getState(StateCommunication state){
+        switch (state) {
             case WAITING:
                 return 0;
             case LISTENING:

@@ -9,18 +9,28 @@ import javax.swing.JPanel;
 import uav.gcs.communication.CommunicationIFA;
 
 /**
- *
+ * The class that controls the drone using keyboard commands.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
  */
 public class KeyboardCommands {
     
     private JFrame frame;
     private final CommunicationIFA communicationIFA;
 
+    /**
+     * Class constructor
+     * @param communicationIFA the communication with IFA
+     * @since version 3.0.0
+     */
     public KeyboardCommands(CommunicationIFA communicationIFA) {
         this.communicationIFA = communicationIFA;
     }
     
+    /**
+     * Opens a new graphical interface for input with keyboard commands
+     * @since version 3.0.0
+     */
     public void openTheWindow(){
         frame = new JFrame("CMDs KEYBOARD");
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -54,6 +64,10 @@ public class KeyboardCommands {
         frame.add(panel);
     }
     
+    /**
+     * The method is listening to the keyboard.
+     * @since version 3.0.0
+     */
     public void listenerTheKeyboard(){
         Keyboard keyboard = new Keyboard(communicationIFA);
         frame.addKeyListener(keyboard);

@@ -25,8 +25,9 @@ import uav.mosa.module.path_planner.HGA4m;
 import uav.mosa.module.path_planner.Planner;
 
 /**
- * Classe que faz as tomadas de decisão do sistema MOSA.
+ * The class makes the decision making of the MOSA system.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class DecisionMaking {
 
@@ -42,6 +43,7 @@ public class DecisionMaking {
      * @param drone instance of the aircraft
      * @param dataAcquisition object to send commands to drone
      * @param wptsMission3D waypoints of the mission 3D
+     * @since version 3.0.0
      */
     public DecisionMaking(Drone drone, DataAcquisition dataAcquisition, 
             Mission3D wptsMission3D) {        
@@ -52,6 +54,10 @@ public class DecisionMaking {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Action to run an mission Onboard.
+     * @since version 4.0.0
+     */
     public void actionForMissionOnboard() {
         statePlanning = StatePlanning.PLANNING;
         boolean resp = false;
@@ -88,6 +94,11 @@ public class DecisionMaking {
         }
     }   
     
+    /**
+     * Action to run an mission offboard.
+     * @param communicationGSC the communication with the GCS
+     * @since version 4.0.0
+     */
     public void actionForMissionOffboard(CommunicationGCS communicationGSC){
         statePlanning = StatePlanning.PLANNING; 
         boolean resp = false;
@@ -124,6 +135,11 @@ public class DecisionMaking {
         }
     }
     
+    /**
+     * Executes the action of changing the behavior of the mission.
+     * @param type the type of behavior to be run
+     * @since version 4.0.0
+     */
     public void actionChangeBehavior(String type){    
         String disc = config.getDiscretizationBehavior();
         String cmd = "";
@@ -149,7 +165,7 @@ public class DecisionMaking {
         String dir = config.getDirBehavior();
         try {
             boolean isPrint = true;
-            UtilRunThread.singleThreadWaitFor(cmd, new File(dir), isPrint);
+            UtilRunThread.runCmdSingleThreadWaitFor(cmd, new File(dir), isPrint);
             Mission mission = new Mission();
             String path = dir + "route-behavior.txt";
             boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
@@ -167,10 +183,22 @@ public class DecisionMaking {
         } 
     }
     
+    /**
+     * Gets the state planning
+     * @return the state planning
+     * @since version 1.0.0
+     */
     public StatePlanning getStatePlanning() {
         return statePlanning;
     }
         
+    /**
+     * Send mission based planner (HGA4m) to autopilot calculated onboard and 
+     * calculated in ground.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerHGA4mCalcGroundOnboard() {
         long timeInit = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground");
@@ -224,6 +252,13 @@ public class DecisionMaking {
         return resp;
     }
     
+    /**
+     * Send mission based planner (HGA4m) to autopilot calculated onboard and 
+     * calculated in air.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerHGA4mCalcAirOnboard() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc air");
@@ -277,6 +312,13 @@ public class DecisionMaking {
         return true;
     }
     
+    /**
+     * Send mission based planner (HGA4m) to autopilot calculated onboard and 
+     * calculated in ground and air.
+     * @return {@code true} if success,  
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerHGA4mCalcGroundAndAirOnboard() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground and air");
@@ -356,6 +398,12 @@ public class DecisionMaking {
         return true;
     }
     
+    /**
+     * Send mission based planner (CCQSP) to autopilot calculated onboard.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerCCQSP4mOnboard() {
         long timeInit = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground ccqsp4m");
@@ -391,6 +439,12 @@ public class DecisionMaking {
         return resp;
     }
     
+    /**
+     * Send mission based planner (AStar4m) to autopilot calculated onboard.
+     * @return {@code true} if success,  
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerAStar4mOnboard() {
         long timeInit1 = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground Astar4m");
@@ -444,6 +498,12 @@ public class DecisionMaking {
         return resp;
     }
     
+    /**
+     * Send mission based planner (HGA4m) to autopilot calculated offboard.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerHGA4mCalcGroundOffboard(
             CommunicationGCS communicationGCS) {
         String typeAircraft = drone instanceof DroneFixedWing ? "FixedWing" : "RotaryWing";
@@ -479,6 +539,12 @@ public class DecisionMaking {
         }
     }
     
+    /**
+     * Send mission based planner (CCQSP4m) to autopilot calculated offboard.
+     * @return {@code true} if success,  
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerCCQSP4mOffboard(
             CommunicationGCS communicationGCS) {
         
@@ -512,6 +578,12 @@ public class DecisionMaking {
         }
     }
     
+    /**
+     * Send mission based planner (AStar4m) to autopilot calculated offboard.
+     * @return {@code true} if success,  
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedPlannerAStar4mOffboard(CommunicationGCS communicationGCS) {
         String attributes = config.getTypePlanner() 
                 + ";" + config.getFileMissionPlannerAStar4m()
@@ -539,6 +611,12 @@ public class DecisionMaking {
         }
     }
     
+    /**
+     * Send mission based fixed route to autopilot.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
     private boolean sendMissionBasedFixedRoute() {
         StandardPrints.printMsgEmph("send fixed route");                
         String path = config.getDirFixedRouteMOSA()+ config.getFileFixedRouteMOSA();

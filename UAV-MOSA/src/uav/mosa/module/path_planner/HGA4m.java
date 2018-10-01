@@ -15,8 +15,10 @@ import uav.generic.hardware.aircraft.Drone;
 import uav.generic.hardware.aircraft.DroneFixedWing;
 
 /**
- * Classe que modela o planejador de rotas HGA4m. 
+ * The class models the path planner HGA4m. 
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
+ * @see Planner
  */
 public class HGA4m extends Planner{
     
@@ -24,11 +26,19 @@ public class HGA4m extends Planner{
      * Class constructor
      * @param drone instance of the aircraft
      * @param waypointsMission waypoints of the mission
+     * @since version 1.0.0
      */
     public HGA4m(Drone drone, Mission3D waypointsMission) {
         super(drone, waypointsMission);
     }   
     
+    /**
+     * Execute the mission
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     public boolean execMission(int i) {
         boolean itIsOkUpdate = updateFileConfig(i);
         boolean itIsOkpathAB = definePathAB(i);        
@@ -38,12 +48,19 @@ public class HGA4m extends Planner{
         return itIsOkUpdate && itIsOkpathAB && itIsOkExec && itIsOkRoute && itIsOkParse;
     }
     
+    /**
+     * Updates the configuration file used by the method.
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     public boolean updateFileConfig(int i) {
         try {
-            double px1 = waypointsMission.getPosition3D(i).getX();
-            double py1 = waypointsMission.getPosition3D(i).getY();
-            double px2 = waypointsMission.getPosition3D(i+1).getX();
-            double py2 = waypointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition(i).getX();
+            double py1 = waypointsMission.getPosition(i).getY();
+            double px2 = waypointsMission.getPosition(i+1).getX();
+            double py2 = waypointsMission.getPosition(i+1).getY();
             double dx = px2 - px1;
             double dy = py2 - py1;
             //distancia entre os pontos com uma margem de seguranca
@@ -69,17 +86,25 @@ public class HGA4m extends Planner{
     
     private double vx1 = 0.0;
     private double vy1 = 0.0;
+    
+    /**
+     * Define the path between two points (i.e. A and B).
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     private boolean definePathAB(int i) {
         try {
-            double px1 = waypointsMission.getPosition3D(i).getX();
-            double py1 = waypointsMission.getPosition3D(i).getY();
-            double px2 = waypointsMission.getPosition3D(i+1).getX();
-            double py2 = waypointsMission.getPosition3D(i+1).getY();
+            double px1 = waypointsMission.getPosition(i).getX();
+            double py1 = waypointsMission.getPosition(i).getY();
+            double px2 = waypointsMission.getPosition(i+1).getX();
+            double py2 = waypointsMission.getPosition(i+1).getY();
             double vx2 = 0;
             double vy2 = 0;
             if (i < waypointsMission.size() - 2){
-                double px3 = waypointsMission.getPosition3D(i+2).getX();
-                double py3 = waypointsMission.getPosition3D(i+2).getY();
+                double px3 = waypointsMission.getPosition(i+2).getX();
+                double py3 = waypointsMission.getPosition(i+2).getY();
                 double dx = px3 - px1;
                 double dy = py3 - py1;
                 double norm = Math.sqrt(dx*dx+dy*dy);
@@ -114,6 +139,13 @@ public class HGA4m extends Planner{
         } 
     }  
     
+    /**
+     * Creates a final route file
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     private boolean createFileFinalRoute(int i) {
         try {
             File src = new File(dir + "output-simulation.log");
@@ -148,6 +180,13 @@ public class HGA4m extends Planner{
         }
     }
     
+    /**
+     * Converts the route in Cartesian coordinates to geographic coordinates 
+     * @param i the i-th index of the route
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 1.0.0
+     */
     public boolean parseRoute3DtoGeo(int i){
         try {
             String nameFileRoute3D =  "route3D"  + i + ".txt";
@@ -163,7 +202,7 @@ public class HGA4m extends Planner{
                 readRoute3D.nextDouble();
                 readRoute3D.nextDouble();
                 printGeo.println(UtilGeo.parseToGeo(pointGeo, x, y, h, ";"));
-                mission3D.addPosition3D(new Position3D(x, y, h));
+                mission3D.addPosition(new Position3D(x, y, h));
                 missionGeo.addWaypoint(new Waypoint(UtilGeo.parseToGeo1(pointGeo, x, y, h)));
                 countLines++;
             }
@@ -182,6 +221,10 @@ public class HGA4m extends Planner{
         } 
     }
     
+    /**
+     * Clears log files generated by method
+     * @since version 1.0.0
+     */
     @Override
     public void clearLogs() {
         UtilIO.deleteFile(new File(dir), ".log");

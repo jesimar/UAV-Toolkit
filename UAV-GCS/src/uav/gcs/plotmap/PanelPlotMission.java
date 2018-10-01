@@ -20,8 +20,9 @@ import uav.generic.struct.mission.Route3D;
 import uav.generic.util.UtilGeo;
 
 /**
- *
+ * The class that plots the map and routes using the Graphics2D.
  * @author Jesimar Arantes
+ * @since version 3.0.0
  */
 public class PanelPlotMission extends sPanelDraw {
 
@@ -49,6 +50,10 @@ public class PanelPlotMission extends sPanelDraw {
     private double maxDistReached;
     private boolean printDrone = false;
 
+    /**
+     * Class constructor
+     * @since version 3.0.0
+     */
     public PanelPlotMission() {
         super(Color.WHITE);
         config = ReaderFileConfig.getInstance();
@@ -64,6 +69,12 @@ public class PanelPlotMission extends sPanelDraw {
         routeDrone = new Route3D();
     }
 
+    /**
+     * Sets plot dimensions.
+     * @param width width value/dimension in x axes
+     * @param height height value/dimension in y axes
+     * @since version 3.0.0
+     */
     public void setNewDimensions(int width, int height) {
         this.Config(width, height);
         this.restart_system();
@@ -107,6 +118,11 @@ public class PanelPlotMission extends sPanelDraw {
         this.repaint();
     }
 
+    /**
+     * Paint in screen the info about map, mission, drone position.
+     * @param g2 the graphics instance
+     * @since version 3.0.0
+     */
     @Override
     protected void paintDynamicScene(Graphics2D g2) {
         //Draw Map
@@ -139,17 +155,17 @@ public class PanelPlotMission extends sPanelDraw {
             g2.setColor(COLOR_ROUTE_IFA);
             for (int i = 0; i < routeIFA.getRoute3D().size(); i++) {
                 g2.fillOval(
-                        toUnit(routeIFA.getRoute3D().getPosition3D(i).getX()) - 15,
-                        toUnit(routeIFA.getRoute3D().getPosition3D(i).getY()) - 15,
+                        toUnit(routeIFA.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeIFA.getRoute3D().getPosition(i).getY()) - 15,
                         30,
                         30
                 );
                 if (i + 1 < routeIFA.getRoute3D().size()) {
                     g2.drawLine(
-                            toUnit(routeIFA.getRoute3D().getPosition3D(i).getX()),
-                            toUnit(routeIFA.getRoute3D().getPosition3D(i).getY()),
-                            toUnit(routeIFA.getRoute3D().getPosition3D(i + 1).getX()),
-                            toUnit(routeIFA.getRoute3D().getPosition3D(i + 1).getY())
+                            toUnit(routeIFA.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeIFA.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeIFA.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeIFA.getRoute3D().getPosition(i + 1).getY())
                     );
                 }
             }
@@ -159,17 +175,17 @@ public class PanelPlotMission extends sPanelDraw {
             g2.setColor(COLOR_ROUTE_MOSA);
             for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
                 g2.fillOval(
-                        toUnit(routeMOSA.getRoute3D().getPosition3D(i).getX()) - 15,
-                        toUnit(routeMOSA.getRoute3D().getPosition3D(i).getY()) - 15,
+                        toUnit(routeMOSA.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeMOSA.getRoute3D().getPosition(i).getY()) - 15,
                         30,
                         30
                 );
                 if (i < routeMOSA.getRoute3D().size() - 1) {
                     g2.drawLine(
-                            toUnit(routeMOSA.getRoute3D().getPosition3D(i).getX()),
-                            toUnit(routeMOSA.getRoute3D().getPosition3D(i).getY()),
-                            toUnit(routeMOSA.getRoute3D().getPosition3D(i + 1).getX()),
-                            toUnit(routeMOSA.getRoute3D().getPosition3D(i + 1).getY())
+                            toUnit(routeMOSA.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeMOSA.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeMOSA.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeMOSA.getRoute3D().getPosition(i + 1).getY())
                     );
                 }
             }
@@ -178,17 +194,17 @@ public class PanelPlotMission extends sPanelDraw {
             g2.setColor(COLOR_ROUTE_MOSA_SIMP);
             for (int i = 0; i < routeMOSASimplifier.getRoute3D().size(); i++) {
                 g2.fillOval(
-                        toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getX()) - 15,
-                        toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()) - 15,
+                        toUnit(routeMOSASimplifier.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeMOSASimplifier.getRoute3D().getPosition(i).getY()) - 15,
                         30,
                         30
                 );
                 if (i < routeMOSASimplifier.getRoute3D().size() - 1) {
                     g2.drawLine(
-                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getX()),
-                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()),
-                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getX()),
-                            toUnit(routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getY())
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeMOSASimplifier.getRoute3D().getPosition(i + 1).getY())
                     );
                 }
             }
@@ -197,17 +213,17 @@ public class PanelPlotMission extends sPanelDraw {
             g2.setColor(COLOR_ROUTE_DRONE);
             for (int i = 0; i < routeDrone.size(); i++) {
                 g2.fillOval(
-                        toUnit(routeDrone.getPosition3D(i).getX()) - 15,
-                        toUnit(routeDrone.getPosition3D(i).getY()) - 15,
+                        toUnit(routeDrone.getPosition(i).getX()) - 15,
+                        toUnit(routeDrone.getPosition(i).getY()) - 15,
                         30,
                         30
                 );
                 if (i < routeDrone.size() - 1) {
                     g2.drawLine(
-                            toUnit(routeDrone.getPosition3D(i).getX()),
-                            toUnit(routeDrone.getPosition3D(i).getY()),
-                            toUnit(routeDrone.getPosition3D(i + 1).getX()),
-                            toUnit(routeDrone.getPosition3D(i + 1).getY())
+                            toUnit(routeDrone.getPosition(i).getX()),
+                            toUnit(routeDrone.getPosition(i).getY()),
+                            toUnit(routeDrone.getPosition(i + 1).getX()),
+                            toUnit(routeDrone.getPosition(i + 1).getY())
                     );
                 }
             }
@@ -224,10 +240,10 @@ public class PanelPlotMission extends sPanelDraw {
         }
     }
 
-    public static int toUnit(double value) {
-        return Math.round((float) (value / CONST_UNIT));
-    }
-
+    /**
+     * The method wait until the routes are ready.
+     * @since version 3.0.0
+     */
     public void waitingForRoutes() {
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
                 && config.getTypePlanner().equals(TypePlanner.HGA4M)) {
@@ -341,6 +357,11 @@ public class PanelPlotMission extends sPanelDraw {
         }
     }
 
+    /**
+     * Plot the drone in real time
+     * @param drone the instance of aircraft
+     * @since version 3.0.0
+     */
     public void plotDroneInRealTime(Drone drone) {
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -354,7 +375,7 @@ public class PanelPlotMission extends sPanelDraw {
                             pxDrone = UtilGeo.convertGeoToX(GCS.pointGeo, lngDrone);
                             pyDrone = UtilGeo.convertGeoToY(GCS.pointGeo, latDrone);
                             maxDistReached = drone.estimatedMaxDistReached;
-                            routeDrone.addPosition3D(new Position3D(pxDrone, pyDrone, 0));
+                            routeDrone.addPosition(new Position3D(pxDrone, pyDrone, 0));
                             printDrone = true;
                         }
                         repaint();
@@ -364,5 +385,15 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             }
         });
+    }
+    
+    /**
+     * Converts to the unit used in the plot (in centimeters).
+     * @param value the value to convert
+     * @return the converted value
+     * @since version 3.0.0
+     */
+    public static int toUnit(double value) {
+        return Math.round((float) (value / CONST_UNIT));
     }
 }

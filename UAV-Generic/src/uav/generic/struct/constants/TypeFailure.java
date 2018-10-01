@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela as possíveis falhas que podem ocorrer no drone.
+ * The class models the types of possible failures that can occur in the drone.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public enum TypeFailure {
     
@@ -11,8 +12,13 @@ public enum TypeFailure {
     FAIL_BASED_INSERT_FAILURE, FAIL_BAD_WEATHER, FAIL_PROXIMITY_TO_GROUND, 
     FAIL_INTRUDER_AIRCRAFT;
     
-    public static String getTypeFailure(TypeFailure failure){
-        switch (failure) {
+    /**
+     * Returns a string with the name of the failure that occurred.
+     * @param typeFailure type of failure occurred
+     * @return name of the failure
+     */
+    public static String getTypeFailure(TypeFailure typeFailure){
+        switch (typeFailure) {
             case FAIL_ENGINE:
                 return "FAIL_ENGINE";
             case FAIL_LOW_BATTERY:

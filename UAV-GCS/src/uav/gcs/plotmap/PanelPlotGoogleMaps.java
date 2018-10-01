@@ -23,7 +23,9 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilGeo;
 
 /**
+ * The class that plots the map and routes using the Google Maps API.
  * @author Jesimar Arantes
+ * @since version 3.0.0
  */
 public class PanelPlotGoogleMaps extends JPanel {
 
@@ -38,6 +40,10 @@ public class PanelPlotGoogleMaps extends JPanel {
     private final double latBase = GCS.pointGeo.getLat();
     private boolean firstTime = true;
 
+    /**
+     * Class constructor
+     * @since version 3.0.0
+     */
     public PanelPlotGoogleMaps() {
         config = ReaderFileConfig.getInstance();
         routeIFA = new ReaderRoute();
@@ -45,6 +51,12 @@ public class PanelPlotGoogleMaps extends JPanel {
         routeMOSASimplifier = new ReaderRoute();
     }
 
+    /**
+     * Initializes Google Maps API.
+     * @param width width value/dimension in x axes
+     * @param height height value/dimension in y axes
+     * @since version 4.0.0
+     */
     public void init(int width, int height) {
         try {
             api = GoogleMapsScene.launch(new File(file), (String) null);
@@ -73,6 +85,10 @@ public class PanelPlotGoogleMaps extends JPanel {
         }
     }
 
+    /**
+     * Paint in screen the info about map.
+     * @since version 3.0.0
+     */
     public void drawMap() {
         String pathMap = config.getDirFiles() + "map-full.sgl";
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)){
@@ -117,6 +133,10 @@ public class PanelPlotGoogleMaps extends JPanel {
         }
     }
 
+    /**
+     * The method wait until the routes are ready and then plots them on the screen.
+     * @since version 3.0.0
+     */
     public void waitingForRoutes() {
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
                 && config.getTypePlanner().equals(TypePlanner.HGA4M)) {
@@ -135,12 +155,12 @@ public class PanelPlotGoogleMaps extends JPanel {
                                     if (j + 1 < routeMOSA.getRoute3D().size()) {
                                         Point2D points[] = new Point2D[2];
                                         points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(j).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(j).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(j).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(j).getX())
                                         );
                                         points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(j + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(j + 1).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(j + 1).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(j + 1).getX())
                                         );
                                         api.addLine("#00FF00", 0.8, 2, points);
                                     }
@@ -170,12 +190,12 @@ public class PanelPlotGoogleMaps extends JPanel {
                                     if (i + 1 < routeMOSA.getRoute3D().size()) {
                                         Point2D points[] = new Point2D[2];
                                         points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(i).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i).getX())
                                         );
                                         points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(i + 1).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i + 1).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i + 1).getX())
                                         );
                                         api.addLine("#00FF00", 0.8, 2, points);
                                     }
@@ -204,12 +224,12 @@ public class PanelPlotGoogleMaps extends JPanel {
                                     if (i + 1 < routeMOSA.getRoute3D().size()) {
                                         Point2D points[] = new Point2D[2];
                                         points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(i).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i).getX())
                                         );
                                         points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition3D(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition3D(i + 1).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i + 1).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i + 1).getX())
                                         );
                                         api.addLine("#00FF00", 0.8, 2, points);
                                     }
@@ -240,12 +260,12 @@ public class PanelPlotGoogleMaps extends JPanel {
                                     if (i + 1 < routeIFA.getRoute3D().size()) {
                                         Point2D points[] = new Point2D[2];
                                         points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition3D(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition3D(i).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition(i).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition(i).getX())
                                         );
                                         points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition3D(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition3D(i + 1).getX())
+                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition(i + 1).getY()),
+                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition(i + 1).getX())
                                         );
                                         api.addLine("#FF0000", 0.8, 2, points);
                                     }
@@ -274,12 +294,12 @@ public class PanelPlotGoogleMaps extends JPanel {
                                     if (i + 1 < routeMOSASimplifier.getRoute3D().size()) {
                                         Point2D points[] = new Point2D[2];
                                         points[0] = new Point2D.Double(
-                                                routeMOSASimplifier.getRoute3D().getPosition3D(i).getX(),
-                                                routeMOSASimplifier.getRoute3D().getPosition3D(i).getY()
+                                                routeMOSASimplifier.getRoute3D().getPosition(i).getX(),
+                                                routeMOSASimplifier.getRoute3D().getPosition(i).getY()
                                         );
                                         points[1] = new Point2D.Double(
-                                                routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getX(),
-                                                routeMOSASimplifier.getRoute3D().getPosition3D(i + 1).getY()
+                                                routeMOSASimplifier.getRoute3D().getPosition(i + 1).getX(),
+                                                routeMOSASimplifier.getRoute3D().getPosition(i + 1).getY()
                                         );
                                         api.addLine("#000000", 0.8, 2, points);
                                     }
@@ -295,6 +315,11 @@ public class PanelPlotGoogleMaps extends JPanel {
         }
     }
 
+    /**
+     * Plot the drone in real time
+     * @param drone the instance of aircraft
+     * @since version 3.0.0
+     */
     public void plotDroneInRealTime(Drone drone) {
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override

@@ -1,8 +1,9 @@
 package uav.generic.struct;
 
 /**
- * Classe que modela o orientação da aeronave.
+ * The class models the orientation of the aircraft.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Heading {
     
@@ -15,6 +16,7 @@ public class Heading {
      * @param value angle between 0 and 360
      * @param typeDirection CCW or CW
      * @param typeAngle ABSOLUTE or RELATIVE
+     * @since version 2.0.0
      */
     public Heading(int value, String typeDirection, String typeAngle){
         this.value = value;

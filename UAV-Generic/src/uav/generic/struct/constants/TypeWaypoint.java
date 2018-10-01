@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de waypoints possíveis.
+ * Class that models the types of waypoints available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeWaypoint {
     

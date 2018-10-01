@@ -6,8 +6,9 @@ import uav.generic.struct.constants.TypeFailure;
 import uav.generic.hardware.aircraft.Drone;
 
 /**
- * Classe que modela uma falha crítica armazendando informações importantes sobre a falha.
+ * The class models a critical failure by storing important information about the failure.
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class Failure {
     
@@ -23,6 +24,7 @@ public class Failure {
      * Class constructor.
      * @param drone drone instance
      * @param typeFailure type of failure occurred
+     * @since version 1.0.0
      */
     public Failure(Drone drone, TypeFailure typeFailure) {
         this.time = drone.getInfo().getTime();
@@ -34,10 +36,20 @@ public class Failure {
         this.typeFailure = typeFailure;
     }
     
+    /**
+     * Get a string with the title
+     * @return a string with the title
+     * @since version 1.0.0
+     */
     public String title(){
         return "date;hour;time;lat;lng;alt_rel;level_bat;satellitesvisible;typeOfFailure";
     } 
 
+    /**
+     * Get a string to print the information about the failure.
+     * @return a string to print the information about the failure.
+     * @since version 1.0.0
+     */
     @Override
     public String toString() {
         String dateHour = new SimpleDateFormat("yyyy/MM/dd;HH:mm:ss").format(new Date());
@@ -46,6 +58,11 @@ public class Failure {
                 TypeFailure.getTypeFailure(typeFailure));
     }
 
+    /**
+     * Gets the type of failure
+     * @return the type of failure
+     * @since version 2.0.0
+     */
     public TypeFailure getTypeFailure() {
         return typeFailure;
     }

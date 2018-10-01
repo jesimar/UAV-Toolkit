@@ -6,8 +6,9 @@ import java.util.List;
 import lib.color.StandardPrints;
 
 /**
- * Classe que modela a rota do drone em coordenadas cartesianas.
+ * The class models the drone route in cartesian  coordinates.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Route3D {
     
@@ -15,35 +16,70 @@ public class Route3D {
     
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public Route3D(){
         
     }
     
-    public void addPosition3D(Position3D wpt){
-        route.add(wpt);
-    }
-    
+    /**
+     * Gets the route
+     * @return the route
+     * @since version 2.0.0
+     */
     public List<Position3D> getRoute(){
         return route;
     }
     
-    public Position3D getPosition3D(int i){
+    /**
+     * Gets the position
+     * @param i the index of the i-th position
+     * @return the position
+     * @since version 4.0.0
+     */
+    public Position3D getPosition(int i){
         return route.get(i);
     }
     
-    public void removePosition3D(){
+    /**
+     * Add a new position at the end of the route
+     * @param position position to be added
+     * @since version 4.0.0
+     */
+    public void addPosition(Position3D position){
+        route.add(position);
+    }
+    
+    /**
+     * Remove the last position of the route
+     * @since version 4.0.0
+     */
+    public void removePosition(){
         route.remove(route.size()-1);
     }
     
-    public void removePosition3D(int i){
+    /**
+     * Remove the i-th position of the route
+     * @param i the index of the i-th position
+     * @since version 4.0.0
+     */
+    public void removePosition(int i){
         route.remove(i);
     }
     
+    /**
+     * Returns the size of route.
+     * @return the size of route
+     * @since version 2.0.0
+     */
     public int size(){
         return route.size();
     }
     
+    /**
+     * Print the route
+     * @since version 2.0.0
+     */
     public void printRoute(){
         StandardPrints.printMsgEmph("Route3D [Size: " + route.size() + "]");
         for (Position3D wpt: route){

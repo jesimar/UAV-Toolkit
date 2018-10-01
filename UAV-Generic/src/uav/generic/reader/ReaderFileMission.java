@@ -14,6 +14,7 @@ import uav.generic.util.UtilString;
 /**
  * Class that reads different mission files.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class ReaderFileMission {
     
@@ -24,9 +25,10 @@ public class ReaderFileMission {
      * | 10.10606405 6.59494416 0.00         |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param mission3D - object to put the waypoints of the mission 3D
+     * @param file File to read
+     * @param mission3D object to put the waypoints of the mission 3D
      * @throws FileNotFoundException 
+     * @since version 2.0.0
      */
     public static void mission3D(File file, Mission3D mission3D) 
             throws FileNotFoundException {
@@ -35,7 +37,7 @@ public class ReaderFileMission {
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
                 Position3D p3d = UtilString.split3D(line, " ");
-                mission3D.addPosition3D(p3d);
+                mission3D.addPosition(p3d);
             }
             sc.close();        
         } catch (NoSuchElementException ex) {
@@ -53,9 +55,10 @@ public class ReaderFileMission {
      * | -22.00204909;-47.93333564;0.00      |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param wptsBuzzer - object to put the waypoints of the buzzer
+     * @param file File to read
+     * @param wptsBuzzer object to put the waypoints of the buzzer
      * @throws FileNotFoundException 
+     * @since version 2.0.0
      */
     public static void missionBuzzer(File file, Mission wptsBuzzer) 
             throws FileNotFoundException {
@@ -92,9 +95,10 @@ public class ReaderFileMission {
      * | -22.00613771;-47.89869416;0.00      |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param wptsPhoto - object to put the waypoints of the camera to picture
+     * @param file File to read
+     * @param wptsPhoto object to put the waypoints of the camera to picture
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void missionCameraPicture(File file, Mission wptsPhoto) 
             throws FileNotFoundException {
@@ -135,9 +139,10 @@ public class ReaderFileMission {
      * | -22.00613771;-47.89869416;0.00      |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param wptsVideo - object to put the waypoints of the camera to video
+     * @param file File to read
+     * @param wptsVideo object to put the waypoints of the camera to video
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void missionCameraVideo(File file, Mission wptsVideo) 
             throws FileNotFoundException {
@@ -178,9 +183,10 @@ public class ReaderFileMission {
      * | -22.00613771;-47.89869416;0.00      |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param wptsPhoto - object to put the waypoints of the camera to photo in sequence
+     * @param file File to read
+     * @param wptsPhoto object to put the waypoints of the camera to photo in sequence
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void missionCameraPhotoInSequence(File file, Mission wptsPhoto) 
             throws FileNotFoundException {
@@ -221,9 +227,10 @@ public class ReaderFileMission {
      * | -22.00207005;-47.93320877;0.00      |
      * | ...                                 |
      * ---------------------------------------
-     * @param file - File to read
-     * @param wptsSpraying - object to put the waypoints of the camera to spraying
+     * @param file File to read
+     * @param wptsSpraying object to put the waypoints of the camera to spraying
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void missionSpraying(File file, Mission wptsSpraying) 
             throws FileNotFoundException {
@@ -254,6 +261,18 @@ public class ReaderFileMission {
         }
     }
     
+    /**
+     * Read a file in this format (cartesian coordinates [x, y, vx, vy]):.
+     * ---------------------------------------
+     * | 8.644050340 29.3082899 3.00 4.29    |
+     * | 10.10606405 6.59494416 2.00 2.13    |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param inFile File to read
+     * @param route3D object to put the waypoints/positions read
+     * @throws FileNotFoundException 
+     * @since version 2.0.0
+     */
     public static void readerRoute(File inFile, Route3D route3D) 
             throws FileNotFoundException {
         double alt = ReaderFileConfig.getInstance().getAltRelMission();
@@ -265,7 +284,7 @@ public class ReaderFileMission {
                 double vx = sc.nextDouble();
                 double vy = sc.nextDouble();
                 Position3D p3d = new Position3D(px, py, alt);
-                route3D.addPosition3D(p3d);
+                route3D.addPosition(p3d);
             }
             sc.close();
         } catch (NoSuchElementException ex) {

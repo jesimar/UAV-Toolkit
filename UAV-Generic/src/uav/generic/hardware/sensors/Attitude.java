@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela a attitude do drone (pitch, yaw, roll).
+ * The class models the attitude of the drone (pitch, yaw, roll).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Attitude {
     
@@ -12,6 +13,7 @@ public class Attitude {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public Attitude() {
         
@@ -22,6 +24,7 @@ public class Attitude {
      * @param pitch angle of pitch (in radians) (range -&pi; to &pi;)
      * @param yaw angle of yaw (in radians) (range -&pi; to &pi;)
      * @param roll angle of roll (in radians) (range -&pi; to &pi;)
+     * @since version 2.0.0
      */
     public Attitude(double pitch, double yaw, double roll) {
         this.pitch = pitch;
@@ -32,6 +35,7 @@ public class Attitude {
     /**
      * Converts line in JSON format to pitch, yaw and roll values.
      * @param line FORMAT: {"att": [-0.0018487547, 1.9062933921, -0.001687332987]}
+     * @since version 2.0.0
      */
     public void parserInfoAttitude(String line) {
         try{
@@ -45,6 +49,13 @@ public class Attitude {
         }
     } 
     
+    /**
+     * Update the info the pitch, yaw and roll.
+     * @param pitch angle of pitch (in radians) (range -&pi; to &pi;)
+     * @param yaw angle of yaw (in radians) (range -&pi; to &pi;)
+     * @param roll angle of roll (in radians) (range -&pi; to &pi;)
+     * @since version 2.0.0 
+     */
     public void updateAttitude(String pitch, String yaw, String roll){
         try{                 
             this.pitch = Double.parseDouble(pitch);        
@@ -55,14 +66,29 @@ public class Attitude {
         }
     }
 
+    /**
+     * Set the pitch value
+     * @param pitch the pitch value
+     * @since version 2.0.0
+     */
     public void setPitch(double pitch) {
         this.pitch = pitch;
     }
 
+    /**
+     * Set the yaw value
+     * @param yaw the yaw value
+     * @since version 2.0.0
+     */
     public void setYaw(double yaw) {
         this.yaw = yaw;
     }
 
+    /**
+     * Set the roll value
+     * @param roll the roll value
+     * @since version 2.0.0
+     */
     public void setRoll(double roll) {
         this.roll = roll;
     }

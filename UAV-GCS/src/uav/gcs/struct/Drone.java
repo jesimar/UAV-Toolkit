@@ -12,8 +12,9 @@ import uav.generic.hardware.sensors.Temperature;
 import uav.generic.hardware.sensors.Velocity;
 
 /**
- * Classe que modela uma aeronave.
+ * The class models an aircraft/drone.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Drone {
     
@@ -42,6 +43,11 @@ public class Drone {
     public Sonar sonar;                                //in meters
     public Temperature temperature;                    //in degree celsius
 
+    /**
+     * Class constructor.
+     * @param userEmail email of the use of Oracle Drone System.
+     * @since version 2.0.0
+     */
     public Drone(String userEmail) {
         this.userEmail = userEmail;
         battery = new Battery();
@@ -56,6 +62,11 @@ public class Drone {
         temperature = new Temperature();
     }    
 
+    /**
+     * Gets the string with title of attributes of drone
+     * @return the string with title of attributes of drone
+     * @since version 2.0.0
+     */
     public String title(){
         return "date;hour;time;lat;lng;alt_rel;alt_abs;voltage_bat;current_bat;"
                 + "level_bat;pitch;yaw;roll;vx;vy;vz;fixtype;satellitesvisible;"
@@ -65,6 +76,11 @@ public class Drone {
                 + "est-max-dist;est-max-time;dist-sonar;temperature-sensor";
     }
     
+    /**
+     * Gets the string with value of attributes of drone
+     * @return the string with value of attributes of drone
+     * @since version 2.0.0
+     */
     @Override
     public String toString() {
         return String.format("%s;%s;%.1f;%.7f;%.7f;%.2f;%.2f;%.3f;%.2f;%.1f;%.4f;%.4f;%.4f;%.2f;" +
@@ -82,7 +98,12 @@ public class Drone {
                 estimatedMaxTimeFlight, sonar.distance, temperature.temperature);
     }
     
-    public void readInfoIFA(String answer) {
+    /**
+     * Update the data of drone.
+     * @param answer string with all data of autopilot.
+     * @since version 4.0.0
+     */
+    public void parserAllDataToDrone(String answer) {
         String v[] = answer.split(";");
         date = v[0];
         hour = v[1];

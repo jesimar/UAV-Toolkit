@@ -1,8 +1,9 @@
 package uav.generic.struct.geom;
 
 /**
- * Classe que implementa um ponto em coordenadas geográficas.
+ * Concrete class that implements a point using geographic coordinates.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class PointGeo extends Point{
     
@@ -15,6 +16,7 @@ public class PointGeo extends Point{
      * @param lng coordinate longitude
      * @param lat coordinate latitude
      * @param alt coordinate altitude
+     * @since version 2.0.0
      */
     public PointGeo(double lng, double lat, double alt) {
         this.lng = lng;
@@ -25,6 +27,7 @@ public class PointGeo extends Point{
     /**
      * Class constructor.
      * @param point point with coordinates longitude, latitude, altitude (lng,lat,alt).
+     * @since version 2.0.0
      */
     public PointGeo(String point) {
         String v[] = point.split(",");        
@@ -33,29 +36,50 @@ public class PointGeo extends Point{
         this.alt = Double.parseDouble(v[2]);
     }
 
+    /**
+     * Gets the value longitude
+     * @return the longitude
+     * @since version 2.0.0
+     */
     public double getLng() {
         return lng;
     }
 
+    /**
+     * Gets the value latitude
+     * @return the latitude
+     * @since version 2.0.0
+     */
     public double getLat() {
         return lat;
     }
 
+    /**
+     * Gets the value altitude
+     * @return the altitude
+     * @since version 2.0.0
+     */
     public double getAlt() {
         return alt;
     }
     
+    /**
+     * Gets a string with the longitude, latitude and altitude
+     * @return the string with the longitude, latitude and altitude
+     * @since version 2.0.0
+     */
     @Override
     public String toString() {
         return "PointGeo{" + "lng=" + lng + ", lat=" + lat + ", alt=" + alt + '}';
     }
 
     /** 
-     * Método que calcula a distância entre duas coordenadas. Cuidado com o 
-     * retorno do método que não está em metros mas sim em graus. Dessa forma, 
-     * deve-se converter para metros.
-     * @param pointDestine - ponto de destino
-     * @return distância (em graus) entre o ponto atual e o argumento.
+     * Calculates the distance between two coordinates.
+     * Note: The return of the method is not in meters, but in degrees. 
+     * That way, it should be converted to meters.
+     * @param pointDestine - destination point
+     * @return the distance (in degrees) between the current point and the argument.
+     * @since version 2.0.0
      */
     @Override
     public double distance(Point pointDestine) {

@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de ângulo disponíveis.
+ * The class models the angle types available.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeAngle {
     

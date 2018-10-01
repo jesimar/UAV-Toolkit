@@ -7,8 +7,9 @@ import javax.swing.JPanel;
 import uav.gcs.struct.Drone;
 
 /**
- *
+ * Class that contains drone information to print in the GUI.
  * @author Jesimar S. Arantes
+ * @version 3.0.0
  */
 public class LabelsInfo {
     
@@ -52,6 +53,11 @@ public class LabelsInfo {
     private final JLabel labelSonarDistance;
     private final JLabel labelTemperature;
 
+    /**
+     * Class constructor.
+     * @param panel the panel that will contain the information
+     * @since version 3.0.0
+     */ 
     public LabelsInfo(JPanel panel) {
         this.labelDate = new JLabel("Date: ");
         labelDate.setPreferredSize(new Dimension(160, 20));
@@ -250,7 +256,12 @@ public class LabelsInfo {
         
     }
     
-    public void updateInfo(Drone drone){
+    /**
+     * Method used to update the drone information in the GUI
+     * @param drone the instance of drone
+     * @since version 4.0.0
+     */
+    public void updateInfoGUI(Drone drone){
         labelDate.setText(String.format("Date: %s", drone.date));
         labelHour.setText(String.format("Hour: %s", drone.hour));
         labelTime.setText(String.format("Time: %.1fs", drone.time));

@@ -23,7 +23,11 @@ import uav.generic.util.UtilRoute;
 import uav.generic.struct.states.StateCommunication;
 
 /**
+ * The class controls communication with MOSA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * @see Communication
+ * @see Server
  */
 public class CommunicationMOSA extends Communication implements Client{
 
@@ -31,6 +35,11 @@ public class CommunicationMOSA extends Communication implements Client{
     private final Drone drone;
     private boolean isRunningPlanner;
 
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     * @since version 4.0.0
+     */
     public CommunicationMOSA(Drone drone) {
         this.drone = drone;
         this.stateCommunication = StateCommunication.WAITING;
@@ -38,6 +47,10 @@ public class CommunicationMOSA extends Communication implements Client{
         this.isRunningPlanner = false;
     }
 
+    /**
+     * Connect with the server
+     * @since version 4.0.0
+     */
     @Override
     public void connectServer() {
         System.out.println("UAV-GCS trying connect with MOSA ...");
@@ -62,6 +75,10 @@ public class CommunicationMOSA extends Communication implements Client{
         });
     }
 
+    /**
+     * Treats the data to be received
+     * @since version 2.0.0
+     */
     @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
@@ -77,7 +94,7 @@ public class CommunicationMOSA extends Communication implements Client{
                                 if (answer.contains(TypeMsgCommunication.MOSA_GCS_PLANNER)) {
                                     answer = answer.substring(18);
                                     long timeInit = System.currentTimeMillis();
-                                    plannerInGCS(answer);
+                                    execPlannerInGCS(answer);
                                     long timeFinal = System.currentTimeMillis();
                                     long time = timeFinal - timeInit;
                                     System.out.println("Time in Planning (ms): " + time);
@@ -103,7 +120,12 @@ public class CommunicationMOSA extends Communication implements Client{
         return isRunningPlanner;
     }
 
-    private void plannerInGCS(String answer) {
+    /**
+     * Execute the path planner in GCS.
+     * @param answer a string with the parameters to exec planner.
+     * @since version 4.0.0
+     */
+    private void execPlannerInGCS(String answer) {
         isRunningPlanner = true;
         String v[] = answer.split(";");
         Planner planner = null;

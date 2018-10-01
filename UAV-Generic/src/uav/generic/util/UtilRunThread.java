@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uav.generic.util;
 
 import java.io.File;
@@ -11,21 +6,46 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 
 /**
- *
+ * Class with feature set to run threads
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class UtilRunThread {
 
-    public static void singleThread(String cmd, File file) throws IOException {
-        singleThread(cmd, file, false);
+    /**
+     * Run a command in a single thread.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @throws java.io.IOException
+     * @since version 4.0.0
+     */
+    public static void runCmdSingleThread(String cmd, File file) throws IOException {
+        UtilRunThread.runCmdSingleThread(cmd, file, false);
     }
     
-    public static void singleThreadWaitFor(String cmd, File file) 
+    /**
+     * Run a command in a single thread with wait.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     * @since version 4.0.0
+     */
+    public static void runCmdSingleThreadWaitFor(String cmd, File file) 
             throws IOException, InterruptedException {
-        singleThreadWaitFor(cmd, file, false);
+        runCmdSingleThreadWaitFor(cmd, file, false);
     }
 
-    public static void singleThread(String cmd, File file, boolean isPrint) 
+    /**
+     * Run a command in a single thread.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @param isPrint {@code true} print the message of process in execution.
+     *                {@code false} dont print the message.
+     * @throws java.io.IOException
+     * @since version 4.0.0
+     */
+    public static void runCmdSingleThread(String cmd, File file, boolean isPrint) 
             throws IOException {
         final Process comp = Runtime.getRuntime().exec(cmd, null, file);
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -42,7 +62,17 @@ public class UtilRunThread {
         });
     }
     
-    public static void singleThreadWaitFor(String cmd, File file, boolean isPrint) 
+    /**
+     * Run a command in a single thread with wait.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @param isPrint {@code true} print the message of process in execution.
+     *                {@code false} dont print the message.
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     * @since version 4.0.0
+     */
+    public static void runCmdSingleThreadWaitFor(String cmd, File file, boolean isPrint) 
             throws IOException, InterruptedException {
         final Process comp = Runtime.getRuntime().exec(cmd, null, file);
         Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -60,12 +90,32 @@ public class UtilRunThread {
         comp.waitFor();
     }
 
-    public static void dualSingleThread(String cmd, File file) 
+    /**
+     * Run a command in a dual thread with wait.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     * @since version 4.0.0
+     */
+    public static void dualSingleThreadWaitFor(String cmd, File file) 
             throws IOException, InterruptedException {
-        dualSingleThread(cmd, file, false, false);
+        dualSingleThreadWaitFor(cmd, file, false, false);
     }
 
-    public static void dualSingleThread(String cmd, File file, boolean isPrintOut, 
+    /**
+     * Run a command in a dual thread with wait.
+     * @param cmd command to execute.
+     * @param file file containing the directory
+     * @param isPrintOut {@code true} print the message of process in execution (standard output).
+     *                   {@code false} dont print the message.
+     * @param isPrintError {@code true} print the message of process in execution (error output).
+     *                     {@code false} dont print the message.
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
+     * @since version 4.0.0
+     */
+    public static void dualSingleThreadWaitFor(String cmd, File file, boolean isPrintOut, 
             boolean isPrintError) throws IOException, InterruptedException {
         final Process comp = Runtime.getRuntime().exec(cmd, null, file);
         Executors.newSingleThreadExecutor().execute(new Runnable() {

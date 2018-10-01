@@ -4,8 +4,9 @@ import uav.generic.struct.HomeLocation;
 import uav.generic.struct.ListParameters;
 
 /**
- *
+ * The class synthesizes a set of drone information.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class DroneInfo {
     
@@ -24,6 +25,10 @@ public class DroneInfo {
     HomeLocation homeLocation;
     ListParameters listParameters;
 
+    /**
+     * Class constructor.
+     * @since 4.0.0
+     */
     public DroneInfo() {
         time = 0.0;
         nextWaypoint = 0;
@@ -32,8 +37,6 @@ public class DroneInfo {
         distanceToCurrentWaypoint = 0.0;
         estimatedTimeToDoRTL = 0.0;
         estimatedConsumptionBatForRTL = 0.0;
-//        estimatedTimeToDoEmergency = 0.0;
-//        estimatedConsumptionBatForEmergency = 0.0;
         estimatedMaxDistReached = 0.0;
         estimatedMaxTimeFlight = 0.0;
         typeFailure = "NONE";
@@ -73,20 +76,20 @@ public class DroneInfo {
         return estimatedTimeToDoRTL;
     }
 
-//    public double getEstimatedTimeToDoEmergency() {
-//        return estimatedTimeToDoEmergency;
-//    }
-//
-//    public double getEstimatedConsumptionBatForEmergency() {
-//        return estimatedConsumptionBatForEmergency;
-//    }
-
     public double getEstimatedMaxDistReached() {
         return estimatedMaxDistReached;
     }
 
     public double getEstimatedMaxTimeFlight() {
         return estimatedMaxTimeFlight;
+    }
+    
+    public HomeLocation getHomeLocation() {
+        return homeLocation;
+    }  
+    
+    public ListParameters getListParameters() {
+        return listParameters;
     }
     
     public void setTime(double time){
@@ -108,6 +111,18 @@ public class DroneInfo {
     public void setEstimatedConsumptionBatForRTL(double consumptionBattery){
         this.estimatedConsumptionBatForRTL = consumptionBattery;
     }
+
+    public void setTypeFailure(String typeFailure) {
+        this.typeFailure = typeFailure;
+    }        
+
+    public void setEstimatedMaxTimeFlight(double estimatedMaxTimeFlight) {
+        this.estimatedMaxTimeFlight = estimatedMaxTimeFlight;
+    }
+
+    public void setEstimatedMaxDistReached(double estimatedMaxDistReached) {
+        this.estimatedMaxDistReached = estimatedMaxDistReached;
+    }
     
     public void setDistanceToHome(String dist) {
         try{
@@ -126,10 +141,31 @@ public class DroneInfo {
     }
     
     /**
+     * Parser the info of home location of the drone
+     * @param home the home containing the coordinate latitude, longitude and altitude.
+     * @since version 2.0.0
+     */
+    public void parserInfoHomeLocation(String home) {
+        homeLocation.parserInfoHomeLocation(home);
+    }
+    
+    /**
+     * Converts parameters in JSON format to ListParameter values.
+     * @param parameters FORMAT: {"parameters": "Key:RC7_REV Value:1.0; ... 
+     * Key:WPNAV_LOIT_SPEED Value:500.0; Key:WPNAV_RADIUS Value:200.0; 
+     * Value:0.699999988079; ... Key:BATT_CURR_PIN Value:12.0; "}
+     * @since version 2.0.0
+     */
+    public void parserInfoListParameters(String parameters) {
+        listParameters.parserInfoListParameters(parameters);
+    }
+    
+    /**
      * Converts line in JSON format to NextWaypoint values.
      * @param line FORMAT: {"next-waypoint": 5}
+     * @since version 4.0.0
      */
-    public void parserNextWaypoint(String line) {
+    public void parserInfoNextWaypoint(String line) {
         line = line.substring(18, line.length() - 1);
         this.nextWaypoint = Integer.parseInt(line);
     }
@@ -137,8 +173,9 @@ public class DroneInfo {
     /**
      * Converts line in JSON format to CountWaypoint values.
      * @param line FORMAT: {"count-waypoint": 28}
+     * @since version 4.0.0
      */
-    public void parserCountWaypoint(String line) {
+    public void parserInfoCountWaypoint(String line) {
         line = line.substring(19, line.length() - 1);
         this.countWaypoint = Integer.parseInt(line);
     }
@@ -146,8 +183,9 @@ public class DroneInfo {
     /**
      * Converts line in JSON format to DistanceToCurrentWaypoint values.
      * @param line FORMAT: {"distance-to-wpt-current": 4.32}
+     * @since version 4.0.0
      */
-    public void parserDistanceToCurrentWaypoint(String line) {
+    public void parserInfoDistanceToCurrentWaypoint(String line) {
         line = line.substring(28, line.length() - 1);
         this.distanceToCurrentWaypoint = Double.parseDouble(line);
     }
@@ -155,50 +193,11 @@ public class DroneInfo {
     /**
      * Converts line in JSON format to DistanceToHome values.
      * @param line FORMAT: {"distance-to-home": 20.50}
+     * @since version 4.0.0
      */
-    public void parserDistanceToHome(String line) {
+    public void parserInfoDistanceToHome(String line) {
         line = line.substring(21, line.length() - 1);
         this.distanceToHome = Double.parseDouble(line);
-    }
-
-    public void setTypeFailure(String typeFailure) {
-        this.typeFailure = typeFailure;
-    }        
-
-    public HomeLocation getHomeLocation() {
-        return homeLocation;
-    }  
-    
-    public ListParameters getListParameters() {
-        return listParameters;
-    }
-    
-    public void defineHomeLocation(double lat, double lng, double alt) {
-        homeLocation.setHomeLocation(lat, lng, alt);
-    }
-    
-    public void defineHomeLocation(String home) {
-        homeLocation.parserInfoHomeLocation(home);
-    }
-    
-    public void defineListParameters(String parameters) {
-        listParameters.parseInfoParameters(parameters);
-    }
-
-//    public void setEstimatedTimeToDoEmergency(double estimatedTimeToDoEmergency) {
-//        this.estimatedTimeToDoEmergency = estimatedTimeToDoEmergency;
-//    }
-//
-//    public void setEstimatedConsumptionBatForEmergency(double estimatedConsumptionBat) {
-//        this.estimatedConsumptionBatForEmergency = estimatedConsumptionBat;
-//    }
-
-    public void setEstimatedMaxTimeFlight(double estimatedMaxTimeFlight) {
-        this.estimatedMaxTimeFlight = estimatedMaxTimeFlight;
-    }
-
-    public void setEstimatedMaxDistReached(double estimatedMaxDistReached) {
-        this.estimatedMaxDistReached = estimatedMaxDistReached;
     }
 
 }

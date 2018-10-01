@@ -25,7 +25,11 @@ import uav.generic.util.UtilRoute;
 import uav.generic.struct.states.StateCommunication;
 
 /**
+ * The class controls communication with IFA.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
+ * @see Communication
+ * @see Client
  */
 public class CommunicationIFA extends Communication implements Client{    
 
@@ -33,6 +37,11 @@ public class CommunicationIFA extends Communication implements Client{
     private final Drone drone;    
     private boolean isRunningReplanner;
 
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     * @since version 4.0.0
+     */
     public CommunicationIFA(Drone drone) {
         this.drone = drone;
         this.stateCommunication = StateCommunication.WAITING;
@@ -40,6 +49,10 @@ public class CommunicationIFA extends Communication implements Client{
         this.isRunningReplanner = false;
     }
 
+    /**
+     * Connect with the server
+     * @since version 4.0.0
+     */
     @Override
     public void connectServer() {
         System.out.println("UAV-GCS trying connect with IFA ...");
@@ -64,6 +77,10 @@ public class CommunicationIFA extends Communication implements Client{
         });
     }
 
+    /**
+     * Treats the data to be received
+     * @since version 2.0.0
+     */
     @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
@@ -78,11 +95,11 @@ public class CommunicationIFA extends Communication implements Client{
                             if (answer != null) {
                                 if (answer.contains(TypeMsgCommunication.IFA_GCS_INFO)) {
                                     answer = answer.substring(14);
-                                    drone.readInfoIFA(answer);
+                                    drone.parserAllDataToDrone(answer);
                                 } else if (answer.contains(TypeMsgCommunication.IFA_GCS_REPLANNER)) {
                                     answer = answer.substring(19);
                                     long timeInit = System.currentTimeMillis();
-                                    replannerInGCS(answer);
+                                    execReplannerInGCS(answer);
                                     long timeFinal = System.currentTimeMillis();
                                     long time = timeFinal - timeInit;
                                     System.out.println("Time in Replanning (ms): " + time);
@@ -108,7 +125,12 @@ public class CommunicationIFA extends Communication implements Client{
         return isRunningReplanner;
     }
 
-    private void replannerInGCS(String answer) {
+    /**
+     * Execute the path replanner in GCS.
+     * @param answer a string with the parameters to exec replanner.
+     * @since version 4.0.0
+     */
+    private void execReplannerInGCS(String answer) {
         isRunningReplanner = true;
         String v[] = answer.split(";");
         Replanner replanner = null;

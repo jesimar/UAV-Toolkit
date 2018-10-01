@@ -4,6 +4,7 @@
 
 ### Features:
 
+* Added javadoc for the systems: UAV-Generic, UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Mission-Creator.
 * Added mensages of log in the system (info about time and overhead of functions).
 * Added path planner A* in UAV-MOSA (onboard and offboard).
 * Added UAV-GCS buttons resources that enable plots in mission of drone.

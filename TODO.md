@@ -9,8 +9,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
 * Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sonar.
 
-* Comentar todo o Código do IFA, MOSA, GCS, S2DK.
-
 ## Sistema IFA:
 
 ## Sistema MOSA:
@@ -38,25 +36,17 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Geral
 
 * Criar no github o UAV-Embedded. Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
-* Corrigir problema câmera raspberry pi (fotos verdes), calibrar melhor o AWB.
-1. Link: https://www.raspberrypi.org/forums/viewtopic.php?t=132944
-2. Link: https://raspberrypi.stackexchange.com/questions/79848/green-image-with-rpi-picamera
-3. Link: https://www.raspberrypi.org/forums/viewtopic.php?t=87244
-4. Link: https://raspberrypi.stackexchange.com/questions/14047/camera-problems-green-tint-and-long-delays-after-snapshot
 * Diagramar toda a máquina de estados dos modos de voo do drone (Guided, Auto, Stabilized, etc).
-* Criar uma pasta de examples em meu projeto em que consiga testar o meu ambiente com baixíssimo nível de modificação. 
 * Documentação: Melhorar a descrição do projeto no github.
     Usar os termos: 
         x86 para 32 bits
         x64 para 64 bits
         ARM32 para 32 bits
         ARM64 para 64 bits
-* Documentação: Traduzir a descrição do projeto no github para o Inglês.
 * Documentação: Melhorar as descrições do github através de links, figuras, diagramas e vídeos.
 * Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 * Documentação: Colocar informações sobre como configurar os arquivos de properties no github.
 * Documentação: Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
-* Documentar todos os códigos em java usando javadoc.
 * Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 * Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
 * Trocar licença de GPL 3.0 para MIT (UAV-Toolkit, UAV-Tools, Path-Replanning).

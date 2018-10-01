@@ -14,6 +14,7 @@ import java.util.Scanner;
 /**
  * Class with util methods on Input/Output (I/O).
  * @author Jesimar S. Arantes
+ * @since version 1.0.0
  */
 public class UtilIO {
     
@@ -22,6 +23,7 @@ public class UtilIO {
      * @param file the input file 
      * @return the number of lines of the file.
      * @throws IOException 
+     * @since version 1.0.0
      */
     public static int getLineNumber(File file) throws IOException {
         LineNumberReader lnr = new LineNumberReader(new FileReader(file));
@@ -33,6 +35,7 @@ public class UtilIO {
      * Method that delete the files based in the directory and extension.
      * @param directory - directory of origin
      * @param extension - extension of the files.
+     * @since version 1.0.0
      */
     public static void deleteFile(File directory, String extension){        
         if (directory.isDirectory()) {
@@ -52,6 +55,7 @@ public class UtilIO {
      * @return The number of bytes that were transferred.
      * @throws FileNotFoundException
      * @throws IOException 
+     * @since version 1.0.0
      */
     public static long copyFile(File source, File destiny) 
             throws FileNotFoundException, IOException{
@@ -73,6 +77,7 @@ public class UtilIO {
      * @param content the new content the line.
      * @param line the number of line.
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void copyFileModifiedIFA(File src, File dst, String content, int line) 
             throws FileNotFoundException {
@@ -104,6 +109,7 @@ public class UtilIO {
      * @param contentTimeH  the new content the line time horizon.
      * @param lineTimeH the number of line time horizon.
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void copyFileModifiedIFA(File src, File dst, String contentDelta, 
             int lineDelta, String contentWpt, int lineWpt, 
@@ -149,6 +155,7 @@ public class UtilIO {
      * @param contentMaxCtrl the new content the line max control.
      * @param lineMaxCtrl the number of line max control.
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void copyFileModifiedMOSA(File src, File dst, String contentTime, 
             int lineTime, String contentDelta, int lineDelta, 
@@ -199,6 +206,7 @@ public class UtilIO {
      * @param contentTimeH  the new content the line time horizon.
      * @param lineTimeH the number of line time horizon.
      * @throws FileNotFoundException 
+     * @since version 3.0.0
      */
     public static void copyFileModifiedMOSA(File src, File dst, 
             String contentDelta, int lineDelta, String contentWpt, int lineWpt, 

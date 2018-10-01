@@ -9,17 +9,26 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.util.UtilRunThread;
 
 /**
- *
+ * The class models the camera control as it takes pictures and make videos.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class CameraControl {
     
     private final ReaderFileConfig config;
 
+    /**
+     * The constructor.
+     * @since version 4.0.0
+     */
     public CameraControl() {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Take a picture based on the type of operation mode and the existing device.
+     * @since version 4.0.0
+     */
     public void takeAPicture(){
         try {
             String cmd = "";
@@ -34,12 +43,16 @@ public class CameraControl {
                 }
             } 
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirCamera()), print);
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] takeAPicture()");
         } 
     }
     
+    /**
+     * Take a sequence of photographs based on the type of operating mode and existing device.
+     * @since version 4.0.0
+     */
     public void photoInSequence(){
         try {
             String cmd = "";
@@ -58,12 +71,16 @@ public class CameraControl {
                 }
             }
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirCamera()), print);
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] photoInSequence()");
         } 
     }
     
+    /**
+     * Make a video based on the type of operating mode and existing device.
+     * @since version 4.0.0
+     */
     public void makeAVideo(){
         try {
             String cmd = "";
@@ -78,7 +95,7 @@ public class CameraControl {
                 }
             } 
             boolean print = true;
-            UtilRunThread.singleThread(cmd, new File(config.getDirCamera()), print);
+            UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] makeAVideo()");
         } 

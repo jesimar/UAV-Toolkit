@@ -1,12 +1,13 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela algumas constantes utilizadas no sistema MOSA e IFA.
+ * The class models some constants used in the MOSA and IFA system.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class Constants {
     
-    //EFFICIENCY DRONE SIMULATED
+    //EFFICIENCY DRONE SIMULATED (arducopter simulated)
     public static final double EFFICIENCY_VERTICAL_UP_SIMULATED    = 0.500;//in % of battery/meter
     public static final double EFFICIENCY_VERTICAL_DOWN_SIMULATED  = 0.450;//in % of battery/meter
     public static final double EFFICIENCY_HORIZONTAL_NAV_SIMULATED = 0.110;//in % of battery/meter

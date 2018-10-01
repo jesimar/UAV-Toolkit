@@ -1,8 +1,9 @@
 package uav.generic.struct.constants;
 
 /**
- * Classe que modela os tipos de decaimento da altitude do drone quando for pousar.
+ * The class models the altitude decay types to land.
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class TypeAltitudeDecay {
    

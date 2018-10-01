@@ -1,8 +1,9 @@
 package uav.generic.hardware.sensors;
 
 /**
- * Classe que modela alguns sensores do drone (heading, groundspeed, airspeed).
+ * The class models some drone sensors (heading, groundspeed, airspeed).
  * @author Jesimar S. Arantes
+ * @since version 2.0.0
  */
 public class SensorUAV {
     
@@ -12,6 +13,7 @@ public class SensorUAV {
 
     /**
      * Class constructor.
+     * @since version 2.0.0
      */
     public SensorUAV() {
         
@@ -22,6 +24,7 @@ public class SensorUAV {
      * @param heading angle of aircraft (in degrees) (range 0 to 360)
      * @param groundspeed velocity in m/s
      * @param airspeed velocity in m/s
+     * @since version 2.0.0
      */
     public SensorUAV(double heading, double groundspeed, double airspeed) {
         this.heading = heading;
@@ -32,6 +35,7 @@ public class SensorUAV {
     /**
      * Converts line in JSON format to heading values.
      * @param line FORMAT: {"heading": 110}
+     * @since version 2.0.0
      */
     public void parserInfoHeading(String line) {
         try{
@@ -45,6 +49,7 @@ public class SensorUAV {
     /**
      * Converts line in JSON format to groundspeed values.
      * @param line FORMAT: {"groundspeed": 2.21}
+     * @since version 2.0.0
      */
     public void parserInfoGroundSpeed(String line) {
         try{
@@ -58,6 +63,7 @@ public class SensorUAV {
     /**
      * Converts line in JSON format to airspeed values.
      * @param line FORMAT: {"airspeed": 1.53}
+     * @since version 2.0.0
      */
     public void parserInfoAirSpeed(String line) {
         try{
@@ -68,6 +74,11 @@ public class SensorUAV {
         }
     }
     
+    /**
+     * Set the heading
+     * @param heading the heading
+     * @since version 2.0.0
+     */
     public void setHeading(String heading) {
         try{
             this.heading = Double.parseDouble(heading);
@@ -76,10 +87,20 @@ public class SensorUAV {
         }        
     }
 
+    /**
+     * Set the heading
+     * @param heading the heading
+     * @since version 2.0.0
+     */
     public void setHeading(double heading) {
         this.heading = heading;
     }
     
+    /**
+     * Set the groundspeed
+     * @param groundspeed the groundspeed
+     * @since version 2.0.0
+     */
     public void setGroundspeed(String groundspeed) {
         try{
             this.groundspeed = Double.parseDouble(groundspeed);
@@ -88,10 +109,20 @@ public class SensorUAV {
         }
     }
     
+    /**
+     * Set the groundspeed
+     * @param groundspeed the groundspeed
+     * @since version 2.0.0
+     */
     public void setGroundspeed(double groundspeed) {
         this.groundspeed = groundspeed;
     }
     
+    /**
+     * Set the airspeed
+     * @param airspeed the airspeed
+     * @since version 2.0.0
+     */
     public void setAirspeed(String airspeed) {
         try{
             this.airspeed = Double.parseDouble(airspeed);
@@ -100,6 +131,11 @@ public class SensorUAV {
         }        
     } 
 
+    /**
+     * Set the airspeed
+     * @param airspeed the airspeed
+     * @since version 2.0.0
+     */
     public void setAirspeed(double airspeed) {
         this.airspeed = airspeed;
     }        

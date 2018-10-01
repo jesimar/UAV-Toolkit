@@ -18,8 +18,9 @@ import uav.generic.struct.constants.TypeSystemExecIFA;
 import uav.generic.struct.constants.TypeSystemExecMOSA;
 
 /**
- * Classe que lê o arquivo com configurações gerais da missão.
+ * The class reads the file with configurations/properties of the MOSA and IFA systems.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class ReaderFileConfig {
     
@@ -167,15 +168,26 @@ public class ReaderFileConfig {
     
     /**
      * Class constructor.
+     * @since version 4.0.0
      */
     private ReaderFileConfig() {
         
     }
     
+    /**
+     * Gets a instance this class (singleton pattern).
+     * @return the instance this class
+     * @since version 4.0.0
+     */
     public static ReaderFileConfig getInstance() {
         return instance;
     }
     
+    /**
+     * Read the properties file
+     * @return {@code true} if success {@code false} otherwise
+     * @since version 4.0.0
+     */
     public boolean read(){
         try {
             prop = new Properties();
@@ -321,6 +333,11 @@ public class ReaderFileConfig {
         }
     }
     
+    /**
+     * Check some fields read of the properties file
+     * @return {@code true} if success {@code false} otherwise
+     * @since version 4.0.0
+     */
     public boolean checkReadFields(){
         if (typeCC == null || 
                 (!typeCC.equals(TypeCC.INTEL_EDISON) && 
@@ -411,6 +428,11 @@ public class ReaderFileConfig {
         return true;
     }
     
+    /**
+     * Automatically completes some paths and variables
+     * @return {@code true} if success {@code false} otherwise
+     * @since version 4.0.0
+     */
     public boolean parseToVariables(){
         try{
             if (methodReplanner.equals(TypeReplanner.DE4S)){

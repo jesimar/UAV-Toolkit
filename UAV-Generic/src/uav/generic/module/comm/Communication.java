@@ -7,8 +7,9 @@ import java.net.Socket;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- *
+ * The class models communication using socket.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public abstract class Communication {
     
@@ -17,14 +18,28 @@ public abstract class Communication {
     public PrintWriter output;
     public StateCommunication stateCommunication;
     
+    /**
+     * Treats the data to be received
+     * @since version 4.0.0
+     */
     public abstract void receiveData();
     
+    /**
+     * Method that sends the data
+     * @param msg the message to be sent
+     * @since version 4.0.0
+     */
     public void sendData(String msg){
         if (output != null){
             output.println(msg);
         }
     }
     
+    /**
+     * Checks the status of the communication
+     * @return {@code true} if connected {@code false} otherwise
+     * @since version 4.0.0
+     */
     public boolean isConnected() {
         if (input == null) {
             return false;
@@ -33,6 +48,10 @@ public abstract class Communication {
         }
     }
     
+    /**
+     * Close the communication
+     * @since version 4.0.0
+     */
     public void close(){
         try {
             output.close();

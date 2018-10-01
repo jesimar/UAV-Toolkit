@@ -1,3 +1,11 @@
+/**
+* Author: Jesimar da Silva Arantes
+* Date: 01/07/2018
+* Last Update: 30/09/2018
+* Description: Code reading the temperature sensor.
+* Descricao: Codigo que faz a leitura do sensor de temperatura. 
+*/
+
 #include <wiringPi.h>
 #include <stdlib.h>
 #include <stdio.h>

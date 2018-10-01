@@ -15,8 +15,11 @@ import uav.generic.reader.ReaderFileConfig;
 import uav.generic.struct.states.StateCommunication;
 
 /**
- * Classe que faz o controle da comunicação com GCS.
+ * The class controls communication with GCS.
  * @author Jesimar S. Arantes
+ * @since version 3.0.0
+ * @see Communication
+ * @see Server
  */
 public class CommunicationGCS extends Communication implements Server{
     
@@ -33,6 +36,7 @@ public class CommunicationGCS extends Communication implements Server{
 
     /**
      * Class contructor.
+     * @since version 3.0.0
      */
     public CommunicationGCS() {
         this.stateCommunication = StateCommunication.WAITING;
@@ -44,6 +48,10 @@ public class CommunicationGCS extends Communication implements Server{
         this.behaviorChangedRectangle = false;
     }
 
+    /**
+     * Start the server
+     * @since version 4.0.0
+     */
     @Override
     public void startServer() {
         StandardPrints.printMsgEmph("MOSA waiting the connection to UAV-GCS ...");
@@ -65,6 +73,10 @@ public class CommunicationGCS extends Communication implements Server{
         });
     }
 
+    /**
+     * Treats the data to be received
+     * @since version 3.0.0
+     */
     @Override
     public void receiveData() {
         stateCommunication = StateCommunication.LISTENING;
@@ -104,6 +116,10 @@ public class CommunicationGCS extends Communication implements Server{
         });
     }
     
+    /**
+     * Close the communication
+     * @since version 3.0.0
+     */
     @Override
     public void close() {
         super.close();

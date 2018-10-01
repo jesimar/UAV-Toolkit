@@ -10,18 +10,27 @@ import uav.generic.struct.constants.TypeOperationMode;
 import uav.generic.reader.ReaderFileConfig;
 
 /**
- *
+ * The class models the sonar control to get distances from objects.
  * @author Jesimar S. Arantes
+ * @since version 4.0.0
  */
 public class SonarControl {
     
     private final ReaderFileConfig config;
     private double distance = -1.0;
 
+    /**
+     * Class constructor.
+     * @since version 4.0.0
+     */
     public SonarControl() {
         this.config = ReaderFileConfig.getInstance();
     }
     
+    /**
+     * Starts the sonar sensor based type of operation mode and on the connected device
+     * @since version 4.0.0
+     */
     public void startSonarSensor(){
         try {
             String cmd = "";
@@ -57,6 +66,11 @@ public class SonarControl {
         } 
     }
 
+    /**
+     * Gets the distance based on sonar (in meters).
+     * @return the distance
+     * @since version 4.0.0
+     */ 
     public double getDistance() {
         return distance;
     }

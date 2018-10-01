@@ -1,20 +1,22 @@
 package uav.generic.struct.states;
 
 /**
- * Classe que modela os possíveis estados do sistema replanejador.
+ * The class models the possible states of the replanner system.
  * @author Jesimar S. Arantes
+ * @since  version 2.0.0
  */
 public enum StateReplanning {
     
     WAITING, REPLANNING, READY, DISABLED;
     
     /**
-     * Método que obtem o modo de operação do replanejador.
-     * @param mode - state of replanner {WAITING, REPLANNING, READY, DISABLED}.
+     * Returns the operating state of the path replanner.
+     * @param state state of replanner {WAITING, REPLANNING, READY, DISABLED}.
      * @return {0, 1, 2, 3, -1}.
+     * @since version 4.0.0
      */
-    public static int getMode(StateReplanning mode){
-        switch (mode) {
+    public static int getState(StateReplanning state){
+        switch (state) {
             case WAITING:
                 return 0;
             case REPLANNING:

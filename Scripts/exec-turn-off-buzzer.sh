@@ -20,4 +20,4 @@ else
 fi
 
 cd ../Modules-Global/Buzzer/
-python turn_off_buzzer-edison.py $PIN
+python turn-off-buzzer-edison.py $PIN
