@@ -1,11 +1,5 @@
 # UAV-GCS
 
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `OBS:`
-- ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) `verde`
-- ![#1589F0](https://placehold.it/15/1589F0/000000?text=+) `azul`
-
-* Markdown suporta Emoji :laughing: :laughing: :kissing_heart: :innocent: :green_heart: ( obter alguns emojis [aqui](http://www.emoji-cheat-sheet.com/) )
-
 O UAV-GCS é um Estação de Controle em Solo, ou ainda, uma Ground Control Station (GCS) para acompanhamento/visualização/interação com o piloto automático e os sistemas MOSA e IFA.
 
 O projeto foi escrito em Java usando a IDE Netbeans.
@@ -51,9 +45,9 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
    4. ./exec-ifa.sh                   (CC)
    5. ./exec-mosa.sh                  (CC)
 
-**OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
+:warning: **OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
 
-**OBS:** Você pode abrir/executar também uma outra estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
+:warning: **OBS:** Você pode abrir/executar também uma outra estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
 
 ## Interface do Sistema
 
@@ -63,7 +57,7 @@ Abaixo encontra-se duas telas com a GUI do sistema em execução.
 |--------------------------------------|---------------------------------------|----------------------------------------|
 | ![](../Figures/uav-gcs1.png)         | ![](../Figures/uav-gcs2.png)          | ![](../Figures/uav-gcs3.png)           |
 
-**OBS:** O sistema de plot na Graphics2D e do Google Maps são invertidos, com impacto apenas visual.
+:warning: **OBS:** O sistema de plot na Graphics2D e do Google Maps são invertidos, com impacto apenas visual.
 
 Abaixo encontra-se um print da saída na linha de comando dessa aplicação contendo alguns logs também importantes.
 
@@ -119,5 +113,4 @@ Os seguites métodos podem ser utilizados para controlar o drone:
 |----------------------------------------|-------------------------------------|
 | ![](../Figures/keyboard-commands.png)  |  ![](../Figures/voice-commands.png) |
 
-
-**OBS:** Para a utilização de Keyboard-Commands e Voice-Commands é recomendado mudar o sistema para o modo CONTROLLER no arquivo config-global.properties.
+:warning: **OBS:** Para a utilização de Keyboard-Commands e Voice-Commands é recomendado mudar o sistema para o modo CONTROLLER no arquivo config-global.properties.
