@@ -8,9 +8,9 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento 
 
 * **CCQSP4m** -> *Chance Constraint Qualitative State Plan for mission* - Utiliza um algoritmo baseado em Programação Linear Inteira-Mista (PLIM) para encontrar a rota. Necessita do IBM CPLEX instalado para utilizá-lo. [[Link](http://www.teses.usp.br/teses/disponiveis/55/55134/tde-05122017-083420/pt-br.php)] 
 
-* **A-Star4m** -> Algoritmo A* para missão. Código em C.
+* **A-Star4m** -> Algoritmo A* para missão. 
 
-* **Route-Standard4m** -> Algoritmo para trocar o comportamento de voo do drone por alguma rota default (circulo, triângulo ou retângulo). Dessa forma, esse algoritmo gera uma dessas possíveis rotas baseado na posição do drone capturada em tempo real. Código em C.
+* **Route-Standard4m** -> Algoritmo para trocar o comportamento de voo do drone por alguma rota default (circulo, triângulo ou retângulo). Dessa forma, esse algoritmo gera uma dessas possíveis rotas baseado na posição do drone capturada em tempo real. 
 
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.
 
@@ -42,12 +42,12 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos do MOSA.
 
 | Característica             | HGA4m                    | CCQSP4m                  | A-Star4m                 | Route-Standard4m         | Fixed-Route4m            |
 |----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| Estratégia                 | AG + Grafo Visibilidade + PLIM | PLIM               | Heurística               | Estratégia Própria       | Rota já Pronta           |
+| Estratégia                 | Metaheurística + Grafo Visibilidade + Programação Matemática | Programação Matemática  | Heurística               | Determinística           | Não tem                  |
 | Módelo PLIM                | Sim                      | Sim                      | Não                      | Não                      | Não                      |
-| Linguagem                  | Java                     | Java                     | C                        | C                        | N/A                      |
 | Tempo Processamento        | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)|
 | Dependência de Bibliotecas | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  |
 | Dependência de Arquitetura | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    |
 | Faz o desvio de obstáculos | Sim                      | Sim                      | Sim                      | Não                      | Não                      |
 | Alocação do Risco          | Sim                      | Sim                      | Não                      | Não                      | Não                      |
+| Linguagem                  | Java                     | Java                     | C                        | C                        | N/A                      |
 | Imagem                     | ![](../Figures/hga.png)  | ![](../Figures/ccqsp.png)| ![](../Figures/astar.png)|![](../Figures/rstand.png)| ![](../Figures/fixed.png)|
