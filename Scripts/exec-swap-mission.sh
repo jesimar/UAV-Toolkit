@@ -52,4 +52,8 @@ echo "copy file map-nfz-astar.sgl and waypointsMission.txt to directory ../Modul
 cp $DIR_FILES/map-nfz-astar.sgl ../Modules-MOSA/A-Star4m/. 2>/dev/null
 cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/A-Star4m/. 2>/dev/null
 
+echo "copy file map-nfz.sgl and waypointsMission.txt to directory ../Modules-MOSA/Path-Planner4m/"
+cp $DIR_FILES/map-nfz.sgl ../Modules-MOSA/Path-Planner4m/. 2>/dev/null
+cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/Path-Planner4m/. 2>/dev/null
+
 echo "====================done==================="

@@ -2,10 +2,10 @@ package uav.ifa.module.path_replanner;
 
 import java.io.File;
 import java.io.IOException;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilRunThread;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.util.UtilRunThread;
 import uav.ifa.module.security_manager.SecurityManager;
 
 /**

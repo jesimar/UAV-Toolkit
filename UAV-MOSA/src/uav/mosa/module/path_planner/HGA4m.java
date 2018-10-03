@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.Waypoint;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilIO;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneFixedWing;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneFixedWing;
+import lib.uav.struct.Waypoint;
+import lib.uav.struct.geom.Position3D;
+import lib.uav.struct.mission.Mission3D;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilIO;
 
 /**
  * The class models the path planner HGA4m. 

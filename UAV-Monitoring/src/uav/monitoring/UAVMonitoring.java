@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
-import uav.generic.module.comm.DataAcquisitionS2DK;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneRotaryWing;
-import uav.generic.module.comm.DataAcquisition;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneRotaryWing;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.module.comm.DataAcquisitionS2DK;
 
 /**
  *

@@ -18,6 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.TypeInputCommand;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilRunScript;
 import uav.gcs.struct.Drone;
 import uav.gcs.communication.CommunicationIFA;
 import uav.gcs.conection.db.SaveDB;
@@ -28,11 +33,6 @@ import uav.gcs.plotmap.PanelPlotGoogleMaps;
 import uav.gcs.plotmap.PanelPlotMission;
 import uav.gcs.struct.EnabledResources;
 import uav.gcs.window.LabelsInfo;
-import uav.generic.struct.constants.TypeInputCommand;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilRunScript;
-import uav.generic.util.UtilGeo;
 
 /**
  * The class used to instantiate/start GCS.
@@ -106,11 +106,27 @@ public final class GCS extends JFrame {
 
     /**
      * Method main that start the GCS System.
-     * @param args not used
+     * @param args used only to see the version/help
      * @since version 2.0.0
      */
     public static void main(String[] args) {
-        GCS gcs = new GCS();
+        if (args.length == 0){
+            Locale.setDefault(Locale.US);
+            GCS gcs = new GCS();
+        }else{
+            if (args[0].equals("--version")){
+                System.out.println("UAV-GCS version: 4.0.0");
+                System.exit(0);
+            }else if (args[0].equals("--help")){
+                System.out.println("UAV-GCS:");
+                System.out.println("    --version          prints the system version");
+                System.out.println("    --help             prints the system help");
+                System.exit(0);
+            }{
+                System.out.println("invalid arguments");
+                System.exit(1);
+            }
+        }
     }
 
     /**
@@ -118,7 +134,6 @@ public final class GCS extends JFrame {
      * @since version 2.0.0
      */
     public GCS() {
-        Locale.setDefault(Locale.US);
         config = ReaderFileConfig.getInstance();
         enabledResources = EnabledResources.getInstance();
         if (!config.read()) {
@@ -723,7 +738,8 @@ public final class GCS extends JFrame {
         String msgAbout = "Program: UAV-GCS\n"
                 + "Author: Jesimar da Silva Arantes\n"
                 + "Version: 4.0.0\n"
-                + "Date: 30/09/2018";
+                + "Date: 03/10/2018"
+                + "Since: 17/05/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
     }

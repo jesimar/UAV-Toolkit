@@ -17,7 +17,7 @@
 
 #define TRUE 0
 #define FALSE 1
-#define debug FALSE
+#define debug TRUE
 #define dim_x_min -100
 #define dim_x_max 100
 #define dim_y_min -100
@@ -183,18 +183,18 @@ void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int num_ob
 	
 	int obsx[100], obsy[100];
 	for(int i = 0; i < num_obstacles; i++){
-		if (debug == TRUE){
-			printf("i = %d\n", i);
-			printf("  l = %d\n", obst[i].number_of_sides);
-		}
+		//if (debug == TRUE){
+		//	printf("i = %d\n", i);
+		//	printf("  l = %d\n", obst[i].number_of_sides);
+		//}
 		for(int j = 0; j < obst[i].number_of_sides; j++){
 			obsx[j] = (int)(obst[i].point[j].x);
 			obsy[j] = (int)(obst[i].point[j].y);
 			obsx[j] = obsx[j] + 100;
 			obsy[j] = obsy[j] + 100;
-			if (debug == TRUE){//imprime os valores das coordenadas dos obstaculos sendo feitas as devidas correcoes para a matriz
-				printf("    inteiros(j=%d    x=%d    y=%d)\n", j, obsx[j], obsy[j]);
-			}
+			//if (debug == TRUE){//imprime os valores das coordenadas dos obstaculos sendo feitas as devidas correcoes para a matriz
+				//printf("    inteiros(j=%d    x=%d    y=%d)\n", j, obsx[j], obsy[j]);
+			//}
 		}
 		
 		//draws each side of the first obstacle one by one, then it repeats the process to nest one
@@ -241,10 +241,12 @@ void fill_map(char map[map_size_rows][map_size_cols], obstacle* obst, int num_ob
 }
 
 void printMap(char map[map_size_rows][map_size_cols], int p_len, int *path){
+	FILE* file_map = fopen("file_map.txt", "w");
+	int isFirst = TRUE;
 	for (int i = 0 ; i < map_size_rows; i++) {
 		for (int j = 0; j < map_size_cols; j++) {
 			if (map[i][j] == 1) {
-				putchar('o');
+				fprintf(file_map, "o");
 			} else {
 				int b = 0;
 				for (int k = 0; k < p_len; k++) {
@@ -253,14 +255,21 @@ void printMap(char map[map_size_rows][map_size_cols], int p_len, int *path){
 					}
 				}
 				if (b == 0) {
-					putchar('.');
+					fprintf(file_map, ".");
 				} else {
-					putchar('x');
+					if (isFirst == TRUE){
+						fprintf(file_map, "S");
+						isFirst = FALSE;
+					}else{
+						fprintf(file_map, "x");
+					}
 				}
 			}
 		}
-		putchar('\n');
+		fprintf(file_map, "\n");
+		//putchar('\n');
 	}
+	fclose(file_map);
 }
 
 void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D pointGoal){
@@ -419,13 +428,22 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 	if (!found) {
 		printf("IMPOSSIBLE\n");
 	} else {
-		printf("path cost is %d:\n", p_len);
+		printf("\npath cost is %d:\n", p_len);
+		printf("\nRoute com coordenadas do convertidas - mesmas do MAPA visual\n");
 		FILE* outputroute = fopen("output.txt", "w");
 		for (int i = p_len - 1; i >= 0; i--) {
 			printf("(x, y) = (%1.0f, %1.0f)\n", stops[path[i]].col, stops[path[i]].row);
 			fprintf(outputroute, "%.2f;%0.2f\n", stops[path[i]].col, stops[path[i]].row);
 		}
 		fclose(outputroute);
+		
+		printf("\nRoute com coordenadas normais - mesmas do Sistema MOSA\n");
+		FILE* outputroute2 = fopen("output2.txt", "w");
+		for (int i = p_len - 1; i >= 0; i--) {
+			printf("(x, y) = (%1.0f, %1.0f)\n", stops[path[i]].col - 100, stops[path[i]].row - 100);
+			fprintf(outputroute2, "%.2f;%0.2f\n", stops[path[i]].col - 100, stops[path[i]].row - 100);
+		}
+		fclose(outputroute2);
 		printMap(map, p_len, path);
 	}
 
@@ -447,6 +465,10 @@ int main(){
 	point2D pointStart = readPositionStart(fileGoals);
 	point2D pointGoal = readPositionGoal(fileGoals);
 	fclose(fileGoals);
+	if (debug == TRUE){
+		printf("Point Start (x, y) = (%.2f %.2f)\n", pointStart.x, pointStart.y);
+		printf("Point Goal  (x, y) = (%.2f %.2f)\n", pointGoal.x, pointGoal.y);
+	}
 
 	FILE *fileObstacles = fopen("map-nfz-astar.sgl","r");
 	

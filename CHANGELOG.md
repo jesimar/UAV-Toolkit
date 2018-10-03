@@ -4,6 +4,9 @@
 
 ### Features:
 
+* Added new scripts Beagle Bone and tests the softwares installed.
+* Added generic planner PathPlanner4m in UAV-MOSA.
+* Renamed the project UAV-Generic to Lib-UAV.
 * Updated readme file in Github with the documentation. 
 * Added javadoc for the systems: UAV-Generic, UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Mission-Creator.
 * Added mensages of log in the system (info about time and overhead of functions).

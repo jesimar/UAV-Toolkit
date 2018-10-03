@@ -1,15 +1,16 @@
 package uav.gcs.struct;
 
-import uav.generic.hardware.sensors.Attitude;
-import uav.generic.hardware.sensors.Barometer;
-import uav.generic.hardware.sensors.Battery;
-import uav.generic.hardware.sensors.GPS;
-import uav.generic.hardware.sensors.GPSInfo;
-import uav.generic.hardware.sensors.SensorUAV;
-import uav.generic.hardware.sensors.Sonar;
-import uav.generic.hardware.sensors.StatusUAV;
-import uav.generic.hardware.sensors.Temperature;
-import uav.generic.hardware.sensors.Velocity;
+import lib.uav.hardware.sensors.Attitude;
+import lib.uav.hardware.sensors.Barometer;
+import lib.uav.hardware.sensors.Battery;
+import lib.uav.hardware.sensors.GPS;
+import lib.uav.hardware.sensors.GPSInfo;
+import lib.uav.hardware.sensors.SensorUAV;
+import lib.uav.hardware.sensors.Sonar;
+import lib.uav.hardware.sensors.StatusUAV;
+import lib.uav.hardware.sensors.Temperature;
+import lib.uav.hardware.sensors.Velocity;
+
 
 /**
  * The class models an aircraft/drone.

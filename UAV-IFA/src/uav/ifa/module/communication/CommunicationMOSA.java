@@ -7,13 +7,13 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.comm.Communication;
-import uav.generic.module.comm.Server;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.states.StateCommunication;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.module.comm.Communication;
+import lib.uav.module.comm.Server;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.states.StateCommunication;
 
 /**
  * The class controls communication with MOSA.

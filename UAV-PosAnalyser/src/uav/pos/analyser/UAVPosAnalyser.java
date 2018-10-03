@@ -2,10 +2,10 @@ package uav.pos.analyser;
 
 import java.util.Locale;
 import java.util.concurrent.Executors;
-import uav.generic.module.comm.DataAcquisitionS2DK;
-import uav.generic.hardware.aircraft.DroneFixedWing;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.comm.DataAcquisition;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneFixedWing;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.module.comm.DataAcquisitionS2DK;
 
 /**
  *

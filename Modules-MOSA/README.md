@@ -10,6 +10,8 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de planejamento 
 
 * **A-Star4m** -> Algoritmo A* para missão. 
 
+* **Path-Planner4m** -> Planejador de rotas genérico para missão. 
+
 * **Route-Standard4m** -> Algoritmo para trocar o comportamento de voo do drone por alguma rota default (circulo, triângulo ou retângulo). Dessa forma, esse algoritmo gera uma dessas possíveis rotas baseado na posição do drone capturada em tempo real. 
 
 O diretório seguinte contém missões pré-planejadas usadas pelo sistema MOSA.

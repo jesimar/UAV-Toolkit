@@ -2,10 +2,10 @@ package uav.gcs.planner;
 
 import java.io.File;
 import java.io.IOException;
+import lib.uav.struct.mission.Mission;
+import lib.uav.struct.mission.Mission3D;
+import lib.uav.util.UtilRunThread;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.mission.Mission;
-import uav.generic.struct.mission.Mission3D;
-import uav.generic.util.UtilRunThread;
 
 /**
  * Class models mission planner of drone avoiding obstacles.

@@ -2,8 +2,8 @@ package uav.ifa.struct;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import uav.generic.struct.constants.TypeFailure;
-import uav.generic.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.struct.constants.TypeFailure;
 
 /**
  * The class models a critical failure by storing important information about the failure.

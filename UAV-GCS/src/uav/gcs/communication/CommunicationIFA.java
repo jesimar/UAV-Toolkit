@@ -1,6 +1,5 @@
 package uav.gcs.communication;
 
-import uav.generic.module.comm.Communication;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,6 +7,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Executors;
+import lib.uav.module.comm.Client;
+import lib.uav.module.comm.Communication;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.constants.TypeReplanner;
+import lib.uav.struct.mission.Mission;
+import lib.uav.struct.states.StateCommunication;
+import lib.uav.util.UtilRoute;
 import uav.gcs.replanner.DE4s;
 import uav.gcs.replanner.GA4s;
 import uav.gcs.replanner.GH4s;
@@ -15,14 +23,6 @@ import uav.gcs.replanner.MPGA4s;
 import uav.gcs.replanner.MS4s;
 import uav.gcs.replanner.Replanner;
 import uav.gcs.struct.Drone;
-import uav.generic.module.comm.Client;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.constants.TypeReplanner;
-import uav.generic.struct.mission.Mission;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilRoute;
-import uav.generic.struct.states.StateCommunication;
 
 /**
  * The class controls communication with IFA.

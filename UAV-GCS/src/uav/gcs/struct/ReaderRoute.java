@@ -3,11 +3,11 @@ package uav.gcs.struct;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import lib.uav.struct.geom.Position3D;
+import lib.uav.struct.mission.Route3D;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilString;
 import uav.gcs.GCS;
-import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.mission.Route3D;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilString;
 
 /**
  * The class that reads the route file
@@ -99,6 +99,30 @@ public class ReaderRoute {
                 pos[1] = sc.nextDouble();
                 sc.nextDouble();
                 sc.nextDouble();
+                route.addPosition(new Position3D(pos[0], pos[1], 0));
+            }
+            isReady = true;
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+        
+    /**
+     * Method that reads the route file
+     * @param file the file of route
+     * @since version 4.0.0
+     */
+    public void readAStar(File file){
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNext()) {
+                String line = sc.nextLine();
+                line = UtilString.changeValueSeparator(line);
+                String v[] = line.split(";");
+                double pos[] = new double[3];
+                pos[0] = Double.parseDouble(v[0]);
+                pos[1] = Double.parseDouble(v[1]);
+                pos[1] = Double.parseDouble(v[2]);
                 route.addPosition(new Position3D(pos[0], pos[1], 0));
             }
             isReady = true;

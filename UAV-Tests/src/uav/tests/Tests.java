@@ -6,17 +6,17 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.comm.DataAcquisitionS2DK;
-import uav.generic.struct.constants.TypeWaypoint;
-import uav.generic.struct.mission.Mission;
-import uav.generic.struct.Waypoint;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneRotaryWing;
-import uav.generic.module.comm.DataAcquisition;
-import uav.generic.struct.Heading;
-import uav.generic.struct.Parameter;
-import uav.generic.struct.constants.TypeAngle;
-import uav.generic.struct.constants.TypeDirection;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneRotaryWing;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.module.comm.DataAcquisitionS2DK;
+import lib.uav.struct.Heading;
+import lib.uav.struct.Parameter;
+import lib.uav.struct.Waypoint;
+import lib.uav.struct.constants.TypeAngle;
+import lib.uav.struct.constants.TypeDirection;
+import lib.uav.struct.constants.TypeWaypoint;
+import lib.uav.struct.mission.Mission;
 
 /**
  *

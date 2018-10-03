@@ -43,6 +43,12 @@ sudo rm ../Modules-MOSA/A-Star4m/output-simulation.log 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/routeGeo* 2>/dev/null
 
+echo "Clear files in Path-Planner4m [output.txt output-simulation.log route3D* routeGeo*]"
+sudo rm ../Modules-MOSA/Path-Planner4m/output.txt 2>/dev/null
+sudo rm ../Modules-MOSA/Path-Planner4m/output-simulation.log 2>/dev/null
+sudo rm ../Modules-MOSA/Path-Planner4m/route3D* 2>/dev/null
+sudo rm ../Modules-MOSA/Path-Planner4m/routeGeo* 2>/dev/null
+
 echo "Clear files in MPGA4s [output-simulation.log route.txt routeGeo.txt *.png]"
 sudo rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/MPGA4s/route.txt 2>/dev/null

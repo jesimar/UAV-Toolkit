@@ -7,17 +7,17 @@ import java.awt.Graphics2D;
 import java.io.File;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeSystemExecIFA;
+import lib.uav.struct.constants.TypeSystemExecMOSA;
+import lib.uav.struct.geom.Position3D;
+import lib.uav.struct.mission.Route3D;
+import lib.uav.util.UtilGeo;
 import marte.swing.graphics.pkg2d.navigation.sPanelDraw;
 import uav.gcs.GCS;
 import uav.gcs.struct.Drone;
 import uav.gcs.struct.EnabledResources;
-import uav.generic.struct.constants.TypePlanner;
-import uav.generic.struct.constants.TypeSystemExecIFA;
-import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.mission.Route3D;
-import uav.generic.util.UtilGeo;
 
 /**
  * The class that plots the map and routes using the Graphics2D.
@@ -126,7 +126,8 @@ public class PanelPlotMission extends sPanelDraw {
     @Override
     protected void paintDynamicScene(Graphics2D g2) {
         //Draw Map
-        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER) && enabledResources.showMap){
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER) && 
+                enabledResources.showMap){
             g2.setColor(COLOR_NFZ);
             for (int i = 0; i < map.getSizeNFZ(); i++) {
                 g2.fillPolygon(
@@ -289,6 +290,52 @@ public class PanelPlotMission extends sPanelDraw {
                     }
                 }
 
+            });
+        }
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
+                && config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                routeMOSA.read(fileMOSA);
+                                repaint();
+                                break;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+
+            });
+        }
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
+                && config.getTypePlanner().equals(TypePlanner.A_STAR4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    int i = 0;
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                routeMOSA.readAStar(fileMOSA);
+                                repaint();
+                                i++;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
             });
         }
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.FIXED_ROUTE)) {

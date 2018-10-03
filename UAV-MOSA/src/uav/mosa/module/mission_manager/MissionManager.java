@@ -5,33 +5,33 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.comm.DataAcquisitionS2DK;
-import uav.generic.module.actuators.BuzzerControl;
-import uav.generic.module.sensors.CameraControl;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneFixedWing;
-import uav.generic.hardware.aircraft.DroneRotaryWing;
-import uav.generic.module.comm.DataAcquisition;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.mission.Mission;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.struct.constants.TypeAircraft;
-import uav.generic.struct.constants.LocalExecPlanner;
-import uav.generic.struct.constants.TypeDataAcquisitionUAV;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.constants.TypePlanner;
-import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.states.StateCommunication;
-import uav.generic.struct.states.StateSystem;
-import uav.generic.struct.states.StateMonitoring;
-import uav.generic.struct.states.StatePlanning;
-import uav.generic.reader.ReaderFileMission;
-import uav.generic.util.UtilFile;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilGeom;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneFixedWing;
+import lib.uav.hardware.aircraft.DroneRotaryWing;
+import lib.uav.module.actuators.BuzzerControl;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.module.comm.DataAcquisitionS2DK;
+import lib.uav.module.sensors.CameraControl;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.reader.ReaderFileMission;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.LocalExecPlanner;
+import lib.uav.struct.constants.TypeAircraft;
+import lib.uav.struct.constants.TypeDataAcquisitionUAV;
+import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.constants.TypeOperationMode;
+import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeSystemExecMOSA;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.struct.mission.Mission;
+import lib.uav.struct.mission.Mission3D;
+import lib.uav.struct.states.StateCommunication;
+import lib.uav.struct.states.StateMonitoring;
+import lib.uav.struct.states.StatePlanning;
+import lib.uav.struct.states.StateSystem;
+import lib.uav.util.UtilFile;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilGeom;
 import uav.mosa.module.communication.CommunicationGCS;
 import uav.mosa.module.communication.CommunicationIFA;
 import uav.mosa.module.decision_making.DecisionMaking;
@@ -462,7 +462,7 @@ public class MissionManager {
     
     /**
      * Read the mission with Cartesian coordinates.
-     * Note: used by HGA4m and A_STAR4m
+     * Note: used by HGA4m, A_STAR4m and PATH_PLANNER4M
      * @since version 2.0.0
      */
     private void readMission3D(){
@@ -473,6 +473,9 @@ public class MissionManager {
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                     String path = config.getDirPlanner() + config.getFileMissionPlannerAStar4m();
+                    ReaderFileMission.mission3D(new File(path), wptsMission3D);
+                }else if (config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)){
+                    String path = config.getDirPlanner() + config.getFileMissionPlannerPathPlanner4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }

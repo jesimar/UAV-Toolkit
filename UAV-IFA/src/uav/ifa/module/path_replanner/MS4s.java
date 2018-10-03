@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
 import lib.color.StandardPrints;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilIO;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.constants.TypeAltitudeDecay;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.struct.constants.TypeAltitudeDecay;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilIO;
 
 /**
  * Class that runs the path replanner MS4s.

@@ -5,7 +5,7 @@ Este diretório agrupa um conjunto de bibliotecas utilizadas nesse projeto.
 Lista de bibliotecas desenvolvidas nesse projeto e utilizadas nesse projeto:
 
 * **LibTextColor.jar** -> Biblioteca para impressão de mensagens de texto colorida. Usada para impressão pelos sistemas UAV-IFA e UAV-MOSA [[Link](https://github.com/jesimar/Java-Lib-Color-Texts)] (Licença MIT).
-* **UAV-Generic.jar** -> Biblioteca genérica para manipulação e processamento de informações de VANTs. Usada pelos sistemas UAV-IFA, UAV-MOSA e UAV-GCS [[Link](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Generic)] (Licença GPL 3.0).
+* **Lib-UAV.jar** -> Biblioteca genérica para manipulação e processamento de informações de VANTs. Usada pelos sistemas UAV-IFA, UAV-MOSA e UAV-GCS [[Link](https://github.com/jesimar/UAV-Toolkit/tree/master/Lib-UAV)] (Licença GPL 3.0).
 
 Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 

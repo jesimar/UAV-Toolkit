@@ -3,25 +3,26 @@ package uav.mosa.module.decision_making;
 import java.io.File;
 import java.io.IOException;
 import lib.color.StandardPrints;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneFixedWing;
-import uav.generic.module.comm.DataAcquisition;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.mission.Mission;
-import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.constants.LocalExecMission;
-import uav.generic.struct.constants.TypeBehavior;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.struct.constants.TypePlanner;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilRoute;
-import uav.generic.struct.states.StatePlanning;
-import uav.generic.util.UtilRunThread;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneFixedWing;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.LocalExecMission;
+import lib.uav.struct.constants.TypeBehavior;
+import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeSystemExecMOSA;
+import lib.uav.struct.mission.Mission;
+import lib.uav.struct.mission.Mission3D;
+import lib.uav.struct.states.StatePlanning;
+import lib.uav.util.UtilRoute;
+import lib.uav.util.UtilRunThread;
 import uav.mosa.module.communication.CommunicationGCS;
 import uav.mosa.module.path_planner.AStar4m;
 import uav.mosa.module.path_planner.CCQSP4m;
 import uav.mosa.module.path_planner.HGA4m;
+import uav.mosa.module.path_planner.PathPlanner4m;
 import uav.mosa.module.path_planner.Planner;
 
 /**
@@ -83,6 +84,8 @@ public class DecisionMaking {
                 resp = sendMissionBasedPlannerCCQSP4mOnboard();
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 resp = sendMissionBasedPlannerAStar4mOnboard();
+            }else if (config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)){
+                resp = sendMissionBasedPlannerPathPlanner4mOnboard();
             }
             if (resp){
                 statePlanning = StatePlanning.READY;
@@ -413,6 +416,47 @@ public class DecisionMaking {
         
         statePlanning = StatePlanning.PLANNING;
         boolean resp = ((CCQSP4m)(planner)).execMission();
+        if (!resp){
+            return false;
+        }
+        statePlanning = StatePlanning.READY;
+        
+        Mission mission = new Mission();
+        String path = config.getDirPlanner() + "routeGeo.txt";
+        if (config.hasRouteSimplifier()){
+            UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
+            path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
+        }
+        resp = UtilRoute.readFileRouteMOSA(mission, path);
+        if (!resp){
+            return false;
+        }
+        mission.printMission();
+        if (mission.getMission().size() > 0){
+            resp = dataAcquisition.setMission(mission);
+        }
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time);
+        return resp;
+    }
+    
+    /**
+     * Send mission based planner (PathPlanner4m) to autopilot calculated onboard.
+     * @return {@code true} if success, 
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    private boolean sendMissionBasedPlannerPathPlanner4mOnboard() {
+        long timeInit = System.currentTimeMillis();
+        StandardPrints.printMsgEmph("send missions to drone calc ground path-planner4m");
+        planner = new PathPlanner4m(drone, wptsMission3D);
+        planner.clearLogs();
+        statePlanning = StatePlanning.WAITING;
+        
+        statePlanning = StatePlanning.PLANNING;
+        boolean resp = ((PathPlanner4m)(planner)).execMission();
         if (!resp){
             return false;
         }

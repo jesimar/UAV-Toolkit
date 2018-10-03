@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
+import lib.uav.struct.constants.TypeAltitudeDecay;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilIO;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilIO;
-import uav.generic.struct.constants.TypeAltitudeDecay;
 
 /**
  * Class that runs the path replanner DE4s.

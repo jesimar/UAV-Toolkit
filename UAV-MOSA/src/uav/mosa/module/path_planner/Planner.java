@@ -2,15 +2,15 @@ package uav.mosa.module.path_planner;
 
 import java.io.File;
 import java.io.IOException;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.struct.constants.TypeCC;
-import uav.generic.struct.mission.Mission;
-import uav.generic.struct.mission.Mission3D;
-import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.constants.TypePlanner;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilRunThread;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.TypeCC;
+import lib.uav.struct.constants.TypeOperationMode;
+import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.struct.mission.Mission;
+import lib.uav.struct.mission.Mission3D;
+import lib.uav.util.UtilRunThread;
 import uav.mosa.module.mission_manager.MissionManager;
 
 /**
@@ -91,6 +91,8 @@ public abstract class Planner {
                     }
                 }
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
+                cmd = config.getCmdExecPlanner();
+            }else if (config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)){
                 cmd = config.getCmdExecPlanner();
             }
             UtilRunThread.dualSingleThreadWaitFor(cmd, new File(dir), isPrint, isPrintError);

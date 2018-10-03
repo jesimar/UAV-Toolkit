@@ -3,7 +3,7 @@ package uav.mission_creator;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import uav.generic.util.UtilString;
+import lib.uav.util.UtilString;
 import uav.mission_creator.struct.Mission;
 import uav.mission_creator.file.ReaderFileConfigMission;
 import uav.mission_creator.file.ReaderKML;

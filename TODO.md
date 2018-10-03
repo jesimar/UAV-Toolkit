@@ -7,13 +7,17 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Incorporar hardware de leds no drone.
 * Incorporar hardware de sonar no drone apontado para baixo.
 * Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
-* Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sonar.
+* Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sona
 
 ## Sistema IFA:
+
+* Trocar velocidade de subida e decida se a bateria estiver acabando (automaticamente no IFA).
+* Trocar velocidade de navegação se bateria estiver acabando (automaticamente no IFA).
 
 ## Sistema MOSA:
 
 * MOSA Adaptativo.
+* Retirar foto e colocar na foto as coordenadas geográficas/altitude absoluta e relativa, bateria do drone.
 
 ## Sistema UAV-GCS
 
@@ -24,6 +28,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 		por exemplo, para etapa de pulverização. (behavior diferente).
 * Colocar marcadores especiais nos Plots (google maps e Plot Mission Márcio) para fotos, vídeo, buzzer, pulverização, waypoints.
 * Pesquisar como executar UAV-GCS (google maps) sem acesso a internet.
+* Colocar legenda de cores UAV-GCS das cores das rotas.
+* Transferir as rotas do MOSA (CC) para a GCS e exibi-las em tempo real. Fazer o mesmo com o vídeo.
 
 ## Sistema UAV-S2DK:
 

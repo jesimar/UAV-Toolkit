@@ -13,14 +13,14 @@ import java.util.concurrent.Executors;
 import javafx.embed.swing.JFXPanel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeSystemExecIFA;
+import lib.uav.struct.constants.TypeSystemExecMOSA;
+import lib.uav.util.UtilGeo;
 import marte.swing.google.maps.GoogleMapsScene;
 import uav.gcs.GCS;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.constants.TypePlanner;
-import uav.generic.struct.constants.TypeSystemExecIFA;
-import uav.generic.struct.constants.TypeSystemExecMOSA;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.util.UtilGeo;
 
 /**
  * The class that plots the map and routes using the Google Maps API.
@@ -143,29 +143,16 @@ public class PanelPlotGoogleMaps extends JPanel {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    int i = 0;
+                    int j = 0;
                     while (true) {
                         try {
                             Thread.sleep(500);
-                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + j + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.readHGA(fileMOSA);
-                                for (int j = 0; j < routeMOSA.getRoute3D().size(); j++) {
-                                    if (j + 1 < routeMOSA.getRoute3D().size()) {
-                                        Point2D points[] = new Point2D[2];
-                                        points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(j).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(j).getX())
-                                        );
-                                        points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(j + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(j + 1).getX())
-                                        );
-                                        api.addLine("#00FF00", 0.8, 2, points);
-                                    }
-                                }
-                                i++;
+                                addRouteInAPIxy(routeMOSA, "#00FF00");
+                                j++;
                             }
                         } catch (InterruptedException ex) {
 
@@ -186,21 +173,31 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.read(fileMOSA);
-                                for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
-                                    if (i + 1 < routeMOSA.getRoute3D().size()) {
-                                        Point2D points[] = new Point2D[2];
-                                        points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i).getX())
-                                        );
-                                        points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i + 1).getX())
-                                        );
-                                        api.addLine("#00FF00", 0.8, 2, points);
-                                    }
-                                }
+                                addRouteInAPIxy(routeMOSA, "#00FF00");
                                 break;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+            });
+        }
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
+                && config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    int j = 0;
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + j + ".txt";
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                routeMOSA.readAStar(fileMOSA);
+                                addRouteInAPIxy(routeMOSA, "#00FF00");
+                                j++;
                             }
                         } catch (InterruptedException ex) {
 
@@ -220,20 +217,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.readGeo(fileMOSA);
-                                for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
-                                    if (i + 1 < routeMOSA.getRoute3D().size()) {
-                                        Point2D points[] = new Point2D[2];
-                                        points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i).getX())
-                                        );
-                                        points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeMOSA.getRoute3D().getPosition(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeMOSA.getRoute3D().getPosition(i + 1).getX())
-                                        );
-                                        api.addLine("#00FF00", 0.8, 2, points);
-                                    }
-                                }
+                                addRouteInAPIxy(routeMOSA, "#00FF00");
                                 repaint();
                                 break;
                             }
@@ -256,20 +240,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
                                 routeIFA.read(fileIFA);
-                                for (int i = 0; i < routeIFA.getRoute3D().size(); i++) {
-                                    if (i + 1 < routeIFA.getRoute3D().size()) {
-                                        Point2D points[] = new Point2D[2];
-                                        points[0] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition(i).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition(i).getX())
-                                        );
-                                        points[1] = new Point2D.Double(
-                                                UtilGeo.convertYtoLatitude(latBase, routeIFA.getRoute3D().getPosition(i + 1).getY()),
-                                                UtilGeo.convertXtoLongitude(lngBase, latBase, routeIFA.getRoute3D().getPosition(i + 1).getX())
-                                        );
-                                        api.addLine("#FF0000", 0.8, 2, points);
-                                    }
-                                }
+                                addRouteInAPIxy(routeIFA, "#FF0000");
                                 break;
                             }
                         } catch (InterruptedException ex) {
@@ -290,20 +261,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileSimplifier = new File(pathSimplifier);
                             if (fileSimplifier.exists()) {
                                 routeMOSASimplifier.read(fileSimplifier);
-                                for (int i = 0; i < routeMOSASimplifier.getRoute3D().size(); i++) {
-                                    if (i + 1 < routeMOSASimplifier.getRoute3D().size()) {
-                                        Point2D points[] = new Point2D[2];
-                                        points[0] = new Point2D.Double(
-                                                routeMOSASimplifier.getRoute3D().getPosition(i).getX(),
-                                                routeMOSASimplifier.getRoute3D().getPosition(i).getY()
-                                        );
-                                        points[1] = new Point2D.Double(
-                                                routeMOSASimplifier.getRoute3D().getPosition(i + 1).getX(),
-                                                routeMOSASimplifier.getRoute3D().getPosition(i + 1).getY()
-                                        );
-                                        api.addLine("#000000", 0.8, 2, points);
-                                    }
-                                }
+                                addRouteInAPIlatlng(routeMOSASimplifier, "#000000");
                                 break;
                             }
                         } catch (InterruptedException ex) {
@@ -344,5 +302,39 @@ public class PanelPlotGoogleMaps extends JPanel {
                 }
             }
         });
+    }
+    
+    private void addRouteInAPIxy(ReaderRoute route, String color){
+        for (int i = 0; i < route.getRoute3D().size(); i++) {
+            if (i + 1 < route.getRoute3D().size()) {
+                Point2D points[] = new Point2D[2];
+                points[0] = new Point2D.Double(
+                        UtilGeo.convertYtoLatitude(latBase, route.getRoute3D().getPosition(i).getY()),
+                        UtilGeo.convertXtoLongitude(lngBase, latBase, route.getRoute3D().getPosition(i).getX())
+                );
+                points[1] = new Point2D.Double(
+                        UtilGeo.convertYtoLatitude(latBase, route.getRoute3D().getPosition(i + 1).getY()),
+                        UtilGeo.convertXtoLongitude(lngBase, latBase, route.getRoute3D().getPosition(i + 1).getX())
+                );
+                api.addLine(color, 0.8, 2, points);
+            }
+        }
+    }
+    
+    private void addRouteInAPIlatlng(ReaderRoute route, String color){
+        for (int i = 0; i < route.getRoute3D().size(); i++) {
+            if (i + 1 < route.getRoute3D().size()) {
+                Point2D points[] = new Point2D[2];
+                points[0] = new Point2D.Double(
+                        route.getRoute3D().getPosition(i).getX(),
+                        route.getRoute3D().getPosition(i).getY()
+                );
+                points[1] = new Point2D.Double(
+                        route.getRoute3D().getPosition(i + 1).getX(),
+                        route.getRoute3D().getPosition(i + 1).getY()
+                );
+                api.addLine(color, 0.8, 2, points);
+            }
+        }
     }
 }

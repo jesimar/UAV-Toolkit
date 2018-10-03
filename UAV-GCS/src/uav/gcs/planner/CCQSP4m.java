@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Scanner;
+import lib.uav.struct.Waypoint;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.struct.geom.Position3D;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilIO;
 import uav.gcs.struct.Drone;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.struct.geom.Position3D;
-import uav.generic.struct.Waypoint;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilIO;
 
 /**
  * The class models the path planner CCQSP4m.

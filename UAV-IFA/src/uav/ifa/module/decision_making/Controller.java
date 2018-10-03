@@ -1,12 +1,12 @@
 package uav.ifa.module.decision_making;
 
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.module.comm.DataAcquisition;
-import uav.generic.struct.Waypoint;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.TypeInputCommand;
-import uav.generic.struct.constants.TypeWaypoint;
-import uav.generic.reader.ReaderFileConfig;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.struct.Waypoint;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.TypeInputCommand;
+import lib.uav.struct.constants.TypeWaypoint;
 import uav.ifa.module.communication.CommunicationGCS;
 
 /**

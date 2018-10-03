@@ -2,8 +2,9 @@
 #Author: Jesimar da Silva Arantes
 #Date: 02/07/2018
 #Last Update: 24/08/2018
-#Description: Script that runs MAVProxy software on CC for real in-flight drone testing.
-#Descrição: Script que executa o software MAVProxy no CC para testes reais em voo no drone.
+#Description: Script that runs MAVProxy software on CC (Raspberry Pi) for real in-flight drone testing.
+#Descrição: Script que executa o software MAVProxy no CC (Raspberry Pi) para testes reais em voo no drone.
+#Note: You need to specify IP of the GCS (IP_GCS) and the device (DEV) used, in general serial0.
 
 if [ -z $1 ]
 then

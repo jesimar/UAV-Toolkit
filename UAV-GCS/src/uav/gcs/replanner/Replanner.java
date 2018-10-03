@@ -2,8 +2,8 @@ package uav.gcs.replanner;
 
 import java.io.File;
 import java.io.IOException;
+import lib.uav.util.UtilRunThread;
 import uav.gcs.struct.Drone;
-import uav.generic.util.UtilRunThread;
 
 /**
  * Class models mission replanner of drone avoiding obstacles and landing the aircraft.

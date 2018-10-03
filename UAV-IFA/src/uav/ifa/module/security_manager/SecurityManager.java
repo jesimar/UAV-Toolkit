@@ -6,34 +6,34 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import lib.color.StandardPrints;
-import uav.generic.module.comm.DataAcquisitionS2DK;
-import uav.generic.module.actuators.BuzzerControl;
-import uav.generic.hardware.aircraft.DroneFixedWing;
-import uav.generic.hardware.aircraft.Drone;
-import uav.generic.hardware.aircraft.DroneRotaryWing;
-import uav.generic.module.comm.DataAcquisition;
-import uav.generic.module.sensors.SonarControl;
-import uav.generic.module.sensors.TemperatureSensorControl;
-import uav.generic.struct.Parameter;
-import uav.generic.reader.ReaderFileConfig;
-import uav.generic.reader.ReaderFileConfigParam;
-import uav.generic.struct.constants.TypeAircraft;
-import uav.generic.struct.constants.TypeFailure;
-import uav.generic.struct.constants.TypeMsgCommunication;
-import uav.generic.struct.constants.Constants;
-import uav.generic.struct.constants.LocalExecPlanner;
-import uav.generic.struct.constants.TypeDataAcquisitionUAV;
-import uav.generic.struct.constants.TypeOperationMode;
-import uav.generic.struct.constants.TypeSystemExecIFA;
-import uav.generic.struct.geom.PointGeo;
-import uav.generic.util.UtilFile;
-import uav.generic.struct.states.StateCommunication;
-import uav.generic.struct.states.StateSystem;
-import uav.generic.struct.states.StateMonitoring;
-import uav.generic.struct.states.StateReplanning;
-import uav.generic.util.UtilRunScript;
-import uav.generic.util.UtilGeo;
-import uav.generic.util.UtilGeom;
+import lib.uav.hardware.aircraft.Drone;
+import lib.uav.hardware.aircraft.DroneFixedWing;
+import lib.uav.hardware.aircraft.DroneRotaryWing;
+import lib.uav.module.actuators.BuzzerControl;
+import lib.uav.module.comm.DataAcquisition;
+import lib.uav.module.comm.DataAcquisitionS2DK;
+import lib.uav.module.sensors.SonarControl;
+import lib.uav.module.sensors.TemperatureSensorControl;
+import lib.uav.reader.ReaderFileConfig;
+import lib.uav.reader.ReaderFileConfigParam;
+import lib.uav.struct.Parameter;
+import lib.uav.struct.constants.Constants;
+import lib.uav.struct.constants.LocalExecPlanner;
+import lib.uav.struct.constants.TypeAircraft;
+import lib.uav.struct.constants.TypeDataAcquisitionUAV;
+import lib.uav.struct.constants.TypeFailure;
+import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.constants.TypeOperationMode;
+import lib.uav.struct.constants.TypeSystemExecIFA;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.struct.states.StateCommunication;
+import lib.uav.struct.states.StateMonitoring;
+import lib.uav.struct.states.StateReplanning;
+import lib.uav.struct.states.StateSystem;
+import lib.uav.util.UtilFile;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilGeom;
+import lib.uav.util.UtilRunScript;
 import uav.ifa.module.decision_making.DecisionMaking;
 import uav.ifa.module.communication.CommunicationMOSA;
 import uav.ifa.module.communication.CommunicationGCS;
@@ -539,24 +539,27 @@ public class SecurityManager {
         double consumptionBatteryHorizontal;
         
         double estMaxDist;
-        
+        double estMaxTime;
+        double level = drone.getSensors().getBattery().level;
+        // 0.7: Este fator representa de fato a eficiência da velocidade de fato 
+        //percorrida pelo drone em relação a velocidade média.
         if (config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
             consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_REAL;
             consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_REAL;
             consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
-            estMaxDist = speedHorizontal * drone.getSensors().getBattery().level/Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
+            estMaxDist = 0.7 * speedHorizontal * level/Constants.EFFICIENCY_HORIZONTAL_NAV_REAL;
+            estMaxTime = level/Constants.EFFICIENCY_FLIGHT_TIME_REAL;
         }else{
             consumptionBatteryUP         = distVerticalUP * Constants.EFFICIENCY_VERTICAL_UP_SIMULATED;
             consumptionBatteryDN         = distVerticalDN * Constants.EFFICIENCY_VERTICAL_DOWN_SIMULATED;
             consumptionBatteryHorizontal = distHorizontal * Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
-            estMaxDist = speedHorizontal * drone.getSensors().getBattery().level/Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
+            estMaxDist = 0.7 * speedHorizontal * level/Constants.EFFICIENCY_HORIZONTAL_NAV_SIMULATED;
+            estMaxTime = level/Constants.EFFICIENCY_FLIGHT_TIME_SIMULATED;
         }
         double estimatedConsumptionBat   = 
                 consumptionBatteryUP + consumptionBatteryDN +consumptionBatteryHorizontal;
         
-        drone.getInfo().setEstimatedConsumptionBatForRTL(estimatedConsumptionBat);  
-        
-        double estMaxTime = estMaxDist/speedHorizontal;
+        drone.getInfo().setEstimatedConsumptionBatForRTL(estimatedConsumptionBat);
         drone.getInfo().setEstimatedMaxDistReached(estMaxDist);
         drone.getInfo().setEstimatedMaxTimeFlight(estMaxTime);
     }
