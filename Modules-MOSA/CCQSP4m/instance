@@ -231,7 +231,7 @@ State Perfect Unc.
 ProOF.apl.UAV.gen.linear.uncertainty.LinearPerfectStateUncertainty
 <parameters number>
 2
-0.2
+0.0
 0.0
 <node id>
 564

@@ -43,7 +43,47 @@ public class ReaderFileMission {
         } catch (NoSuchElementException ex) {
             
         }
-    }        
+    }
+    
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | Waypoints Mission                   |
+     * | 3                                   |
+     * | -22.00593333;-47.89870833;0.00      |
+     * | -22.00613771;-47.89869416;0.00      |
+     * | -22.00204909;-47.93333564;0.00      |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file File to read
+     * @param wptsMission object to put the waypoints of the mission
+     * @throws FileNotFoundException 
+     * @since version 4.0.0
+     */
+    public static void missionMission(File file, Mission wptsMission) 
+            throws FileNotFoundException {
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals("Waypoints Mission")){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsMission.addWaypoint(wpt);
+                    }
+                }
+            }
+            sc.close();
+        } catch (NoSuchElementException ex) {
+            
+        }
+    }
     
     /**
      * Read a file in this format (geographical coordinates [lat, lng]):.

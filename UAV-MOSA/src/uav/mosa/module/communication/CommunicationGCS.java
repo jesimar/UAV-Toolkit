@@ -1,11 +1,17 @@
 package uav.mosa.module.communication;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
+import java.nio.ByteBuffer;
 import java.util.concurrent.Executors;
+import javax.imageio.ImageIO;
 import lib.color.StandardPrints;
 import lib.uav.module.comm.Communication;
 import lib.uav.module.comm.Server;
@@ -24,6 +30,7 @@ import lib.uav.struct.states.StateCommunication;
 public class CommunicationGCS extends Communication implements Server{
     
     private ServerSocket server;
+    private OutputStream out;
 
     private boolean hasReceiveRouteGCS;
     private String routePlannerGCS;
@@ -63,6 +70,7 @@ public class CommunicationGCS extends Communication implements Server{
                     socket = server.accept();//wait the connection
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     output = new PrintWriter(socket.getOutputStream(), true);
+                    out = socket.getOutputStream();
                     StandardPrints.printMsgEmph("MOSA connected in UAV-GCS");
                 } catch (IOException ex) {
                     StandardPrints.printMsgWarning("Warning [IOException] startServer()");
@@ -94,14 +102,16 @@ public class CommunicationGCS extends Communication implements Server{
                                 if (answer.contains(TypeInputCommand.CMD_MISSION)){
                                     hasReceiveRouteGCS = true;
                                     routePlannerGCS = answer;
-                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR)){
+                                } else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR)){
                                     behaviorChanged = true;
-                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_CIRCLE)){
+                                } else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_CIRCLE)){
                                     behaviorChangedCircle = true;
-                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_TRIANGLE)){
+                                } else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_TRIANGLE)){
                                     behaviorChangedTriangle = true;
-                                }else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_RECTANGLE)){
+                                } else if (answer.contains(TypeInputCommand.CMD_CHANGE_BEHAVIOR_RECTANGLE)){
                                     behaviorChangedRectangle = true;
+                                } else if (answer.contains(TypeInputCommand.CMD_GET_PICTURE)){
+                                    sendPicture();
                                 }
                             }
                         }
@@ -175,6 +185,23 @@ public class CommunicationGCS extends Communication implements Server{
     
     public String getRoutePlannerGCS(){
         return routePlannerGCS;
+    }
+    
+    private void sendPicture(){
+        try {
+            StandardPrints.printMsgEmph("send picture");
+            String path = config.getDirCamera();
+            BufferedImage image = ImageIO.read(new File(path + "picture/foto.jpg"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", baos);
+            byte[] imageInByte = baos.toByteArray();
+            byte[] size = ByteBuffer.allocate(4).putInt(baos.size()).array();            
+            out.write(size);
+            out.write(imageInByte);
+            out.flush();
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] sendPicture()");
+        }
     }
     
 }

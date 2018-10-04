@@ -15,5 +15,5 @@ camera = PiCamera()
 camera.resolution = (2592, 1944)
 
 for i in range(number):
-	camera.capture('photo-in-sequence_%s.jpg' % i)
+	camera.capture('photos-in-sequence/photo-in-sequence_%s.jpg' % i)
 	sleep(delay)

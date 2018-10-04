@@ -15,8 +15,8 @@
 
 //===============================DEFINES================================
 
-#define TRUE 0
-#define FALSE 1
+#define TRUE 1
+#define FALSE 0
 #define debug TRUE
 #define dim_x_min -100
 #define dim_x_max 100
@@ -124,6 +124,8 @@ point2D readPositionGoal(FILE *file){
 	pointGoal.y = strtof(pend, NULL);
 	pointGoal.x = pointGoal.x + 100;
 	pointGoal.y = pointGoal.y + 100;
+	//destino.x = (destino.x+5)*10;
+    //destino.y = (destino.y)*10;
 	return pointGoal;
 }
 
@@ -267,7 +269,6 @@ void printMap(char map[map_size_rows][map_size_cols], int p_len, int *path){
 			}
 		}
 		fprintf(file_map, "\n");
-		//putchar('\n');
 	}
 	fclose(file_map);
 }
@@ -310,15 +311,15 @@ void a_star(char map[map_size_rows][map_size_cols], point2D pointStart, point2D 
 	}
 
 	//index of start stop
-	//int s = ((int)(pointStart.x)+1)*(int)(pointStart.y+1);
-	int s = dim_x_total * (pointStart.y - 1) + (pointStart.x);
+	//int s = ((int)(pointStart.x) + 1) * (int)(pointStart.y + 1);//calculo rafael
+	int s = dim_x_total * pointStart.y + pointStart.x - 3 * 200 +1;//calculo jesimar
 	if (debug == TRUE){
 		printf("valor s = %d\n", s);
 	}
 	
 	//index of finish stop
-	//int e = s_len - (map_size_rows-(int)(pointGoal.x))*(map_size_cols-(int)(pointGoal.y));
-	int e = dim_x_total * (pointGoal.y - 1) + (pointGoal.x);
+	//int e = s_len - (map_size_rows - (int)(pointGoal.x)) * (map_size_cols - (int)(pointGoal.y));//calculo rafael
+	int e = dim_x_total * (pointGoal.y - 1) + (pointGoal.x);//calculo jesimar
 	if (debug == TRUE){
 		printf("valor e = %d\n", e);
 		printf("valor s_len = %d\n", s_len);
@@ -470,7 +471,7 @@ int main(){
 		printf("Point Goal  (x, y) = (%.2f %.2f)\n", pointGoal.x, pointGoal.y);
 	}
 
-	FILE *fileObstacles = fopen("map-nfz-astar.sgl","r");
+	FILE *fileObstacles = fopen("map-nfz-astar.sgl","r");//fopen("obstaculos2.txt","r");//fopen("map-nfz-astar.sgl","r");
 	
 	//in this part fileObstacles the code, is defined the number of obstacles
 	while(!feof(fileObstacles)){

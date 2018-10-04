@@ -83,18 +83,20 @@ public class CameraControl {
      */
     public void makeAVideo(){
         try {
+            boolean print = true;
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
                 cmd = "java -jar video-pc.jar " + config.getTimeVideo();
+                print = false;
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    print = true;
                     cmd = "python video-rpi.py " + config.getTimeVideo();
                 }else{
                     cmd = "./device";
                 }
-            } 
-            boolean print = true;
+            }
             UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
             StandardPrints.printMsgWarning("Warning [IOException] makeAVideo()");

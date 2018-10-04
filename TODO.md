@@ -17,19 +17,18 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Sistema MOSA:
 
 * MOSA Adaptativo.
+* Colocar missão no Route-Standard de zig zag para pulverização.
 * Retirar foto e colocar na foto as coordenadas geográficas/altitude absoluta e relativa, bateria do drone.
 
 ## Sistema UAV-GCS
 
+* Colocar alocação de risco (incerteza da posição) das rotas CCQSP4m e HGA4m.
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
 * Plotar na GCS as rotas do Behavior
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
 		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 
 		por exemplo, para etapa de pulverização. (behavior diferente).
-* Colocar marcadores especiais nos Plots (google maps e Plot Mission Márcio) para fotos, vídeo, buzzer, pulverização, waypoints.
-* Pesquisar como executar UAV-GCS (google maps) sem acesso a internet.
-* Colocar legenda de cores UAV-GCS das cores das rotas.
-* Transferir as rotas do MOSA (CC) para a GCS e exibi-las em tempo real. Fazer o mesmo com o vídeo.
+* Transferir as fotos do MOSA (CC) para a GCS e exibi-las em tempo real. Fazer o mesmo com o vídeo.
 
 ## Sistema UAV-S2DK:
 

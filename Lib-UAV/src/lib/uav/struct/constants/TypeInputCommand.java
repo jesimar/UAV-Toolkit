@@ -37,4 +37,7 @@ public class TypeInputCommand {
     public static final String CMD_CHANGE_BEHAVIOR_TRIANGLE = "changebehtriangle";
     public static final String CMD_CHANGE_BEHAVIOR_RECTANGLE = "changebehrectangle";
     
+    public static final String CMD_GET_PICTURE = "get-picture";
+    public static final String CMD_GET_VIDEO = "get-video";
+    
 }

@@ -17,6 +17,6 @@ camera.framerate = 15
 
 i = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
 
-camera.start_recording('video_%s.h264' % i)
+camera.start_recording('videos/video_%s.h264' % i)
 sleep(time)
 camera.stop_recording()

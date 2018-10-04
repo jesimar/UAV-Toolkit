@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -19,8 +20,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import lib.uav.reader.ReaderFileConfig;
+import lib.uav.reader.ReaderFileMission;
 import lib.uav.struct.constants.TypeInputCommand;
 import lib.uav.struct.geom.PointGeo;
+import lib.uav.struct.mission.Mission;
 import lib.uav.util.UtilGeo;
 import lib.uav.util.UtilRunScript;
 import uav.gcs.struct.Drone;
@@ -51,9 +54,12 @@ public final class GCS extends JFrame {
     private final JPanel panelRight;
     private final PanelPlotMission panelPlotMission;
     private PanelPlotGoogleMaps panelPlotGoogleMaps;
+    private final JPanel panelCameraData;
     private final LabelsInfo labelsInfo;
     private final JTabbedPane tab;
 
+    private final JButton btnGetPicture;
+    private final JButton btnGetVideo;
     private final JButton btnBadWeather;
     private final JButton btnPathReplanningEmergency;
     private final JButton btnLand;
@@ -71,7 +77,7 @@ public final class GCS extends JFrame {
     private JButton btnLED;
     private JButton btnBlink;
     private JButton btnSpraying;
-    private JButton btnParachute;
+    private JButton btnParachute;    
     
     private JButton btnShowRoutePlanner;
     private JButton btnShowRouteReplanner;
@@ -92,7 +98,7 @@ public final class GCS extends JFrame {
     private final JLabel labelIsRunningPathReplanner;
 
     private final int width = 900;
-    private final int height = 620;
+    private final int height = 680;
 
     private final Drone drone;
     private final ReaderFileConfig config;
@@ -103,6 +109,13 @@ public final class GCS extends JFrame {
     private SaveDB saveDB;
     private final KeyboardCommands keyboard;
     private final VoiceCommands voice;
+    
+    private Mission wptsMission;
+    private Mission wptsBuzzer;
+    private Mission wptsCameraPicture;
+    private Mission wptsCameraVideo;
+    private Mission wptsCameraPhotoInSeq;
+    private Mission wptsSpraying;
 
     /**
      * Method main that start the GCS System.
@@ -155,10 +168,15 @@ public final class GCS extends JFrame {
             ex.printStackTrace();
             System.exit(1);
         }
+        
+        panelCameraData = new JPanel();
+        panelCameraData.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelCameraData.setBackground(new Color(255, 255, 255));
+        panelCameraData.setVisible(true);
 
         drone = new Drone(config.getUserEmail());
         communicationIFA = new CommunicationIFA(drone);
-        communicationMOSA = new CommunicationMOSA(drone);
+        communicationMOSA = new CommunicationMOSA(drone, panelCameraData);
         keyboard = new KeyboardCommands(communicationIFA);
         voice = new VoiceCommands(communicationIFA);
         if (config.hasDB()) {
@@ -322,6 +340,28 @@ public final class GCS extends JFrame {
             }
         });
         panelLeft.add(btnCopyFilesResults);
+        
+        btnGetPicture = new JButton("Get Picture");
+        btnGetPicture.setPreferredSize(new Dimension(185, 25));
+        btnGetPicture.setEnabled(false);
+        btnGetPicture.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_GET_PICTURE);
+            }
+        });
+        panelLeft.add(btnGetPicture);
+        
+        btnGetVideo = new JButton("Get Video");
+        btnGetVideo.setPreferredSize(new Dimension(185, 25));
+        btnGetVideo.setEnabled(false);
+        btnGetVideo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                communicationMOSA.sendData(TypeInputCommand.CMD_GET_VIDEO);
+            }
+        });
+        panelLeft.add(btnGetVideo);
 
         btnBadWeather = new JButton("BAD-WEATHER");
         btnBadWeather.setPreferredSize(new Dimension(185, 25));
@@ -573,21 +613,14 @@ public final class GCS extends JFrame {
         if (config.hasGoogleMaps()) {
             panelPlotGoogleMaps = new PanelPlotGoogleMaps();
             panelPlotGoogleMaps.init(width - 200, height - 100);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            panelPlotGoogleMaps.drawMap();
-            panelPlotGoogleMaps.waitingForRoutes();
-            panelPlotGoogleMaps.plotDroneInRealTime(drone);
         }
-
+        
         tab.add("UAV Data", panelRight);
         tab.add("Plot Simple Map", panelPlotMission);
         if (config.hasGoogleMaps()) {
             tab.add("Plot Google Maps", panelPlotGoogleMaps);
         }
+        tab.add("Camera Data", panelCameraData);
 
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
@@ -623,6 +656,66 @@ public final class GCS extends JFrame {
         panelMain.add(tab);
 
         enableComponentsInterface();
+        
+        this.wptsMission = new Mission();
+        readerFileMission();
+        panelPlotMission.setWptsMission(wptsMission);
+        if (config.hasGoogleMaps()) {
+            panelPlotGoogleMaps.setWptsMission(wptsMission);
+        }
+        if (config.hasBuzzer()){
+            this.wptsBuzzer = new Mission();
+            readerFileBuzzer();
+            panelPlotMission.setWptsBuzzer(wptsBuzzer);
+            if (config.hasGoogleMaps()) {
+                panelPlotGoogleMaps.setWptsBuzzer(wptsBuzzer);
+            }
+        }
+        if (config.hasCamera()){
+            this.wptsCameraPicture = new Mission(); 
+            this.wptsCameraVideo = new Mission();
+            this.wptsCameraPhotoInSeq = new Mission();
+            readerFileCameraPhoto();
+            readerFileCameraVideo();
+            readerFileCameraPhotoInSeq();
+            panelPlotMission.setWptsCameraPicture(wptsCameraPicture);
+            panelPlotMission.setWptsCameraPhotoInSeq(wptsCameraPhotoInSeq);
+            panelPlotMission.setWptsCameraVideo(wptsCameraVideo);    
+            if (config.hasGoogleMaps()) {
+                panelPlotGoogleMaps.setWptsCameraPicture(wptsCameraPicture);
+                panelPlotGoogleMaps.setWptsCameraPhotoInSeq(wptsCameraPhotoInSeq);
+                panelPlotGoogleMaps.setWptsCameraVideo(wptsCameraVideo);
+            }
+        }
+        if (config.hasSpraying()){
+            this.wptsSpraying = new Mission(); 
+            readerFileSpraying();
+            panelPlotMission.setWptsSpraying(wptsSpraying);
+            if (config.hasGoogleMaps()) {
+                panelPlotGoogleMaps.setWptsSpraying(wptsSpraying);
+            }
+        }
+        
+        if (config.hasGoogleMaps()) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    //aguarda o google maps inicializar. se não aguardar não 
+                    //pode mandar desenhar nada. alterar isso depois. 
+                    //mandar aguardar até o google inicilizar como uma variavel 
+                    //controlando isso.
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                    panelPlotGoogleMaps.drawMap();
+                    panelPlotGoogleMaps.waitingForRoutes();
+                    panelPlotGoogleMaps.plotDroneInRealTime(drone);
+                    panelPlotGoogleMaps.drawMarkers();
+                }
+            });
+        }
 
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -706,6 +799,10 @@ public final class GCS extends JFrame {
                                 labelIsRunningPathPlanner.setText("Run Planner: False");
                                 labelIsRunningPathPlanner.setForeground(Color.RED);
                             }
+                            if (config.hasCamera()) {
+                                btnGetPicture.setEnabled(true);
+                                btnGetVideo.setEnabled(true);
+                            }
                         } else {
                             labelIsConnectedMOSA.setText("Connected MOSA: False");
                             labelIsConnectedMOSA.setForeground(Color.RED);
@@ -738,7 +835,7 @@ public final class GCS extends JFrame {
         String msgAbout = "Program: UAV-GCS\n"
                 + "Author: Jesimar da Silva Arantes\n"
                 + "Version: 4.0.0\n"
-                + "Date: 03/10/2018"
+                + "Date: 03/10/2018\n"
                 + "Since: 17/05/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
@@ -778,5 +875,95 @@ public final class GCS extends JFrame {
             ex.printStackTrace();
         }
     }
-
+    
+    /**
+     * Reads the feature mission file with the mission waypoints.
+     * @since version 4.0.0
+     */
+    private void readerFileMission(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionMission(new File(path), wptsMission);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileMission()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Reads the feature mission file with the buzzer's trigger data.
+     * @since version 4.0.0
+     */
+    private void readerFileBuzzer(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionBuzzer(new File(path), wptsBuzzer);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileBuzzer()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Reads the feature mission file with the camera's trigger data (photo).
+     * @since version 4.0.0
+     */
+    private void readerFileCameraPhoto(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionCameraPicture(new File(path), wptsCameraPicture);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileCameraPhoto()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Reads the feature mission file with the camera's trigger data (video).
+     * @since version 4.0.0
+     */
+    private void readerFileCameraVideo(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionCameraVideo(new File(path), wptsCameraVideo);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileCameraVideo()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Reads the feature mission file with the camera's trigger data (photo in sequence).
+     * @since version 4.0.0
+     */
+    private void readerFileCameraPhotoInSeq(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionCameraPhotoInSequence(new File(path), wptsCameraPhotoInSeq);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileCameraVideo()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Reads the feature mission file with the spraying's trigger data.
+     * @since version 3.0.0
+     */
+    private void readerFileSpraying(){
+        try {
+            String path = config.getDirFiles()+ config.getFileFeatureMission();
+            ReaderFileMission.missionSpraying(new File(path), wptsSpraying);
+        } catch (FileNotFoundException ex) {
+            System.err.println("Error [FileNotFoundException]: readerFileSpraying()");
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
+    
 }

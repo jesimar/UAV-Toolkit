@@ -322,6 +322,20 @@ Ordem  Software/Aplicação                                      Comando para En
 
 :warning: **OBS:** Caso não se deseje analisar os logs gerados na simulação/voo é uma boa prática limpar os logs gerados pelo sistema. Dessa forma, execute o seguinte comando: `UAV-Toolkit/Scripts$ ./clear-simulations.sh`
 
+<!--
+## Drones Construídos:
+
+Abaixo encontram-se alguns dos drones construídos e utilizados durante esse trabalho.
+
+| iDroneAlpha                    | iDroneBeta                     | iDroneGamma                    | iDroneDelta                    |
+|--------------------------------|--------------------------------|--------------------------------|--------------------------------|
+| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) |
+| Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          |
+| AP: APM v2.8                   | AP: Pixhawk v1                 | AP: APM v2.8                   | AP: APM v2.8                   |
+| GPS: Neo M6N                   | GPS: Neo M8N                   | GPS: Neo M6N                   | GPS: Neo M6N                   |
+| CC: Intel Edison               | CC: Raspberry Pi 3             | CC: Beagle Bone Black Wireless | CC: Odroid                     |
+-->
+
 ## Citação
 
 Se você usar o UAV-Toolkit, por favor, cite minha Qualificação de Doutorado [[PDF](./Docs/Qualificação-Jesimar-2017.pdf)].

@@ -17,6 +17,7 @@ import lib.uav.reader.ReaderFileConfig;
 import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
 import lib.uav.struct.constants.TypeSystemExecMOSA;
+import lib.uav.struct.mission.Mission;
 import lib.uav.util.UtilGeo;
 import marte.swing.google.maps.GoogleMapsScene;
 import uav.gcs.GCS;
@@ -39,6 +40,13 @@ public class PanelPlotGoogleMaps extends JPanel {
     private final double lngBase = GCS.pointGeo.getLng();
     private final double latBase = GCS.pointGeo.getLat();
     private boolean firstTime = true;
+    
+    private Mission wptsMission = null;
+    private Mission wptsBuzzer = null;
+    private Mission wptsCameraPicture = null;
+    private Mission wptsCameraVideo = null;
+    private Mission wptsCameraPhotoInSeq = null;
+    private Mission wptsSpraying = null;
 
     /**
      * Class constructor
@@ -304,6 +312,31 @@ public class PanelPlotGoogleMaps extends JPanel {
         });
     }
     
+    /**
+     * Paint in screen the info about markers.
+     * @since version 4.0.0
+     */
+    public void drawMarkers() {
+        if (wptsMission != null){
+            addPolyRect(wptsMission, "#808080", 1);
+        }
+        if (wptsBuzzer != null){
+            addPolyRect(wptsBuzzer, "#FF0000", 0.5);
+        }
+        if (wptsCameraPicture != null){
+            addPolyRect(wptsCameraPicture, "#FFC800", 0.5);
+        }
+        if (wptsCameraPhotoInSeq != null){
+            addPolyRect(wptsCameraPhotoInSeq, "#FFC800", 0.5);
+        }
+        if (wptsCameraVideo != null){
+            addPolyRect(wptsCameraVideo, "#FFC800", 0.5);
+        }
+        if (wptsSpraying != null){
+            addPolyRect(wptsSpraying, "#FF00FF", 0.5);
+        }
+    }
+    
     private void addRouteInAPIxy(ReaderRoute route, String color){
         for (int i = 0; i < route.getRoute3D().size(); i++) {
             if (i + 1 < route.getRoute3D().size()) {
@@ -336,5 +369,52 @@ public class PanelPlotGoogleMaps extends JPanel {
                 api.addLine(color, 0.8, 2, points);
             }
         }
+    }
+    
+    private void addPolyRect(Mission wpts, String color, double factor){
+        for (int i = 0; i < wpts.size(); i++){
+            Point2D points[] = new Point2D[4];
+            points[0] = new Point2D.Double(
+                    wpts.getWaypoint(i).getLat()-0.000009*factor,
+                    wpts.getWaypoint(i).getLng()-0.000009*factor
+            );
+            points[1] = new Point2D.Double(
+                    wpts.getWaypoint(i).getLat()+0.000009*factor,
+                    wpts.getWaypoint(i).getLng()-0.000009*factor
+            );
+            points[2] = new Point2D.Double(
+                    wpts.getWaypoint(i).getLat()+0.000009*factor,
+                    wpts.getWaypoint(i).getLng()+0.000009*factor
+            );
+            points[3] = new Point2D.Double(
+                    wpts.getWaypoint(i).getLat()-0.000009*factor,
+                    wpts.getWaypoint(i).getLng()+0.000009*factor
+            );
+            api.addPolygon(color, 0.8, 2, color, 0.35, points);
+        }
+    }
+    
+    public void setWptsMission(Mission wptsMission) {
+        this.wptsMission = wptsMission;
+    }       
+
+    public void setWptsBuzzer(Mission wptsBuzzer) {
+        this.wptsBuzzer = wptsBuzzer;
+    }
+
+    public void setWptsCameraPicture(Mission wptsCameraPicture) {
+        this.wptsCameraPicture = wptsCameraPicture;
+    }
+
+    public void setWptsCameraVideo(Mission wptsCameraVideo) {
+        this.wptsCameraVideo = wptsCameraVideo;
+    }
+
+    public void setWptsCameraPhotoInSeq(Mission wptsCameraPhotoInSeq) {
+        this.wptsCameraPhotoInSeq = wptsCameraPhotoInSeq;
+    }
+
+    public void setWptsSpraying(Mission wptsSpraying) {
+        this.wptsSpraying = wptsSpraying;
     }
 }

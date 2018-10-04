@@ -12,6 +12,7 @@ import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
 import lib.uav.struct.constants.TypeSystemExecMOSA;
 import lib.uav.struct.geom.Position3D;
+import lib.uav.struct.mission.Mission;
 import lib.uav.struct.mission.Route3D;
 import lib.uav.util.UtilGeo;
 import marte.swing.graphics.pkg2d.navigation.sPanelDraw;
@@ -37,6 +38,14 @@ public class PanelPlotMission extends sPanelDraw {
     private static final Color COLOR_ROUTE_DRONE = Color.GRAY;
     private static final Color COLOR_DRONE = Color.BLUE;
     private static final Color COLOR_MAX_DIST = new Color(0, 255, 0, 50);
+        
+    private static final Color COLOR_WPT_MISSION          = Color.GRAY;
+    private static final Color COLOR_WPT_BUZZER           = Color.RED;
+    private static final Color COLOR_WPT_CAM_PICTURE      = Color.ORANGE;
+    private static final Color COLOR_WPT_CAM_VIDEO        = Color.ORANGE;
+    private static final Color COLOR_WPT_CAM_PHOTO_IN_SEQ = Color.ORANGE;
+    private static final Color COLOR_WPT_SPRAYING         = Color.MAGENTA;
+    
     private final ReaderFileConfig config;
     private final EnabledResources enabledResources;
     
@@ -49,6 +58,13 @@ public class PanelPlotMission extends sPanelDraw {
     private double pyDrone;
     private double maxDistReached;
     private boolean printDrone = false;
+    
+    private Mission wptsMission = null;
+    private Mission wptsBuzzer = null;
+    private Mission wptsCameraPicture = null;
+    private Mission wptsCameraVideo = null;
+    private Mission wptsCameraPhotoInSeq = null;
+    private Mission wptsSpraying = null;
 
     /**
      * Class constructor
@@ -117,6 +133,24 @@ public class PanelPlotMission extends sPanelDraw {
         );
         this.repaint();
     }
+    
+    @Override
+    protected void paintStaticLast(Graphics2D g2) {
+        g2.drawRect(0, 0, width()-1, height()-2);
+        g2.setColor(Color.LIGHT_GRAY);
+        g2.fillRect(510, 386, 134, 86);
+        g2.setColor(Color.BLACK);
+        g2.drawRect(510, 386, 134, 86);
+        g2.drawString("Legend:", 518, 400);
+        g2.setColor(COLOR_ROUTE_MOSA);
+        g2.drawString("  Route Planner", 518, 416);
+        g2.setColor(COLOR_ROUTE_IFA);
+        g2.drawString("  Route RePlanner", 518, 432);
+        g2.setColor(COLOR_ROUTE_MOSA_SIMP);
+        g2.drawString("  Route Simplifier", 518, 448);
+        g2.setColor(COLOR_ROUTE_DRONE);
+        g2.drawString("  Route Drone", 518, 464);
+    }                        
 
     /**
      * Paint in screen the info about map, mission, drone position.
@@ -238,6 +272,68 @@ public class PanelPlotMission extends sPanelDraw {
             g2.fillOval(toUnit(pxDrone) - toUnit(maxDistReached)/2, 
                     toUnit(pyDrone) - toUnit(maxDistReached)/2, 
                     toUnit(maxDistReached), toUnit(maxDistReached));
+        }
+        if (enabledResources.showMarkers){
+            if (wptsMission != null){
+                for (int i = 0; i < wptsMission.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsMission.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsMission.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_MISSION);
+                    g2.fillOval(toUnit(x) - 36, toUnit(y) - 36, 72, 72);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptMission", toUnit(x)-30, toUnit(y)+5); 
+                }
+            }
+            if (wptsBuzzer != null){
+                for (int i = 0; i < wptsBuzzer.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsBuzzer.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsBuzzer.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_BUZZER);
+                    g2.fillOval(toUnit(x) - 30, toUnit(y) - 30, 60, 60);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptBuzzer", toUnit(x)-27, toUnit(y)+5); 
+                }
+            }
+            if (wptsCameraPicture != null){
+                for (int i = 0; i < wptsCameraPicture.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsCameraPicture.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsCameraPicture.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_CAM_PICTURE);
+                    g2.fillOval(toUnit(x) - 30, toUnit(y) - 30, 60, 60);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptPicture", toUnit(x)-30, toUnit(y)+5);                
+                }
+            }
+            if (wptsCameraPhotoInSeq != null){
+                for (int i = 0; i < wptsCameraPhotoInSeq.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsCameraPhotoInSeq.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsCameraPhotoInSeq.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_CAM_PHOTO_IN_SEQ);            
+                    g2.fillOval(toUnit(x) - 30, toUnit(y) - 30, 60, 60);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptPhotoSeq", toUnit(x)-33, toUnit(y)+5);                
+                }
+            }
+            if (wptsCameraVideo != null){            
+                for (int i = 0; i < wptsCameraVideo.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsCameraVideo.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsCameraVideo.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_CAM_VIDEO);
+                    g2.fillOval(toUnit(x) - 30, toUnit(y) - 30, 60, 60);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptVideo", toUnit(x)-24, toUnit(y)+5);                
+                }
+            }
+            if (wptsSpraying != null){
+                for (int i = 0; i < wptsSpraying.size(); i++){
+                    double x = UtilGeo.convertGeoToX(GCS.pointGeo, wptsSpraying.getWaypoint(i).getLng());
+                    double y = UtilGeo.convertGeoToY(GCS.pointGeo, wptsSpraying.getWaypoint(i).getLat());
+                    g2.setColor(COLOR_WPT_SPRAYING);
+                    g2.fillOval(toUnit(x) - 30, toUnit(y) - 30, 60, 60);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString("WptSpray", toUnit(x)-24, toUnit(y)+5);
+                }
+            }
         }
     }
 
@@ -442,5 +538,29 @@ public class PanelPlotMission extends sPanelDraw {
      */
     public static int toUnit(double value) {
         return Math.round((float) (value / CONST_UNIT));
+    }
+
+    public void setWptsMission(Mission wptsMission) {
+        this.wptsMission = wptsMission;
+    }       
+
+    public void setWptsBuzzer(Mission wptsBuzzer) {
+        this.wptsBuzzer = wptsBuzzer;
+    }
+
+    public void setWptsCameraPicture(Mission wptsCameraPicture) {
+        this.wptsCameraPicture = wptsCameraPicture;
+    }
+
+    public void setWptsCameraVideo(Mission wptsCameraVideo) {
+        this.wptsCameraVideo = wptsCameraVideo;
+    }
+
+    public void setWptsCameraPhotoInSeq(Mission wptsCameraPhotoInSeq) {
+        this.wptsCameraPhotoInSeq = wptsCameraPhotoInSeq;
+    }
+
+    public void setWptsSpraying(Mission wptsSpraying) {
+        this.wptsSpraying = wptsSpraying;
     }
 }
