@@ -24,6 +24,8 @@ Os algoritmos seguintes estão sendo utilizados como algoritmos de replanejament
 
 * **Fixed-Route4s** -> *Fixed Route for security*
 
+* **G-Path-Replanner4s** -> *Generic Path Replanner for security* - Replanejador de rotas genérico para segurança. 
+
 ## Arquivos dos Métodos
 
 Em cada uma das pastas dos métodos citados acima (DE4s, GH4s, GA4s, MPGA4s), tem-se um conjunto de arquivos explicados a seguir. 

@@ -7,7 +7,8 @@
 * Added special markers on Plots (Google Maps and Simple Map) for waypoints, buzzer, photos, video and spraying.
 * Added color legend of the routes on the UAV-GCS.
 * Added new scripts Beagle Bone and tests the softwares installed.
-* Added generic planner PathPlanner4m in UAV-MOSA.
+* Added generic path replanner, called G-Path-Replanner4s, in UAV-IFA.
+* Added generic path planner, called G-Path-Planner4m, in UAV-MOSA.
 * Renamed the project UAV-Generic to Lib-UAV.
 * Updated readme file in Github with the documentation. 
 * Added javadoc for the systems: UAV-Generic, UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Mission-Creator.

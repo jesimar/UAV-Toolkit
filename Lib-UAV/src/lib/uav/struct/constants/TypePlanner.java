@@ -7,9 +7,9 @@ package lib.uav.struct.constants;
  */
 public class TypePlanner {
    
-    public static final String HGA4M          = "HGA4m";
-    public static final String CCQSP4M        = "CCQSP4m";
-    public static final String A_STAR4M       = "A_STAR4m";
-    public static final String PATH_PLANNER4M = "PATH_PLANNER4m";
+    public static final String HGA4M            = "HGA4m";
+    public static final String CCQSP4M          = "CCQSP4m";
+    public static final String A_STAR4M         = "A_STAR4m";
+    public static final String G_PATH_PLANNER4M = "G_PATH_PLANNER4m";
     
 }

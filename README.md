@@ -137,10 +137,11 @@ ou
 
 **Software necessário para execução de alguns planejadores de rotas:**
 
-* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86) (Instalar no PC e CC) (Licença Proprietária)
+* IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Funciona somente em arquiteturas x86 e x64) (Instalar no PC e CC) (Licença Proprietária)
 
 OBS: A versão do CPLEX que avaliada foi: IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.5.1.0.
 
+:warning: **OBS:** A instalação do CPLEX ocupa aproximadamente 1268 MB de espaço em disco.
 :warning: **OBS:** Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
 
 **Software necessário para criar uma nova missão para o Drone:**

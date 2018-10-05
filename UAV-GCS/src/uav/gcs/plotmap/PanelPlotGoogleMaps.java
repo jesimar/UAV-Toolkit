@@ -192,7 +192,7 @@ public class PanelPlotGoogleMaps extends JPanel {
             });
         }
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
-                && config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)) {
+                && config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)) {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {

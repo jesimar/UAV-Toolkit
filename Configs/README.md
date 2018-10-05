@@ -4,6 +4,6 @@ Esta pasta contém os arquivos de configurações dos parâmetros de voo do dron
 
 ## Drone iDroneAlpha:
 
-* **params-idronealpha-apmplanner2.param** -> Arquivo gerado pelo programa APM Planner 2.0.
+* **iDroneAlpha-Apm-Planner2-10-09-2018.param** -> Arquivo gerado pelo programa APM Planner 2.0.
 
-* **params-idronealpha-qgroundcontrol** -> Arquivo gerado pelo programa QGroundControl.
+* **iDroneAlpha-QGroundControl-04-10-2018.params** -> Arquivo gerado pelo programa QGroundControl.

@@ -84,7 +84,7 @@ public class DecisionMaking {
                 resp = sendMissionBasedPlannerCCQSP4mOnboard();
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 resp = sendMissionBasedPlannerAStar4mOnboard();
-            }else if (config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)){
+            }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
                 resp = sendMissionBasedPlannerPathPlanner4mOnboard();
             }
             if (resp){

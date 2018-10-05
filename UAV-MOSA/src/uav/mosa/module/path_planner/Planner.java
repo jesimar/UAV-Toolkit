@@ -92,7 +92,7 @@ public abstract class Planner {
                 }
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 cmd = config.getCmdExecPlanner();
-            }else if (config.getTypePlanner().equals(TypePlanner.PATH_PLANNER4M)){
+            }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
                 cmd = config.getCmdExecPlanner();
             }
             UtilRunThread.dualSingleThreadWaitFor(cmd, new File(dir), isPrint, isPrintError);

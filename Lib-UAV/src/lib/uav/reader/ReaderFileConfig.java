@@ -400,7 +400,8 @@ public class ReaderFileConfig {
                 !methodReplanner.equals(TypeReplanner.DE4S) &&
                 !methodReplanner.equals(TypeReplanner.GA_GA_4S) && 
                 !methodReplanner.equals(TypeReplanner.GA_GH_4S) && 
-                !methodReplanner.equals(TypeReplanner.PRE_PLANNED4s))){
+                !methodReplanner.equals(TypeReplanner.PRE_PLANNED4s) &&
+                !methodReplanner.equals(TypeReplanner.G_PATH_REPLANNER4M))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         }
@@ -426,7 +427,7 @@ public class ReaderFileConfig {
                 (!methodPlanner.equals(TypePlanner.HGA4M) &&
                  !methodPlanner.equals(TypePlanner.CCQSP4M) && 
                  !methodPlanner.equals(TypePlanner.A_STAR4M) &&
-                 !methodPlanner.equals(TypePlanner.PATH_PLANNER4M))){
+                 !methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         } 
@@ -475,8 +476,8 @@ public class ReaderFileConfig {
             }else if (methodPlanner.equals(TypePlanner.A_STAR4M)){
                 typePlanner = TypePlanner.A_STAR4M;
                 dirPlanner = "../Modules-MOSA/A-Star4m/";
-            }else if (methodPlanner.equals(TypePlanner.PATH_PLANNER4M)){
-                typePlanner = TypePlanner.PATH_PLANNER4M;
+            }else if (methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M)){
+                typePlanner = TypePlanner.G_PATH_PLANNER4M;
                 dirPlanner = "../Modules-MOSA/Path-Planner4m/";
             }
             return true;
