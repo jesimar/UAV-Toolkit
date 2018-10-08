@@ -6,9 +6,10 @@ Abaixo serão descritas as especificações de entrada e saída do planejador, c
 
 ### Entrada do Mapa
 
-O seu planejador deverá utilizar como entrada um arquivo de mapa chamado "map-nfz.sgl".
+O seu planejador deverá utilizar como entrada um arquivo de mapa chamado "map-nfz". Atualmente, existem três versões/formatos disponíveis de mapas que o .sgl, .json e .xml.
+Os três arquivos possuem o mesmo conteúdo, você poderá escolher o que você achar melhor. 
 
-O arquivo possui o seguinte padrão: "map-nfz.sgl"
+O arquivo .sgl possui o seguinte padrão: "map-nfz.sgl"
 
 ```
 <number of polygons>
@@ -33,7 +34,7 @@ O arquivo possui o seguinte padrão: "map-nfz.sgl"
 -9.790579190714476,-6.290114975736857,-6.290060849773693,-9.790524335512249
 ```
 
-A primeira linha contém um comentário, informando que a linha de baixo representa o <number of polygons>.
+A primeira linha contém um comentário, informando que a linha de baixo representa o "number of polygons".
 
 A segunda linha contém o número de polígonos.
 
@@ -48,6 +49,8 @@ Linha contendo as coordenadas Y do polígono.
 :warning: **OBS:** Não altere esse nome ("map-nfz.sgl") do arquivo de mapa.
 
 :warning: **OBS:** Repare que o arquivo "map-nfz.sgl" está em coordenadas cartesianas.
+
+:warning: **OBS:** Dê uma olhada nos arquivos "map-nfz.xml" e "map-nfz.json". Eles podem ser mais legíveis para você uma vez que seu formato é mais conhecido.
 
 ### Entrada da Missão
 

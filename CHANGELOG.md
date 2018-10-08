@@ -4,10 +4,12 @@
 
 ### Features:
 
+* Added plot G-Path-Planner4m and G-Path-Replanner4s in UAV-GCS.
+* Added plot behavior in UAV-GCS.
 * Added plot of uncertainty in UAV-GCS (plot mission) in method CCQSP4m.
 * Added three parameters in CCQSP4m (time_horizon, steps, std_position) to be read in file of properties.
 * Updated code UAV-Mission-Creator to define objective waypoint with 2 meters of radius (before it was 1 meter).
-* Added in path replanner G-Path-Replanner4m the data input and output specifications.
+* Added in path replanner G-Path-Replanner4s the data input and output specifications.
 * Added in path planner G-Path-Planner4m the data input and output specifications.
 * Added map in XML and JSON format in software UAV-Mission-Creator.
 * Added special markers on Plots (Google Maps and Simple Map) in UAV-GCS for waypoints, buzzer, photos, video and spraying.

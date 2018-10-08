@@ -6,13 +6,13 @@ O projeto UAV-Mission-Creator foi desenvolvido para auxiliar a projetar missões
  
 Esse projeto conta com um conjunto de ferramentas para conversões de rotas em coordenadas cartesianas em coordenadas geograficas (e vice-versa), conta também com conversões de mapas projetados no Google Earth para mapas em coordenadas cartesianas. Dentre inumeras outras funcionalidades.
 
-Este sistema é o responsável por a partir de um arquivo de mapa geográfico (kml) (feito no google earth) transformar esse arquivo em um conjunto de arquivos necessários aos algoritmos de planejamento de caminho (HGA4m) e replanejamento de caminho (MPGA4s, GA4s, GH4s, DE4s).
+Este sistema é o responsável por a partir de um arquivo de mapa geográfico (kml) (feito no Google Earth) transformar esse arquivo em um conjunto de arquivos necessários aos algoritmos de planejamento de caminho (HGA4m, CCQSP4m, AStar4m, G-Path-Planner4m) e replanejamento de caminho (MPGA4s, GA4s, GH4s, DE4s, MS4s, G-Path-Replanner4s).
 
 A ideia geral do sistema pode ser vista na figura abaixo.
 
 ![](../Figures/sw-mission-creator.png)
 
-Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/kml/
+Os arquivos de entrada/saída desse sistema ficam dentro do diretório: /UAV-Toolkit/Missions/
 
 ## Criando o arquivo KML
 
@@ -29,17 +29,17 @@ As seguintes notações foram definidas afim de registrar as atividades relacion
 
 * **geo_base**: define um ponto de referência para a transformação entre os sistemas de coordenadas cartesianas e geográficas.
 * **waypoint**: define um ponto de passagem que a aeronave deve cumprir durante a sua missão. Os waypoints definidos serão utilizados pelo MOSA para estabelecer a rota a ser seguida pela aeronave.
-* **cmd_picture**: define um ponto ou região de pontos em que fotografia(s) deve(m) ser retirada(s). O sistema MOSA ao atingir esse ponto ou região de pontos efetua a retirada da(s) fotografia(s).
+* **cmd_picture**: define um ponto em que uma fotografia deve ser retirada. O sistema MOSA ao atingir esse ponto efetua a retirada da fotografia.
 * **cmd_photo_seq**: define um ponto a partir do qual uma sequência de fotografias serão retiradas. O sistema MOSA ao atingir esse ponto irá iniciar a retirada da(s) fotografia(s) em sequência.
 * **cmd_video**: define um ponto a partir do qual se iniciara a filmagem da região.
 * **cmd_spraying_begin**: define um ponto a partir do qual se iniciara a pulverização da região.
-* **cmd_spraying_end**: define um ponto de termino da pulverização.
+* **cmd_spraying_end**: define um ponto de término da pulverização.
 
 ## Arquivos de Entrada
 
-* config-mission.properties: Um arquivo de configurações (config-mission.properties) encontra-se também disponível para configuração de um conjunto de propriedades importantes.
+* **config-mission.properties**: Um arquivo de configurações (config-mission.properties) encontra-se também disponível para configuração de um conjunto de propriedades importantes.
 
-* mission.kml: Um arquivo com a missão (.kml) planejada feito usando o Google Earth.
+* **mission.kml**: Um arquivo com a missão (.kml) planejada feito usando o Google Earth. Este arquivo pode ter qualquer nome, mas deve possuir a extensão kml. Extensões kmz ainda não são suportadas.
 
 ## Arquivos de Saída
 

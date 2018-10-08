@@ -6,9 +6,10 @@ Abaixo serão descritas as especificações de entrada e saída do replanejador,
 
 ### Entrada do Mapa
 
-O seu replanejador deverá utilizar como entrada um arquivo de mapa chamado "map.sgl".
+O seu replanejador deverá utilizar como entrada um arquivo de mapa chamado "map". Atualmente, existem três versões/formatos disponíveis de mapas que o .sgl, .json e .xml.
+Os três arquivos possuem o mesmo conteúdo, você poderá escolher o que você achar melhor. 
 
-O arquivo possui o seguinte padrão: "map.sgl"
+O arquivo .sgl possui o seguinte padrão: "map.sgl"
 
 ```
 <number of polygons>
@@ -45,21 +46,35 @@ O arquivo possui o seguinte padrão: "map.sgl"
 -5.5912675314779126,-7.676106710825428,-7.789440323181001,-5.591271982323588
 ```
 
-A primeira linha contém um comentário, informando que a linha de baixo representa o "<number of polygons>"
+A primeira linha contém um comentário, informando que a linha de baixo representa o "number of polygons"
+
 A segunda linha contém o número de polígonos.
-A terceira linha contém um comentário, informando que a linha de baixo representa o "<number of zona n>" (n representa região não navegável).
+
+A terceira linha contém um comentário, informando que a linha de baixo representa o "number of zona n" (n representa região não navegável).
+
 A quarta linha contém o número de regiões do tipo n.
-A quinta linha contém um comentário, informando que a linha de baixo representa o "<number of zona p>" (p representa região penalizadora).
+
+A quinta linha contém um comentário, informando que a linha de baixo representa o "number of zona p" (p representa região penalizadora).
+
 A sexta linha contém o número de regiões do tipo p.
-A sétima linha contém um comentário, informando que a linha de baixo representa o "<number of zona b>" (b representa região bonificadora).
+
+A sétima linha contém um comentário, informando que a linha de baixo representa o "number of zona b" (b representa região bonificadora).
+
 A oitava linha contém o número de regiões do tipo b.
+
 A partir da nona linha o seguinte padrão se repete:
+
 Linha contendo um comentário, informando que as duas linhas abaixo apresentam os valores de x e os valores de y, respectivamente.
+
 Linha contendo as coordenadas X do polígono.
+
 Linha contendo as coordenadas Y do polígono.
 
 :warning: **OBS:** Não altere esse nome ("map.sgl") do arquivo de mapa.
+
 :warning: **OBS:** Repare que o arquivo "map.sgl" está em coordenadas cartesianas.
+
+:warning: **OBS:** Dê uma olhada nos arquivos "map.xml" e "map.json". Eles podem ser mais legíveis para você uma vez que seu formato é mais conhecido.
 
 ### Entrada do Estado do VANT
 
@@ -73,6 +88,7 @@ Abaixo um exemplo de arquivo de configuração: "config.sgl"
 ```
 
 A primeira linha contém um comentário sobre quem são os valores lidos abaixo. 
+
 A segunda linha contém os valores da posiçãoX, posiçãoY, velocidade e orientação do drone. 
 
 :warning: **OBS:** A posição do drone é medida em metros, a velocidade em m/s e a orientação em radianos.
@@ -103,6 +119,10 @@ Abaixo um exemplo de arquivo de rota: "output.txt"
 35.20921905800773 29.06371985062370
 ```
 
+:warning: **OBS:** A rota de saída deve ser apenas 2D.
+
 :warning: **OBS:** Deve-se utilizar o separador de espaço ou ainda o separador de tabulação (tab) ("\t").
+
 :warning: **OBS:** O arquivo deverá ter necessariamente o nome "output.txt".
+
 :warning: **OBS:** Repare que o arquivo "output.txt" está em coordenadas cartesianas. O sistema UAV-Toolkit irá converter a sua rota posteriormente para coordenadas geográficas.
