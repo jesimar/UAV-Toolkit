@@ -54,10 +54,18 @@ public class CCQSP4m extends Planner{
         try {
             File src_instance = new File(dir + "instance-base");
             File dst_instance = new File(dir + "instance");
+            String steps = config.getStepsPlannerCCQSP4m();
             String delta = config.getDeltaPlannerCCQSP4m();
+            String stdPos = config.getStdPositionPlannerCCQSP4m();
             String qtdWpt = config.getWaypointsPlannerCCQSP4m();
-            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
-                    qtdWpt, 298, qtdWpt, 299);
+            String timeHorizon = config.getTimeHorizonPlannerCCQSP4m();
+            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, steps, 177,
+                    delta, 189, stdPos, 234, qtdWpt, 298, timeHorizon, 299);
+            
+            File src_mission = new File(dir + "mission-ccqsp.sgl");
+            File dst_mission = new File(dir + "mission.sgl");
+            UtilIO.copyFileModifiedMOSA(src_mission, dst_mission,
+                    delta, 5, timeHorizon, 10);
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");

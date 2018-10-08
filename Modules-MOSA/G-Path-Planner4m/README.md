@@ -33,14 +33,20 @@ O arquivo possui o seguinte padrão: "map-nfz.sgl"
 -9.790579190714476,-6.290114975736857,-6.290060849773693,-9.790524335512249
 ```
 
-A primeira linha contém um comentário, informando que a linha de baixo representa o "<number of polygons>"
+A primeira linha contém um comentário, informando que a linha de baixo representa o <number of polygons>.
+
 A segunda linha contém o número de polígonos.
+
 A partir da terceira linha o seguinte padrão se repete:
+
 Linha contendo um comentário, informando que as duas linhas abaixo apresentam os valores de x e os valores de y, respectivamente.
+
 Linha contendo as coordenadas X do polígono.
+
 Linha contendo as coordenadas Y do polígono.
 
 :warning: **OBS:** Não altere esse nome ("map-nfz.sgl") do arquivo de mapa.
+
 :warning: **OBS:** Repare que o arquivo "map-nfz.sgl" está em coordenadas cartesianas.
 
 ### Entrada da Missão
@@ -94,6 +100,10 @@ Abaixo um exemplo de arquivo de rota: "output.txt"
 35.20921905800773 29.06371985062370
 ```
 
+:warning: **OBS:** A rota de saída deve ser apenas 2D.
+
 :warning: **OBS:** Deve-se utilizar o separador de espaço ou ainda o separador de tabulação (tab) ("\t").
+
 :warning: **OBS:** O arquivo deverá ter necessariamente o nome "output.txt".
+
 :warning: **OBS:** Repare que o arquivo "output.txt" está em coordenadas cartesianas. O sistema UAV-Toolkit irá converter a sua rota posteriormente para coordenadas geográficas.

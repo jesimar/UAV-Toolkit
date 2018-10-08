@@ -4,7 +4,13 @@
 
 ### Features:
 
-* Added special markers on Plots (Google Maps and Simple Map) for waypoints, buzzer, photos, video and spraying.
+* Added plot of uncertainty in UAV-GCS (plot mission) in method CCQSP4m.
+* Added three parameters in CCQSP4m (time_horizon, steps, std_position) to be read in file of properties.
+* Updated code UAV-Mission-Creator to define objective waypoint with 2 meters of radius (before it was 1 meter).
+* Added in path replanner G-Path-Replanner4m the data input and output specifications.
+* Added in path planner G-Path-Planner4m the data input and output specifications.
+* Added map in XML and JSON format in software UAV-Mission-Creator.
+* Added special markers on Plots (Google Maps and Simple Map) in UAV-GCS for waypoints, buzzer, photos, video and spraying.
 * Added color legend of the routes on the UAV-GCS.
 * Added new scripts Beagle Bone and tests the softwares installed.
 * Added generic path replanner, called G-Path-Replanner4s, in UAV-IFA.
@@ -17,7 +23,7 @@
 * Added UAV-GCS buttons resources that enable plots in mission of drone.
 * Added feature maximun distance reached based in battery and speed average of drone.
 * Added feature maximun time of flight based in battery of drone.
-* Update all code (refactored UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Generic).
+* Updated all code (refactored UAV-MOSA, UAV-IFA, UAV-GCS, UAV-Generic).
 * Added in Modules-MOSA RouteStandard4m (circle, triangle, rectangle) (behavior) (MOSA-Adaptive).
 * Renamed method of path replanning Fixed-Route4s to Pre-Planned4s.
 * Updated file log-aircraft.csv with information estTimeToDoRTL and estConsumptionBatRTL.
@@ -40,6 +46,7 @@
 
 ### Bug Fixes:
 
+* Fixed a error in CCQSP4m (strengthening constraints).
 * Enable Google Maps feature in UAV-GCS (google maps need the internet to work) (defined by file of properties).
 * Fixed some of the untreated data input combinations on the UAV-IFA.
 

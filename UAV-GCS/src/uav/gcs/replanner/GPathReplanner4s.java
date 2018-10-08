@@ -1,0 +1,137 @@
+package uav.gcs.replanner;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+import lib.color.StandardPrints;
+import lib.uav.struct.constants.TypeAltitudeDecay;
+import lib.uav.struct.geom.PointGeo;
+import lib.uav.util.UtilGeo;
+import lib.uav.util.UtilIO;
+import uav.gcs.struct.Drone;
+
+/**
+ * The class models the generic path replanner, called GPathReplanner4s.
+ * @author Jesimar S. Arantes
+ * @since version 4.0.0
+ * @see Replanner
+ */
+public class GPathReplanner4s extends Replanner{
+    
+    /**
+     * Class constructor
+     * @param drone instance of the aircraft
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirReplanner replanner directory
+     * @param cmdExecReplanner command to exec the replanner
+     * @param typeAltitudeDecay type of altitude decay [CONSTANT or LINEAR]
+     * @since version 2.0.0
+     */
+    public GPathReplanner4s(Drone drone, String dirFiles, String fileGeoBase, 
+            String dirReplanner, String cmdExecReplanner, String typeAltitudeDecay) {
+        super(drone, dirFiles, fileGeoBase, dirReplanner, cmdExecReplanner, 
+                typeAltitudeDecay);
+    }
+
+    /**
+     * Execute the replanner
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    @Override
+    public boolean exec() {
+        boolean itIsOkUpdate = updateFileConfig();
+        boolean itIsOkExec   = execMethod();
+        boolean itIsOkParse  = parseRoute3DtoGeo();
+        return itIsOkUpdate && itIsOkExec && itIsOkParse;
+    }
+    
+    /**
+     * Updates the configuration file used by the method.
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    @Override
+    public boolean updateFileConfig() { 
+        try {
+            PointGeo pGeo = UtilGeo.getPointGeoBase(dirFiles + fileGeoBase);
+            double px = UtilGeo.convertGeoToX(pGeo, drone.gps.lng);
+            double py = UtilGeo.convertGeoToY(pGeo, drone.gps.lat);
+            double vel = 1.5;//drone.getSensorUAV().groundspeed;
+            int head = (int)drone.sensorUAV.heading;
+            int heading = UtilGeo.convertAngleAviationToAngleMath(head);
+            double angle = Math.toRadians(heading);
+            File file = new File(dir + "config.sgl");
+            String state = px + " " + py + " " + vel + " " + angle;
+            PrintStream print = new PrintStream(file);
+            print.println("# Initial State: positionX positionY velocity angle");
+            print.println(state);
+            print.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            return false;
+        }
+    }
+    
+    /**
+     * Converts the route in Cartesian coordinates to geographic coordinates
+     * @return {@code true} if the execution was successful
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    @Override
+    public boolean parseRoute3DtoGeo() {
+        try{
+            PointGeo pGeo = UtilGeo.getPointGeoBase(dirFiles + fileGeoBase);
+            String nameFileRoute3D =  "output.txt";
+            String nameFileRouteGeo = "routeGeo.txt";       
+            File fileRouteGeo = new File(dir + nameFileRouteGeo);
+            PrintStream printGeo = new PrintStream(fileRouteGeo);        
+            Scanner readRoute3D = new Scanner(new File(dir + nameFileRoute3D));
+            double h = drone.barometer.alt_rel;
+            int qtdWaypoints = UtilIO.getLineNumber(new File(dir + nameFileRoute3D));
+            double frac = h/qtdWaypoints;
+            int countLines = 0;
+            while(readRoute3D.hasNext()){                        
+                double x = readRoute3D.nextDouble();
+                double y = readRoute3D.nextDouble();           
+                if (typeAltitudeDecay.equals(TypeAltitudeDecay.LINEAR)){
+                    h = h - frac;
+                }
+                printGeo.println(UtilGeo.parseToGeo(pGeo, x, y, h, ";"));
+                countLines++;
+            }
+            if (countLines == 0){
+                StandardPrints.printMsgWarning("Route-Empty");
+            }
+            readRoute3D.close();
+            printGeo.close();
+            return true;
+        } catch (FileNotFoundException ex) {
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException] parseRoute3DtoGeo()");
+            return false;
+        } catch (IOException ex) {
+            StandardPrints.printMsgWarning("Warning [IOException] parseRoute3DtoGeo()");
+            return false;
+        }
+    }
+    
+    /**
+     * Clears log files generated by method
+     * @since version 4.0.0
+     */
+    @Override
+    public void clearLogs() {
+        UtilIO.deleteFile(new File(dir), ".log");
+        UtilIO.deleteFile(new File(dir), ".png");
+        new File(dir + "output.txt").delete();
+        new File(dir + "routeGeo.txt").delete();
+    } 
+        
+}

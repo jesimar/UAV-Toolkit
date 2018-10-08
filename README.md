@@ -55,7 +55,7 @@ Abaixo estão listados alguns pré-requisitos de instalação/configuração do 
 
 **Arquiteturas suportadas:**
 
-O presente projeto suporta processadores com arquiteturas x86, x64 e ARM (32 e 64 bits). A tabela abaixo mostra os processadores suportados ou testados.
+O presente projeto suporta processadores com arquiteturas x86, x64 e ARM (32 e 64 bits). Vale lembrar que as arquiteturas ARM usadas são de computadores de bordo (CC). E as arquiteturas x86 e x64 são tanto arquiteturas PC quanto CC, como a Intel Edison. A tabela abaixo mostra os processadores suportados ou testados.
 
 | Arquitetura x86 x64                                            | Arquitetura ARM                                          |
 |----------------------------------------------------------------|----------------------------------------------------------|
@@ -117,12 +117,18 @@ Abaixo estão descritos os softwares necessários para execução, acompanhar a 
 
 **Softwares básicos necessários para execução:**
 
-* Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)] (Instalar no PC e no CC). Foi testado na versão do Java SE 1.8. 
+* Java Runtime Environment [[Link](https://www.java.com/pt_BR/download/)] (Instalar no PC e no CC). Foi testado na versão do Java SE 1.8. Todos os códigos Java usaram o JDK 1.8.
+
 :warning: **OBS:** a versão OpenJDK pode apresentar problemas com o UAV-Manager e UAV-GCS.
-* Python 2.7.* [[Link](https://www.python.org/)] (Instalar no PC e no CC). 
+
+* Python 2.7.* [[Link](https://www.python.org/)] (Instalar no PC e no CC).
+ 
 :warning: **OBS:** a versão Python 3.* não é totalmente suportada pelo Dronekit.
+
 * Dronekit 2.9.* ou superior [[Link](http://python.dronekit.io/)] (Instalar no PC e no CC) (Licença Apache 2.0)
+
 * Dronekit-SITL 3.2.* ou superior [[Link](http://python.dronekit.io/)] ((Instalar **somente** no PC) (Licença MIT, Apache 2.0 e GPL 3.0)
+
 * Mavproxy 1.6.* ou superior [[Link](http://ardupilot.github.io/MAVProxy/html/index.html)] (Instalar no PC e no CC) (Licença GPL 3.0)
 
 **Softwares necessários para acomponhar a execução da missão:**
@@ -142,6 +148,7 @@ ou
 OBS: A versão do CPLEX que avaliada foi: IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.5.1.0.
 
 :warning: **OBS:** A instalação do CPLEX ocupa aproximadamente 1268 MB de espaço em disco.
+
 :warning: **OBS:** Após instalar deve-se, copiar o arquivo cplex.jar do diretório `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/` e `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`.
 
 **Software necessário para criar uma nova missão para o Drone:**
@@ -242,6 +249,7 @@ Existem dois arquivos que devem ser sempre conferidos antes de executar o ambine
 * O arquivo config-param.properties contém alguns parâmetros do piloto automático que sempre é atualizado pelo sistema IFA antes da realização da missão. Pode-se alterar qualquer parâmetro do piloto automático nesse arquivo usando o esquema de chave, valor dado. 
 
 :warning: **OBS:** Nunca execute o sistema sem antes conferir o conteúdo do arquivo "config-global.properties".
+
 :warning: **OBS:** Cuidado, pois os nomes dos parâmetros do arquivo "config-param.properties" podem mudar dependendo da versão do firmware do AP que você está usando. Os valores que modifiquei lá são totalmente compatíveis com os firwares que venho usando na APM e Pixhawk, mas sempre confira isso.
 
 ## Como Executar

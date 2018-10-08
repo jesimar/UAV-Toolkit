@@ -28,14 +28,18 @@ public class CCQSP4m extends Planner{
      * @param cmdExecPlanner command to exec the planner
      * @param altitudeFlight flight altitude cruising
      * @param waypoint amount of waypoint used
+     * @param timeHorizon time horizon
      * @param delta delta parameter/risk allocation
+     * @param steps means waypoints used for the obstacle avoidance
+     * @param stdPos standard deviation of drone position
      * @since version 3.0.0
      */
     public CCQSP4m(Drone drone, String dirFiles, String fileGeoBase, 
             String dirPlanner, String cmdExecPlanner, String altitudeFlight, 
-            String waypoint, String delta) {
+            String waypoint, String timeHorizon, String delta, String steps, 
+            String stdPos) {
         super(drone, dirFiles, fileGeoBase, dirPlanner, cmdExecPlanner, 
-                altitudeFlight, waypoint, delta);
+                altitudeFlight, waypoint, timeHorizon, delta, steps, stdPos);
     }
     
     /**
@@ -62,8 +66,12 @@ public class CCQSP4m extends Planner{
         try {
             File src_instance = new File(dir + "instance-base");
             File dst_instance = new File(dir + "instance");
-            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, delta, 189, 
-                    waypoint, 298, waypoint, 299);
+            UtilIO.copyFileModifiedMOSA(src_instance, dst_instance, steps, 177,
+                    delta, 189, stdPos, 234, waypoint, 298, timeHorizon, 299);
+            File src_mission = new File(dir + "mission-ccqsp.sgl");
+            File dst_mission = new File(dir + "mission.sgl");
+            UtilIO.copyFileModifiedMOSA(src_mission, dst_mission,
+                    delta, 5, timeHorizon, 10);
             return true;
         } catch (FileNotFoundException ex) {
             System.out.println("Warning [FileNotFoundException]: updateFileConfig()");

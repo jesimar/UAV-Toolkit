@@ -1,0 +1,372 @@
+<factorys number>
+13
+<node id>
+0
+<node type>
+2
+<node name>
+Run
+<node class name>
+ProOF.apl.factorys.fRun
+<chooses>
+4
+<node id>
+131
+<node type>
+2
+<node name>
+Models
+<node class name>
+ProOF.apl.factorys.fCplexFull
+<chooses>
+4
+<node id>
+183
+<node type>
+2
+<node name>
+UAV-Approach
+<node class name>
+ProOF.apl.UAV.fUAVApproach
+<chooses>
+1
+<node id>
+449
+<node type>
+2
+<node name>
+Vehicle
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.fLinearVehicle
+<chooses>
+0
+<node id>
+560
+<node type>
+2
+<node name>
+fOnoUncertainty
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoUncertainty
+<chooses>
+1
+<node id>
+563
+<node type>
+2
+<node name>
+Instance Reader
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoInstance
+<chooses>
+0
+<node id>
+566
+<node type>
+2
+<node name>
+Objective
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoObjective
+<chooses>
+2
+<node id>
+572
+<node type>
+2
+<node name>
+State Bound
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearStateBound
+<chooses>
+0
+<node id>
+578
+<node type>
+2
+<node name>
+Control Bound
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearControlBound
+<chooses>
+0
+<node id>
+584
+<node type>
+2
+<node name>
+Dynamic
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic
+<chooses>
+8
+<node id>
+603
+<node type>
+2
+<node name>
+Specific
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearSpecific
+<chooses>
+0
+<node id>
+556
+<node type>
+2
+<node name>
+Ono Operators
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoOperator
+<chooses>
+0
+<node id>
+609
+<node type>
+2
+<node name>
+Ono Avoidance
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoAvoidance
+<chooses>
+2
+<nodes number>
+17
+<node id>
+5
+<node type>
+1
+<node name>
+Cplex Model
+<node class name>
+ProOF.CplexOpt.CplexModel
+<parameters number>
+0
+<node id>
+136
+<node type>
+0
+<node name>
+UAVfull
+<node class name>
+ProOF.apl.UAV.UAVfull
+<parameters number>
+11
+1
+10.0
+0
+1000000000
+1.0E-4
+128.0
+2
+0
+0
+0
+1
+<node id>
+185
+<node type>
+0
+<node name>
+Ono
+<node class name>
+ProOF.apl.UAV.mission.Ono.OnoApproach
+<parameters number>
+3
+12
+7
+true;true;true;true;true;true;true;false;true
+<node id>
+110
+<node type>
+0
+<node name>
+Linear Delta
+<node class name>
+ProOF.apl.UAV.abst.uncertainty.Delta
+<parameters number>
+1
+0.05
+<node id>
+187
+<node type>
+0
+<node name>
+Ono Plot
+<node class name>
+ProOF.apl.UAV.mission.Ono.OnoPlot
+<parameters number>
+4
+1
+1
+0
+2.5
+<node id>
+188
+<node type>
+0
+<node name>
+Control Perfect Unc.
+<node class name>
+ProOF.apl.UAV.gen.linear.uncertainty.LinearPerfectControlUncertainty
+<parameters number>
+0
+<node id>
+450
+<node type>
+0
+<node name>
+Parts
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.fLinearVehicle$PartsVehicle
+<parameters number>
+0
+<node id>
+562
+<node type>
+0
+<node name>
+State Perfect Unc.
+<node class name>
+ProOF.apl.UAV.gen.linear.uncertainty.LinearPerfectStateUncertainty
+<parameters number>
+2
+0.05
+0.0
+<node id>
+564
+<node type>
+0
+<node name>
+Instance 2D
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoInstance$Instance2D
+<parameters number>
+1
+mission-ccqsp.sgl
+<node id>
+569
+<node type>
+0
+<node name>
+aprox{ u*u }*dt
+<node class name>
+ProOF.apl.UAV.gen.linear.mission.parts.fLinearObjective$ScalProdUtAprox
+<parameters number>
+1
+32
+<node id>
+573
+<node type>
+0
+<node name>
+DetNorm1(Vt)
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearStateBound$DetNorm1VtUB
+<parameters number>
+0
+<node id>
+579
+<node type>
+0
+<node name>
+DetNorm1(Ut)
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearControlBound$DetNorm1UtUB
+<parameters number>
+0
+<node id>
+593
+<node type>
+0
+<node name>
+Air-Resistence2
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirResistence2
+<parameters number>
+0
+<node id>
+602
+<node type>
+0
+<node name>
+Power dt
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirDt
+<parameters number>
+4
+30
+30
+4.0
+2.0
+<node id>
+604
+<node type>
+0
+<node name>
+Empty
+<node class name>
+ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearSpecific$Empty
+<parameters number>
+0
+<node id>
+557
+<node type>
+0
+<node name>
+RAA
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoOperator$RAA
+<parameters number>
+0
+<node id>
+612
+<node type>
+0
+<node name>
+or{ Z(t) and Z(t-1) } = 1
+<node class name>
+ProOF.apl.UAV.mission.Ono.fOnoAvoidance$Model6
+<parameters number>
+0
+---------- summarizing ----------
+Run;Cplex Model
+Models;UAVfull
+UAV-Approach;Ono
+Vehicle;Parts
+fOnoUncertainty;State Perfect Unc.
+Instance Reader;Instance 2D
+Objective;aprox{ u*u }*dt
+State Bound;DetNorm1(Vt)
+Control Bound;DetNorm1(Ut)
+Dynamic;Air-Resistence2
+Specific;Empty
+Ono Operators;RAA
+Ono Avoidance;or{ Z(t) and Z(t-1) } = 1
+Threads;1
+Time;10.0
+HistoryTime;0
+ItLim;1000000000
+Gap Rel;1.0E-4
+WorkMem(MB);128.0
+NodeSel;BestEst
+RootAlg;AutoAlg
+MIPEmphasis;Balanced
+warning;false
+output;true
+Avoid-N-risk;12
+Steps;7		-> troquei 	linha 177
+Strengthened;true;true;true;true;true;true;true;false;true
+Delta;0.01 	-> troquei	linha 189
+Enable plot;true
+Save png;true
+Save gif;false
+resolution;2.5
+std-position;0.5	-> troquei	linha 234
+std-velocity;0.0
+CCQSP 2D;mission.sgl
+N-aprox;32
+Waypoints;14	-> troquei		linha 298
+time horizon;14.0	-> troquei	linha 299
+V-term;4.0
+U-max;2.0

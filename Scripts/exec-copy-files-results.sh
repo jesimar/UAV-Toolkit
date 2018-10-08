@@ -2,7 +2,7 @@
 : '
 Author: Jesimar da Silva Arantes
 #Date: 13/02/2018
-#Last Update: 07/03/2018
+#Last Update: 06/10/2018
 #Description: Script that copies (saves) the results files automatically.
 #Descrição: Script que copia (salva) os arquivos de resultados de forma automática.
 '
@@ -43,6 +43,14 @@ cp ../Modules-MOSA/CCQSP4m/*.png ../$DIR_FILES/MOSA/. 2>/dev/null
 cp ../Modules-MOSA/CCQSP4m/route3D* ../$DIR_FILES/MOSA/. 2>/dev/null
 cp ../Modules-MOSA/CCQSP4m/routeGeo* ../$DIR_FILES/MOSA/. 2>/dev/null
 
+cp ../Modules-MOSA/A-Star4m/output* ../$DIR_FILES/MOSA/. 2>/dev/null
+cp ../Modules-MOSA/A-Star4m/route3D* ../$DIR_FILES/MOSA/. 2>/dev/null
+cp ../Modules-MOSA/A-Star4m/routeGeo* ../$DIR_FILES/MOSA/. 2>/dev/null
+
+cp ../Modules-MOSA/G-Path-Planner4m/output* ../$DIR_FILES/MOSA/. 2>/dev/null
+cp ../Modules-MOSA/G-Path-Planner4m/route3D* ../$DIR_FILES/MOSA/. 2>/dev/null
+cp ../Modules-MOSA/G-Path-Planner4m/routeGeo* ../$DIR_FILES/MOSA/. 2>/dev/null
+
 echo "copy file path replanning"
 
 cp ../Modules-IFA/MPGA4s/output-simulation.log ../$DIR_FILES/IFA/. 2>/dev/null
@@ -69,5 +77,11 @@ cp ../Modules-IFA/MS4s/output-simulation.log ../$DIR_FILES/IFA/. 2>/dev/null
 cp ../Modules-IFA/MS4s/route.txt ../$DIR_FILES/IFA/. 2>/dev/null
 cp ../Modules-IFA/MS4s/routeGeo.txt ../$DIR_FILES/IFA/. 2>/dev/null
 cp ../Modules-IFA/MS4s/*.png ../$DIR_FILES/IFA/. 2>/dev/null
+
+cp ../Modules-IFA/G-Path-Replanner4s/output-simulation.log ../$DIR_FILES/IFA/. 2>/dev/null
+cp ../Modules-IFA/G-Path-Replanner4s/output.txt ../$DIR_FILES/IFA/. 2>/dev/null
+cp ../Modules-IFA/G-Path-Replanner4s/route.txt ../$DIR_FILES/IFA/. 2>/dev/null
+cp ../Modules-IFA/G-Path-Replanner4s/routeGeo.txt ../$DIR_FILES/IFA/. 2>/dev/null
+cp ../Modules-IFA/G-Path-Replanner4s/*.png ../$DIR_FILES/IFA/. 2>/dev/null
 
 echo "====================done==================="

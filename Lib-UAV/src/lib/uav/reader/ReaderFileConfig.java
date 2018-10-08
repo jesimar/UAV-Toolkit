@@ -140,13 +140,16 @@ public class ReaderFileConfig {
     
     //ccqsp4m
     private String waypointsPlannerCCQSP4m;
+    private String timeHorizonPlannerCCQSP4m;
     private String deltaPlannerCCQSP4m;
+    private String stepsPlannerCCQSP4m;
+    private String stdPositionPlannerCCQSP4m;
     
     //astar4m
     private String fileMissionPlannerAStar4m;
     
     //pathplanner4m
-    private String fileMissionPlannerPathPlanner4m;
+    private String fileMissionPlannerGPathPlanner4m;
     
     //fixed route    
     private String dirFixedRouteMOSA;
@@ -296,11 +299,14 @@ public class ReaderFileConfig {
             maxControlPlannerHGA4m    = prop.getProperty("prop.mosa.planner.hga4m.max_control");                        
             
             waypointsPlannerCCQSP4m   = prop.getProperty("prop.mosa.planner.ccqsp4m.waypoints");
+            timeHorizonPlannerCCQSP4m = prop.getProperty("prop.mosa.planner.ccqsp4m.time_horizon");
             deltaPlannerCCQSP4m       = prop.getProperty("prop.mosa.planner.ccqsp4m.delta");
+            stepsPlannerCCQSP4m       = prop.getProperty("prop.mosa.planner.ccqsp4m.steps");
+            stdPositionPlannerCCQSP4m = prop.getProperty("prop.mosa.planner.ccqsp4m.std_position");
             
             fileMissionPlannerAStar4m = prop.getProperty("prop.mosa.planner.astar4m.file_mission");         
             
-            fileMissionPlannerPathPlanner4m = prop.getProperty("prop.mosa.planner.pathplanner4m.file_mission");         
+            fileMissionPlannerGPathPlanner4m = prop.getProperty("prop.mosa.planner.gpathplanner4m.file_mission");         
             
             dirFixedRouteMOSA         = prop.getProperty("prop.mosa.fixed_route.dir");
             fileFixedRouteMOSA        = prop.getProperty("prop.mosa.fixed_route.file_waypoints");
@@ -401,7 +407,7 @@ public class ReaderFileConfig {
                 !methodReplanner.equals(TypeReplanner.GA_GA_4S) && 
                 !methodReplanner.equals(TypeReplanner.GA_GH_4S) && 
                 !methodReplanner.equals(TypeReplanner.PRE_PLANNED4s) &&
-                !methodReplanner.equals(TypeReplanner.G_PATH_REPLANNER4M))){
+                !methodReplanner.equals(TypeReplanner.G_PATH_REPLANNER4s))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         }
@@ -466,6 +472,9 @@ public class ReaderFileConfig {
             }else if (methodReplanner.equals(TypeReplanner.PRE_PLANNED4s)){
                 typeReplanner = TypeReplanner.PRE_PLANNED4s;
                 dirReplanner = "../Modules-IFA/Fixed-Route4s/";
+            }else if (methodReplanner.equals(TypeReplanner.G_PATH_REPLANNER4s)){
+                typeReplanner = TypeReplanner.G_PATH_REPLANNER4s;
+                dirReplanner = "../Modules-IFA/G-Path-Replanner4s/";
             }
             if (methodPlanner.equals(TypePlanner.HGA4M)){
                 typePlanner = TypePlanner.HGA4M;
@@ -478,7 +487,7 @@ public class ReaderFileConfig {
                 dirPlanner = "../Modules-MOSA/A-Star4m/";
             }else if (methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M)){
                 typePlanner = TypePlanner.G_PATH_PLANNER4M;
-                dirPlanner = "../Modules-MOSA/Path-Planner4m/";
+                dirPlanner = "../Modules-MOSA/G-Path-Planner4m/";
             }
             return true;
         } catch (NumberFormatException ex){
@@ -808,8 +817,8 @@ public class ReaderFileConfig {
         return fileMissionPlannerAStar4m;
     }
     
-    public String getFileMissionPlannerPathPlanner4m() {
-        return fileMissionPlannerPathPlanner4m;
+    public String getFileMissionPlannerGPathPlanner4m() {
+        return fileMissionPlannerGPathPlanner4m;
     }
     
     public String getTimeExecPlannerHGA4m(int i) {
@@ -844,8 +853,20 @@ public class ReaderFileConfig {
         return waypointsPlannerCCQSP4m;
     }
     
+    public String getTimeHorizonPlannerCCQSP4m() {
+        return timeHorizonPlannerCCQSP4m;
+    }
+    
     public String getDeltaPlannerCCQSP4m() {
         return deltaPlannerCCQSP4m;
+    }
+    
+    public String getStepsPlannerCCQSP4m() {
+        return stepsPlannerCCQSP4m;
+    }
+    
+    public String getStdPositionPlannerCCQSP4m() {
+        return stdPositionPlannerCCQSP4m;
     }
     
     public String getDirFixedRouteMOSA() {

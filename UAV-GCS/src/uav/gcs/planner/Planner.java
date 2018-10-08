@@ -27,12 +27,15 @@ public abstract class Planner {
     final String cmdExecPlanner;   //local
     final String altitudeFlight;   //local
     String time;                   //local - used in planner hga4m
-    String waypoint;               //local - used in planner ccqsp4m
     String delta;                  //local - used in planner hga4m and ccqsp4m
     String maxVel;                 //local - used in planner hga4m
     String maxCtrl;                //local - used in planner hga4m
     String speedCruize;            //local - used in planner hga4m
     String typeAircraft;           //local - used in planner hga4m
+    String waypoint;               //local - used in planner ccqsp4m
+    String timeHorizon;            //local - used in planner ccqsp4m
+    String steps;                  //local - used in planner ccqsp4m
+    String stdPos;                 //local - used in planner ccqsp4m
 
     /**
      * Class constructor - Used in HGA4m
@@ -84,12 +87,16 @@ public abstract class Planner {
      * @param cmdExecPlanner command to exec the planner
      * @param altitudeFlight flight altitude cruising
      * @param waypoint amount of waypoint used
+     * @param timeHorizon time horizon
      * @param delta delta parameter/risk allocation
+     * @param steps means waypoints used for the obstacle avoidance
+     * @param stdPos standard deviation of drone position
      * @since version 3.0.0
      */
     public Planner(Drone drone, String dirFiles, String fileGeoBase, 
             String dirPlanner, String cmdExecPlanner, String altitudeFlight, 
-            String waypoint, String delta) {
+            String waypoint, String timeHorizon, String delta, String steps, 
+            String stdPos) {
         this.drone = drone;
         this.dirFiles = dirFiles;
         this.fileGeoBase = fileGeoBase;
@@ -97,7 +104,10 @@ public abstract class Planner {
         this.cmdExecPlanner = cmdExecPlanner;
         this.altitudeFlight = altitudeFlight;
         this.waypoint = waypoint;
+        this.timeHorizon = timeHorizon;
         this.delta = delta;      
+        this.steps = steps;
+        this.stdPos = stdPos;
         this.waypointsMission = new Mission3D();
         this.mission3D = new Mission3D();
         this.missionGeo = new Mission();
@@ -119,6 +129,30 @@ public abstract class Planner {
             String altitudeFlight) {
         this.drone = drone; 
         this.fileWaypointsMission = fileWaypointsMission;
+        this.dirFiles = dirFiles;
+        this.fileGeoBase = fileGeoBase;
+        this.dir = dirPlanner;
+        this.cmdExecPlanner = cmdExecPlanner;
+        this.altitudeFlight = altitudeFlight;      
+        this.waypointsMission = new Mission3D();
+        this.mission3D = new Mission3D();
+        this.missionGeo = new Mission();
+    }
+    
+    /**
+     * Class constructor - G-Path-Planner4m
+     * @param drone instance of the aircraft
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirPlanner planner directory
+     * @param cmdExecPlanner command to exec the planner
+     * @param altitudeFlight flight altitude cruising
+     * @since version 4.0.0
+     */
+    public Planner(Drone drone, String dirFiles, 
+            String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
+            String altitudeFlight) {
+        this.drone = drone;
         this.dirFiles = dirFiles;
         this.fileGeoBase = fileGeoBase;
         this.dir = dirPlanner;

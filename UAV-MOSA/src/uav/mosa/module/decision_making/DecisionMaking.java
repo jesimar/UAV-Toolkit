@@ -22,7 +22,7 @@ import uav.mosa.module.communication.CommunicationGCS;
 import uav.mosa.module.path_planner.AStar4m;
 import uav.mosa.module.path_planner.CCQSP4m;
 import uav.mosa.module.path_planner.HGA4m;
-import uav.mosa.module.path_planner.PathPlanner4m;
+import uav.mosa.module.path_planner.GPathPlanner4m;
 import uav.mosa.module.path_planner.Planner;
 
 /**
@@ -85,7 +85,7 @@ public class DecisionMaking {
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 resp = sendMissionBasedPlannerAStar4mOnboard();
             }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
-                resp = sendMissionBasedPlannerPathPlanner4mOnboard();
+                resp = sendMissionBasedPlannerGPathPlanner4mOnboard();
             }
             if (resp){
                 statePlanning = StatePlanning.READY;
@@ -125,8 +125,10 @@ public class DecisionMaking {
                 }
             } else if (config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
                 resp = sendMissionBasedPlannerCCQSP4mOffboard(communicationGSC);                
-            }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
+            } else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
                 resp = sendMissionBasedPlannerAStar4mOffboard(communicationGSC);
+            } else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
+                resp = sendMissionBasedPlannerGPathPlanner4mOffboard(communicationGSC);
             }
             if (resp){
                 statePlanning = StatePlanning.READY;
@@ -448,15 +450,15 @@ public class DecisionMaking {
      *         {@code false} otherwise
      * @since version 4.0.0
      */
-    private boolean sendMissionBasedPlannerPathPlanner4mOnboard() {
+    private boolean sendMissionBasedPlannerGPathPlanner4mOnboard() {
         long timeInit = System.currentTimeMillis();
         StandardPrints.printMsgEmph("send missions to drone calc ground path-planner4m");
-        planner = new PathPlanner4m(drone, wptsMission3D);
+        planner = new GPathPlanner4m(drone, wptsMission3D);
         planner.clearLogs();
         statePlanning = StatePlanning.WAITING;
         
         statePlanning = StatePlanning.PLANNING;
-        boolean resp = ((PathPlanner4m)(planner)).execMission();
+        boolean resp = ((GPathPlanner4m)(planner)).execMission();
         if (!resp){
             return false;
         }
@@ -600,7 +602,10 @@ public class DecisionMaking {
                 + ";" + config.getCmdExecPlanner() 
                 + ";" + config.getAltRelMission() 
                 + ";" + config.getWaypointsPlannerCCQSP4m()
-                + ";" + config.getDeltaPlannerCCQSP4m();
+                + ";" + config.getTimeHorizonPlannerCCQSP4m()
+                + ";" + config.getDeltaPlannerCCQSP4m()
+                + ";" + config.getStepsPlannerCCQSP4m()
+                + ";" + config.getStdPositionPlannerCCQSP4m();
         communicationGCS.sendData(TypeMsgCommunication.MOSA_GCS_PLANNER + attributes);
         do {
             try {
@@ -646,6 +651,42 @@ public class DecisionMaking {
             }
         } while (!communicationGCS.hasReceiveRouteGCS());
         String msgRoute = communicationGCS.getRoutePlannerGCS();
+        if (msgRoute.equals(TypeMsgCommunication.UAV_ROUTE_FAILURE)) {
+            System.out.println("Route GCS [Failure]: " + msgRoute);
+            return false;
+        } else {
+            boolean resp = dataAcquisition.setMission(msgRoute);
+            return resp;
+        }
+    }
+    
+    /**
+     * Send mission based planner (G-Path-Planner4m) to autopilot calculated offboard.
+     * @return {@code true} if success,  
+     *         {@code false} otherwise
+     * @since version 4.0.0
+     */
+    private boolean sendMissionBasedPlannerGPathPlanner4mOffboard(
+            CommunicationGCS communicationGCS) {        
+        long timeInit = System.currentTimeMillis();
+        String attributes = config.getTypePlanner() 
+                + ";" + config.getDirFiles() 
+                + ";" + config.getFileGeoBase()
+                + ";" + config.getDirPlanner() 
+                + ";" + config.getCmdExecPlanner() 
+                + ";" + config.getAltRelMission();
+        communicationGCS.sendData(TypeMsgCommunication.MOSA_GCS_PLANNER + attributes);
+        do {
+            try {
+                Thread.sleep(1);//AUMENTAR UM POUCO DEPOIS -> fazendo teste de velocidade de comunicação
+            } catch (InterruptedException ex) {
+
+            }
+        } while (!communicationGCS.hasReceiveRouteGCS());
+        String msgRoute = communicationGCS.getRoutePlannerGCS();
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgBlue("Time in Planner :> (ms): " + time);
         if (msgRoute.equals(TypeMsgCommunication.UAV_ROUTE_FAILURE)) {
             System.out.println("Route GCS [Failure]: " + msgRoute);
             return false;

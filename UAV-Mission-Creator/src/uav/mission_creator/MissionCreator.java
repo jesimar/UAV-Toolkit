@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import lib.uav.util.UtilString;
+import uav.mission_creator.converter.Converter;
+import uav.mission_creator.converter.map.Map;
+import uav.mission_creator.converter.reader.ReaderMapFull;
+import uav.mission_creator.converter.reader.ReaderMapNFZ;
 import uav.mission_creator.struct.Mission;
 import uav.mission_creator.file.ReaderFileConfigMission;
 import uav.mission_creator.file.ReaderKML;
@@ -48,6 +52,8 @@ public class MissionCreator {
         createFileSGL_NFZ(mission); 
         createFileSGL_NFZ_AStar(mission);
         createFileSGL_Full(mission);
+        createFileXMLandJSON_NFZ();
+        createFileXMLandJSON_Full();
         createFileMissionCCQSP4m(mission);
         createFileGeoBase(mission);      
         createFileWaypoints3D(mission);
@@ -58,6 +64,7 @@ public class MissionCreator {
         if (mission.hasPointFailure()){
             createPointsFailure(mission);
         }
+        new File(config.getDirRouteKML() + "new" + config.getFileRouteKML()).delete();
     }
     
     private void createFilePreProcessor(){
@@ -139,6 +146,42 @@ public class MissionCreator {
         File fileFailure = new File(config.getDirRouteKML() + "pontos_de_falha.txt");
         save.printerPointsFailure(fileFailure, mission);
         System.out.println("--------End Pontos de Falha--------");
+    }
+    
+    private void createFileXMLandJSON_NFZ(){
+        System.out.println("--------Begin Printer XML and JSON NFZ--------");
+        boolean printPrettyFormat = true;
+        Map map = new Map();
+        String nameFile = config.getFileMapNFZ();
+        String onlyName = nameFile.replace(".sgl", "");
+        ReaderMapNFZ reader = new ReaderMapNFZ(map, config.getDirRouteKML() + nameFile);
+        reader.read();
+        if (printPrettyFormat){
+            Converter.convertToJSONinPrettyFormat(map, config.getDirRouteKML() + onlyName + ".json");
+            Converter.convertToXMLinPrettyFormat(map, config.getDirRouteKML() + onlyName + ".xml");
+        }else{
+            Converter.convertToJSON(map, config.getDirRouteKML() + onlyName + "_simple.json");
+            Converter.convertToXML(map, config.getDirRouteKML() + onlyName +"_simple.xml");
+        }      
+        System.out.println("--------End Printer XML and JSON NFZ--------");
+    }
+    
+    private void createFileXMLandJSON_Full(){
+        System.out.println("--------Begin Printer XML and JSON Full--------");
+        boolean printPrettyFormat = true;
+        Map map = new Map();
+        String nameFile = config.getFileMapFull();
+        String onlyName = nameFile.replace(".sgl", "");
+        ReaderMapFull reader = new ReaderMapFull(map, config.getDirRouteKML() + nameFile);
+        reader.read();
+        if (printPrettyFormat){
+            Converter.convertToJSONinPrettyFormat(map, config.getDirRouteKML() + onlyName + ".json");
+            Converter.convertToXMLinPrettyFormat(map, config.getDirRouteKML() + onlyName + ".xml");
+        }else{
+            Converter.convertToJSON(map, config.getDirRouteKML() + onlyName + "_simple.json");
+            Converter.convertToXML(map, config.getDirRouteKML() + onlyName +"_simple.xml");
+        }
+        System.out.println("--------end Printer XML and JSON Full--------");
     }
     
 }

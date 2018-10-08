@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import lib.uav.reader.ReaderFileConfig;
 import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeReplanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
 import lib.uav.struct.constants.TypeSystemExecMOSA;
 import lib.uav.struct.mission.Mission;
@@ -36,6 +37,7 @@ public class PanelPlotGoogleMaps extends JPanel {
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
     private final ReaderRoute routeMOSASimplifier;
+    private final ReaderRoute routeMOSABehavior;
     private ReaderMap map;
     private final double lngBase = GCS.pointGeo.getLng();
     private final double latBase = GCS.pointGeo.getLat();
@@ -57,6 +59,7 @@ public class PanelPlotGoogleMaps extends JPanel {
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
         routeMOSASimplifier = new ReaderRoute();
+        routeMOSABehavior = new ReaderRoute();
     }
 
     /**
@@ -151,16 +154,16 @@ public class PanelPlotGoogleMaps extends JPanel {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    int j = 0;
+                    int i = 0;
                     while (true) {
                         try {
                             Thread.sleep(500);
-                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + j + ".txt";
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.readHGA(fileMOSA);
-                                addRouteInAPIxy(routeMOSA, "#00FF00");
-                                j++;
+                                addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
+                                i++;
                             }
                         } catch (InterruptedException ex) {
 
@@ -181,7 +184,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.read(fileMOSA);
-                                addRouteInAPIxy(routeMOSA, "#00FF00");
+                                addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 break;
                             }
                         } catch (InterruptedException ex) {
@@ -196,16 +199,37 @@ public class PanelPlotGoogleMaps extends JPanel {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    int j = 0;
                     while (true) {
                         try {
                             Thread.sleep(500);
-                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + j + ".txt";
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                routeMOSA.read(fileMOSA);
+                                addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+            });
+        }
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
+                && config.getTypePlanner().equals(TypePlanner.A_STAR4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    int i = 0;
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.readAStar(fileMOSA);
-                                addRouteInAPIxy(routeMOSA, "#00FF00");
-                                j++;
+                                addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
+                                i++;
                             }
                         } catch (InterruptedException ex) {
 
@@ -225,7 +249,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
                                 routeMOSA.readGeo(fileMOSA);
-                                addRouteInAPIxy(routeMOSA, "#00FF00");
+                                addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 repaint();
                                 break;
                             }
@@ -237,7 +261,8 @@ public class PanelPlotGoogleMaps extends JPanel {
 
             });
         }
-        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER) &&
+                !config.getTypeReplanner().equals(TypeReplanner.G_PATH_REPLANNER4s)) {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -248,7 +273,29 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
                                 routeIFA.read(fileIFA);
-                                addRouteInAPIxy(routeIFA, "#FF0000");
+                                addRouteInAPIxy(routeIFA, "#FF0000", 0.8, 3);
+                                break;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+            });
+        }
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER) &&
+                config.getTypeReplanner().equals(TypeReplanner.G_PATH_REPLANNER4s)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteIFA = config.getDirReplanner() + "output.txt";
+                            File fileIFA = new File(pathRouteIFA);
+                            if (fileIFA.exists()) {
+                                routeIFA.read(fileIFA);
+                                addRouteInAPIxy(routeIFA, "#FF0000", 0.8, 3);
                                 break;
                             }
                         } catch (InterruptedException ex) {
@@ -269,7 +316,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             File fileSimplifier = new File(pathSimplifier);
                             if (fileSimplifier.exists()) {
                                 routeMOSASimplifier.read(fileSimplifier);
-                                addRouteInAPIlatlng(routeMOSASimplifier, "#000000");
+                                addRouteInAPIlatlng(routeMOSASimplifier, "#000000", 0.8, 2);
                                 break;
                             }
                         } catch (InterruptedException ex) {
@@ -279,6 +326,25 @@ public class PanelPlotGoogleMaps extends JPanel {
                 }
             });
         }
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                        String pathSimplifier = config.getDirRouteSimplifier() + "route-behavior.txt";
+                        File fileSimplifier = new File(pathSimplifier);
+                        if (fileSimplifier.exists()) {
+                            routeMOSABehavior.readGeo(fileSimplifier);
+                            addRouteInAPIlatlng(routeMOSABehavior, "#000000", 0.8, 2);
+                            break;
+                        }
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -337,7 +403,8 @@ public class PanelPlotGoogleMaps extends JPanel {
         }
     }
     
-    private void addRouteInAPIxy(ReaderRoute route, String color){
+    private void addRouteInAPIxy(ReaderRoute route, String color, 
+            double strokeOpacity, double strokeWeight){
         for (int i = 0; i < route.getRoute3D().size(); i++) {
             if (i + 1 < route.getRoute3D().size()) {
                 Point2D points[] = new Point2D[2];
@@ -349,12 +416,13 @@ public class PanelPlotGoogleMaps extends JPanel {
                         UtilGeo.convertYtoLatitude(latBase, route.getRoute3D().getPosition(i + 1).getY()),
                         UtilGeo.convertXtoLongitude(lngBase, latBase, route.getRoute3D().getPosition(i + 1).getX())
                 );
-                api.addLine(color, 0.8, 2, points);
+                api.addLine(color, strokeOpacity, strokeWeight, points);
             }
         }
     }
     
-    private void addRouteInAPIlatlng(ReaderRoute route, String color){
+    private void addRouteInAPIlatlng(ReaderRoute route, String color, 
+            double strokeOpacity, double strokeWeight){
         for (int i = 0; i < route.getRoute3D().size(); i++) {
             if (i + 1 < route.getRoute3D().size()) {
                 Point2D points[] = new Point2D[2];
@@ -366,7 +434,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                         route.getRoute3D().getPosition(i + 1).getX(),
                         route.getRoute3D().getPosition(i + 1).getY()
                 );
-                api.addLine(color, 0.8, 2, points);
+                api.addLine(color, strokeOpacity, strokeWeight, points);
             }
         }
     }

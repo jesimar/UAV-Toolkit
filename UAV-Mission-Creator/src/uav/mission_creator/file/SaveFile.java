@@ -85,9 +85,9 @@ public class SaveFile {
     public void printerMissionSGL_CCQSP(File fileMission, Mission mission) {
         double vx = 0.0;
         double vy = 0.0;
-        double delta = 0.04;
+        double delta = 0.01;
         double timeMax = 60.0;
-        double offset = 0.5;
+        double offset = 1.0;//radius of waypoint (in meters)
         try {
             int wpt = mission.getSizeWaypoints();
             PrintStream printMission = new PrintStream(fileMission);

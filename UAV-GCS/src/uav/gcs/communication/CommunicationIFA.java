@@ -19,6 +19,7 @@ import lib.uav.util.UtilRoute;
 import uav.gcs.replanner.DE4s;
 import uav.gcs.replanner.GA4s;
 import uav.gcs.replanner.GH4s;
+import uav.gcs.replanner.GPathReplanner4s;
 import uav.gcs.replanner.MPGA4s;
 import uav.gcs.replanner.MS4s;
 import uav.gcs.replanner.Replanner;
@@ -145,6 +146,8 @@ public class CommunicationIFA extends Communication implements Client{
             replanner =   new MS4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
         } else if (v[0].equals(TypeReplanner.DE4S)) {
             replanner =   new DE4s(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]);
+        } else if (v[0].equals(TypeReplanner.G_PATH_REPLANNER4s)) {
+            replanner =   new GPathReplanner4s(drone, v[1], v[2], v[3], v[4], v[5]);
         }else{
             System.out.println("Error: " + v[0]);
             System.out.println("Error: " + answer);

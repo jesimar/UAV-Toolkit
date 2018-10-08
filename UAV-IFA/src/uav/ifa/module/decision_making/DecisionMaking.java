@@ -23,6 +23,7 @@ import uav.ifa.module.path_replanner.GA4s;
 import uav.ifa.module.path_replanner.GA_GA_4s;
 import uav.ifa.module.path_replanner.GA_GH_4s;
 import uav.ifa.module.path_replanner.GH4s;
+import uav.ifa.module.path_replanner.GPathReplanner4s;
 import uav.ifa.module.path_replanner.MPGA4s;
 import uav.ifa.module.path_replanner.MS4s;
 import uav.ifa.module.path_replanner.Replanner;
@@ -504,6 +505,8 @@ public class DecisionMaking {
             replanner = new GA_GH_4s(drone);
         } else if (config.getTypeReplanner().equals(TypeReplanner.PRE_PLANNED4s)) {
             replanner = new PrePlanned4s(drone);
+        } else if (config.getTypeReplanner().equals(TypeReplanner.G_PATH_REPLANNER4s)) {
+            replanner = new GPathReplanner4s(drone);
         }
         replanner.clearLogs();
         boolean itIsOkExec = replanner.exec();

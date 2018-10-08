@@ -19,6 +19,7 @@ Lista de bibliotecas desenvolvidas por terceiros e utilizadas nesse projeto:
 * **java-swing-graphics-2d-navigation.jar** -> Biblioteca para navegação 2D usando Swing. Usado pelo programa UAV-GCS e UAV-Plot-Mission [[Link](https://github.com/marcio-da-silva-arantes/java-swing-graphics-2d-navigation)] (Licença GPL 3.0).
 * **java-screen-recorder** -> Incluem as bibliotecas screen_recorder.jar, screen_converter.jar, screen_player.jar. Usado pelo programa Video-PC [[Link](https://code.google.com/archive/p/java-screen-recorder/)] (Licença MIT).
 * **cplex.jar** -> Biblioteca para resolução de modelos matemáticos de Programação Linear Inteira Mista. Usado pelos algoritmos HGA4m e CCQSP4m [[Link](https://www.ibm.com/developerworks/br/downloads/ws/ilogcplex/index.html)] (Licença Proprietária).
+* **xstream-1.4.5.jar** -> Biblioteca para conversão de objetos para formato XML. Usada para conversão em formato XML [[Link](https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream/1.4.5)] (Licença BSD).
 
 OBS: Para utilização dos recursos do IBM ILOG CPLEX Optimization Studio [[Link](https://www.ibm.com/)], você deverá: Primeiramente, instalar o CPLEX (suportado apenas em arquiteturas x86 e x86_64). Em seguida, troque (copiar) o arquivo cplex.jar de 
 `.../IBM/ILOG/CPLEX_StudioXXXX/cplex/lib/` para todos os planejadores de rota que utilizam pragramação matemática como em: `.../UAV-Toolkit/Modules-MOSA/HGA4m/lib/`, `.../UAV-Toolkit/Modules-MOSA/CCQSP4m/lib/`

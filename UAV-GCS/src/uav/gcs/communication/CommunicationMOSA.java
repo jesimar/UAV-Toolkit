@@ -29,6 +29,7 @@ import lib.uav.struct.states.StateCommunication;
 import lib.uav.util.UtilRoute;
 import uav.gcs.planner.AStar4m;
 import uav.gcs.planner.CCQSP4m;
+import uav.gcs.planner.GPathPlanner4m;
 import uav.gcs.planner.HGA4m;
 import uav.gcs.planner.Planner;
 import uav.gcs.struct.Drone;
@@ -46,11 +47,12 @@ public class CommunicationMOSA extends Communication implements Client{
     private final ReaderFileConfig config;
     private final Drone drone;
     private boolean isRunningPlanner;
-    private JPanel panelCameraData;
+    private final JPanel panelCameraData;
 
     /**
      * Class constructor
      * @param drone instance of the aircraft
+     * @param panelCameraData
      * @since version 4.0.0
      */
     public CommunicationMOSA(Drone drone, JPanel panelCameraData) {
@@ -149,7 +151,7 @@ public class CommunicationMOSA extends Communication implements Client{
                             }catch (NegativeArraySizeException ex){
                                 System.out.println("Warning [NegativeArraySizeException] try again");
                             } catch (Exception ex){
-                                System.out.println("Warning [Exception] try again");
+//                                System.out.println("Warning [Exception] try again");
                             } 
                         }
                         Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
@@ -220,7 +222,7 @@ public class CommunicationMOSA extends Communication implements Client{
             mission.printMission();
             sendData(new Gson().toJson(mission));
         } else if (v[0].equals(TypePlanner.CCQSP4M)) {
-            planner = new CCQSP4m(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+            planner = new CCQSP4m(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9], v[10]);
             planner.clearLogs();
             long timeInit = System.currentTimeMillis();
             boolean respMission = ((CCQSP4m) (planner)).execMission();
@@ -287,6 +289,36 @@ public class CommunicationMOSA extends Communication implements Client{
             }
             mission.printMission();
             sendData(new Gson().toJson(mission));
+        } else if (v[0].equals(TypePlanner.G_PATH_PLANNER4M)) {
+            planner = new GPathPlanner4m(drone, v[1], v[2], v[3], v[4], v[5]);
+            planner.clearLogs();
+            long timeInit = System.currentTimeMillis();
+            boolean respMission = ((GPathPlanner4m) (planner)).execMission();
+            long timeFinal = System.currentTimeMillis();
+            long time = timeFinal - timeInit;
+            System.out.println("Time in Planning execMission (ms): " + time);
+            if (!respMission) {
+                sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                isRunningPlanner = false;
+                return;
+            }
+            Mission mission = new Mission();
+            String path = v[3] + "routeGeo.txt";
+            
+            if (config.hasRouteSimplifier()){
+                UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(), 
+                            config.getFactorRouteSimplifier(), ";");
+                path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
+            }
+            
+            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
+            if (!respFile) {
+                sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
+                isRunningPlanner = false;
+                return;
+            }
+            mission.printMission();
+            sendData(new Gson().toJson(mission));            
         } 
         isRunningPlanner = false;
     }

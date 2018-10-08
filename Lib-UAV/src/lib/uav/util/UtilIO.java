@@ -157,8 +157,8 @@ public class UtilIO {
      * @throws FileNotFoundException 
      * @since version 3.0.0
      */
-    public static void copyFileModifiedMOSA(File src, File dst, String contentTime, 
-            int lineTime, String contentDelta, int lineDelta, 
+    public static void copyFileModifiedMOSA(File src, File dst, 
+            String contentTime, int lineTime, String contentDelta, int lineDelta, 
             String contentWpt, int lineWpt, String contentTimeH, int lineTimeH, 
             String contentMaxVel, int lineMaxVel, String contentMaxCtrl, int lineMaxCtrl) 
             throws FileNotFoundException {
@@ -196,29 +196,41 @@ public class UtilIO {
     
     /**
      * Method that copy the file source to destiny modified the lines (line*) for 
-     * the content (content).
+     * the content (content). Used by CCQSP4m.
      * @param src File of source (file to be copied).
      * @param dst File of destiny (file copied).
+     * @param contentSteps the new content the line steps.
+     * @param lineSteps the number of line steps.
      * @param contentDelta the new content the line delta.
      * @param lineDelta the number of line delta.
+     * @param contentStdPos the new content the line standard position.
+     * @param lineStdPos the number of line standard position.
      * @param contentWpt the new content the line waypoint.
      * @param lineWpt the number of line waypoint.
      * @param contentTimeH  the new content the line time horizon.
      * @param lineTimeH the number of line time horizon.
      * @throws FileNotFoundException 
-     * @since version 3.0.0
+     * @since version 4.0.0
      */
     public static void copyFileModifiedMOSA(File src, File dst, 
-            String contentDelta, int lineDelta, String contentWpt, int lineWpt, 
+            String contentSteps, int lineSteps, String contentDelta, int lineDelta, 
+            String contentStdPos, int lineStdPos, String contentWpt, int lineWpt, 
             String contentTimeH, int lineTimeH) throws FileNotFoundException {
         Scanner sc = new Scanner(src);
         PrintStream print = new PrintStream(dst);
         int i = 1;
         while (sc.hasNextLine()) {
-            if (i != lineDelta && i != lineWpt && i != lineTimeH){
+            if (i != lineSteps && i != lineDelta && i != lineStdPos && 
+                    i != lineWpt && i != lineTimeH){
                 print.println(sc.nextLine());
+            } else if (i == lineSteps){
+                print.println(contentSteps);
+                sc.nextLine();
             } else if (i == lineDelta){
                 print.println(contentDelta);
+                sc.nextLine();
+            } else if (i == lineStdPos){
+                print.println(contentStdPos);
                 sc.nextLine();
             } else if (i == lineWpt){
                 print.println(contentWpt);
@@ -226,6 +238,40 @@ public class UtilIO {
             } else if (i == lineTimeH){
                 print.println(contentTimeH);
                 sc.nextLine();
+            }
+            i++;
+        }
+        sc.close();
+        print.close();
+    }
+    
+    /**
+     * Method that copy the file source to destiny modified the lines (line*) for 
+     * the content (content). File mission*.sgl. Used by CCQSP4m.
+     * @param src File of source (file to be copied).
+     * @param dst File of destiny (file copied).
+     * @param contentDelta the new content the line delta.
+     * @param lineDelta the number of line delta.
+     * @param contentTimeH  the new content the line time horizon.
+     * @param lineTimeH the number of line time horizon.
+     * @throws FileNotFoundException 
+     * @since version 4.0.0
+     */
+    public static void copyFileModifiedMOSA(File src, File dst, 
+            String contentDelta, int lineDelta, String contentTimeH, int lineTimeH) 
+            throws FileNotFoundException {
+        Scanner sc = new Scanner(src);
+        PrintStream print = new PrintStream(dst);
+        int i = 1;
+        while (sc.hasNextLine()) {
+            if (i != lineDelta && i != lineTimeH){
+                print.println(sc.nextLine());
+            } else if (i == lineDelta){
+                print.println(contentDelta);
+                sc.nextLine();
+            } else if (i == lineTimeH){
+                String v[] = sc.nextLine().split("\t");
+                print.println(v[0] + "\t" + v[1] + "\t" + v[2] + "\t" + contentTimeH);
             }
             i++;
         }

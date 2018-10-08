@@ -77,8 +77,8 @@ public abstract class Planner {
      */
     boolean execMethod(){
         try {
-            boolean isPrint = true;
-            boolean isPrintError = true;
+            boolean isPrint = false;
+            boolean isPrintError = false;
             String cmd = "";
             if (config.getTypePlanner().equals(TypePlanner.HGA4M) || 
                     config.getTypePlanner().equals(TypePlanner.CCQSP4M)){

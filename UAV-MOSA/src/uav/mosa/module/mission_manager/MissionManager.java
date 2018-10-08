@@ -475,7 +475,7 @@ public class MissionManager {
                     String path = config.getDirPlanner() + config.getFileMissionPlannerAStar4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
-                    String path = config.getDirPlanner() + config.getFileMissionPlannerPathPlanner4m();
+                    String path = config.getDirPlanner() + config.getFileMissionPlannerGPathPlanner4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }

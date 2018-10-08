@@ -14,6 +14,27 @@ A ideia geral do sistema pode ser vista na figura abaixo.
 
 Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/kml/
 
+## Criando o arquivo KML
+
+Para a criação do arquivo KML basta abrir o Google Earth. E criar um mapa, na criação desse mapa as seguinte tags devem ser utilizadas.
+
+As seguintes notações foram definidas afim de mapear as regiões em que ocorrerá a missão:
+
+* **map_obstacle**: esta região define as áreas que o VANT está estritamente proibido de sobrevoar ou pousar, podendo representar, por exemplo, edifícios, casas, bases militares, aeroportos, entre outras.
+* **map_penalty**: esta região define as áreas que o VANT pode sobrevoar, mas não deve pousar. Caso pouse, uma penalização será aplicada. Isso porque nessa área encontram-se estruturas de tamanho mediano como as árvores, lagos, montanhas, etc.
+* **map_bonus**: esta região define as áreas que o VANT pode sobrevoar e pousar. Essa região pode representar a pista de pouso do VANT, planícies, entre outras.
+* **map_frontier**: define a fronteira da missão, ou seja, uma região a qual o VANT jamais deve sobrevoar fora da mesma, delimitando assim o espaço de voo/missão.
+
+As seguintes notações foram definidas afim de registrar as atividades relacionadas a missão:
+
+* **geo_base**: define um ponto de referência para a transformação entre os sistemas de coordenadas cartesianas e geográficas.
+* **waypoint**: define um ponto de passagem que a aeronave deve cumprir durante a sua missão. Os waypoints definidos serão utilizados pelo MOSA para estabelecer a rota a ser seguida pela aeronave.
+* **cmd_picture**: define um ponto ou região de pontos em que fotografia(s) deve(m) ser retirada(s). O sistema MOSA ao atingir esse ponto ou região de pontos efetua a retirada da(s) fotografia(s).
+* **cmd_photo_seq**: define um ponto a partir do qual uma sequência de fotografias serão retiradas. O sistema MOSA ao atingir esse ponto irá iniciar a retirada da(s) fotografia(s) em sequência.
+* **cmd_video**: define um ponto a partir do qual se iniciara a filmagem da região.
+* **cmd_spraying_begin**: define um ponto a partir do qual se iniciara a pulverização da região.
+* **cmd_spraying_end**: define um ponto de termino da pulverização.
+
 ## Arquivos de Entrada
 
 * config-mission.properties: Um arquivo de configurações (config-mission.properties) encontra-se também disponível para configuração de um conjunto de propriedades importantes.
@@ -22,11 +43,17 @@ Os arquivos de entrada/saída desse sistema ficam dentro do diretório: mission/
 
 ## Arquivos de Saída
 
-* map.sgl
-* map-full.sgl
-* geoBase.txt
-* wpts.txt
-* featureMission.txt
+* **featureMission.txt** -> Pontos contendo as principais especificações/características da missão.
+* **geoBase.txt** -> Ponto base em coordenadas geográficas para conversão entre coordenadas cartesianas e geográficas e vice-versa.
+* **map-full.json** -> Mapa completo em formato .JSON contendo os obstáculos, regiões bonificadores e penalizadores.
+* **map-full.sgl** -> Mapa completo em formato .SGL contendo os obstáculos, regiões bonificadores e penalizadores.
+* **map-full.xml** -> Mapa completo em formato .XML contendo os obstáculos, regiões bonificadores e penalizadores.
+* **map-nfz.json** -> Mapa contendo os obstáculos em formato .JSON.
+* **map-nfz.sgl** -> Mapa contendo os obstáculos em formato .SGL.
+* **map-nfz.xml** -> Mapa contendo os obstáculos em formato .XML.
+* **map-nfz-astar.sgl** -> Mapa contendo os obstáculos em formato .SGL. Usado pelo algoritmo A-Star4m.
+* **mission-ccqsp.sgl** -> Mapa e especificação da missão em formato .SGL. Usado pelo algoritmo CCQSP4m.
+* **waypointsMission.txt** -> Especificação dos waypoints que deseja-se sobrevoar com o VANT.
 
 ## Como Usar
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 13/02/2018
-#Last Update: 30/09/2018
+#Last Update: 06/10/2018
 #Description: Script that does the swap mission files to be executed automatically.
 #Descrição: Script que troca os arquivos da missão a ser executada de forma automática.
 
@@ -41,19 +41,26 @@ cp $DIR_FILES/map-full.sgl ../Modules-IFA/MPGA4s/map.sgl 2>/dev/null
 cp $DIR_FILES/map-full.sgl ../Modules-IFA/MS4s/map.sgl 2>/dev/null
 cp $DIR_FILES/map-full.sgl ../Modules-IFA/MILP4s/map.sgl 2>/dev/null
 
+echo "copy file map-full (.sgl .json and .xml) to directory ../Modules-IFA/G-Path-Replanner4s/"
+cp $DIR_FILES/map-full.sgl ../Modules-IFA/G-Path-Replanner4s/map.sgl 2>/dev/null
+cp $DIR_FILES/map-full.json ../Modules-IFA/G-Path-Replanner4s/map.json 2>/dev/null
+cp $DIR_FILES/map-full.xml ../Modules-IFA/G-Path-Replanner4s/map.xml 2>/dev/null
+
 echo "copy file map-nfz.sgl and waypointsMission.txt to directory ../Modules-MOSA/HGA4m/"
 cp $DIR_FILES/map-nfz.sgl ../Modules-MOSA/HGA4m/. 2>/dev/null
 cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/HGA4m/. 2>/dev/null
 
-echo "copy file mission_ccqsp.sgl to directory ../Modules-MOSA/CCQSP4m/"
-cp $DIR_FILES/mission_ccqsp.sgl ../Modules-MOSA/CCQSP4m/. 2>/dev/null
+echo "copy file mission-ccqsp.sgl to directory ../Modules-MOSA/CCQSP4m/"
+cp $DIR_FILES/mission-ccqsp.sgl ../Modules-MOSA/CCQSP4m/. 2>/dev/null
 
 echo "copy file map-nfz-astar.sgl and waypointsMission.txt to directory ../Modules-MOSA/A-Star4m/"
 cp $DIR_FILES/map-nfz-astar.sgl ../Modules-MOSA/A-Star4m/. 2>/dev/null
 cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/A-Star4m/. 2>/dev/null
 
-echo "copy file map-nfz.sgl and waypointsMission.txt to directory ../Modules-MOSA/Path-Planner4m/"
-cp $DIR_FILES/map-nfz.sgl ../Modules-MOSA/Path-Planner4m/. 2>/dev/null
-cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/Path-Planner4m/. 2>/dev/null
+echo "copy file map-nfz (.sgl .xml and .json) and waypointsMission.txt to directory ../Modules-MOSA/G-Path-Planner4m/"
+cp $DIR_FILES/map-nfz.sgl ../Modules-MOSA/G-Path-Planner4m/. 2>/dev/null
+cp $DIR_FILES/map-nfz.json ../Modules-MOSA/G-Path-Planner4m/. 2>/dev/null
+cp $DIR_FILES/map-nfz.xml ../Modules-MOSA/G-Path-Planner4m/. 2>/dev/null
+cp $DIR_FILES/waypointsMission.txt ../Modules-MOSA/G-Path-Planner4m/. 2>/dev/null
 
 echo "====================done==================="

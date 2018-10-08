@@ -7,8 +7,10 @@ import java.awt.Graphics2D;
 import java.io.File;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
+import jsc.distributions.Normal;
 import lib.uav.reader.ReaderFileConfig;
 import lib.uav.struct.constants.TypePlanner;
+import lib.uav.struct.constants.TypeReplanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
 import lib.uav.struct.constants.TypeSystemExecMOSA;
 import lib.uav.struct.geom.Position3D;
@@ -35,6 +37,7 @@ public class PanelPlotMission extends sPanelDraw {
     private static final Color COLOR_ROUTE_IFA = Color.RED;
     private static final Color COLOR_ROUTE_MOSA = Color.GREEN;
     private static final Color COLOR_ROUTE_MOSA_SIMP = Color.BLACK;
+    private static final Color COLOR_ROUTE_MOSA_BEH = Color.MAGENTA;
     private static final Color COLOR_ROUTE_DRONE = Color.GRAY;
     private static final Color COLOR_DRONE = Color.BLUE;
     private static final Color COLOR_MAX_DIST = new Color(0, 255, 0, 50);
@@ -53,6 +56,7 @@ public class PanelPlotMission extends sPanelDraw {
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
     private final ReaderRoute routeMOSASimplifier;
+    private final ReaderRoute routeMOSABehavior;
     private final Route3D routeDrone;
     private double pxDrone;
     private double pyDrone;
@@ -82,6 +86,7 @@ public class PanelPlotMission extends sPanelDraw {
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
         routeMOSASimplifier = new ReaderRoute();
+        routeMOSABehavior = new ReaderRoute();
         routeDrone = new Route3D();
     }
 
@@ -190,10 +195,10 @@ public class PanelPlotMission extends sPanelDraw {
             g2.setColor(COLOR_ROUTE_IFA);
             for (int i = 0; i < routeIFA.getRoute3D().size(); i++) {
                 g2.fillOval(
-                        toUnit(routeIFA.getRoute3D().getPosition(i).getX()) - 15,
-                        toUnit(routeIFA.getRoute3D().getPosition(i).getY()) - 15,
-                        30,
-                        30
+                        toUnit(routeIFA.getRoute3D().getPosition(i).getX()) - 20,
+                        toUnit(routeIFA.getRoute3D().getPosition(i).getY()) - 20,
+                        40,
+                        40
                 );
                 if (i + 1 < routeIFA.getRoute3D().size()) {
                     g2.drawLine(
@@ -207,8 +212,8 @@ public class PanelPlotMission extends sPanelDraw {
         }
 
         if (routeMOSA.isReady() && enabledResources.showRoutePlanner) {
-            g2.setColor(COLOR_ROUTE_MOSA);
             for (int i = 0; i < routeMOSA.getRoute3D().size(); i++) {
+                g2.setColor(COLOR_ROUTE_MOSA);
                 g2.fillOval(
                         toUnit(routeMOSA.getRoute3D().getPosition(i).getX()) - 15,
                         toUnit(routeMOSA.getRoute3D().getPosition(i).getY()) - 15,
@@ -223,7 +228,21 @@ public class PanelPlotMission extends sPanelDraw {
                             toUnit(routeMOSA.getRoute3D().getPosition(i + 1).getY())
                     );
                 }
+                if (config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
+                    g2.setColor(COLOR_ROUTE_MOSA.brighter());
+                    double uncertainty = Double.parseDouble(config.getStdPositionPlannerCCQSP4m());
+                    Normal normal = new Normal(0.0, uncertainty);
+                    double delta = Double.parseDouble(config.getDeltaPlannerCCQSP4m());
+                    int radius = toUnit(normal.inverseCdf(1.0 - delta/2));
+                    g2.drawOval(
+                            toUnit(routeMOSA.getRoute3D().getPosition(i).getX()) - radius,
+                            toUnit(routeMOSA.getRoute3D().getPosition(i).getY()) - radius,
+                            2*radius,
+                            2*radius
+                    );
+                }
             }
+            
         }
         if (routeMOSASimplifier.isReady() && enabledResources.showRouteSimplifier) {
             g2.setColor(COLOR_ROUTE_MOSA_SIMP);
@@ -244,15 +263,28 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             }
         }
-        if (enabledResources.showRouteDrone) {
-            g2.setColor(COLOR_ROUTE_DRONE);
-            for (int i = 0; i < routeDrone.size(); i++) {
+        if (routeMOSABehavior.isReady()) {
+            g2.setColor(COLOR_ROUTE_MOSA_BEH);
+            for (int i = 0; i < routeMOSABehavior.getRoute3D().size(); i++) {
                 g2.fillOval(
-                        toUnit(routeDrone.getPosition(i).getX()) - 15,
-                        toUnit(routeDrone.getPosition(i).getY()) - 15,
+                        toUnit(routeMOSABehavior.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeMOSABehavior.getRoute3D().getPosition(i).getY()) - 15,
                         30,
                         30
                 );
+                if (i < routeMOSABehavior.getRoute3D().size() - 1) {
+                    g2.drawLine(
+                            toUnit(routeMOSABehavior.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeMOSABehavior.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeMOSABehavior.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeMOSABehavior.getRoute3D().getPosition(i + 1).getY())
+                    );
+                }
+            }
+        }
+        if (enabledResources.showRouteDrone) {
+            g2.setColor(COLOR_ROUTE_DRONE);
+            for (int i = 0; i < routeDrone.size(); i++) {
                 if (i < routeDrone.size() - 1) {
                     g2.drawLine(
                             toUnit(routeDrone.getPosition(i).getX()),
@@ -262,10 +294,6 @@ public class PanelPlotMission extends sPanelDraw {
                     );
                 }
             }
-        }
-        if (enabledResources.showPositionDrone && printDrone){
-            g2.setColor(COLOR_DRONE);
-            g2.fillOval(toUnit(pxDrone) - 30, toUnit(pyDrone) - 30, 60, 60);
         }
         if (enabledResources.showMaxDistReached && printDrone){
             g2.setColor(COLOR_MAX_DIST);
@@ -334,6 +362,12 @@ public class PanelPlotMission extends sPanelDraw {
                     g2.drawString("WptSpray", toUnit(x)-24, toUnit(y)+5);
                 }
             }
+        }
+        if (enabledResources.showPositionDrone && printDrone){
+            g2.setColor(COLOR_DRONE);
+            g2.fillOval(toUnit(pxDrone) - 30, toUnit(pyDrone) - 30, 60, 60);
+            g2.setColor(Color.BLACK);
+            g2.drawString("UAV", toUnit(pxDrone)-10, toUnit(pyDrone)+5);
         }
     }
 
@@ -456,7 +490,8 @@ public class PanelPlotMission extends sPanelDraw {
 
             });
         }
-        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER)) {
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER) && 
+                !config.getTypeReplanner().equals(TypeReplanner.G_PATH_REPLANNER4s)) {
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -464,6 +499,28 @@ public class PanelPlotMission extends sPanelDraw {
                         try {
                             Thread.sleep(500);
                             String pathRouteIFA = config.getDirReplanner() + "route.txt";
+                            File fileIFA = new File(pathRouteIFA);
+                            if (fileIFA.exists()) {
+                                routeIFA.read(fileIFA);
+                                repaint();
+                                break;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+            });
+        }
+        if (config.getSystemExecIFA().equals(TypeSystemExecIFA.REPLANNER) && 
+                config.getTypeReplanner().equals(TypeReplanner.G_PATH_REPLANNER4s)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteIFA = config.getDirReplanner() + "output.txt";
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
                                 routeIFA.read(fileIFA);
@@ -498,6 +555,25 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             });
         }
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                        String pathBehavior = config.getDirBehavior()+ "route-behavior.txt";
+                        File file = new File(pathBehavior);
+                        if (file.exists()) {
+                            routeMOSABehavior.readGeo(file);
+                            repaint();
+                            break;
+                        }
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
     }
 
     /**

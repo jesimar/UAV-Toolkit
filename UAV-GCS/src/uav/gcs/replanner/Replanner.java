@@ -19,9 +19,9 @@ public abstract class Replanner {
     final String fileGeoBase;        //global
     final String cmdExecReplanner;   //local
     final String typeAltitudeDecay;  //local
-    final String time;               //local
-    final String qtdWpt;             //local
-    final String delta;              //local
+    String time;                     //local
+    String qtdWpt;                   //local
+    String delta;                    //local
 
     /**
      * Class constructor
@@ -48,6 +48,26 @@ public abstract class Replanner {
         this.time = time;
         this.qtdWpt = qtdWpt;
         this.delta = delta;
+    }
+    
+    /**
+     * Class constructor - G-Path-Replanner4s
+     * @param drone instance of the aircraft
+     * @param dirFiles directory of main files 
+     * @param fileGeoBase name of file geoBase
+     * @param dirReplanner replanner directory
+     * @param cmdExecReplanner command to exec the replanner
+     * @param typeAltitudeDecay type of altitude decay [CONSTANT or LINEAR]
+     * @since version 4.0.0
+     */
+    public Replanner(Drone drone, String dirFiles, String fileGeoBase, 
+            String dirReplanner, String cmdExecReplanner, String typeAltitudeDecay) {
+        this.drone = drone;      
+        this.dirFiles = dirFiles;
+        this.fileGeoBase = fileGeoBase;
+        this.dir = dirReplanner;
+        this.cmdExecReplanner = cmdExecReplanner;
+        this.typeAltitudeDecay = typeAltitudeDecay;
     }
     
     /**

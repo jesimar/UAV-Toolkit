@@ -15,6 +15,6 @@ public class TypeReplanner {
     public static final String GA_GA_4S           = "GA-GA-4s";
     public static final String GA_GH_4S           = "GA-GH-4s";
     public static final String PRE_PLANNED4s      = "Pre-Planned4s";
-    public static final String G_PATH_REPLANNER4M = "G_PATH_REPLANNER4m";
+    public static final String G_PATH_REPLANNER4s = "G_PATH_REPLANNER4s";
     
 }

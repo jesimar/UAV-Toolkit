@@ -177,16 +177,14 @@ public class SecurityManager {
 
         communicationGCS.startServer();         //Thread
         communicationGCS.receiveData();         //Thread
-
+        monitoringAircraft();                   //Thread
+        communicationGCS.sendDataDrone();       //Thread
+        
         if (!config.getSystemExecIFA().equals(TypeSystemExecIFA.CONTROLLER)) {
             communicationMOSA.startServer();    //blocked
             communicationMOSA.receiveData();    //Thread        
-        }
-        monitoringAircraft();                   //Thread
-
-        communicationGCS.sendDataDrone();       //Thread
-
-        waitingForAnActionOfEmergency();                   //Thread                
+        }       
+        waitingForAnActionOfEmergency();        //Thread                
         monitoringStateMachine();               //Thread
 
         stateSystem = StateSystem.INITIALIZED;
