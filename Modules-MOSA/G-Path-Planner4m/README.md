@@ -110,3 +110,18 @@ Abaixo um exemplo de arquivo de rota: "output.txt"
 :warning: **OBS:** O arquivo deverá ter necessariamente o nome "output.txt".
 
 :warning: **OBS:** Repare que o arquivo "output.txt" está em coordenadas cartesianas. O sistema UAV-Toolkit irá converter a sua rota posteriormente para coordenadas geográficas.
+
+## Códigos de Exemplo
+
+Na pasta /UAV-Toolkit/Modules-MOSA/G-Path-Planner4m/Example/ contém quatro códigos de exemplo que são: 
+
+* **planner-making-square-c.c** -> Código em C que produz como saída um quadrado.
+* **planner-making-square-cpp.cpp** -> Código em C++ que produz como saída um quadrado.
+* **planner-making-square-python.py** -> Código em Python que produz como saída um quadrado.
+* **planner-making-square-java.jar** -> Código em Java que produz como saída um quadrado.
+
+:warning: **OBS:** Repare que estes códigos são chamados/executados pelo script: "exec-planner.sh".
+
+:warning: **OBS:** Você pode/deve escolher qual código será executado usando este script. Abra-o e o edit. 
+
+:warning: **OBS:** Caso seu path planner use CPLEX e seja feito em Java você deverá passar o path de instalação do CPLEX. Você necessitará também copiar a lib do CPLEX (cplex.jar) para a pasta lib/ para que o seu código execute.

@@ -1,6 +1,6 @@
 # Changelog
 
-## Version v4.0.0 (20/09/2018)
+## Version v4.0.0 (08/10/2018)
 
 ### Features:
 

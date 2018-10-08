@@ -126,3 +126,16 @@ Abaixo um exemplo de arquivo de rota: "output.txt"
 :warning: **OBS:** O arquivo deverá ter necessariamente o nome "output.txt".
 
 :warning: **OBS:** Repare que o arquivo "output.txt" está em coordenadas cartesianas. O sistema UAV-Toolkit irá converter a sua rota posteriormente para coordenadas geográficas.
+
+## Códigos de Exemplo
+
+Na pasta /UAV-Toolkit/Modules-IFA/G-Path-Replanner4s/Example/ contém quatro códigos de exemplo que são: 
+
+* **replanner-making-line-c.c** -> Código em C que produz como saída uma linha reta.
+* **replanner-making-line-cpp.cpp** -> Código em C++ que produz como saída uma linha reta.
+* **replanner-making-line-python.py** -> Código em Python que produz como saída uma linha reta.
+* **replanner-making-line-java.jar** -> Código em Java que produz como saída uma linha reta.
+
+:warning: **OBS:** Repare que estes códigos são chamados/executados pelo script: "exec-replanner.sh".
+
+:warning: **OBS:** Você pode/deve escolher qual código será executado usando este script. Abra-o e o edit. 
