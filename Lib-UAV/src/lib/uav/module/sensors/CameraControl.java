@@ -41,7 +41,7 @@ public class CameraControl {
                 }else{
                     cmd = "python device.py";
                 }
-            } 
+            }
             boolean print = true;
             UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);
         } catch (IOException ex) {
