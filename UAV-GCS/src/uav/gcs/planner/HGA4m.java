@@ -100,7 +100,8 @@ public class HGA4m extends Planner{
             File dst_ga = new File(dir + "ga-config");
             String timeExec = getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
-            String qtdWpt = String.format("%d", (int)(dist/2));
+            //usando o minimo entre 50 e a metade dos waypoints DeltaT=2
+            String qtdWpt = String.format("%d", Math.min(50, (int)(dist/2)));
             UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, timeExec, 207, delta, 304,
                     qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;

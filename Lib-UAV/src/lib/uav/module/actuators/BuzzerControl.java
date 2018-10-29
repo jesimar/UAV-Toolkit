@@ -39,8 +39,10 @@ public class BuzzerControl {
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python buzzer-edison.py " + config.getPinBuzzer();
-                }else{
-                    cmd = "./device";
+                } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python buzzer-rpi.py " + config.getPinBuzzer();//fazer isso aqui ainda
+                } else{
+                    cmd = "python device.py";
                 }
             }
             boolean print = true;
@@ -64,8 +66,10 @@ public class BuzzerControl {
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python alarm-edison.py " + config.getPinBuzzer();
-                }else{
-                    cmd = "./device";
+                } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                    cmd = "python alarm-rpi.py " + config.getPinBuzzer();//fazer isso aqui ainda
+                } else{
+                    cmd = "python device.py";
                 }
             }
             boolean print = true;

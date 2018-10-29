@@ -70,8 +70,8 @@ public class HGA4m extends Planner{
             File dst_ga = new File(dir + "ga-config");
             String time = config.getTimeExecPlannerHGA4m(i);
             String timeH = String.format("%d", (int)(dist));
-            //usando metade dos waypoints DeltaT=2
-            String qtdWpt = String.format("%d", (int)(dist/2));
+            //usando o minimo entre 50 e a metade dos waypoints DeltaT=2
+            String qtdWpt = String.format("%d", Math.min(50, (int)(dist/2)));
             String delta = config.getDeltaPlannerHGA4m();
             String maxVel = config.getMaxVelocityPlannerHGA4m();
             String maxCtrl = config.getMaxControlPlannerHGA4m();

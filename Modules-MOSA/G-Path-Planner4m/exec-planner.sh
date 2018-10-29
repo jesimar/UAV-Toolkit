@@ -7,14 +7,14 @@
 
 #Abaixo deve ser definida a forma de execução do seu código usando o shellscript.
 
+#Por exemplo: caso seu código esteja em Python descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
+python Example/planner-making-square-python.py > output-simulation.log
+
 #Por exemplo: caso seu código esteja em C descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
- ./Example/planner-making-square-c > output-simulation.log
+# ./Example/planner-making-square-c > output-simulation.log
 
 #Por exemplo: caso seu código esteja em C++ descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
 # ./Example/planner-making-square-cpp > output-simulation.log
-
-#Por exemplo: caso seu código esteja em Python descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
-# python Example/planner-making-square-python.py > output-simulation.log
 
 #Por exemplo: caso seu código esteja em Java descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
 # java -jar Example/planner-making-square-java.jar > output-simulation.log

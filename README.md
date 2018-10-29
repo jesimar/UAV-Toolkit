@@ -43,9 +43,7 @@ A organização desse projeto foi feita através da separação em diversos dire
 * **UAV-IFA** -> Implementação do sistema IFA que faz o gerenciamento da segurança em voo. [[UAV-IFA](./UAV-IFA/)]
 * **UAV-Manager** -> Aplicação que gerencia a instalação e execução de todo o ambiente UAV-Toolkit. [[UAV-Manager](./UAV-Manager/)]
 * **UAV-Mission-Creator** -> Aplicação que auxilia a criar missões e mapas usando o Google Earth. [[UAV-Mission-Creator](./UAV-Mission-Creator/)]
-* **UAV-Monitoring** -> Aplicação que faz o monitoramento dos sensores e informações da aeronave. [[UAV-Monitoring](./UAV-Monitoring/)]
 * **UAV-MOSA** -> Implementação do sistema MOSA que faz o gerenciamento da missão em voo. [[UAV-MOSA](./UAV-MOSA/)]
-* **UAV-PosAnalyser** -> Aplicação que faz o monitoramento da posição da aeronave. [[UAV-PosAnalyser](./UAV-PosAnalyser/)]
 * **UAV-S2DK** -> Aplicação que provê serviços de acesso a informações/controle do drone através da biblioteca dronekit e mensagens MAVLink. [[UAV-S2DK](./UAV-S2DK/)]
 * **UAV-Tests** -> Sistema para execução de testes das funcionalidades do UAV-S2DK. [[UAV-Tests](./UAV-Tests/)]
 
@@ -60,9 +58,9 @@ O presente projeto suporta processadores com arquiteturas x86, x64 e ARM (32 e 6
 | Arquitetura x86 x64                                            | Arquitetura ARM                                          |
 |----------------------------------------------------------------|----------------------------------------------------------|
 | ![](./Figures/logo-architecture-x86.png)                       | ![](./Figures/logo-architecture-arm.png)                 |
-| Testado CPU: Intel i3, i7 (no PC) (64 bits)                    | Testado CPU: ARM Cortex-A7 (RPi 2) (32 bits)             |
-| Testado CPU: Intel Core i7-8750H Coffee Lake (no PC) (64 bits) | Testado CPU: ARM Cortex-A53 (RPi 3) (64 bits)            |
-| Testado CPU: Intel Atom (Intel Edison)                         | Testado CPU: ARM Cortex-A8 (BB Black Wireless) (64 bits) |
+| CPU Testada: Intel i3, i7 (no PC) (64 bits)                    | CPU Testada: ARM Cortex-A7 (RPi 2) (32 bits)             |
+| CPU Testada: Intel Core i7-8750H Coffee Lake (no PC) (64 bits) | CPU Testada: ARM Cortex-A53 (RPi 3) (64 bits)            |
+| CPU Testada: Intel Atom (Intel Edison)                         | CPU Testada: ARM Cortex-A8 (BB Black Wireless) (64 bits) |
 
 :warning: **OBS:** A presente ferramenta suporta a arquitetura ARM, no entanto, com algumas limitações. Os planejadores que utilizam a biblioteca CPLEX não são suportados, uma vez que, não tem instalador do CPLEX para arquiteturas ARM. 
 
@@ -75,7 +73,7 @@ O presente projeto, no lado da aplicação que starta o sistema (estação base 
 | Linux                                            | Windows                            | Mac OS                         |
 |--------------------------------------------------|------------------------------------|--------------------------------|
 | ![](./Figures/logo-os-linux.png)                 | ![](./Figures/logo-os-windows.png) | ![](./Figures/logo-os-mac.png) |
-| Testado SO: Ubuntu 16.04, 17.04, 18.04 e Manjaro | Testado SO: Windows 10             | Testado SO: N/A                |
+| SO Testado: Ubuntu 16.04, 17.04, 18.04 e Manjaro | SO Testado: Windows 10             | SO Testado: N/A                |
 
 **Companion Computers suportados:**
 
@@ -84,8 +82,8 @@ O presente projeto, no lado da aplicação que irá voar (drone/CC), suporta os 
 | Intel Edison                      | Raspberry Pi                       | BeagleBone                                | Odroid                            |
 |-----------------------------------|------------------------------------|-------------------------------------------|-----------------------------------|
 | ![](./Figures/logo-cc-edison.png) | ![](./Figures/logo-cc-rpi.png)     | ![](./Figures/logo-cc-bb-black.png)       | ![](./Figures/logo-cc-odroid.png) |
-| Testado SO: Yocto Linux           | Testado SO: Raspbian               | Testado SO: Debian                        | Testado SO: N/A                   |
-| Testado Modelo: Intel Edison      | Testado Modelo: RPi 2, 3           | Testado Modelo: BB Black Wireless         | Testado Modelo: N/A               |
+| SO Testado: Yocto Linux           | SO Testado: Raspbian               | SO Testado: Debian                        | SO Testado: N/A                   |
+| Modelo Testado: Intel Edison      | Modelo Testado: RPi 2, 3           | Modelo Testado: BB Black Wireless         | Modelo Testado: N/A               |
 
 Outros CC suportados:
 
@@ -99,7 +97,7 @@ Os seguintes Pilotos Automáticos (APs) são suportados e foram testados.
 | APM                             | Pixhawk                             |
 |---------------------------------|-------------------------------------|
 | ![](./Figures/logo-ap-apm.png)  | ![](./Figures/logo-ap-pixhawk.png)  |
-| Testado Modelo: APM v2.8        | Testado Modelo: Pixhawk v1.0        |
+| Modelo Testado: APM v2.8        | Modelo Testado: Pixhawk v1.0        |
 
 **VANTs suportados:**
 
@@ -108,7 +106,7 @@ O presente projeto dá suporte a um conjunto de VANTs e estão listados abaixo.
 | Quadricóptero                            | Hexacóptero                              | Asa Fixa                                |
 |------------------------------------------|------------------------------------------|-----------------------------------------|
 | ![](./Figures/logo-drone-quadcopter.png) | ![](./Figures/logo-drone-hexacopter.png) | ![](./Figures/logo-drone-fixedwing.png) |
-| Testado Modelo: Quadricóptero em X       | Testado Modelo: N/A                      | Testado Modelo: N/A                     |
+| Modelo Testado: Quadricóptero em X       | Modelo Testado: N/A                      | Modelo Testado: N/A                     |
 | Nome: iDroneAlpha                        | Nome: N/A (Drone Simões)                 | Nome: N/A  (Ararinha)                   |
 
 ## Pré-Requisitos de Instalação (Software): 
@@ -155,7 +153,7 @@ OBS: A versão do CPLEX que avaliada foi: IBM(R) ILOG(R) CPLEX(R) Interactive Op
 
 * Google-Earth [[Link](https://www.google.com/earth/index.html)] (Instalar somente no PC) (Licença Apache 2.0)
 
-** Software necessário para fazer atualizações no projeto (incluindo melhorias):**
+**Software necessário para fazer atualizações no projeto (incluindo melhorias):**
 
 * IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC) (Licença dupla CDDL 1.0 e GPL 2.0)
 ou 
@@ -236,6 +234,39 @@ A imagem abaixo sintetiza todos os softwares que devem ser instalados na platafo
 
 ![](./Figures/apps-installs-uav-toolkit.png)
 
+## Compilação dos Projetos/Códigos em C/C++
+
+Por ser dependente de arquitetura todos os códigos em C/C++ utilizados devem ser compilados para a sua arquitetura/máquina antes de executar qualquer simulação.
+
+Para visualizar as opções de compilação possíveis digite: `/UAV-Toolkit/Scripts$ ./compile-all-code-c-cpp.sh --help`
+
+Saída para esse comando:
+```
+=======================Compile Codes C/C++========================
+How to use: 
+    Format:  ./compile-all-code-c-cpp.sh COMPUTER_TYPE
+    Example: ./compile-all-code-c-cpp.sh  RPi
+    COMPUTER_TYPE:
+        PC -> Personal Computer
+        Edison -> Intel Edison
+        RPi -> Raspberry Pi
+        BBB -> BeagleBone Black
+        Odroid -> Odroid
+==============================Done================================
+```
+
+Para compilar os códigos C/C++ para o PC digite: `$ ./compile-all-code-c-cpp.sh PC`
+
+Saída para esse comando:
+```
+=======================Compile Codes C/C++========================
+Compiled replanner-making-line-c.c and replanner-making-line-cpp.cpp
+Compiled planner-making-square-c.c and planner-making-square-cpp.cpp
+Compiled A-Star.c
+Compiled RouteStandard4m.c
+==============================Done================================
+```
+
 ## Configurações Antes da Execução
 
 Existem dois arquivos que devem ser sempre conferidos antes de executar o ambinente que são: 
@@ -302,11 +333,13 @@ Ordem  Software/Aplicação                                      (Local de Execu
 
 :warning: **OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
 
-:warning: **OBS:** Você pode abrir/executar outras estações de controle de solo para acompanhar a execução da missão, com por exemplo, APM Planner 2.0 ou Mission Planner.
+:warning: **OBS:** Você pode abrir/executar outras estações de controle de solo para acompanhar a execução da missão, com por exemplo, APM Planner 2.0 ou Mission Planner. Caso use o Mission Planner será necessário usar a conexão com UDP baudrate (57600) e porta (14550).
 
 A imagem abaixo sintetiza as três formas possíveis de execução dos softwares.
 
 ![](./Figures/forms-run-uav-toolkit.png)
+
+:warning: **OBS:** Antes de executar o UAV-IFA (exec-ifa.sh) é necessário aguardar até que o software UAV-S2DK esteja pronto (aguardando conexão).
 
 ## Como Terminar a Execução
 

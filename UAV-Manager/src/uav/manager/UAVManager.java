@@ -60,7 +60,7 @@ public class UAVManager {
     private final Font FONT_AREA = new Font(Font.MONOSPACED, Font.PLAIN, 12);
     private final Font FONT = new Font(Font.MONOSPACED, Font.PLAIN, 20);
     private final Font FONT_TITLE = new Font(Font.DIALOG_INPUT, Font.BOLD, 32);
-    private final Font FONT_SUB = new Font(Font.DIALOG_INPUT, Font.BOLD, 20);
+    private final Font FONT_SUB = new Font(Font.DIALOG_INPUT, Font.BOLD, 18);
 
     private final JFileChooser fileChooser;
     private final sFrame windows;
@@ -73,7 +73,7 @@ public class UAVManager {
     //private final JLabel labelOk;
     private final ImageIcon iconLogo;
     private final ImageIcon iconSITL_PC;
-    private final ImageIcon iconSITL_CC;
+    private final ImageIcon iconHITL_CC;
     private final ImageIcon iconReal_Fligth;
     
     
@@ -112,7 +112,7 @@ public class UAVManager {
     
         iconLogo = new ImageIcon("./resources/logo-uav-toolkit.png");
         iconSITL_PC = new ImageIcon("./resources/SITL_PC.png");
-        iconSITL_CC = new ImageIcon("./resources/SITL_CC.png");
+        iconHITL_CC = new ImageIcon("./resources/SITL_CC.png");
         iconReal_Fligth = new ImageIcon("./resources/RealFlight_CC.png");
         iconOk = new ImageIcon(new ImageIcon("./resources/ok.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
         iconFail = new ImageIcon(new ImageIcon("./resources/fail.png").getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH));
@@ -321,13 +321,13 @@ public class UAVManager {
             //this.add(panelBtms);
             
             commands = new PanelCommand[]{
-                new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl"),
-                new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy"),
-                new PanelCommand("UAV-S2DK >>",  properties_file, background, "S2DK_APP", "exec-s2dk", "S2DK_DIR"),
                 new PanelCommand("GCS >>",      properties_file, background, "GROUND_STATION_APP", "exec-gcs", "GROUND_STATION_DIR"),
                 new PanelCommand("UAV-GCS >>",  properties_file, background, "UAV_GCS_APP", "exec-uav-gcs", "UAV_GCS_DIR"),
-                new PanelCommand("IFA >>",      properties_file, background, "UAV_IFA_APP", "exec-uav-ifa", "UAV_IFA_DIR"),
-                new PanelCommand("MOSA >>",     properties_file, background, "UAV_MOSA_APP", "exec-uav-mosa", "UAV_MOSA_DIR")
+                new PanelCommand("SITL >>",     properties_file, background, "SITL_COMMAND", "exec-dronekit-sitl"),
+                new PanelCommand("MAVProxy >>", properties_file, background, "MAVPROXY_COMMAND", "exec-mavproxy"),
+                new PanelCommand("UAV-S2DK >>", properties_file, background, "S2DK_APP", "exec-s2dk", "S2DK_DIR"),
+                new PanelCommand("UAV-IFA >>",  properties_file, background, "UAV_IFA_APP", "exec-uav-ifa", "UAV_IFA_DIR"),
+                new PanelCommand("UAV-MOSA >>", properties_file, background, "UAV_MOSA_APP", "exec-uav-mosa", "UAV_MOSA_DIR")
             };
             
             this.panelLogo = new LogoPanel(logo, background);
@@ -482,7 +482,7 @@ public class UAVManager {
         public boolean needSITL_PC(){
             return module_sitl_pc;
         }
-        public boolean needSITL_CC(){
+        public boolean needHITL_CC(){
             return module_sitl_cc;
         }
         public boolean needRealFlight_CC(){
@@ -606,12 +606,12 @@ public class UAVManager {
                             os.patternTestInstallationMAVProxy(), 10000), 
                     new CheckOutputPattern("python -m pip install MAVProxy==1.6.1", "(.)*", 300000)
                 ),
-                new CheckPanel(true, true, true, "Ground Station", 
+                new CheckPanel(true, true, true, "Ground Control Station", 
                     (r) -> r.accept(new File(properties.getProperty("GROUND_STATION_DIR"), properties.getProperty("GROUND_STATION_APP")).exists()),
                     new CheckFindApp(finder, saver, "GROUND_STATION_DIR", "GROUND_STATION_APP"),
                     "Please install manually and click here to select one Ground Control Station aplication"
                 ),
-                new CheckPanel(true, false, false, "S2DK", 
+                new CheckPanel(true, false, false, "UAV-S2DK", 
                     (r) -> r.accept(new File(properties.getProperty("S2DK_DIR"), properties.getProperty("S2DK_APP")).exists()),
                     new CheckFindApp(finder, saver, "S2DK_DIR", "S2DK_APP"),
                     "Please select the file init.py from UAV-Toolkit/UAV-S2DK/ directory"
@@ -631,15 +631,14 @@ public class UAVManager {
                     new CheckFindApp(finder, saver, "UAV_MOSA_DIR", "UAV_MOSA_APP"),
                     "Please select the UAV-MOSA.jar from UAV-Toolkit/UAV-MOSA/dist/ directory"
                 )
-            };
-            
+            };            
             
             this.labelModules = new JLabel("Modules", SwingConstants.CENTER);
             this.labelModules.setFont(FONT_TITLE);
             this.modules = new ModulePanel[]{
-                new ModulePanel(iconSITL_PC, "SITL - PC", background, (r)-> r.accept(verifiy(CheckPanel::needSITL_PC))),
-                new ModulePanel(iconSITL_CC, "SITL - CC", background, (r)-> r.accept(verifiy(CheckPanel::needSITL_CC))),
-                new ModulePanel(iconReal_Fligth, "Real Flight - CC", background,      (r)-> r.accept(verifiy(CheckPanel::needRealFlight_CC)))
+                new ModulePanel(iconSITL_PC, "SITL-[PC]", background, (r)-> r.accept(verifiy(CheckPanel::needSITL_PC))),
+                new ModulePanel(iconHITL_CC, "HITL-[PC+CC]", background, (r)-> r.accept(verifiy(CheckPanel::needHITL_CC))),
+                new ModulePanel(iconReal_Fligth, "Real Flight-[CC+UAV]", background,      (r)-> r.accept(verifiy(CheckPanel::needRealFlight_CC)))
             };
 
             this.panelChecks = new sPanel(background){

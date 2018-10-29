@@ -18,7 +18,6 @@ mav.tlog
 mav.tlog.raw
 
 ideias-todo.txt
-dicas-voo.txt
 TODO-Future.md
 
 /Modules-Global/Camera/*.png
@@ -52,14 +51,9 @@ TODO-Future.md
 /UAV-Mission-Creator/build/
 /UAV-Mission-Creator/test/
 
-/UAV-Monitoring/nbproject/private/
-/UAV-Monitoring/build/
-/UAV-Monitoring/test/
-
-/UAV-PosAnalyser/nbproject/private/
-/UAV-PosAnalyser/build/
-/UAV-PosAnalyser/test/
-
 /UAV-Tests/nbproject/private/
 /UAV-Tests/build/
 /UAV-Tests/test/
+/Lib-UAV/nbproject/private/
+/Lib-UAV/build/
+/Lib-UAV/dist/

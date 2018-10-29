@@ -33,13 +33,13 @@ public class SprayingControl {
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
-                cmd = "./open-spraying";
+                cmd = "python open-spraying-pc.py";
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python open-spraying.py";//fazer isso aqui ainda
+                    cmd = "python open-spraying-rpi.py";//fazer isso aqui ainda
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             } 
             boolean print = true;
@@ -57,13 +57,13 @@ public class SprayingControl {
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
-                cmd = "./close-spraying";
+                cmd = "python close-spraying-pc.py";
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python close-spraying.py";//fazer isso aqui ainda
+                    cmd = "python close-spraying-rpi.py";//fazer isso aqui ainda
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             } 
             boolean print = true;

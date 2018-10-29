@@ -9,6 +9,21 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
 * Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sona
 
+* Compilar todos os códigos em C para as suas respectivas arquiteturas.
+1. RouteStandard4m-PC -> Sim
+2. RouteStandard4m-Edison -> Não
+3. RouteStandard4m-RPi -> Não
+4. RouteStandard4m-BBB -> Não
+5. RouteStandard4m-Odroid -> Não
+
+1. A-Start-PC -> Sim
+2. A-Start-Edison -> Não
+3. A-Start-RPi -> Não
+4. A-Start-BBB -> Não
+5. A-Start-Odroid -> Não
+
+* Calcular melhor o valor de std-position baseado no GPS: 0,65
+
 ## Sistema IFA:
 
 * Trocar velocidade de subida e decida se a bateria estiver acabando (automaticamente no IFA).
@@ -28,12 +43,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
 		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 
 		por exemplo, para etapa de pulverização. (behavior diferente).
-* Transferir as fotos do MOSA (CC) para a GCS e exibi-las em tempo real. Fazer o mesmo com o vídeo.
 
 ## Sistema UAV-S2DK:
 
-* Criar função para pairar o drone após chegar a uma waypoint final e não ter nenhuma missão para executar. 
-* Observar o porquê o drone esta pousando no final da missão.
 * Corrigir problema na função setHomeLocation(). Problema no cmds.download() e cmds.wait_ready().
 * Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
 * OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
@@ -41,20 +53,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 ## Geral
 
 * Criar no github o UAV-Embedded. Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
-* Diagramar toda a máquina de estados dos modos de voo do drone (Guided, Auto, Stabilized, etc).
-* Documentação: Melhorar a descrição do projeto no github.
-    Usar os termos: 
-        x86 para 32 bits
-        x64 para 64 bits
-        ARM32 para 32 bits
-        ARM64 para 64 bits
-* Documentação: Melhorar as descrições do github através de links, figuras, diagramas e vídeos.
 * Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
-* Documentação: Colocar informações sobre como configurar os arquivos de properties no github.
 * Documentação: Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
 * Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
-* Fazer de papelão objetos que representam as regiões bonificadoras e regiões penalizadoras.
-* Trocar licença de GPL 3.0 para MIT (UAV-Toolkit, UAV-Tools, Path-Replanning).
 
 ## Documentação Formal das Falhas no Sistema
 

@@ -39,7 +39,7 @@ public class CameraControl {
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python picture-rpi.py";
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             } 
             boolean print = true;
@@ -67,7 +67,7 @@ public class CameraControl {
                             config.getNumberPhotoInSequence() + " " + 
                             config.getDelayPhotoInSequence();
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             }
             boolean print = true;
@@ -94,7 +94,7 @@ public class CameraControl {
                     print = true;
                     cmd = "python video-rpi.py " + config.getTimeVideo();
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             }
             UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirCamera()), print);

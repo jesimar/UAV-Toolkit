@@ -1,5 +1,19 @@
 # Changelog
 
+## Version v4.1.0 (08/10/2018)
+
+### Features:
+
+* Removed code UAV-PosAnalyser and UAV-Monitoring
+* Added support to artificial maps (instances Path-Planner and Path-Replanner). You need to set the start and goal points
+* Added a script to compile all the C/C++ system codes.
+* Updated code UAV-Manager (parameter names) in GUI.
+* Changed the sequence of the buttons in UAV-Manager.
+
+### Bug Fixes:
+
+* Updated HGA4m to support map with long distance (the HGA4m did not find solution for large maps).
+
 ## Version v4.0.0 (08/10/2018)
 
 ### Features:

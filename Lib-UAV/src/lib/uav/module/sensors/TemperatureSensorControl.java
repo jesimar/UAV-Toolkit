@@ -42,7 +42,7 @@ public class TemperatureSensorControl {
                     cmd = "python temperature-rpi.py " + config.getPinTemperatureCLK() + " "
                             + config.getPinTemperatureCS() + " " + config.getPinTemperatureSO();
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             }
             File file = new File(config.getDirTemperatureSensor());

@@ -42,7 +42,7 @@ public class SonarControl {
                     cmd = "python sonar-rpi.py " + config.getPinSonarTrig() + " " +
                             config.getPinSonarEcho();
                 }else{
-                    cmd = "./device";
+                    cmd = "python device.py";
                 }
             }
             File file = new File(config.getDirSonar());

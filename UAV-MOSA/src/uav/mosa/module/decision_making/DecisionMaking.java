@@ -10,7 +10,9 @@ import lib.uav.reader.ReaderFileConfig;
 import lib.uav.struct.constants.Constants;
 import lib.uav.struct.constants.LocalExecMission;
 import lib.uav.struct.constants.TypeBehavior;
+import lib.uav.struct.constants.TypeCC;
 import lib.uav.struct.constants.TypeMsgCommunication;
+import lib.uav.struct.constants.TypeOperationMode;
 import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeSystemExecMOSA;
 import lib.uav.struct.mission.Mission;
@@ -148,21 +150,35 @@ public class DecisionMaking {
     public void actionChangeBehavior(String type){    
         String disc = config.getDiscretizationBehavior();
         String cmd = "";
+        if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+            cmd = "./RouteStandard4m-PC ";
+        } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
+                config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                cmd = "./RouteStandard4m-Edison ";
+            } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                cmd = "./RouteStandard4m-RPi ";
+            } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                cmd = "./RouteStandard4m-BBB ";
+            } else if (config.getTypeCC().equals(TypeCC.ODROID)){
+                cmd = "./RouteStandard4m-Odroid ";
+            }
+        }
         if (type.equals(TypeBehavior.CIRCLE)){
             String dist = config.getRadiusCircleBehavior();
-            cmd = "./RouteStandard4m " + drone.getSensors().getGPS().lat + " " + 
+            cmd = cmd + drone.getSensors().getGPS().lat + " " + 
                     drone.getSensors().getGPS().lng + " " + 
                     drone.getSensors().getBarometer().alt_rel + " CIRCLE " + 
                     dist + " " + disc;
         }else if (type.equals(TypeBehavior.TRIANGLE)){
             String dist = config.getBaseTriangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getSensors().getGPS().lat + " " + 
+            cmd = cmd + drone.getSensors().getGPS().lat + " " + 
                     drone.getSensors().getGPS().lng + " " + 
                     drone.getSensors().getBarometer().alt_rel + " TRIANGLE " + 
                     dist + " " + disc;
         }else if (type.equals(TypeBehavior.RECTANGLE)){
             String dist = config.getBaseRectangleBehavior();
-            cmd = "./RouteStandard4m " + drone.getSensors().getGPS().lat + " " + 
+            cmd = cmd + drone.getSensors().getGPS().lat + " " + 
                     drone.getSensors().getGPS().lng + " " + 
                     drone.getSensors().getBarometer().alt_rel + " RECTANGLE " + 
                     dist + " " + disc;

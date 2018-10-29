@@ -1,0 +1,14 @@
+Waypoints Mission
+2
+-21.99968206310259;-47.93965555555555;0.000000000000000
+-21.99502163051751;-47.93965555555555;0.000000000000000
+Waypoints Buzzer
+0
+Waypoints Camera Picture
+0
+Waypoints Camera Video
+0
+Waypoints Camera Photo In Sequence
+0
+Waypoints Spraying
+0

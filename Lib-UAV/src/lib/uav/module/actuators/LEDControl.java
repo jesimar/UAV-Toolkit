@@ -33,13 +33,15 @@ public class LEDControl {
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
-                cmd = "./turn-on-led";
+                cmd = "python turn-on-led-pc.py";
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python turn-on-led.py";//fazer isso aqui ainda
-                }else{
-                    cmd = "./device";
+                    cmd = "python turn-on-led-rpi.py";//fazer isso aqui ainda
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python turn-on-led-bbb.py";//fazer isso aqui ainda
+                } else{
+                    cmd = "python device.py";
                 }
             } 
             boolean print = true;
@@ -57,13 +59,15 @@ public class LEDControl {
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
-                cmd = "./turn-off-led";
+                cmd = "python turn-off-led-pc.py";
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python turn-off-led.py";//fazer isso aqui ainda
-                }else{
-                    cmd = "./device";
+                    cmd = "python turn-off-led-rpi.py";//fazer isso aqui ainda
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python turn-off-led-bbb.py";//fazer isso aqui ainda
+                } else{
+                    cmd = "python device.py";
                 }
             }
             boolean print = true;
@@ -81,13 +85,15 @@ public class LEDControl {
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
-                cmd = "./blink-led";
+                cmd = "python blink-led-pc.py";
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python blink-led.py";//fazer isso aqui ainda
-                }else{
-                    cmd = "./device";
+                    cmd = "python blink-led-rpi.py";//fazer isso aqui ainda
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python blink-led-bbb.py";//fazer isso aqui ainda
+                } else{
+                    cmd = "python device.py";
                 }
             } 
             boolean print = true;

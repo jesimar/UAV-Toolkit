@@ -7,14 +7,14 @@
 
 #Abaixo deve ser definida a forma de execução do seu código usando o shellscript.
 
+#Por exemplo: caso seu código esteja em Python descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
+python Example/replanner-making-line-python.py > output-simulation.log
+
 #Por exemplo: caso seu código esteja em C descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
- ./Example/replanner-making-line-c > output-simulation.log
+# ./Example/replanner-making-line-c > output-simulation.log
 
 #Por exemplo: caso seu código esteja em C++ descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
 # ./Example/replanner-making-line-cpp > output-simulation.log
-
-#Por exemplo: caso seu código esteja em Python descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
-# python Example/replanner-making-line-python.py > output-simulation.log
 
 #Por exemplo: caso seu código esteja em Java descomente/use a linha abaixo. Atualize o nome do seu código abaixo e o caminho do código.
 # java -jar Example/replanner-making-line-java.jar > output-simulation.log

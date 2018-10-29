@@ -91,7 +91,20 @@ public abstract class Planner {
                     }
                 }
             }else if (config.getTypePlanner().equals(TypePlanner.A_STAR4M)){
-                cmd = config.getCmdExecPlanner();
+                if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+                    cmd = config.getCmdExecPlanner() + " local";
+                } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
+                        config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                    if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                        cmd = config.getCmdExecPlanner() + " edison";
+                    } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+                        cmd = config.getCmdExecPlanner() + " rpi";
+                    } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                        cmd = config.getCmdExecPlanner() + " bbb";
+                    } else if (config.getTypeCC().equals(TypeCC.ODROID)){
+                        cmd = config.getCmdExecPlanner() + " odroid";
+                    }
+                }
             }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
                 cmd = config.getCmdExecPlanner();
             }
