@@ -36,7 +36,7 @@ Este diretório também possui dois arquivos de configuração que são:
 
 Abaixo encontra-se uma tabela sintetizando os principais módulos presentes nessa pasta e suas características.
 
-| Característica              | Sonar          | Temperature         | Camera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
+| Característica              | Sonar          | Temperature         | Câmera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
 |-----------------------------|----------------|---------------------|------------------|---------------|---------------|---------------|---------------|---------------------|
 | Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
 | Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    |               |               |               | N/A                 |
@@ -46,27 +46,42 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos presentes ness
 | Tem versão PC               | Sim (Simulado) | Sim (Simulado)      | Sim              | Sim           | Não           | Não           | Não           | N/A                 |
 | Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
 
-| Característica              | Camera                        | Camera                                    | Camera                    |
-|-----------------------------|-------------------------------|-------------------------------------------|---------------------------|
-| Tipo de Ação                | Retirar Foto                  | Retirar Fotos em Sequência                | Fazer Vídeo               |
-| Código para Raspberry Pi    | picture-rpi.py                | photo-in-sequence-rpi.py                  | video-rpi.py              |
-| Código para PC              | picture-pc.jar (print screen) | photo-in-sequence-pc.jar (print screens)  | video-pc.jar (grava tela) |
+A tabela abaixo sintetiza algumas informações sobre o sensor câmera.
 
-| Característica              | Buzzer                                | Buzzer                               |
-|-----------------------------|---------------------------------------|--------------------------------------|
-| Tipo de Ação                | Aciona um Beep (Buzzer)               | Aciona vários Beeps (Alarme)         |
-| Código para Edison          | buzzer-edison.py                      | alarm-edison.py                      |
-| Código para PC              | buzzer-pc.jar (aciona o buzzer do pc) | alarm-pc.jar (aciona o buzzer do pc) |
+| Característica           | Câmera                  | Câmera                       | Câmera                 | Observação                               |
+|--------------------------|-------------------------|------------------------------|------------------------|------------------------------------------|
+| Tipo de Ação             | Retirar Foto            | Retirar Fotos em Sequência   | Fazer Vídeo            |                                          |
+| Código para Raspberry Pi | picture-rpi.py          | photo-in-sequence-rpi.py     | video-rpi.py           |                                          |
+| Código para PC           | picture-pc.jar          | photo-in-sequence-pc.jar     | video-pc.jar           | Print screen, print screens e grava tela |
 
-| Característica              | Sonar                          | 
-|-----------------------------|--------------------------------|
-| Tipo de Ação                | Calcula Distância              |
-| Código para Raspberry Pi    | sonar-rpi.py                   |
-| Código para PC              | sonar-pc.jar (dados simulados) |
+A tabela abaixo sintetiza algumas informações sobre o atuador buzzer.
 
-| Característica              | Temperature                          | 
-|-----------------------------|--------------------------------------|
-| Tipo de Ação                | Calcula a Temperatura                |
-| Código para Raspberry Pi    | temperature-rpi.py                   |
-| Código para Raspberry Pi    | temperature-rpi.c                    |
-| Código para PC              | temperature-pc.jar (dados simulados) |
+| Característica           | Buzzer                  | Buzzer                       | Observação             |
+|--------------------------|-------------------------|------------------------------|------------------------|
+| Tipo de Ação             | Aciona um Beep (Buzzer) | Aciona vários Beeps (Alarme) |                        |
+| Código para Edison       | buzzer-edison.py        | alarm-edison.py              |                        |
+| Código para PC           | buzzer-pc.jar           | alarm-pc.jar                 | Aciona o buzzer do pc  |
+
+A tabela abaixo sintetiza algumas informações sobre o sensor sonar.
+
+| Característica           | Sonar                 | Observação             |
+|--------------------------|-----------------------|------------------------|
+| Tipo de Ação             | Calcula Distância     |                        |
+| Código para Raspberry Pi | sonar-rpi.py          |                        |
+| Código para PC           | sonar-pc.jar          | Dados apenas simulados |
+
+A tabela abaixo sintetiza algumas informações sobre o sensor de temperatura.
+
+| Característica           | Temperature           | Observação             |
+|--------------------------|-----------------------|------------------------|
+| Tipo de Ação             | Calcula a Temperatura |                        |
+| Código para Raspberry Pi | temperature-rpi.py    |                        |
+| Código para Raspberry Pi | temperature-rpi.c     |                        |
+| Código para PC           | temperature-pc.jar    | Dados apenas simulados |
+
+A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (por enquanto, esse recurso será adicionado em breve), execuntando onboard ou offboard. Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
+
+| Característica                                 | HGA4m Onboard   | HGA4m Offboard  | CCQSP4m Onboard | CCQSP4m Offboard | Métodos-IFA Onboard | Métodos-IFA Offboard |
+|------------------------------------------------|-----------------|-----------------|-----------------|------------------|---------------------|----------------------|
+| Suporta Simplificador de Rotas                 | Sim             | Sim             | Sim             | Sim              | Não                 | Não                  |
+| Suporta Simplificador de Rotas Automaticamente | Não             | Não             | Sim             | Não              | Não                 | Não                  |
