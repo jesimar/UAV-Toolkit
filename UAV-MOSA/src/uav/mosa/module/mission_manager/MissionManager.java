@@ -126,6 +126,11 @@ public class MissionManager {
         this.communicationIFA = new CommunicationIFA(drone);
         this.communicationGCS = new CommunicationGCS();
         
+        if (!config.hasGPS()){
+            System.out.println("The drone needs GPS to do the mission.");
+            System.exit(1);
+        }
+        
         if (config.hasBuzzer()){
             this.wptsBuzzer = new Mission();
             readerFileBuzzer();
@@ -299,18 +304,24 @@ public class MissionManager {
                     while(stateMOSA != StateSystem.DISABLED){                    
                         if (communicationIFA.getStateCommunication() == StateCommunication.DISABLED){
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                            communicationIFA.close();
+                            communicationGCS.close();
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(1);
                         }
                         if (decisonMaking.getStatePlanning()== StatePlanning.DISABLED){
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                            communicationIFA.close();
+                            communicationGCS.close();
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(1);
                         }
                         if (stateMonitoring == StateMonitoring.DISABLED){
                             communicationIFA.sendData(TypeMsgCommunication.MOSA_IFA_DISABLED);
+                            communicationIFA.close();
+                            communicationGCS.close();
                             stateMOSA = StateSystem.DISABLED;
                             Thread.sleep(100);
                             System.exit(1);

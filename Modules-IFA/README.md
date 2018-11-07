@@ -76,18 +76,16 @@ Abaixo encontram-se duas tabela sintetizando os principais módulos do IFA e sua
 | Alocação do Risco          | Sim                       | Sim                      | Sim                      | Não                      | Não                      |
 | Linguagem                  | Java                      | Java                     | Java                     | Java                     | Java                     |
 | Local de Execução          | Onboard/Offboard          | Onboard/Offboard         | Onboard/Offboard         | Onboard/Offboard         | Onboard/Offboard         |
-| Imagem                     | ![](../Figures/mpga4s.png)| ![](../Figures/ga4s.png) | ![](../Figures/de4s.png) | ![](../Figures/gh4s.png) | ![](../Figures/ms4s.png) |
 
-| Característica             | GA-GA-4s                   | GA-GH-4s                 | Pre-Planned4s            | Fixed-Route4s            | MILP4s                   |
-|----------------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
-| Estratégia                 | Metaheurística             | Metaheurística           | Determinística           | Determinística           | Programação Matemática   |
-| Módelo PLIM                | Não                        | Não                      | Não                      | Não                      | Sim                      |
-| Núcleos da CPU usados      | Dois                       | Dois                     | Um                       | Um                       | Um                       |
-| Tempo de Processamento     | Rápido (~0.5 a 2 seg)      | Rápido (~0.5 a 2 seg)    | (~0.5 a 2 seg)           | Super Rápido (<0.001 seg)| Super Lento (>30 seg até 10 minutos) |
-| Dependência de Bibliotecas | Não tem                    | Não tem                  | Não tem                  | Não tem                  | CPLEX                    |
-| Dependência de Arquitetura | Todas que rodam Java       | Todas que rodam Java     | Todas                    | Todas                    | Apenas x86 e x64         |
-| Faz o desvio de obstáculos | Sim                        | Sim                      | Sim                      | Não                      | Sim                      |
-| Alocação do Risco          | Sim                        | Sim                      | Sim                      | Não                      | Sim                      |
-| Linguagem                  | Java                       | Java                     | Java                     | N/A                      | Java                     |
-| Local de Execução          | Onboard                    | Onboard                  | Onboard                  | Onboard                  | Onboard                  |
-| Imagem                     | ![](../Figures/ga-ga4s.png)| ![](../Figures/ga-gh4s.png) | ![](../Figures/pre-planned4s.png) | ![](../Figures/fixed-route4s.png) | ![](../Figures/milp4s.png) |
+| Característica             | GA-GA-4s                   | GA-GH-4s                 | Pre-Planned4s            | Fixed-Route4s            | MILP4s                   | G-Path-Replanner4s 
+|----------------------------|----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
+| Estratégia                 | Metaheurística             | Metaheurística           | Determinística           | Determinística           | Programação Matemática   | Qualquer Estratégia      |
+| Módelo PLIM                | Não                        | Não                      | Não                      | Não                      | Sim                      | N/A                      |
+| Núcleos da CPU usados      | Dois                       | Dois                     | Um                       | Um                       | Um                       | N/A                      |
+| Tempo de Processamento     | Rápido (~0.5 a 2 seg)      | Rápido (~0.5 a 2 seg)    | (~0.5 a 2 seg)           | Super Rápido (<0.001 seg)| Super Lento (>30 seg até 10 minutos) | N/A                      |
+| Dependência de Bibliotecas | Não tem                    | Não tem                  | Não tem                  | Não tem                  | CPLEX                    | N/A                      |
+| Dependência de Arquitetura | Todas que rodam Java       | Todas que rodam Java     | Todas                    | Todas                    | Apenas x86 e x64         | N/A                      |
+| Faz o desvio de obstáculos | Sim                        | Sim                      | Sim                      | Não                      | Sim                      | N/A                      |
+| Alocação do Risco          | Sim                        | Sim                      | Sim                      | Não                      | Sim                      | N/A                      |
+| Linguagem                  | Java                       | Java                     | Java                     | N/A                      | Java                     | Qualquer Linguagem (Tem Exemplos em C, C++, Java e Python) |
+| Local de Execução          | Onboard                    | Onboard                  | Onboard                  | Onboard                  | Onboard                  | Onboard/Offboard         |

@@ -74,18 +74,19 @@ prop.ifa.replanner.type_altitude_decay=CONSTANT
 O seguinte arquivo de saída (log-overhead-ifa*.csv) em formato CSV é gerado: 
 
 ```
-Time-in-POST(ms);/set-parameter/;322
-Time-in-POST(ms);/set-parameter/;232
-Time-in-POST(ms);/set-parameter/;348
-Time-in-GET(ms);/get-parameters/;208
-Time-in-GET(ms);/get-home-location/;419
-Time-in-GET(ms);/get-all-sensors/;27
-Time-in-GET(ms);/get-distance-to-home/;60
+Type-of-Method;Requisition-URL;Time-In-MilliSeconds
+POST;/set-parameter/;322
+POST;/set-parameter/;232
+POST;/set-parameter/;348
+GET;/get-parameters/;208
+GET;/get-home-location/;419
+GET;/get-all-sensors/;27
+GET;/get-distance-to-home/;60
 ...
-Time-in-GET(ms);/get-all-sensors/;44
+GET;/get-all-sensors/;44
 ```
 
-Este arquivo contém basicamente três campos o tipo de comando, o nome do comando e o tempo gasto (overhead) em milissegundos (ms) para concluir o comando.
+Este arquivo contém basicamente três campos o tipo de comando (tipo de método), o nome do comando (nome da URL) e o tempo gasto (overhead) em milissegundos (ms) para concluir o comando.
 
 Um outro arquivo de saída gerado é o log-aircraft*.csv que também utiliza o formato CSV e possui o seguinte aspecto:
 

@@ -70,13 +70,14 @@ public class HGA4m extends Planner{
             File dst_ga = new File(dir + "ga-config");
             String time = config.getTimeExecPlannerHGA4m(i);
             String timeH = String.format("%d", (int)(dist));
-            //usando o minimo entre 50 e a metade dos waypoints DeltaT=2
-            String qtdWpt = String.format("%d", Math.min(50, (int)(dist/2)));
+            //usando o minimo entre 25 e um quarto dos waypoints DeltaT=4
+            String qtdWpt = String.format("%d", Math.min(25, (int)(dist/4)));
             String delta = config.getDeltaPlannerHGA4m();
             String maxVel = config.getMaxVelocityPlannerHGA4m();
             String maxCtrl = config.getMaxControlPlannerHGA4m();
+            String stdPos = config.getStdPositionPlannerHGA4m();
             UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, time, 207, delta, 304,
-                    qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
+                    stdPos, 350, qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
             StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");

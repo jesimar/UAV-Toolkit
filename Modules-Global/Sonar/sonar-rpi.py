@@ -1,7 +1,7 @@
 #Author: Jesimar da Silva Arantes
 #Date: 21/08/2018
 #Last Update: 21/08/2018
-#Description: Code that start the sonar [HC-SR04].
+#Description: Code that start the sonar [HC-SR04] on Raspberry Pi.
 
 import RPi.GPIO as GPIO
 import time

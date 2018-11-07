@@ -2,7 +2,7 @@
 #Author: Jesimar da Silva Arantes
 #Date: 16/08/2018
 #Last Update: 11/09/2018
-#Description: Code that start the temperature sensor MAX6675 with Type-K Thermocouple.
+#Description: Code that start the temperature sensor MAX6675 with Type-K Thermocouple on Raspberry Pi.
 
 from max6675 import MAX6675, MAX6675Error
 import RPi.GPIO as GPIO

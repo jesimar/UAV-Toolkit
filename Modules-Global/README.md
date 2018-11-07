@@ -36,15 +36,16 @@ Este diretório também possui dois arquivos de configuração que são:
 
 Abaixo encontra-se uma tabela sintetizando os principais módulos presentes nessa pasta e suas características.
 
-| Característica              | Sonar          | Temperature         | Câmera           | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
+| Característica              | Câmera         | Sonar               | Temperature      | Buzzer        | LED           | Parachute     | Spraying      | Route-Simplifier    |
 |-----------------------------|----------------|---------------------|------------------|---------------|---------------|---------------|---------------|---------------------|
 | Tipo                        | Sensor         | Sensor              | Sensor           | Atuador       | Atuador       | Atuador       | Atuador       | Otimizador de Rotas |
-| Marca/Modelo                | HC-SR04        | MAX6675             | Camera RPi v1    | Buzzer 12V    |               |               |               | N/A                 |
-| Dependência de Bibliotecas  | RPi.GPIO       | RPi.GPIO e WiringPi | picamera         | mraa          |               |               |               | Não tem             |
-| Linguagem                   | Python         | Python ou C         | Python           | Python        |               |               |               | Python              |
-| Aplicação que Utiliza       | IFA            | IFA                 | MOSA             | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
-| Tem versão PC               | Sim (Simulado) | Sim (Simulado)      | Sim              | Sim           | Não           | Não           | Não           | N/A                 |
-| Imagem                      | ![](../Figures/sonar.png) | ![](../Figures/temperature.png)| ![](../Figures/camera.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
+| Marca/Modelo                | Camera RPi v1  | HC-SR04             | MAX6675          | Buzzer 12V    | LED Red 5mm   |               |               | N/A                 |
+| Dependência de Bibliotecas  | picamera       | RPi                 | RPi e WiringPi   | mraa          | Adafruit_BBIO |               |               | Não tem             |
+| Linguagem                   | Python         | Python              | Python ou C      | Python        | Python        |               |               | Python              |
+| Aplicação que Utiliza       | MOSA           | IFA                 | IFA              | IFA/MOSA      | IFA/MOSA      | IFA           | MOSA          | MOSA                |
+| Tem versão PC               | Sim            | Sim (Simulado)      | Sim (Simulado)   | Sim           | Não           | Não           | Não           | N/A                 |
+| Totalmente Funcional        | Sim            | Sim                 | Sim              | Sim           | Sim           | Não           | Não           | Sim                 |
+| Imagem                      | ![](../Figures/camera.png) | ![](../Figures/sonar.png) | ![](../Figures/temperature.png) | ![](../Figures/buzzer.png) | ![](../Figures/led.png) | ![](../Figures/parachute.png) | ![](../Figures/spraying.png) | ![](../Figures/route-simplifier.png) |
 
 A tabela abaixo sintetiza algumas informações sobre o sensor câmera.
 
@@ -54,20 +55,14 @@ A tabela abaixo sintetiza algumas informações sobre o sensor câmera.
 | Código para Raspberry Pi | picture-rpi.py          | photo-in-sequence-rpi.py     | video-rpi.py           |                                          |
 | Código para PC           | picture-pc.jar          | photo-in-sequence-pc.jar     | video-pc.jar           | Print screen, print screens e grava tela |
 
-A tabela abaixo sintetiza algumas informações sobre o atuador buzzer.
-
-| Característica           | Buzzer                  | Buzzer                       | Observação             |
-|--------------------------|-------------------------|------------------------------|------------------------|
-| Tipo de Ação             | Aciona um Beep (Buzzer) | Aciona vários Beeps (Alarme) |                        |
-| Código para Edison       | buzzer-edison.py        | alarm-edison.py              |                        |
-| Código para PC           | buzzer-pc.jar           | alarm-pc.jar                 | Aciona o buzzer do pc  |
-
 A tabela abaixo sintetiza algumas informações sobre o sensor sonar.
 
 | Característica           | Sonar                 | Observação             |
 |--------------------------|-----------------------|------------------------|
 | Tipo de Ação             | Calcula Distância     |                        |
 | Código para Raspberry Pi | sonar-rpi.py          |                        |
+| Código para BBB          | sonar-bbb.py          | Não testado            |
+| Código para Edison       | sonar-edison.py       | Não testado            |
 | Código para PC           | sonar-pc.jar          | Dados apenas simulados |
 
 A tabela abaixo sintetiza algumas informações sobre o sensor de temperatura.
@@ -77,7 +72,46 @@ A tabela abaixo sintetiza algumas informações sobre o sensor de temperatura.
 | Tipo de Ação             | Calcula a Temperatura |                        |
 | Código para Raspberry Pi | temperature-rpi.py    |                        |
 | Código para Raspberry Pi | temperature-rpi.c     |                        |
+| Código para BBB          | temperature-bbb.py    | Não testado            |
+| Código para Edison       | temperature-edison.py | Não testado            |
 | Código para PC           | temperature-pc.jar    | Dados apenas simulados |
+
+A tabela abaixo sintetiza algumas informações sobre o atuador buzzer.
+
+| Característica           | Buzzer                  | Buzzer                       | Observação             |
+|--------------------------|-------------------------|------------------------------|------------------------|
+| Tipo de Ação             | Aciona um Beep (Buzzer) | Aciona vários Beeps (Alarme) |                        |
+| Código para Edison       | buzzer-edison.py        | alarm-edison.py              |                        |
+| Código para Raspberry Pi | buzzer-rpi.py           | alarm-rpi.py                 |                        |
+| Código para BeagleBone   | buzzer-bbb.py           | alarm-bbb.py                 | Não testado            |
+| Código para PC           | buzzer-pc.jar           | alarm-pc.jar                 | Aciona o buzzer do pc  |
+
+A tabela abaixo sintetiza algumas informações sobre o atuador LED.
+
+| Característica           | LED                     | LED                          | Observação             |
+|--------------------------|-------------------------|------------------------------|------------------------|
+| Tipo de Ação             | Liga o LED              | Pisca o LED (Blink)          |                        |
+| Código para Raspberry Pi | turn-on-led-rpi.py      | blink-led-rpi.py             | Não testado            |
+| Código para BBB          | turn-on-led-bbb.py      | blink-led-bbb.py             |                        |
+| Código para Edison       | turn-on-led-edison.py   | blink-led-edison.py          | Não testado            |
+
+A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
+
+| Característica           | Parachute                | Observação             |
+|--------------------------|--------------------------|------------------------|
+| Tipo de Ação             | Abre o paraquedas        |                        |
+| Código para Edison       | open-parachute-edison.py | Não testado            |
+| Código para Raspberry Pi | open-parachute-rpi.py    | Não testado            |
+| Código para BBB          | open-parachute-bb.py     | Não testado            |
+
+A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
+
+| Característica           | Spraying                | Spraying                 | Observação             |
+|--------------------------|-------------------------|--------------------------|------------------------|
+| Tipo de Ação             | Abre o pulverizador     | Fecha o pulverizador     |                        |
+| Código para Edison       | open-spraying-edison.py | close-spraying-edison.py | Não testado            |
+| Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    | Não testado            |
+| Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    | Não testado            |
 
 A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (por enquanto, esse recurso será adicionado em breve), execuntando onboard ou offboard. Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
 
@@ -85,3 +119,15 @@ A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificad
 |------------------------------------------------|-----------------|-----------------|-----------------|------------------|---------------------|----------------------|
 | Suporta Simplificador de Rotas                 | Sim             | Sim             | Sim             | Sim              | Não                 | Não                  |
 | Suporta Simplificador de Rotas Automaticamente | Não             | Não             | Sim             | Não              | Não                 | Não                  |
+
+A tabela abaixo sintetiza algumas informações sobre os Companions Computers e o suporte a alguns dispositivos de hardware (sensores/atuadores).
+
+| Sensor/Atuador                  | Intel Edison    | Raspberry Pi 2, 3 | BeagleBone Black | Odroid C1     |
+|---------------------------------|-----------------|-------------------|------------------|---------------|
+| Suporta Sensor Sonar            | Não             | Sim               | Não              | Não           |
+| Suporta Sensor Temperatura      | Não             | Sim               | Não              | Não           |
+| Suporta Câmera                  | Não             | Sim               | Não              | Não           |
+| Suporta Buzzer                  | Sim             | Não               | Sim              | Não           |
+| Suporta LED                     | Não             | TODO              | Sim              | Não           |
+| Suporta Parachute               | Não             | Não               | Não              | Não           |
+| Suporta Spraying                | Não             | Não               | Não              | Não           |

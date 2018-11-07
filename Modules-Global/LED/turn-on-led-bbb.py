@@ -1,7 +1,14 @@
 #Author: Jesimar da Silva Arantes
 #Date: 29/03/2018
-#Last Update: 29/03/2018
-#Description: Code that turn on led. Prints message: turn-on-led [Need to do]
-#Descricao: Codigo que liga o led. Imprime mensagem: turn-on-led [Precisa fazer]
+#Last Update: 06/11/2018
+#Description: Code that turn on led.
+#Descricao: Codigo que liga o led.
 
-print "turn-on-led"
+import Adafruit_BBIO.GPIO as GPIO
+import sys
+
+pin = sys.argv[1] # sends the signal (pin "P8_10")
+
+GPIO.setup(pin, GPIO.OUT)
+
+GPIO.output(pin, GPIO.HIGH)

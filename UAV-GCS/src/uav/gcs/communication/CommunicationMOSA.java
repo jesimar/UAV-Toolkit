@@ -183,8 +183,8 @@ public class CommunicationMOSA extends Communication implements Client{
         String v[] = answer.split(";");
         Planner planner = null;
         if (v[0].equals(TypePlanner.HGA4M)) {
-            planner = new HGA4m(drone, v[1], v[2], v[3], v[4], v[5],
-                    v[6], v[7], v[8], v[9], v[10], v[11], v[12], v[13]);
+            planner = new HGA4m(drone, v[1], v[2], v[3], v[4], v[5], v[6], v[7], 
+                    v[8], v[9], v[10], v[11], v[12], v[13], v[14]);
             planner.clearLogs();
             int size = Integer.parseInt(v[2]);
             boolean finish = false;

@@ -82,15 +82,16 @@ prop.mosa.fixed_route.file_waypoints=missao-teste.txt
 O seguinte arquivo de saída (log-overhead-mosa*.csv) em formato CSV é gerado: 
 
 ```
-Time-in-GET(ms);/get-parameters/;348
-Time-in-GET(ms);/get-all-sensors/;32
-Time-in-GET(ms);/get-distance-to-home/;11
-Time-in-GET(ms);/get-all-sensors/;30
-Time-in-GET(ms);/get-distance-to-home/;17
-Time-in-GET(ms);/get-all-sensors/;47
-Time-in-GET(ms);/get-distance-to-home/;37
+Type-of-Method;Requisition-URL;Time-In-MilliSeconds
+GET;/get-parameters/;348
+GET;/get-all-sensors/;32
+GET;/get-distance-to-home/;11
+GET;/get-all-sensors/;30
+GET;/get-distance-to-home/;17
+GET;/get-all-sensors/;47
+GET;/get-distance-to-home/;37
 ...
-Time-in-GET(ms);/get-all-sensors/;37
+GET;/get-all-sensors/;37
 ```
 
-Este arquivo contém basicamente três campos o tipo de comando, o nome do comando e o tempo gasto (overhead) em milissegundos (ms) para concluir o comando.
+Este arquivo contém basicamente três campos o tipo de comando (tipo de método), o nome do comando (nome da URL) e o tempo gasto (overhead) em milissegundos (ms) para concluir o comando.

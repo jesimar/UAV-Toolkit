@@ -89,6 +89,7 @@ public class CommunicationIFA extends Communication implements Client{
                                     sendData(TypeMsgCommunication.MOSA_IFA_STARTED);
                                 } else if (answer.equals(TypeMsgCommunication.IFA_MOSA_STOP)){
                                     sendData(TypeMsgCommunication.MOSA_IFA_STOPPED);
+                                    close();
                                     Thread.sleep(100);
                                     System.exit(1);
                                 }

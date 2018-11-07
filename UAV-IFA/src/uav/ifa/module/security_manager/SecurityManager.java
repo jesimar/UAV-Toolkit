@@ -79,6 +79,8 @@ public class SecurityManager {
     private double speedUP;
     private double speedHorizontal;
     private double speedDN;
+    
+    private int killSystem = 0;
 
     /**
      * Class constructor.
@@ -285,6 +287,31 @@ public class SecurityManager {
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
                         Thread.sleep(time);
+                        
+                        if (killSystem == 0){
+                            if (!drone.getSensors().getStatusUAV().armed){
+                                killSystem++;
+                            }
+                        }else if (killSystem == 1){
+                            if (drone.getSensors().getStatusUAV().armed){
+                                killSystem++;
+                            }
+                        }else if (killSystem == 2){
+                            if (!drone.getSensors().getStatusUAV().armed){
+                                killSystem++;
+                            }
+                        }else if (killSystem == 3){
+                            Thread.sleep(1000);
+                            StandardPrints.printMsgEmph("Fineshed Mission");
+                            StandardPrints.printMsgEmph("Stop MOSA");
+                            communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
+                            Thread.sleep(1000);
+                            communicationMOSA.close();
+                            communicationGCS.close();
+                            StandardPrints.printMsgEmph("Terminating IFA system execution");
+                            System.exit(0);
+                        }
+                        
                     }
                 } catch (InterruptedException ex) {
                     StandardPrints.printMsgError2("Error [InterruptedException] monitoringAircraft()");

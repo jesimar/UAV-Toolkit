@@ -37,15 +37,17 @@ public class HGA4m extends Planner{
      * @param maxCtrl maximum control
      * @param speedCruize cruise speed
      * @param typeAircraft type of aircraft
+     * @param stdPos standard deviation of drone position
      * @since version 3.0.0
      */
     public HGA4m(Drone drone, String fileWaypointsMission, String numberRoutes, String dirFiles, 
             String fileGeoBase, String dirPlanner, String cmdExecPlanner, 
             String altitudeFlight, String time, String delta, 
-            String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
+            String maxVel, String maxCtrl, String speedCruize, String typeAircraft, 
+            String stdPos) {
         super(drone, fileWaypointsMission, numberRoutes, dirFiles, fileGeoBase, dirPlanner, 
                 cmdExecPlanner, altitudeFlight, time, delta, maxVel, 
-                maxCtrl, speedCruize, typeAircraft);
+                maxCtrl, speedCruize, typeAircraft, stdPos);
         readMission3D();
     }   
     
@@ -100,10 +102,10 @@ public class HGA4m extends Planner{
             File dst_ga = new File(dir + "ga-config");
             String timeExec = getTimeExec(i);
             String timeH = String.format("%d", (int)(dist));
-            //usando o minimo entre 50 e a metade dos waypoints DeltaT=2
-            String qtdWpt = String.format("%d", Math.min(50, (int)(dist/2)));
+            //usando o minimo entre 25 e um quarto dos waypoints DeltaT=4
+            String qtdWpt = String.format("%d", Math.min(25, (int)(dist/4)));
             UtilIO.copyFileModifiedMOSA(src_ga, dst_ga, timeExec, 207, delta, 304,
-                    qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
+                    stdPos, 350, qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
             System.out.println("Warning [FileNotFoundException]: updateFileConfig()");

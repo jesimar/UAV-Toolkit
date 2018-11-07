@@ -35,7 +35,7 @@ public abstract class Planner {
     String waypoint;               //local - used in planner ccqsp4m
     String timeHorizon;            //local - used in planner ccqsp4m
     String steps;                  //local - used in planner ccqsp4m
-    String stdPos;                 //local - used in planner ccqsp4m
+    String stdPos;                 //local - used in planner hga4m and ccqsp4m
 
     /**
      * Class constructor - Used in HGA4m
@@ -53,12 +53,14 @@ public abstract class Planner {
      * @param maxCtrl maximum control
      * @param speedCruize cruise speed
      * @param typeAircraft type of aircraft
+     * @param stdPos standard deviation of drone position
      * @since version 3.0.0
      */
     public Planner(Drone drone, String fileWaypointsMission, String numberRoutes, 
             String dirFiles, String fileGeoBase, String dirPlanner, 
             String cmdExecPlanner, String altitudeFlight, String time, String delta, 
-            String maxVel, String maxCtrl, String speedCruize, String typeAircraft) {
+            String maxVel, String maxCtrl, String speedCruize, String typeAircraft, 
+            String stdPos) {
         this.drone = drone; 
         this.fileWaypointsMission = fileWaypointsMission;
         this.sizeWpt = numberRoutes;
@@ -72,7 +74,8 @@ public abstract class Planner {
         this.maxVel = maxVel;
         this.maxCtrl = maxCtrl;
         this.speedCruize = speedCruize;
-        this.typeAircraft = typeAircraft;       
+        this.typeAircraft = typeAircraft;   
+        this.stdPos = stdPos;
         this.waypointsMission = new Mission3D();
         this.mission3D = new Mission3D();
         this.missionGeo = new Mission();

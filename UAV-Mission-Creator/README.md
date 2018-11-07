@@ -57,6 +57,10 @@ As seguintes notações foram definidas afim de registrar as atividades relacion
 
 ## Como Usar
 
-Abaixo encontra-se um vídeo explicando um pouco como projetar os mapas usando o Google Earth.
+Abaixo encontra-se alguns vídeos mostrando um pouco como projetar os mapas usando o Google Earth.
 
 [![](https://img.youtube.com/vi/UpTqucMuJt8/0.jpg)](https://www.youtube.com/watch?v=UpTqucMuJt8 "Criando Missões com Google Earth")
+
+[![](https://img.youtube.com/vi/JgspSf9rvio/0.jpg)](https://www.youtube.com/watch?v=JgspSf9rvio "Criando Missões com Google Earth")
+
+[![](https://img.youtube.com/vi/u5QslNeOEYs/0.jpg)](https://www.youtube.com/watch?v=u5QslNeOEYs "Criando Missões com Google Earth")

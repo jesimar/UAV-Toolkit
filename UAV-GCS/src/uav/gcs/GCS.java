@@ -3,6 +3,7 @@ package uav.gcs;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.concurrent.Executors;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +23,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import lib.uav.reader.ReaderFileConfig;
 import lib.uav.reader.ReaderFileMission;
+import lib.uav.struct.constants.TypeAP;
+import lib.uav.struct.constants.TypeAircraft;
+import lib.uav.struct.constants.TypeCC;
 import lib.uav.struct.constants.TypeInputCommand;
+import lib.uav.struct.constants.TypeOperationMode;
 import lib.uav.struct.geom.PointGeo;
 import lib.uav.struct.mission.Mission;
 import lib.uav.util.UtilGeo;
@@ -50,8 +56,8 @@ public final class GCS extends JFrame {
     private final JPanel panelTopMenu2;
     private final JPanel panelMain;
     private final JPanel panelLeft;
-    private final JPanel panelRightStatus;
-    private final JPanel panelRight;
+    private final JPanel panelUAVStatus;
+    private final JPanel panelUAVData;
     private final PanelPlotMission panelPlotMission;
     private PanelPlotGoogleMaps panelPlotGoogleMaps;
     private final JPanel panelCameraData;
@@ -90,7 +96,26 @@ public final class GCS extends JFrame {
 
     private final JButton btnKeyboardCommands;
     private final JButton btnVoiceCommands;
-
+    
+    private ImageIcon imgTextOperationMode;
+    private ImageIcon imgTextDroneAP_CC;
+    private ImageIcon imgTextSensors;
+    private ImageIcon imgTextActuators;
+    private ImageIcon imgOperationMode;
+    private ImageIcon imgDrone;
+    private ImageIcon imgAP;
+    private ImageIcon imgCC;
+    private ImageIcon imgAccessoriesTelemetry;
+    private ImageIcon imgSensorGPS;
+    private ImageIcon imgSensorPowerModule;
+    private ImageIcon imgSensorCamera;
+    private ImageIcon imgSensorTemperature;
+    private ImageIcon imgSensorSonar;    
+    private ImageIcon imgActuatorSpraying;
+    private ImageIcon imgActuatorParachute;
+    private ImageIcon imgActuatorBuzzer;
+    private ImageIcon imgActuatorLED;    
+    
     private final JLabel labelIsConnectedIFA;
     private final JLabel labelIsConnectedMOSA;
     private final JLabel labelIsConnectedDB;
@@ -116,6 +141,8 @@ public final class GCS extends JFrame {
     private Mission wptsCameraVideo;
     private Mission wptsCameraPhotoInSeq;
     private Mission wptsSpraying;
+    
+    private final int dimImg = 110;
 
     /**
      * Method main that start the GCS System.
@@ -594,17 +621,201 @@ public final class GCS extends JFrame {
             saveDB.saveDB(drone, communicationIFA);
         }
 
-        panelRightStatus = new JPanel();
-        panelRightStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelRightStatus.setBackground(new Color(230, 230, 230));
-        panelRightStatus.setVisible(true);
-
         tab = new JTabbedPane();
+        
+        panelUAVStatus = new JPanel();
+        panelUAVStatus.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelUAVStatus.setBackground(new Color(255, 255, 255));
+        panelUAVStatus.setVisible(true);
+                   
+        imgTextOperationMode = new ImageIcon("resources/text-operation-mode.png");
+        JLabel labelOperationMode = new JLabel(imgTextOperationMode, JLabel.CENTER);
+        panelUAVStatus.add(labelOperationMode);
+        
+        //operation mode
+        if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+            imgOperationMode = new ImageIcon("resources/operation-mode-sitl.png");
+        }else if (config.getOperationMode().equals(TypeOperationMode.HITL)){
+            imgOperationMode = new ImageIcon("resources/operation-mode-hitl.png");
+        }else if (config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            imgOperationMode = new ImageIcon("resources/operation-mode-real-flight.png");
+        } 
+        Image image = imgOperationMode.getImage();
+        Image newimg = image.getScaledInstance(210, 90,  java.awt.Image.SCALE_SMOOTH);
+        imgOperationMode = new ImageIcon(newimg); 
+        JLabel labelOperationMod = new JLabel(imgOperationMode, JLabel.CENTER);
+        panelUAVStatus.add(labelOperationMod);
+        
+        imgTextDroneAP_CC = new ImageIcon("resources/text-drone-ap-cc.png");
+        JLabel labelDroneAP_CC = new JLabel(imgTextDroneAP_CC, JLabel.CENTER);
+        panelUAVStatus.add(labelDroneAP_CC);
+        
+        //type aircraft
+        if (config.getTypeAircraft().equals(TypeAircraft.ROTARY_WING)){
+            imgDrone = new ImageIcon("resources/drone-quadcopter.png");
+        } else if (config.getTypeAircraft().equals(TypeAircraft.FIXED_WING)){
+            imgDrone = new ImageIcon("resources/drone-fixedwing.png");
+        }
+        image = imgDrone.getImage();
+        newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+        imgDrone = new ImageIcon(newimg); 
+        JLabel labelDrone = new JLabel(imgDrone, JLabel.CENTER);
+        panelUAVStatus.add(labelDrone);
+        
+        ImageIcon imgBlank = new ImageIcon("resources/blank.png");
+        image = imgBlank.getImage();
+        newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+        imgBlank = new ImageIcon(newimg); 
+        JLabel labelBlank = new JLabel(imgBlank, JLabel.CENTER);
+        panelUAVStatus.add(labelBlank);
+        
+        //type AP
+        if (config.getTypeAP().equals(TypeAP.APM)){
+            imgAP = new ImageIcon("resources/ap-apm.png"); 
+        }else if (config.getTypeAP().equals(TypeAP.PIXHAWK)){
+            imgAP = new ImageIcon("resources/ap-pixhawk.png");
+        }
+        image = imgAP.getImage();
+        newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+        imgAP = new ImageIcon(newimg);
+        JLabel labelAP = new JLabel(imgAP, JLabel.CENTER);
+        panelUAVStatus.add(labelAP);
+        
+        ImageIcon imgBlank2 = new ImageIcon("resources/blank.png");
+        image = imgBlank2.getImage();
+        newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+        imgBlank2 = new ImageIcon(newimg); 
+        JLabel labelBlank2 = new JLabel(imgBlank2, JLabel.CENTER);
+        panelUAVStatus.add(labelBlank2);      
+        
+        //type CC
+        if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
+            imgCC = new ImageIcon("resources/cc-rpi.png");
+        }else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+            imgCC = new ImageIcon("resources/cc-intel-edison.png");
+        }else if (config.getTypeCC().equals(TypeCC.INTEL_GALILEO)){
+            imgCC = new ImageIcon("resources/cc-intel-galileo.png");
+        }else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+            imgCC = new ImageIcon("resources/cc-bb-black.png");
+        }else if (config.getTypeCC().equals(TypeCC.ODROID)){
+            imgCC = new ImageIcon("resources/cc-odroid.png");
+        }
+        if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+            imgCC = new ImageIcon("resources/cc-notebook.png");
+        }
+        image = imgCC.getImage();
+        newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+        imgCC = new ImageIcon(newimg);
+        JLabel labelCC = new JLabel(imgCC, JLabel.CENTER);
+        panelUAVStatus.add(labelCC);
+        
+        ImageIcon imgBlank3 = new ImageIcon("resources/blank.png");
+        image = imgBlank3.getImage();
+        newimg = image.getScaledInstance(30, 30,  java.awt.Image.SCALE_SMOOTH);
+        imgBlank3 = new ImageIcon(newimg); 
+        JLabel labelBlank3 = new JLabel(imgBlank3, JLabel.CENTER);
+        panelUAVStatus.add(labelBlank3); 
+            
+        //type Accessories
+        if (config.hasTelemetry()){
+            imgAccessoriesTelemetry = new ImageIcon("resources/accessory-telemetry.png"); 
+        }else {
+            imgAccessoriesTelemetry = new ImageIcon("resources/blank.png");
+        }
+        image = imgAccessoriesTelemetry.getImage();
+        newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+        imgAccessoriesTelemetry = new ImageIcon(newimg);
+        JLabel labelAccessoriesTelemetry = new JLabel(imgAccessoriesTelemetry, JLabel.CENTER);
+        panelUAVStatus.add(labelAccessoriesTelemetry);
+        
+        imgTextSensors = new ImageIcon("resources/text-sensors.png");
+        JLabel labelSensors = new JLabel(imgTextSensors, JLabel.CENTER);
+        panelUAVStatus.add(labelSensors);
+        
+        //Sensors
+        if (config.hasGPS()){
+            imgSensorGPS = new ImageIcon("resources/sensor-gps.png");
+            image = imgSensorGPS.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgSensorGPS = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgSensorGPS, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasPowerModule()){
+            imgSensorPowerModule = new ImageIcon("resources/sensor-power-module.png");
+            image = imgSensorPowerModule.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgSensorPowerModule = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgSensorPowerModule, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasCamera()){
+            imgSensorCamera = new ImageIcon("resources/sensor-camera.png");
+            image = imgSensorCamera.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgSensorCamera = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgSensorCamera, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasSonar()){
+            imgSensorSonar = new ImageIcon("resources/sensor-sonar.png");
+            image = imgSensorSonar.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgSensorSonar = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgSensorSonar, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasTemperatureSensor()){
+            imgSensorTemperature = new ImageIcon("resources/sensor-temperature.png");
+            image = imgSensorTemperature.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgSensorTemperature = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgSensorTemperature, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        
+        imgTextActuators = new ImageIcon("resources/text-actuators.png");
+        JLabel labelActuators = new JLabel(imgTextActuators, JLabel.CENTER);
+        panelUAVStatus.add(labelActuators);
+        
+        //Actuators
+        if (config.hasSpraying()){
+            imgActuatorSpraying = new ImageIcon("resources/actuator-spraying.png");
+            image = imgActuatorSpraying.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgActuatorSpraying = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgActuatorSpraying, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasParachute()){
+            imgActuatorParachute = new ImageIcon("resources/actuator-parachute.png");
+            image = imgActuatorParachute.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgActuatorParachute = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgActuatorParachute, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasBuzzer()){
+            imgActuatorBuzzer = new ImageIcon("resources/actuator-buzzer.png");
+            image = imgActuatorBuzzer.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgActuatorBuzzer = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgActuatorBuzzer, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
+        if (config.hasLED()){
+            imgActuatorLED = new ImageIcon("resources/actuator-led.png");
+            image = imgActuatorLED.getImage();
+            newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);
+            imgActuatorLED = new ImageIcon(newimg);
+            JLabel label = new JLabel(imgActuatorLED, JLabel.CENTER);
+            panelUAVStatus.add(label);
+        }
 
-        panelRight = new JPanel();
-        panelRight.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panelRight.setBackground(new Color(255, 255, 255));
-        panelRight.setVisible(true);
+        panelUAVData = new JPanel();
+        panelUAVData.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelUAVData.setBackground(new Color(255, 255, 255));
+        panelUAVData.setVisible(true);
 
         panelPlotMission = new PanelPlotMission();
         panelPlotMission.waitingForRoutes();
@@ -614,8 +825,8 @@ public final class GCS extends JFrame {
             panelPlotGoogleMaps = new PanelPlotGoogleMaps();
             panelPlotGoogleMaps.init(width - 200, height - 100);
         }
-        
-        tab.add("UAV Data", panelRight);
+        tab.add("UAV HW Status", panelUAVStatus);
+        tab.add("UAV Flight Data", panelUAVData);
         tab.add("Plot Simple Map", panelPlotMission);
         if (config.hasGoogleMaps()) {
             tab.add("Plot Google Maps", panelPlotGoogleMaps);
@@ -625,31 +836,29 @@ public final class GCS extends JFrame {
         labelIsConnectedIFA = new JLabel("Connected IFA: False");
         labelIsConnectedIFA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedIFA.setForeground(Color.RED);
-        panelRightStatus.add(labelIsConnectedIFA);
+        panelUAVData.add(labelIsConnectedIFA);
 
         labelIsConnectedMOSA = new JLabel("Connected MOSA: False");
         labelIsConnectedMOSA.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedMOSA.setForeground(Color.RED);
-        panelRightStatus.add(labelIsConnectedMOSA);
+        panelUAVData.add(labelIsConnectedMOSA);
 
         labelIsConnectedDB = new JLabel("Connected DB: False");
         labelIsConnectedDB.setPreferredSize(new Dimension(170, 20));
         labelIsConnectedDB.setForeground(Color.RED);
-        panelRightStatus.add(labelIsConnectedDB);
+        panelUAVData.add(labelIsConnectedDB);
 
         labelIsRunningPathPlanner = new JLabel("Run Planner: False");
         labelIsRunningPathPlanner.setPreferredSize(new Dimension(160, 20));
         labelIsRunningPathPlanner.setForeground(Color.RED);
-        panelRightStatus.add(labelIsRunningPathPlanner);
+        panelUAVData.add(labelIsRunningPathPlanner);
 
         labelIsRunningPathReplanner = new JLabel("Run Replanner: False");
         labelIsRunningPathReplanner.setPreferredSize(new Dimension(160, 20));
         labelIsRunningPathReplanner.setForeground(Color.RED);
-        panelRightStatus.add(labelIsRunningPathReplanner);
+        panelUAVData.add(labelIsRunningPathReplanner);
 
-        panelRight.add(panelRightStatus);
-
-        labelsInfo = new LabelsInfo(panelRight);
+        labelsInfo = new LabelsInfo(panelUAVData);
         this.add(panelTop);
         this.add(panelMain);
 
@@ -834,8 +1043,8 @@ public final class GCS extends JFrame {
     public void showAbout() {
         String msgAbout = "Program: UAV-GCS\n"
                 + "Author: Jesimar da Silva Arantes\n"
-                + "Version: 4.0.0\n"
-                + "Date: 03/10/2018\n"
+                + "Version: 5.0.0\n"
+                + "Date: 03/11/2018\n"
                 + "Since: 17/05/2018";
         JOptionPane.showMessageDialog(null, msgAbout, "About",
                 JOptionPane.INFORMATION_MESSAGE);
@@ -849,8 +1058,8 @@ public final class GCS extends JFrame {
         panelTopMenu2.setPreferredSize(new Dimension(width - 140 - 20 - 30, 62));
         panelMain.setPreferredSize(new Dimension(width - 30, height - 110));
         panelLeft.setPreferredSize(new Dimension(200, height - 120));
-        panelRightStatus.setPreferredSize(new Dimension(width - 30 - 200 - 20 - 20, 50));
-        panelRight.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
+        panelUAVStatus.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
+        panelUAVData.setPreferredSize(new Dimension(width - 30 - 200 - 20, height - 120));
         panelPlotMission.setNewDimensions(width - 30 - 200 - 20, height - 120);
     }
     
@@ -965,5 +1174,4 @@ public final class GCS extends JFrame {
             System.exit(1);
         }
     }
-    
 }
