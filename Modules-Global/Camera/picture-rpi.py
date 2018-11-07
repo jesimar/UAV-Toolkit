@@ -11,4 +11,4 @@ camera = PiCamera()
 camera.resolution = (2592, 1944)
 
 i = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
-camera.capture('picutures/picture_%s.jpg' % i)
+camera.capture('pictures/picture_%s.jpg' % i)
