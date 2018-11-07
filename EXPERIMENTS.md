@@ -48,7 +48,7 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | Mapa               | Instâncias Artificiais               | Sim                       | Não                      | Não                      |
 | IFA                | Fixed Route                          | Sim                       | Sim                      | Sim                      |
 | IFA                | Controller - Baseado no Teclado      | Sim                       | Sim                      | Sim                      |
-| IFA                | Controller - Baseado em Voz          | Sim                       | Não                      | Não                      |
+| IFA                | Controller - Baseado em Voz          | Sim                       | Sim                      | Não                      |
 | IFA                | Replanner                            | Sim                       | Sim                      | Sim                      |
 | IFA                | Replanner - Onboard                  | Sim                       | Sim                      | Sim                      |
 | IFA                | Replanner - Offboard                 | Sim                       | Sim                      | Não                      |

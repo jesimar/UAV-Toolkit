@@ -83,7 +83,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador buzzer.
 | Tipo de Ação             | Aciona um Beep (Buzzer) | Aciona vários Beeps (Alarme) |                        |
 | Código para Edison       | buzzer-edison.py        | alarm-edison.py              |                        |
 | Código para Raspberry Pi | buzzer-rpi.py           | alarm-rpi.py                 |                        |
-| Código para BeagleBone   | buzzer-bbb.py           | alarm-bbb.py                 | Não testado            |
+| Código para BeagleBone   | buzzer-bbb.py           | alarm-bbb.py                 |                        |
 | Código para PC           | buzzer-pc.jar           | alarm-pc.jar                 | Aciona o buzzer do pc  |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador LED.
@@ -92,7 +92,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador LED.
 |--------------------------|-------------------------|------------------------------|------------------------|
 | Tipo de Ação             | Liga o LED              | Pisca o LED (Blink)          |                        |
 | Código para Edison       | turn-on-led-edison.py   | blink-led-edison.py          | Não testado            |
-| Código para Raspberry Pi | turn-on-led-rpi.py      | blink-led-rpi.py             | Não testado            |
+| Código para Raspberry Pi | turn-on-led-rpi.py      | blink-led-rpi.py             |                        |
 | Código para BBB          | turn-on-led-bbb.py      | blink-led-bbb.py             |                        |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
@@ -101,8 +101,8 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
 |--------------------------|--------------------------|------------------------|
 | Tipo de Ação             | Abre o paraquedas        |                        |
 | Código para Edison       | open-parachute-edison.py | Não testado            |
-| Código para Raspberry Pi | open-parachute-rpi.py    | Não testado            |
-| Código para BBB          | open-parachute-bb.py     |                        |
+| Código para Raspberry Pi | open-parachute-rpi.py    |                        |
+| Código para BBB          | open-parachute-bbb.py    |                        |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 
@@ -110,7 +110,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 |--------------------------|-------------------------|--------------------------|------------------------|
 | Tipo de Ação             | Abre o pulverizador     | Fecha o pulverizador     |                        |
 | Código para Edison       | open-spraying-edison.py | close-spraying-edison.py | Não testado            |
-| Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    | Não testado            |
+| Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    |                        |
 | Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    |                        |
 
 A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (por enquanto, esse recurso será adicionado em breve), execuntando onboard ou offboard. Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
@@ -128,6 +128,8 @@ A tabela abaixo sintetiza algumas informações sobre os Companions Computers e 
 | Suporta Sensor Temperatura      | Não             | Sim               | Não              | Não           |
 | Suporta Câmera                  | Não             | Sim               | Não              | Não           |
 | Suporta Buzzer                  | Sim             | Não               | Sim              | Não           |
-| Suporta LED                     | Não             | TODO              | Sim              | Não           |
+| Suporta LED                     | Não             | Sim               | Sim              | Não           |
 | Suporta Parachute               | Não             | Não               | Não              | Não           |
 | Suporta Spraying                | Não             | Não               | Não              | Não           |
+
+OBS: Os códigos (turn-on-led-bbb.py, blink-led-bbb.py, etc) quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nesta placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando. Caso tem-se executar os códigos no sistema não dará nenhum problema apenas não serão executados como se deseja.

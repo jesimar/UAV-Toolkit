@@ -4,7 +4,7 @@
 
 ### Features:
 
-* Added code to control sensors and actuators (LED).
+* Added code to control sensors and actuators (LED, Buzzer, parachute, spraying).
 * Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
 * Added auto finished execution in UAV-IFA (change status disarmed, armed, disarmed).
 * Added new resources hardware status called UAV-Status in UAV-GCS.
