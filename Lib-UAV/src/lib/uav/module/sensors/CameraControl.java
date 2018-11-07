@@ -27,9 +27,12 @@ public class CameraControl {
     
     /**
      * Take a picture based on the type of operation mode and the existing device.
-     * @since version 4.0.0
+     * @param lat - latitude of drone
+     * @param lng - longitude of drone
+     * @param alt - altitude relative
+     * @since version 5.0.0
      */
-    public void takeAPicture(){
+    public void takeAPicture(String lat, String lng, String alt){
         try {
             String cmd = "";
             if (config.getOperationMode().equals(TypeOperationMode.SITL)){
@@ -37,7 +40,7 @@ public class CameraControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python picture-rpi.py";
+                    cmd = "python picture-rpi.py " + lat + " " + lng + " " + alt;
                 }else{
                     cmd = "python device.py";
                 }
@@ -92,7 +95,7 @@ public class CameraControl {
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     print = true;
-                    cmd = "python video-rpi.py " + config.getTimeVideo();
+                    cmd = "python video-rpi.py " + config.getTimeVideo() + " " + config.getFrameRateVideo();
                 }else{
                     cmd = "python device.py";
                 }

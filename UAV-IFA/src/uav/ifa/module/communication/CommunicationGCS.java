@@ -122,7 +122,11 @@ public class CommunicationGCS extends Communication implements Server{
                                     buzzer.turnOnAlarm();
                                 } else if (answer.equals(TypeInputCommand.CMD_PICTURE)){
                                     CameraControl camera = new CameraControl();
-                                    camera.takeAPicture();
+                                    camera.takeAPicture(
+                                            drone.getSensors().getGPS().lat+"", 
+                                            drone.getSensors().getGPS().lng+"",
+                                            drone.getSensors().getBarometer().alt_rel+""
+                                    );
                                 } else if (answer.equals(TypeInputCommand.CMD_VIDEO)){
                                     CameraControl camera = new CameraControl();
                                     camera.makeAVideo();

@@ -60,6 +60,7 @@ public class ReaderFileConfig {
     private boolean hasCamera;
     private String dirCamera;
     private String timeVideo;
+    private String frameRateVideo;
     private String numberPhotoInSequence;
     private String delayPhotoInSequence;
     private boolean hasSonar;
@@ -249,6 +250,7 @@ public class ReaderFileConfig {
             //sensor
             dirCamera             = prop.getProperty("prop.hw.sensor.camera.dir");
             timeVideo             = prop.getProperty("prop.hw.sensor.camera.video.time");
+            frameRateVideo        = prop.getProperty("prop.hw.sensor.camera.video.framerate");
             numberPhotoInSequence = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.number");
             delayPhotoInSequence  = prop.getProperty("prop.hw.sensor.camera.photo_in_sequence.delay");
             dirSonar              = prop.getProperty("prop.hw.sensor.sonar.dir");
@@ -651,6 +653,10 @@ public class ReaderFileConfig {
     
     public String getTimeVideo() {
         return timeVideo;
+    }
+    
+    public String getFrameRateVideo() {
+        return frameRateVideo;
     }
     
     public String getNumberPhotoInSequence() {

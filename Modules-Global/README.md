@@ -140,3 +140,5 @@ chmod 777 Camera/pictures/
 chmod 777 Camera/photos-in-sequence/
 chmod 777 Camera/videos/
 ```
+
+:warning: **OBS:** A câmera da Raspberry Pi 3 possui como orientação principal nas fotografias/filmagens a direção do cabo flat da câmera. Dessa forma, o cabo deve ficar orientado para baixo, assim a foto/filmagem ficará orientada de forma correta.

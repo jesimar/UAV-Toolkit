@@ -403,7 +403,11 @@ public class MissionManager {
                 wptsCameraPicture.removeWaypoint(index);
             }
             StandardPrints.printMsgEmph("turn on the camera picture");
-            camera.takeAPicture();
+            camera.takeAPicture(
+                    drone.getSensors().getGPS().lat+"", 
+                    drone.getSensors().getGPS().lng+"",
+                    drone.getSensors().getBarometer().alt_rel+""
+            );
         }
     }
     
