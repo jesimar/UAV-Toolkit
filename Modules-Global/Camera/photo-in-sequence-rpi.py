@@ -12,7 +12,7 @@ delay = int(sys.argv[2])
 
 camera = PiCamera()
 
-camera.resolution = (2592, 1944)
+camera.resolution = (1366, 768) #(2592, 1944)
 
 for i in range(number):
 	camera.capture('photos-in-sequence/photo-in-sequence_%s.jpg' % i)

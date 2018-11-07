@@ -8,7 +8,7 @@ from time import gmtime, strftime
 
 camera = PiCamera()
 
-camera.resolution = (2592, 1944)
+camera.resolution = (1366, 768) #(2592, 1944)
 
 i = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
 camera.capture('pictures/picture_%s.jpg' % i)

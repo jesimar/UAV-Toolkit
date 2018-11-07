@@ -12,7 +12,7 @@ time = int(sys.argv[1])
 
 camera = PiCamera()
 
-camera.resolution = (1920, 1080)
+camera.resolution = (1366, 768)  #(1920, 1080)
 camera.framerate = 15
 
 i = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
