@@ -88,7 +88,7 @@ public class AStar4m extends Planner{
             print.close();
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: definePathAB()");
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: definePathAB() " + ex);
             return false;
         } 
     }

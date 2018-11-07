@@ -76,7 +76,7 @@ public class MPGA4s extends Replanner{
             UtilIO.copyFileModifiedIFA(src_mpga, dst_mpga, time, 117);
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }

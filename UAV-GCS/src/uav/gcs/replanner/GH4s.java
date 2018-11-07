@@ -80,7 +80,7 @@ public class GH4s extends Replanner{
             UtilIO.copyFileModifiedIFA(src, dst, state, 8, qtdWpt, 20, delta, 26);
             return true;
         } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: updateFileConfig()");
+            System.out.println("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }

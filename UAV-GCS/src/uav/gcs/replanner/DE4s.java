@@ -84,7 +84,7 @@ public class DE4s extends Replanner{
             UtilIO.copyFileModifiedIFA(src_de, dst_de, time, 192);
             return true;
         } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: updateFileConfig()");
+            System.out.println("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }

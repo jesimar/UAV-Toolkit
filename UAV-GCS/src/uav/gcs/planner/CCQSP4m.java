@@ -74,7 +74,7 @@ public class CCQSP4m extends Planner{
                     delta, 5, timeHorizon, 10);
             return true;
         } catch (FileNotFoundException ex) {
-            System.out.println("Warning [FileNotFoundException]: updateFileConfig()");
+            System.out.println("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }

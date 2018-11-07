@@ -309,31 +309,33 @@ Ordem  Software/Aplicação                                      (Local de Execu
 Forma 2 -> Execução em HITL (PC + CC):
 
 ```
-Ordem  Software/Aplicação                                      (Local de Execução)
+Ordem  Software/Aplicação                                      (Local de Execução)  (Observações)
 1.     Abra uma GCS como o QGroundControl                      (PC)
 2.     UAV-Toolkit/Scripts$ ./exec-gcs.sh                      (PC)
 3.     UAV-Toolkit/Scripts$ ./exec-sitl.sh LAT LNG             (PC)
 4.     UAV-Toolkit/Scripts$ ./exec-mavproxy-hitl.sh IP_GCS     (CC)
 5.     UAV-Toolkit/Scripts$ ./exec-s2dk.sh                     (CC)
-6.     UAV-Toolkit/Scripts$ ./exec-ifa.sh                      (CC)
-7.     UAV-Toolkit/Scripts$ ./exec-mosa.sh                     (CC)
+6.     UAV-Toolkit/Scripts$ ./exec-ifa.sh                      (CC)                 (Necessita de sudo na RPi)
+7.     UAV-Toolkit/Scripts$ ./exec-mosa.sh                     (CC)                 (Necessita de sudo na RPi)
 ```
 
 Forma 3 -> Execução em REAL_FLIGHT (PC + CC + UAV):
 
 ```
-Ordem  Software/Aplicação                                      (Local de Execução)
+Ordem  Software/Aplicação                                      (Local de Execução)  (Observações)
 1.     Abra uma GCS como o QGroundControl                      (PC)
 2.     UAV-Toolkit/Scripts$ ./exec-gcs.sh                      (PC)
 3.     UAV-Toolkit/Scripts$ ./exec-mavproxy-real-?.sh IP_GCS   (CC)
 4.     UAV-Toolkit/Scripts$ ./exec-s2dk.sh                     (CC)
-5.     UAV-Toolkit/Scripts$ ./exec-ifa.sh                      (CC)
-6.     UAV-Toolkit/Scripts$ ./exec-mosa.sh                     (CC)
+5.     UAV-Toolkit/Scripts$ ./exec-ifa.sh                      (CC)                 (Necessita de sudo na RPi)
+6.     UAV-Toolkit/Scripts$ ./exec-mosa.sh                     (CC)                 (Necessita de sudo na RPi)
 ```
 
 :warning: **OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
 
 :warning: **OBS:** Você pode abrir/executar outras estações de controle de solo para acompanhar a execução da missão, com por exemplo, APM Planner 2.0 ou Mission Planner. Caso use o Mission Planner será necessário usar a conexão com UDP baudrate (57600) e porta (14550).
+
+:warning: **OBS:** O comando sudo pode ser necessário antes dos comandos exec-ifa.sh e exec-mosa.sh caso esteja-se executando em HITL e REAL_FLIGHT. A placa Raspberry Pi 3 reclama de permissões, em alguns casos específicos, como fazer o recálculo de rotas emergenciais.
 
 A imagem abaixo sintetiza as três formas possíveis de execução dos softwares.
 

@@ -84,7 +84,7 @@ public class GA_GH_4s extends Replanner{
             
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }   

@@ -76,7 +76,7 @@ public class MS4s extends Replanner{
             UtilIO.copyFileModifiedIFA(src_ms, dst_ms, time, 148);
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }

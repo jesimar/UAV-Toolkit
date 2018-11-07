@@ -80,7 +80,7 @@ public class HGA4m extends Planner{
                     stdPos, 350, qtdWpt, 425, timeH, 426, maxVel, 427, maxCtrl, 428);
             return true;
         } catch (FileNotFoundException ex) {
-            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig()");
+            StandardPrints.printMsgWarning("Warning [FileNotFoundException]: updateFileConfig() " + ex);
             return false;
         }
     }
