@@ -6,7 +6,7 @@ Main developer and idealizer.
 jesimar.arantes@gmail.com
 
 Veronica Vannini (PhD Student)
-Has supported the development of some hardwares/software modules (module buzzer.py to raspberry pi).
+Has supported the development of some hardwares/software modules (module buzzer.py to raspberry pi), helped with simulations, build the drones.
 vee.vannini@gmail.com 
 
 Márcio da Silva Arantes (Researcher)
@@ -17,6 +17,10 @@ André Missaglia (Undergraduate Student)
 Developer of some secondary modules (first version UAV-S2DK).
 andre.missaglia@gmail.com
 
+Rafael Sanches (PhD Student)
+Has supported the development of some software modules, installation/configuration of the environment (video youtube), creation of a virtual machine.
+rafaelsanches123@gmail.com
+
 Pedro Henrique Rampim Natali (Undergraduate Student)
 Developer of some secondary modules (first version Route-Simplifier).
 pedronatali@usp.br
@@ -26,15 +30,19 @@ Developer of some secondary modules (first version Route-Simplifier and A-Star).
 rafaelfpinho@usp.br
 
 Fabiano Cavalheiro Paulelli (Undergraduate Student)
-Assisted in the development of the project in its first version.
+Assisted in the development of the project in its first version (helped with SITL simulations, first version parachute module).
 fabiano.paulelli@usp.br 
 
+Bárbara Castanheira (PhD Student - ex-student)
+Assisted in the development of the project in its first version (helped build the robotic car, first version parachute module).
+ba.castanheira@gmail.com
+
 Eduardo do Valle Simões (Professor)
-Supervisor of technical aspects of hardware.
+Supervisor of technical aspects of hardware (helped build the drones).
 simoes@icmc.usp.br
 
 Onofre Trindade Júnior (Professor)
-Idealizer of IFA and MOSA systems and project consultant.
+Idealizer of IFA and MOSA systems and project consultant (helped build the drones).
 onofre.trindade.junior@gmail.com
 
 Claudio Fabiano Motta Toledo (Professor)

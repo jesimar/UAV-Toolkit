@@ -5,11 +5,11 @@ A seguir serão apresentados um conjunto de tabelas contendo os resultados obtid
 | Tipo de Aeronave   | Aeronave                  | Construída por UAV-Team   | Avaliada em Voo Real     |
 |--------------------|---------------------------|---------------------------|--------------------------|
 | Quadricóptero      | iDroneAlpha               | Sim                       | Sim                      |
-| Quadricóptero      | iDroneBeta                | Sim                       | Não                      |
-| Quadricóptero      | iDroneGamma               | Sim                       | Não                      |
-| Quadricóptero      | iDroneDelta               | Sim                       | Não                      |
-| Quadricóptero      | DroneOnofre               | Não                       | Não                      |
-| Hexacóptero        | DroneSimões               | Não                       | Não                      |
+| Quadricóptero      | iDroneBeta                | Sim                       | TODO                     |
+| Quadricóptero      | iDroneGamma               | Sim                       | TODO                     |
+| Quadricóptero      | iDroneDelta               | Sim                       | TODO                     |
+| Quadricóptero      | DroneOnofre               | Não                       | TODO                     |
+| Hexacóptero        | DroneSimões               | Não                       | TODO                     |
 | Asa Fixa           | Ararinha                  | Não                       | Não                      |
 
 A segunda tabela mostra alguns componentes de hardware avaliados.
@@ -22,16 +22,16 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Companion Computer | Raspberry Pi 2            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 3            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | BeagleBone Black Wireless | N/A                       | Sim                      | TODO                     |
-| Companion Computer | Odroid C1                 | N/A                       | TODO                     | TODO                     |
+| Companion Computer | Odroid C1                 | N/A                       | Não                      | Não                      |
 | Companion Computer | Raspberry Pi Zero         | N/A                       | Não                      | Não                      |
 | Companion Computer | Intel Galileo             | N/A                       | Não                      | Não                      |
 | Sensor             | Câmera                    | Sim (Simulado)            | Sim                      | Sim                      |
-| Sensor             | Sonar                     | Sim (Simulado)            | Sim                      | Sim                      |
-| Sensor             | Temperatura               | Sim (Simulado)            | Sim                      | Sim                      |
+| Sensor             | Sonar                     | Sim (Simulado)            | Sim                      | Não                      |
+| Sensor             | Temperatura               | Sim (Simulado)            | Sim                      | Não                      |
 | Sensor             | Power Module              | Sim (Simulado)            | Sim                      | Sim                      |
 | Atuador            | Buzzer                    | Sim (Simulado)            | Sim                      | Sim                      |
+| Atuador            | LED                       | Não                       | Sim                      | Não                      |
 | Atuador            | parachute                 | Não                       | Não                      | Não                      |
-| Atuador            | LED                       | TODO                      | TODO                     | Não                      |
 | Atuador            | Spraying                  | Não                       | Não                      | Não                      |
 
 A terceira tabela mostra alguns componentes de software avaliados.

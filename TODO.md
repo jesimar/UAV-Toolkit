@@ -4,10 +4,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Drone - iDroneAlpha:
 
-* Incorporar hardware de leds no drone.
-* Incorporar hardware de sonar no drone apontado para baixo.
-* Desenvolver aplicação básica na Edison, Raspberry Pi, BBB, Odroid para acender os leds.
-* Desenvolver aplicação básica na Edison, BBB, Odroid para ler informações do sona
+* Desabilitar o failsafe do iDroneBeta, iDroneGamma, iDroneDelta
 
 * Compilar todos os códigos em C para as suas respectivas arquiteturas.
 1. RouteStandard4m-PC -> Sim
@@ -15,14 +12,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 3. RouteStandard4m-RPi -> Não
 4. RouteStandard4m-BBB -> Não
 5. RouteStandard4m-Odroid -> Não
-
-1. A-Start-PC -> Sim
-2. A-Start-Edison -> Não
-3. A-Start-RPi -> Não
-4. A-Start-BBB -> Não
-5. A-Start-Odroid -> Não
-
-* Calcular melhor o valor de std-position baseado no GPS: 0,65
 
 ## Sistema IFA:
 
@@ -33,7 +22,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * MOSA Adaptativo.
 * Colocar missão no Route-Standard de zig zag para pulverização.
-* Retirar foto e colocar na foto as coordenadas geográficas/altitude absoluta e relativa, bateria do drone.
 
 ## Sistema UAV-GCS
 
@@ -55,7 +43,6 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 * Criar no github o UAV-Embedded. Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
 * Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 * Documentação: Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
-* Fazer voo com drone pairando em uma altitude constante para capturar o erro do barômetro.
 
 ## Documentação Formal das Falhas no Sistema
 
@@ -87,12 +74,14 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 ## Trabalho Alunos de IC:
 
 * Fazer simplificador de rotas baseado em derivadas (Feito)
-* Fazer planejador baseado em A* (Feito)
+* Fazer planejador baseado em A* (Feito - Pequeno defeito - desistimos de procurar o erro)
+* Estudar FlytOS (Feito - problemas com instalação/configuração - desistimos de tentar instalar e usar)
 * Sistema de comunicação entre telemetria (air <-> ground) (Feito)
 * Instalar/Configurar SO Yocto na Intel Galileo (Feito)
 * Estudar ROS (Fazendo)
-* Estudar FlytOS (Fazendo)
-
+* Instalar/Configurar SO na Raspberry Pi Zero e habilitar o SSH (Fazendo)
+* Instalar/Configurar SO na Odroid C1 e habilitar o SSH
+* Instalar/Configurar SO na Intel Galileo e habilitar o SSH
 * Instalar/Configurar SO de tempo real na Intel Galileo 
 * Fazer planejador baseado em Campos Potenciais
 * Fazer planejador baseado em AG Puro

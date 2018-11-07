@@ -20,19 +20,21 @@ mav.tlog.raw
 ideias-todo.txt
 TODO-Future.md
 
-/Modules-Global/Camera/*.png
-/Modules-Global/Camera/*.jpg
-/Modules-Global/Camera/*.mov
-/Modules-Global/Camera/*.cap
-/Modules-Global/Camera/*.h264
+/Modules-Global/Camera/photos-in-sequence/*.png
+/Modules-Global/Camera/photos-in-sequence/*.jpg
+/Modules-Global/Camera/picutures/*.png
+/Modules-Global/Camera/picutures/*.jpg
+/Modules-Global/Camera/videos/*.mov
+/Modules-Global/Camera/videos/*.cap
+/Modules-Global/Camera/videos/*.h264
 
 /UAV-GCS/nbproject/private/
 /UAV-GCS/build/
 /UAV-GCS/test/
 
-/UAV-Generic/nbproject/private/
-/UAV-Generic/build/
-/UAV-Generic/test/
+/Lib-UAV/nbproject/private/
+/Lib-UAV/build/
+/Lib-UAV/dist/
 
 /UAV-IFA/nbproject/private/
 /UAV-IFA/build/
@@ -54,6 +56,3 @@ TODO-Future.md
 /UAV-Tests/nbproject/private/
 /UAV-Tests/build/
 /UAV-Tests/test/
-/Lib-UAV/nbproject/private/
-/Lib-UAV/build/
-/Lib-UAV/dist/

@@ -1,9 +1,17 @@
 # Changelog
 
-## Version v4.1.0 (08/10/2018)
+## Version v5.0.0 (03/11/2018)
 
 ### Features:
 
+* Added code to control sensors and actuators (LED).
+* Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
+* Added auto finished execution in UAV-IFA (change status disarmed, armed, disarmed).
+* Added new resources hardware status called UAV-Status in UAV-GCS.
+* Updated documentation in markdown.
+* Added automatic route simplification feature based on route size used by CCQSP4m (only onboard) algorithm.
+* Updated file overhead MOSA and IFA.
+* Added Script to support BeagleBone Black.
 * Removed code UAV-PosAnalyser and UAV-Monitoring
 * Added support to artificial maps (instances Path-Planner and Path-Replanner). You need to set the start and goal points
 * Added a script to compile all the C/C++ system codes.

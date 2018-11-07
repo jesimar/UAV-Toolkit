@@ -364,6 +364,15 @@ Ordem  Software/Aplicação                                      Comando para En
 
 :warning: **OBS:** Caso não se deseje analisar os logs gerados na simulação/voo é uma boa prática limpar os logs gerados pelo sistema. Dessa forma, execute o seguinte comando: `UAV-Toolkit/Scripts$ ./clear-simulations.sh`
 
+## Vídeo da Instalação e Execução
+
+Abaixo encontra-se um vídeo de como instalar o ambiente UAV-Toolkit e todas as suas dependências, além também de como configurar alguns arquivos para execução e por fim como executar o ambiente. 
+
+O link para o youtube pode ser acessado aqui: https://youtu.be/G4YxFfW4OI0
+
+[![](https://img.youtube.com/vi/G4YxFfW4OI0/0.jpg)](https://youtu.be/G4YxFfW4OI0 "Instalando/Configurando/Executando o UAV-Toolkit")
+
+
 <!--
 ## Drones Construídos:
 
@@ -371,11 +380,11 @@ Abaixo encontram-se alguns dos drones construídos e utilizados durante esse tra
 
 | iDroneAlpha                    | iDroneBeta                     | iDroneGamma                    | iDroneDelta                    |
 |--------------------------------|--------------------------------|--------------------------------|--------------------------------|
-| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneAlpha.png) |
+| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.png)  | ![](./Figures/iDroneGamma.png) | ![](./Figures/iDroneDelta.png) |
 | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          |
 | AP: APM v2.8                   | AP: Pixhawk v1                 | AP: APM v2.8                   | AP: APM v2.8                   |
-| GPS: Neo M6N                   | GPS: Neo M8N                   | GPS: Neo M6N                   | GPS: Neo M6N                   |
-| CC: Intel Edison               | CC: Raspberry Pi 3             | CC: Beagle Bone Black Wireless | CC: Odroid                     |
+| GPS: Neo M6N                   | GPS: Neo M8N                   | GPS: Neo M8N                   | GPS: Neo M6N                   |
+| CC: Intel Edison               | CC: Raspberry Pi 3             | CC: Beagle Bone Black          | CC: Odroid                     |
 -->
 
 ## Citação
