@@ -13,14 +13,12 @@ A Figura abaixo dá uma visão geral dos arquivos de instâncias disponibilizado
 ## Formato de Entrada: 
 
 * **SGL** -> formato de entrada próprio do mapa, utilizado pelo Framework ProOF. Este padrão é mais leve, porém também mais difícil de entender e de ler.
-
-## Formato de Saída: 
-
-* **JSON** -> formato de saída do mapa é, em geral, fácil de entender e ler. Este padrão é mais pesado que o SGL, ocupa em média o quádruplo do SGL em disco (HD).
-* **XML** -> formato de saída do mapa é, em geral, fácil de ler. Este padrão é mais pesado que o SGL e JSON, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
+* **JSON** -> formato de entrada do mapa é, em geral, fácil de entender e ler. Este padrão é mais pesado que o SGL, ocupa em média o quádruplo do SGL em disco (HD).
+* **XML** -> formato de entrada do mapa é, em geral, fácil de ler. Este padrão é mais pesado que o SGL e JSON, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
 
 ## Arquivo de Instância do Path Planner:
 
+Abaixo encontra-se um exemplo do arquivo em formato .SGL.
 Os valores das coordenadas utilizadas são cartesianas.
 Utilizado no planejador de rotas: HGA4m.
 
@@ -49,6 +47,7 @@ Utilizado no planejador de rotas: HGA4m.
 
 ## Arquivo de Instância do Path Replanner:
 
+Abaixo encontra-se um exemplo do arquivo em formato .SGL.
 Os valores das coordenadas utilizadas são cartesianas.
 Utilizado no replanejador de rotas: MPGA4s, GA4s, GH4s, DE4s, etc.
 

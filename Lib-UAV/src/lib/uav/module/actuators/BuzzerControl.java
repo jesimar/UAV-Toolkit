@@ -40,7 +40,9 @@ public class BuzzerControl {
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python buzzer-edison.py " + config.getPinBuzzer();
                 } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python buzzer-rpi.py " + config.getPinBuzzer();//fazer isso aqui ainda
+                    cmd = "python buzzer-rpi.py " + config.getPinBuzzer();
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python buzzer-bbb.py " + config.getPinBuzzer();
                 } else{
                     cmd = "python device.py";
                 }
@@ -67,7 +69,9 @@ public class BuzzerControl {
                 if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
                     cmd = "python alarm-edison.py " + config.getPinBuzzer();
                 } else if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python alarm-rpi.py " + config.getPinBuzzer();//fazer isso aqui ainda
+                    cmd = "python alarm-rpi.py " + config.getPinBuzzer();
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python alarm-bbb.py " + config.getPinBuzzer();
                 } else{
                     cmd = "python device.py";
                 }

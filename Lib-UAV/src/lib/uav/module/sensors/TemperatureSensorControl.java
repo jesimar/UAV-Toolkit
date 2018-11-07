@@ -41,7 +41,13 @@ public class TemperatureSensorControl {
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python temperature-rpi.py " + config.getPinTemperatureCLK() + " "
                             + config.getPinTemperatureCS() + " " + config.getPinTemperatureSO();
-                }else{
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python temperature-bbb.py " + config.getPinTemperatureCLK() + " "
+                            + config.getPinTemperatureCS() + " " + config.getPinTemperatureSO();
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python temperature-edison.py " + config.getPinTemperatureCLK() + " "
+                            + config.getPinTemperatureCS() + " " + config.getPinTemperatureSO();
+                } else{
                     cmd = "python device.py";
                 }
             }

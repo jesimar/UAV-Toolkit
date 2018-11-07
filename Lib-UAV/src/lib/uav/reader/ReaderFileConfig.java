@@ -56,6 +56,7 @@ public class ReaderFileConfig {
     private int portNetworkS2DK;
         
     //sensor
+    private boolean hasGPS;
     private boolean hasCamera;
     private String dirCamera;
     private String timeVideo;
@@ -80,10 +81,17 @@ public class ReaderFileConfig {
     private String pinBuzzer;
     private boolean hasParachute;
     private String dirParachute;
+    private String pinParachute;
     private boolean hasLED;
     private String dirLED;
+    private String pinLED;
+    private String delayLED;
     private boolean hasSpraying;
     private String dirSpraying;
+    private String pinSpraying;
+    
+    //accessory
+    private boolean hasTelemetry;
     
     //aircraft 
     private String uavName;
@@ -137,6 +145,7 @@ public class ReaderFileConfig {
     private String deltaPlannerHGA4m;
     private String maxVelocityPlannerHGA4m;
     private String maxControlPlannerHGA4m;
+    private String stdPositionPlannerHGA4m;
     
     //ccqsp4m
     private String waypointsPlannerCCQSP4m;
@@ -219,13 +228,14 @@ public class ReaderFileConfig {
             //communication
             hostIFA               = prop.getProperty("prop.global.comm.host_ifa");
             hostMOSA              = prop.getProperty("prop.global.comm.host_mosa");
-            hostS2DK               = prop.getProperty("prop.global.comm.host_s2dk");
+            hostS2DK              = prop.getProperty("prop.global.comm.host_s2dk");
             portNetworkIFAandMOSA = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_ifa_mosa"));
             portNetworkIFAandGCS  = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_ifa_gcs"));
             portNetworkMOSAandGCS = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_mosa_gcs"));
-            portNetworkS2DK        = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_s2dk"));
+            portNetworkS2DK       = Integer.parseInt(prop.getProperty("prop.global.comm.port_network_s2dk"));
             
             //modules hardware
+            hasGPS                = Boolean.parseBoolean(prop.getProperty("prop.hw.sensor.has_gps"));
             hasCamera             = Boolean.parseBoolean(prop.getProperty("prop.hw.sensor.has_camera"));
             hasSonar              = Boolean.parseBoolean(prop.getProperty("prop.hw.sensor.has_sonar"));
             hasPowerModule        = Boolean.parseBoolean(prop.getProperty("prop.hw.sensor.has_powermodule"));
@@ -234,6 +244,7 @@ public class ReaderFileConfig {
             hasParachute          = Boolean.parseBoolean(prop.getProperty("prop.hw.actuator.has_parachute"));
             hasLED                = Boolean.parseBoolean(prop.getProperty("prop.hw.actuator.has_led"));
             hasSpraying           = Boolean.parseBoolean(prop.getProperty("prop.hw.actuator.has_spraying"));      
+            hasTelemetry          = Boolean.parseBoolean(prop.getProperty("prop.hw.accessory.has_telemetry"));
             
             //sensor
             dirCamera             = prop.getProperty("prop.hw.sensor.camera.dir");
@@ -254,8 +265,12 @@ public class ReaderFileConfig {
             dirBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.dir");
             pinBuzzer             = prop.getProperty("prop.hw.actuator.buzzer.pin");
             dirParachute          = prop.getProperty("prop.hw.actuator.parachute.dir");
+            pinParachute          = prop.getProperty("prop.hw.actuator.parachute.pin");
             dirLED                = prop.getProperty("prop.hw.actuator.led.dir");
+            pinLED                = prop.getProperty("prop.hw.actuator.led.pin");
+            delayLED              = prop.getProperty("prop.hw.actuator.led.delay");
             dirSpraying           = prop.getProperty("prop.hw.actuator.spraying.dir");
+            pinSpraying           = prop.getProperty("prop.hw.actuator.spraying.pin");
             
             //aircraft
             uavName               = prop.getProperty("prop.aircraft.name");
@@ -296,7 +311,8 @@ public class ReaderFileConfig {
             timeExecPlannerHGA4m      = prop.getProperty("prop.mosa.planner.hga4m.time_exec");
             deltaPlannerHGA4m         = prop.getProperty("prop.mosa.planner.hga4m.delta");
             maxVelocityPlannerHGA4m   = prop.getProperty("prop.mosa.planner.hga4m.max_velocity");
-            maxControlPlannerHGA4m    = prop.getProperty("prop.mosa.planner.hga4m.max_control");                        
+            maxControlPlannerHGA4m    = prop.getProperty("prop.mosa.planner.hga4m.max_control");
+            stdPositionPlannerHGA4m   = prop.getProperty("prop.mosa.planner.hga4m.std_position");
             
             waypointsPlannerCCQSP4m   = prop.getProperty("prop.mosa.planner.ccqsp4m.waypoints");
             timeHorizonPlannerCCQSP4m = prop.getProperty("prop.mosa.planner.ccqsp4m.time_horizon");
@@ -587,7 +603,15 @@ public class ReaderFileConfig {
         return portNetworkS2DK;
     }
     
-    //hardwares
+    //hardwares    
+    public boolean hasTelemetry() {
+        return hasTelemetry;
+    }
+    
+    public boolean hasGPS() {
+        return hasGPS;
+    }
+    
     public boolean hasCamera() {
         return hasCamera;
     }
@@ -686,12 +710,28 @@ public class ReaderFileConfig {
         return dirParachute;
     }
     
+    public String getPinParachute() {
+        return pinParachute;
+    }
+    
     public String getDirLED() {
         return dirLED;
     }
     
+    public String getPinLED() {
+        return pinLED;
+    }
+    
+    public String getDelayLED() {
+        return delayLED;
+    }
+    
     public String getDirSpraying() {
         return dirSpraying;
+    }
+    
+    public String getPinSpraying() {
+        return pinSpraying;
     }
     
     //Aircraft
@@ -847,6 +887,10 @@ public class ReaderFileConfig {
 
     public String getMaxControlPlannerHGA4m() {
         return maxControlPlannerHGA4m;
+    }
+    
+    public String getStdPositionPlannerHGA4m() {
+        return stdPositionPlannerHGA4m;
     }
     
     public String getWaypointsPlannerCCQSP4m() {

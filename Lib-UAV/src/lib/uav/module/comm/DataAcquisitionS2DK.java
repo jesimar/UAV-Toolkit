@@ -68,6 +68,8 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
         this.HOST = host;        
         this.PORT = port;
         this.printLogOverhead = overhead;
+        printLogOverhead.println("Type-of-Method;Requisition-URL;Time-In-MilliSeconds");
+        printLogOverhead.flush();
         this.PROTOCOL = "http://";
     } 
     
@@ -611,7 +613,7 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
             if (printLogOverhead != null){
-                printLogOverhead.println("Time-in-POST(ms);" + urlPost + ";" + time);
+                printLogOverhead.println("POST" + ";" + urlPost + ";" + time);
                 printLogOverhead.flush();
             }
             return true;
@@ -650,7 +652,7 @@ public class DataAcquisitionS2DK extends DataAcquisition implements HTTPRequest{
             long timeFinal = System.currentTimeMillis();
             long time = timeFinal - timeInit;
             if (printLogOverhead != null){
-                printLogOverhead.println("Time-in-GET(ms);" + urlGet + ";" + time);
+                printLogOverhead.println("GET" + ";" + urlGet + ";" + time);
                 printLogOverhead.flush();
             }
             return inputLine;

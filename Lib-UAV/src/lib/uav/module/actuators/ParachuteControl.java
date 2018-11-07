@@ -38,8 +38,12 @@ public class ParachuteControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python open-parachute-rpi.py";//fazer isso aqui ainda
-                }else{
+                    cmd = "python open-parachute-rpi.py";
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python open-parachute-bbb.py";
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python open-parachute-edison.py";
+                } else{
                     cmd = "python device.py";
                 }
             } 

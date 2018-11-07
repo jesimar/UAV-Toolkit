@@ -41,10 +41,10 @@ public abstract class Communication {
      * @since version 4.0.0
      */
     public boolean isConnected() {
-        if (input == null) {
-            return false;
-        } else {
+        if (socket != null && !socket.isClosed()) {
             return true;
+        } else {
+            return false;
         }
     }
     
@@ -55,7 +55,7 @@ public abstract class Communication {
     public void close(){
         try {
             output.close();
-            input.close();            
+            input.close(); 
             socket.close();
             stateCommunication = StateCommunication.DISABLED;
         } catch (IOException ex) {

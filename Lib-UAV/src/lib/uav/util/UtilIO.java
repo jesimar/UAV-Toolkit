@@ -146,6 +146,8 @@ public class UtilIO {
      * @param lineTime the number of line time.
      * @param contentDelta the new content the line delta.
      * @param lineDelta the number of line delta.
+     * @param contentStdPos the new content the line stdPosition.
+     * @param lineStdPos the number of line stdPosition.
      * @param contentWpt the new content the line waypoint.
      * @param lineWpt the number of line waypoint.
      * @param contentTimeH  the new content the line time horizon.
@@ -159,21 +161,25 @@ public class UtilIO {
      */
     public static void copyFileModifiedMOSA(File src, File dst, 
             String contentTime, int lineTime, String contentDelta, int lineDelta, 
-            String contentWpt, int lineWpt, String contentTimeH, int lineTimeH, 
-            String contentMaxVel, int lineMaxVel, String contentMaxCtrl, int lineMaxCtrl) 
+            String contentStdPos, int lineStdPos, String contentWpt, int lineWpt, 
+            String contentTimeH, int lineTimeH, String contentMaxVel, 
+            int lineMaxVel, String contentMaxCtrl, int lineMaxCtrl) 
             throws FileNotFoundException {
         Scanner sc = new Scanner(src);
         PrintStream print = new PrintStream(dst);
         int i = 1;
         while (sc.hasNextLine()) {
-            if (i != lineTime && i != lineDelta && i != lineWpt && i != lineTimeH &&
-                    i != lineMaxVel && i != lineMaxCtrl){
+            if (i != lineTime && i != lineDelta && i != lineStdPos && i != lineWpt 
+                    && i != lineTimeH && i != lineMaxVel && i != lineMaxCtrl){
                 print.println(sc.nextLine());
             } else if (i == lineTime){
                 print.println(contentTime);
                 sc.nextLine();
             } else if (i == lineDelta){
                 print.println(contentDelta);
+                sc.nextLine();
+            } else if (i == lineStdPos){
+                print.println(contentStdPos);
                 sc.nextLine();
             } else if (i == lineWpt){
                 print.println(contentWpt);

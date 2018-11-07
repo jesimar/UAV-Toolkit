@@ -37,13 +37,15 @@ public class LEDControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python turn-on-led-rpi.py";//fazer isso aqui ainda
+                    cmd = "python turn-on-led-rpi.py";
                 } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
-                    cmd = "python turn-on-led-bbb.py";//fazer isso aqui ainda
+                    cmd = "python turn-on-led-bbb.py " + config.getPinLED();
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python turn-on-led-edison.py " + config.getPinLED();
                 } else{
                     cmd = "python device.py";
                 }
-            } 
+            }
             boolean print = true;
             UtilRunThread.runCmdSingleThread(cmd, new File(config.getDirLED()), print);
         } catch (IOException ex) {
@@ -63,9 +65,11 @@ public class LEDControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python turn-off-led-rpi.py";//fazer isso aqui ainda
+                    cmd = "python turn-off-led-rpi.py";
                 } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
-                    cmd = "python turn-off-led-bbb.py";//fazer isso aqui ainda
+                    cmd = "python turn-off-led-bbb.py " + config.getPinLED();
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python turn-off-led-edison.py " + config.getPinLED();
                 } else{
                     cmd = "python device.py";
                 }
@@ -89,9 +93,11 @@ public class LEDControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python blink-led-rpi.py";//fazer isso aqui ainda
+                    cmd = "python blink-led-rpi.py " + config.getPinLED() + " " + config.getDelayLED();
                 } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
-                    cmd = "python blink-led-bbb.py";//fazer isso aqui ainda
+                    cmd = "python blink-led-bbb.py " + config.getPinLED() + " " + config.getDelayLED();
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python blink-led-edison.py " + config.getPinLED() + " " + config.getDelayLED();
                 } else{
                     cmd = "python device.py";
                 }

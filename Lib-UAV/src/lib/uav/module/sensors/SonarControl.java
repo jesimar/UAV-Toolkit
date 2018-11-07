@@ -41,7 +41,13 @@ public class SonarControl {
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
                     cmd = "python sonar-rpi.py " + config.getPinSonarTrig() + " " +
                             config.getPinSonarEcho();
-                }else{
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python sonar-bbb.py " + config.getPinSonarTrig() + " " +
+                            config.getPinSonarEcho();
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python sonar-edison.py " + config.getPinSonarTrig() + " " +
+                            config.getPinSonarEcho();
+                } else{
                     cmd = "python device.py";
                 }
             }

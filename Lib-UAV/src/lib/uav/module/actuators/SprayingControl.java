@@ -37,8 +37,12 @@ public class SprayingControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python open-spraying-rpi.py";//fazer isso aqui ainda
-                }else{
+                    cmd = "python open-spraying-rpi.py";
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python open-spraying-bbb.py";
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python open-spraying-edison.py";
+                } else{
                     cmd = "python device.py";
                 }
             } 
@@ -61,8 +65,12 @@ public class SprayingControl {
             } else if (config.getOperationMode().equals(TypeOperationMode.HITL) || 
                     config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
                 if (config.getTypeCC().equals(TypeCC.RASPBERRY)){
-                    cmd = "python close-spraying-rpi.py";//fazer isso aqui ainda
-                }else{
+                    cmd = "python close-spraying-rpi.py";
+                } else if (config.getTypeCC().equals(TypeCC.BEAGLE_BONE)){
+                    cmd = "python close-spraying-bbb.py";
+                } else if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                    cmd = "python close-spraying-edison.py";
+                } else{
                     cmd = "python device.py";
                 }
             } 
