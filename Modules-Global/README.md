@@ -60,9 +60,9 @@ A tabela abaixo sintetiza algumas informações sobre o sensor sonar.
 | Característica           | Sonar                 | Observação             |
 |--------------------------|-----------------------|------------------------|
 | Tipo de Ação             | Calcula Distância     |                        |
+| Código para Edison       | sonar-edison.py       | Não testado            |
 | Código para Raspberry Pi | sonar-rpi.py          |                        |
 | Código para BBB          | sonar-bbb.py          | Não testado            |
-| Código para Edison       | sonar-edison.py       | Não testado            |
 | Código para PC           | sonar-pc.jar          | Dados apenas simulados |
 
 A tabela abaixo sintetiza algumas informações sobre o sensor de temperatura.
@@ -70,10 +70,10 @@ A tabela abaixo sintetiza algumas informações sobre o sensor de temperatura.
 | Característica           | Temperature           | Observação             |
 |--------------------------|-----------------------|------------------------|
 | Tipo de Ação             | Calcula a Temperatura |                        |
+| Código para Edison       | temperature-edison.py | Não testado            |
 | Código para Raspberry Pi | temperature-rpi.py    |                        |
 | Código para Raspberry Pi | temperature-rpi.c     |                        |
 | Código para BBB          | temperature-bbb.py    | Não testado            |
-| Código para Edison       | temperature-edison.py | Não testado            |
 | Código para PC           | temperature-pc.jar    | Dados apenas simulados |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador buzzer.
@@ -91,9 +91,9 @@ A tabela abaixo sintetiza algumas informações sobre o atuador LED.
 | Característica           | LED                     | LED                          | Observação             |
 |--------------------------|-------------------------|------------------------------|------------------------|
 | Tipo de Ação             | Liga o LED              | Pisca o LED (Blink)          |                        |
+| Código para Edison       | turn-on-led-edison.py   | blink-led-edison.py          | Não testado            |
 | Código para Raspberry Pi | turn-on-led-rpi.py      | blink-led-rpi.py             | Não testado            |
 | Código para BBB          | turn-on-led-bbb.py      | blink-led-bbb.py             |                        |
-| Código para Edison       | turn-on-led-edison.py   | blink-led-edison.py          | Não testado            |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
 
@@ -102,7 +102,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
 | Tipo de Ação             | Abre o paraquedas        |                        |
 | Código para Edison       | open-parachute-edison.py | Não testado            |
 | Código para Raspberry Pi | open-parachute-rpi.py    | Não testado            |
-| Código para BBB          | open-parachute-bb.py     | Não testado            |
+| Código para BBB          | open-parachute-bb.py     |                        |
 
 A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 
@@ -111,7 +111,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 | Tipo de Ação             | Abre o pulverizador     | Fecha o pulverizador     |                        |
 | Código para Edison       | open-spraying-edison.py | close-spraying-edison.py | Não testado            |
 | Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    | Não testado            |
-| Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    | Não testado            |
+| Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    |                        |
 
 A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (por enquanto, esse recurso será adicionado em breve), execuntando onboard ou offboard. Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
 

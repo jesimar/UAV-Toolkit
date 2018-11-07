@@ -110,7 +110,7 @@ public class MissionManager {
             drone = new DroneRotaryWing("iDroneAlpha");
         }
         
-        printLogOverhead = UtilFile.createFileLog("log-overhead-ifa", ".csv");
+        printLogOverhead = UtilFile.createFileLog("log-overhead-mosa", ".csv");
         
         if (config.getTypeDataAcquisition().equals(TypeDataAcquisitionUAV.DRONEKIT)){
             this.dataAcquisition = new DataAcquisitionS2DK(drone, "MOSA", 
