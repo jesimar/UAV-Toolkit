@@ -89,11 +89,11 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário                 | CC               | Altura    | Path Planner   | Path Replanner | Tipo de Voo         | Filmou o Voo | Status | 
 |-------------------------|------------------|-----------|----------------|----------------|---------------------|--------------|--------|
 | Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   |                | Sem Falha           | Sim          | FEITO  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   | DE4s           | Falha Tempo Ruim    | Sim          | Fazer  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   |                | Falha Baixa Bateria | Sim          | Fazer  |
+| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   |                | Falha Tempo Ruim    | Sim          | FEITO  |
+| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   | DE4s           | Falha Baixa Bateria | Sim          | Fazer  |
 | Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   |                | Sem Falha           | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   | DE4s           | Falha Tempo Ruim    | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   |                | Falha Baixa Bateria | Não          | Fazer  |
+| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   |                | Falha Tempo Ruim    | Não          | Fazer  |
+| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   | DE4s           | Falha Baixa Bateria | Não          | Fazer  |
 
 | Cenário II              | Raspberry Pi 3   | 15 metros | CCQSP4m        |                | Sem Falha           | Sim          | Fazer  |
 | Cenário II              | Raspberry Pi 3   | 15 metros | CCQSP4m        |                | Pouso Vertical      | Sim          | Fazer  |
