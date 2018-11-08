@@ -98,15 +98,14 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Não          | Fazer  |                 |
 | Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Não          | Fazer  |                 |
 | Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Não          | Fazer  |                 |
-
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Sim          | FEITO  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Sim          | FEITO  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
@@ -115,7 +114,6 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Não          | Fazer  |                 |
-
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Sim          | Fazer  |                 |
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Sim          | Fazer  |                 |
@@ -132,7 +130,6 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Não          | Fazer  |                 |
-
 | Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-1    | Replanner | Sim          | Fazer  |                 |
 | Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-2    | Replanner | Sim          | Fazer  |                 |

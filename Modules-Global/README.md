@@ -142,3 +142,5 @@ chmod 777 Camera/videos/
 ```
 
 :warning: **OBS:** A câmera da Raspberry Pi 3 possui como orientação principal nas fotografias/filmagens a direção do cabo flat da câmera. Dessa forma, o cabo deve ficar orientado para baixo, assim a foto/filmagem ficará orientada de forma correta.
+
+:warning: **OBS:** A câmera da Raspberry Pi 3 fica gravando o tempo todo a qualquer momento que a gravação for interrompiada não se perde o conteúdo anterior gravado. Por exemplo, supanhamos que estejamos gravando e o drone cai o conteúdo anteriormente gravado não é perdido mesmo que desligamos a RPi repentinamente, o que foi salvo fica perfeito.

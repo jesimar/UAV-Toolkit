@@ -204,7 +204,7 @@ Time
 ProOF.gen.stopping.Time
 <parameters number>
 1
-8.0
+4.0
 <node id>
 131
 <node type>
@@ -301,7 +301,7 @@ Linear Delta
 ProOF.apl.UAV.abst.uncertainty.Delta
 <parameters number>
 1
-0.08
+0.05
 <node id>
 99
 <node type>
@@ -347,7 +347,7 @@ State Open Unc.
 ProOF.apl.UAV.gen.linear.uncertainty.LinearOpenStateUncertainty
 <parameters number>
 3
-0.30
+0.50
 0.0
 0.0
 <node id>
@@ -422,8 +422,8 @@ Dynamic dt
 ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$DynamicDt
 <parameters number>
 4
-50
-1200
+20
+82
 4.0
 2.0
 <node id>
