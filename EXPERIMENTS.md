@@ -110,10 +110,10 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
 | Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Não          | Fazer  |                 |
-| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
-| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
-| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | FEITO  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Não          | FEITO  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Não          | FEITO  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Não          | FEITO  |                 |
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Sim          | Fazer  |                 |
 | Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Sim          | Fazer  |                 |
