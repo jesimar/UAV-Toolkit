@@ -132,7 +132,7 @@ A tabela abaixo sintetiza algumas informações sobre os Companions Computers e 
 | Suporta Parachute               | Não             | Não               | Não              | Não           |
 | Suporta Spraying                | Não             | Não               | Não              | Não           |
 
-:warning: **OBS:** Os códigos (turn-on-led-bbb.py, blink-led-bbb.py, etc) quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nesta placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando. Caso tem-se executar os códigos no sistema não dará nenhum problema apenas não serão executados como se deseja.
+:warning: **OBS:** Os códigos turn-on-led-bbb.py, blink-led-bbb.py, etc quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nesta placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando. Caso tem-se executar os códigos no sistema não dará nenhum problema apenas não serão executados como se deseja.
 
 :warning: **OBS:** Os códigos picture-rpi.py, photo-in-sequence-rpi.py e video-rpi.py necessitam de permissão para gravar os dados na pasta na Raspberry Pi, dessa forma, certifique-se que você deu permissão total para a pasta através dos comandos: 
 ```

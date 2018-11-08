@@ -8,8 +8,8 @@ A seguir serão apresentados um conjunto de tabelas contendo os resultados obtid
 | Quadricóptero      | iDroneBeta                | Sim                       | TODO                     |
 | Quadricóptero      | iDroneGamma               | Sim                       | TODO                     |
 | Quadricóptero      | iDroneDelta               | Sim                       | TODO                     |
-| Quadricóptero      | DroneOnofre               | Não                       | TODO                     |
-| Hexacóptero        | DroneSimões               | Não                       | TODO                     |
+| Quadricóptero      | DroneOnofre               | Não                       | Não                      |
+| Hexacóptero        | DroneSimões               | Não                       | Não                      |
 | Asa Fixa           | Ararinha                  | Não                       | Não                      |
 
 A segunda tabela mostra alguns componentes de hardware avaliados.
@@ -86,42 +86,66 @@ A terceira tabela mostra alguns componentes de software avaliados.
 
 A quarta tabela mostra as simulações de HITL feitos para a tese.
 
-| Cenário                 | CC               | Altura    | Path Planner   | Path Replanner | Tipo de Falha       | Filmou o Voo | Status | 
-|-------------------------|------------------|-----------|----------------|----------------|---------------------|--------------|--------|
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   |                | WithoutFailure      | Sim          | FEITO  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   |                | Falha BadWeather    | Sim          | FEITO  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-1  | Sim          | FEITO  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-2  | Sim          | FEITO  |
-| Cenário I               | Raspberry Pi 3   | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-3  | Sim          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   |                | WithoutFailure      | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   |                | Falha BadWeather    | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-1  | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-2  | Não          | Fazer  |
-| Cenário I               | Intel Edison     | 5 metros  | FixedRoute4m   | DE4s           | Falha LowBattery-3  | Não          | Fazer  |
+| Cenário     | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
+|-------------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
+| Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Sim          | FEITO  |                 |
+| Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Sim          | FEITO  | Pousou em bonificadora     |
+| Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Sim          | FEITO  | Pousou em bonificadora     |
+| Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Sim          | FEITO  | Não pousou em bonificadora |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Não          | Fazer  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Não          | Fazer  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Não          | Fazer  |                 |
 
-| Cenário II              | Raspberry Pi 3   | 15 metros | CCQSP4m        |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário II              | Raspberry Pi 3   | 15 metros | CCQSP4m        |                | Pouso Vertical      | Sim          | Fazer  |
-| Cenário II              | Raspberry Pi 3   | 15 metros | HGA4m          |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário II              | Raspberry Pi 3   | 15 metros | HGA4m          |                | Pouso Vertical      | Sim          | Fazer  |
-| Cenário II              | BeagleBone Black | 15 metros | CCQSP4m        |                | WithoutFailure      | Não          | Fazer  |
-| Cenário II              | BeagleBone Black | 15 metros | CCQSP4m        |                | Pouso Vertical      | Não          | Fazer  |
-| Cenário II              | BeagleBone Black | 15 metros | HGA4m          |                | WithoutFailure      | Não          | Fazer  |
-| Cenário II              | BeagleBone Black | 15 metros | HGA4m          |                | Pouso Vertical      | Não          | Fazer  |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Não          | Fazer  |                 |
+| Cenário II  | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure-3      | VertLand  | Não          | Fazer  |                 |
 
-| Cenário III             | Raspberry Pi 3   | 25 metros | CCQSP4m        |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário III             | Raspberry Pi 3   | 25 metros | CCQSP4m        | MPGA4s         | Baixa Bateria       | Sim          | Fazer  |
-| Cenário III             | Raspberry Pi 3   | 25 metros | HGA4m          |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário III             | Raspberry Pi 3   | 25 metros | HGA4m          | MPGA4s         | Baixa Bateria       | Sim          | Fazer  |
-| Cenário III             | Intel Edison     | 25 metros | CCQSP4m        |                | WithoutFailure      | Não          | Fazer  |
-| Cenário III             | Intel Edison     | 25 metros | CCQSP4m        | MPGA4s         | Baixa Bateria       | Não          | Fazer  |
-| Cenário III             | Intel Edison     | 25 metros | HGA4m          |                | WithoutFailure      | Não          | Fazer  |
-| Cenário III             | Intel Edison     | 25 metros | HGA4m          | MPGA4s         | Baixa Bateria       | Não          | Fazer  |
+| Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-3      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Raspberry Pi 3   | 25 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Sim          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | CCQSP4m      | MPGA4s         | LowBattery-3      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 25 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Não          | Fazer  |                 |
 
-| Cenário IV              | Raspberry Pi 3   | 30 metros | CCQSP4m        |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário IV              | Raspberry Pi 3   | 30 metros | CCQSP4m        | MS4s           | Simular Falha MOSA  | Sim          | Fazer  |
-| Cenário IV              | Raspberry Pi 3   | 30 metros | HGA4m          |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário IV              | Raspberry Pi 3   | 30 metros | HGA4m          | MS4s           | Simular Falha MOSA  | Sim          | Fazer  |
-| Cenário IV              | BeagleBone Black | 30 metros | CCQSP4m        |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário IV              | BeagleBone Black | 30 metros | CCQSP4m        | MS4s           | Simular Falha MOSA  | Sim          | Fazer  |
-| Cenário IV              | BeagleBone Black | 30 metros | HGA4m          |                | WithoutFailure      | Sim          | Fazer  |
-| Cenário IV              | BeagleBone Black | 30 metros | HGA4m          | MS4s           | Simular Falha MOSA  | Sim          | Fazer  |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-1    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-2    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-3    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | HGA4m        | MS4s           | MOSA-Failure-1    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | HGA4m        | MS4s           | MOSA-Failure-2    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 30 m      | HGA4m        | MS4s           | MOSA-Failure-3    | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-1    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-2    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | CCQSP4m      | MS4s           | MOSA-Failure-3    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | HGA4m        | MS4s           | MOSA-Failure-1    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | HGA4m        | MS4s           | MOSA-Failure-2    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 30 m      | HGA4m        | MS4s           | MOSA-Failure-3    | Replanner | Não          | Fazer  |                 |
