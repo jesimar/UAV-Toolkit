@@ -99,10 +99,10 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Não          | Fazer  |                 |
 | Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Não          | Fazer  |                 |
 
-| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Sim          | Fazer  |                 |
-| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Sim          | Fazer  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Sim          | FEITO  |                 |
+| Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-3      | VertLand  | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-1      | VertLand  | Sim          | Fazer  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | HGA4m        |                | AP-Failure-2      | VertLand  | Sim          | Fazer  |                 |

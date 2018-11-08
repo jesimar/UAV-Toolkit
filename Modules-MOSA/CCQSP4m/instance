@@ -186,7 +186,7 @@ Linear Delta
 ProOF.apl.UAV.abst.uncertainty.Delta
 <parameters number>
 1
-0.01
+0.10
 <node id>
 187
 <node type>
@@ -231,7 +231,7 @@ State Perfect Unc.
 ProOF.apl.UAV.gen.linear.uncertainty.LinearPerfectStateUncertainty
 <parameters number>
 2
-0.20
+0.30
 0.0
 <node id>
 564
@@ -295,8 +295,8 @@ Power dt
 ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirDt
 <parameters number>
 4
-25
-50
+30
+90
 5.0
 3.0
 <node id>
