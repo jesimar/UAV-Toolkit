@@ -53,9 +53,9 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
 
 Abaixo encontra-se três telas com a GUI do sistema em execução.
 
-| Tela com diversos dados do UAV       | Tela com plot da missão na Graphics2D | Tela com plot da missão no Google Maps |
-|--------------------------------------|---------------------------------------|----------------------------------------|
-| ![](../Figures/uav-gcs1.png)         | ![](../Figures/uav-gcs2.png)          | ![](../Figures/uav-gcs3.png)           |
+| Tela com status de HW do UAV         | Tela com diversos dados do UAV       | Tela com plot da missão na Graphics2D | Tela com plot da missão no Google Maps |
+|--------------------------------------|--------------------------------------|---------------------------------------|----------------------------------------|
+| ![](../Figures/uav-gcs0.png)         | ![](../Figures/uav-gcs1.png)         | ![](../Figures/uav-gcs2.png)          | ![](../Figures/uav-gcs3.png)           |
 
 :warning: **OBS:** O sistema de plot na Graphics2D e do Google Maps são invertidos, com impacto apenas visual.
 

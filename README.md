@@ -276,8 +276,8 @@ Existem dois arquivos que devem ser sempre conferidos antes de executar o ambine
 ./UAV-Toolkit/Modules-Global/config-param.properties
 ```
 
-* O arquivo config-global.properties contém um conjunto de configurações que irá determinar o tipo de operação (SITL/HITL/REAL_FLIGHT), tipo de CC usado, tipo de planejadores/replanejadores usados, etc. 
-* O arquivo config-param.properties contém alguns parâmetros do piloto automático que sempre é atualizado pelo sistema IFA antes da realização da missão. Pode-se alterar qualquer parâmetro do piloto automático nesse arquivo usando o esquema de chave, valor dado. 
+* O arquivo config-global.properties [[Link](./Modules-Global/config-global.properties/)] contém um conjunto de configurações que irá determinar o tipo de operação (SITL/HITL/REAL_FLIGHT), tipo de CC usado, tipo de planejadores/replanejadores usados, etc. 
+* O arquivo config-param.properties [[Link](./Modules-Global/config-param.properties/)] contém alguns parâmetros do piloto automático que sempre é atualizado pelo sistema IFA antes da realização da missão. Pode-se alterar qualquer parâmetro do piloto automático nesse arquivo usando o esquema de chave, valor dado. 
 
 :warning: **OBS:** Nunca execute o sistema sem antes conferir o conteúdo do arquivo "config-global.properties".
 
@@ -337,11 +337,18 @@ Ordem  Software/Aplicação                                      (Local de Execu
 
 :warning: **OBS:** O comando sudo pode ser necessário antes dos comandos exec-ifa.sh e exec-mosa.sh caso esteja-se executando em HITL e REAL_FLIGHT. A placa Raspberry Pi 3 reclama de permissões, em alguns casos específicos, como fazer o recálculo de rotas emergenciais.
 
+:warning: **OBS:** Antes de executar o UAV-IFA (exec-ifa.sh) é necessário aguardar até que o software UAV-S2DK esteja pronto (aguardando conexão).
+
 A imagem abaixo sintetiza as três formas possíveis de execução dos softwares.
 
 ![](./Figures/forms-run-uav-toolkit.png)
 
-:warning: **OBS:** Antes de executar o UAV-IFA (exec-ifa.sh) é necessário aguardar até que o software UAV-S2DK esteja pronto (aguardando conexão).
+A imagem abaixo mostra como deve ser feita as conexões entre o PC e o CC para fazer os experimentos HITL.
+
+| HITL GCS e Raspberry Pi            | HITL GCS e BeagleBone Black        | HITL GCS e Intel Edison            |
+|------------------------------------|------------------------------------|------------------------------------|
+| ![](./Figures/hitl-gcs-rpi.png)    | ![](./Figures/hitl-gcs-bbb.png)    | ![](./Figures/hitl-gcs-edison.png) |
+| Aqui a transmissão de dados deve ser feita através de uma intranet ou internet | Aqui transmissão de dados poderá ser feita através de uma intranet ou internet, ou ainda, através do próprio cabo no IP 192.168.7.2 |                 |
 
 ## Como Terminar a Execução
 
@@ -373,7 +380,6 @@ Abaixo encontra-se um vídeo de como instalar o ambiente UAV-Toolkit e todas as 
 O link para o youtube pode ser acessado aqui: https://youtu.be/G4YxFfW4OI0
 
 [![](https://img.youtube.com/vi/G4YxFfW4OI0/0.jpg)](https://youtu.be/G4YxFfW4OI0 "Instalando/Configurando/Executando o UAV-Toolkit")
-
 
 <!--
 ## Drones Construídos:
