@@ -4,6 +4,9 @@
 
 ### Features:
 
+* Added file param of drones (iDroneAlpha, iDroneBeta) on ./UAV-Toolkit/Configs/
+* Added file instances (kml) on ./UAV-Toolkit/Missions-Google-Earth/.
+* Updated documentation on github.
 * Added code to control sensors and actuators (LED, Buzzer, parachute, spraying).
 * Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
 * Added auto finished execution in UAV-IFA (change status disarmed, armed, disarmed).
