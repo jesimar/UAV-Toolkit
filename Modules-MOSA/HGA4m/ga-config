@@ -422,8 +422,8 @@ Dynamic dt
 ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$DynamicDt
 <parameters number>
 4
-20
-82
+25
+178
 4.0
 2.0
 <node id>
