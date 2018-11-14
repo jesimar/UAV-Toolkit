@@ -1,11 +1,12 @@
 # Changelog
 
-## Version v5.0.0 (03/11/2018)
+## Version v5.0.0 (14/11/2018)
 
 ### Features:
 
 * Added file param of drones (iDroneAlpha, iDroneBeta) on ./UAV-Toolkit/Configs/
 * Added file instances (kml) on ./UAV-Toolkit/Missions-Google-Earth/.
+* Added EXPERIMENTS.md on github.
 * Updated documentation on github.
 * Added code to control sensors and actuators (LED, Buzzer, parachute, spraying).
 * Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
@@ -23,6 +24,7 @@
 
 ### Bug Fixes:
 
+* Updated automatic route simplification.
 * Updated HGA4m to support map with long distance (the HGA4m did not find solution for large maps).
 
 ## Version v4.0.0 (08/10/2018)
