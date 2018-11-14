@@ -1,4 +1,4 @@
-# TO DO
+# TO DO 
 
 A seguir encontra-se diversas atividades para serem feitas no projeto.
 
@@ -22,12 +22,13 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 * MOSA Adaptativo.
 * Colocar missão no Route-Standard de zig zag para pulverização.
+* Incluir tempo-maximo para processamento no arquivo de config-global.properties e alterar no arquivo instance-base do modulo CCQSP4m.
 
 ## Sistema UAV-GCS
 
-* Colocar alocação de risco (incerteza da posição) das rotas CCQSP4m e HGA4m.
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
 * Plotar na GCS as rotas do Behavior
+* Plotar na GCS as rotas calculadas nas placas do MOSA.
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
 		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 
 		por exemplo, para etapa de pulverização. (behavior diferente).
@@ -71,6 +72,8 @@ Traceback (most recent call last):
 AttributeError: 'NoneType' object has no attribute 'lat'
 ```
 
+* Falha na decolagem: o drone durante a decolagem enquanto ganha altitude, do nada troca o modo de voo para LAND, abortando assim a decolagem e o restante da missão que ainda não foi setado.
+
 ## Trabalho Alunos de IC:
 
 * Fazer simplificador de rotas baseado em derivadas (Feito)
@@ -92,3 +95,4 @@ AttributeError: 'NoneType' object has no attribute 'lat'
 ## Trabalho Doutorado Rafael:
 
 * Fazer tradução de código de replanejador AG para linguagem C (Fazendo)
+* Fazer iniciador automático do sistema para inclusão de path planner (Fazendo)

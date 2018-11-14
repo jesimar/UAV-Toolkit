@@ -472,7 +472,7 @@ public class DecisionMaking {
                 StandardPrints.printMsgEmph("    Size: " + mission.getMission().size());
                 StandardPrints.printMsgEmph("    MAX: " + wpt);
                 StandardPrints.printMsgEmph("    Using Route Simplifier");
-                Mission missionSimplif = new Mission();
+                mission = new Mission();
                 String pathSimplif = config.getDirPlanner() + "routeGeo.txt";
                 String factor = config.getFactorRouteSimplifier();
                 if (config.hasRouteSimplifier()) {
@@ -482,13 +482,13 @@ public class DecisionMaking {
                 UtilRoute.execRouteSimplifier(pathSimplif, config.getDirRouteSimplifier(),
                         factor, ";");
                 pathSimplif = config.getDirRouteSimplifier() + "output-simplifier.txt";
-                resp = UtilRoute.readFileRouteMOSA(missionSimplif, pathSimplif);
+                resp = UtilRoute.readFileRouteMOSA(mission, pathSimplif);
                 if (!resp) {
                     return false;
                 }
-                missionSimplif.printMission();
-                if (missionSimplif.getMission().size() > 0) {
-                    if (missionSimplif.getMission().size() < wpt) {
+                mission.printMission();
+                if (mission.getMission().size() > 0) {
+                    if (mission.getMission().size() < wpt) {
                         resp = dataAcquisition.setMission(mission);
                     }else{
                         StandardPrints.printMsgEmph("Very large mission size: ");
