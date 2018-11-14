@@ -61,20 +61,42 @@
       <typeRegion>BONUS_REGION</typeRegion>
       <coordenates>
         <uav.mission__creator.converter.map.Point2D>
-          <x>158.29987499530964</x>
-          <y>94.93194144162034</y>
+          <x>114.88711949558589</x>
+          <y>113.51757488352627</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>158.56524121587552</x>
-          <y>115.92600940890657</y>
+          <x>118.54086530249998</x>
+          <y>126.43949253468107</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>180.24818309010743</x>
-          <y>115.66336255455846</y>
+          <x>142.51554505978507</x>
+          <y>125.86873734103469</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>178.41267208444785</x>
-          <y>95.10095951512213</y>
+          <x>141.27962763670328</x>
+          <y>104.17029065948486</y>
+        </uav.mission__creator.converter.map.Point2D>
+      </coordenates>
+    </uav.mission__creator.converter.map.Poly2D>
+    <uav.mission__creator.converter.map.Poly2D>
+      <nameRegion>2</nameRegion>
+      <typeRegion>BONUS_REGION</typeRegion>
+      <coordenates>
+        <uav.mission__creator.converter.map.Point2D>
+          <x>81.63729208757431</x>
+          <y>-8.401365769437657</y>
+        </uav.mission__creator.converter.map.Point2D>
+        <uav.mission__creator.converter.map.Point2D>
+          <x>94.86231201097206</x>
+          <y>-15.293880919348249</y>
+        </uav.mission__creator.converter.map.Point2D>
+        <uav.mission__creator.converter.map.Point2D>
+          <x>94.73142147311033</x>
+          <y>-23.74160331172525</y>
+        </uav.mission__creator.converter.map.Point2D>
+        <uav.mission__creator.converter.map.Point2D>
+          <x>79.86789554031483</x>
+          <y>-24.06698025788406</y>
         </uav.mission__creator.converter.map.Point2D>
       </coordenates>
     </uav.mission__creator.converter.map.Poly2D>
