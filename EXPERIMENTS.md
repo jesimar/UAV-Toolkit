@@ -93,11 +93,11 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Sim          | FEITO  | Pousou em bonificadora     |
 | Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Sim          | FEITO  | Pousou em bonificadora     |
 | Cenário I   | Raspberry Pi 3   | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Sim          | FEITO  | Não pousou em bonificadora |
-| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
-| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Não          | Fazer  |                 |
-| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Não          | Fazer  |                 |
-| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Não          | Fazer  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Não          | FEITO  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | FEITO  |                 |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-1      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-2      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
+| Cenário I   | Intel Edison     | 5 m       | FixedRoute4m | DE4s           | LowBattery-3      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-1      | VertLand  | Sim          | FEITO  |                 |
 | Cenário II  | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure-2      | VertLand  | Sim          | FEITO  |                 |

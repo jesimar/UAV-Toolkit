@@ -89,6 +89,8 @@ Outros CC suportados:
 
 * Intel Galileo (ainda não testado)
 * Raspberry Pi Zero (ainda não testado)
+* BeagleBone Blue (ainda não testado)
+* BeagleBone Green (ainda não testado)
 
 **Pilotos automáticos suportados:**
 
@@ -159,7 +161,7 @@ OBS: A versão do CPLEX que avaliada foi: IBM(R) ILOG(R) CPLEX(R) Interactive Op
 ou 
 * Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto) (Instalar somente no PC)
 
-**Software necessário para obteer últimas atualizações do projeto:**
+**Software necessário para obter últimas atualizações do projeto:**
 
 * Git [[Link](https://git-scm.com/)] (Instalar no PC e no CC) (Licença Apache 2.0)
 
