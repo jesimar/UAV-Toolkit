@@ -388,6 +388,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readHGA(fileMOSA);
                                 repaint();
                                 i++;
@@ -410,6 +411,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.read(fileMOSA);
                                 repaint();
                                 break;
@@ -433,6 +435,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.read(fileMOSA);
                                 repaint();
                                 break;
@@ -457,6 +460,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readAStar(fileMOSA);
                                 repaint();
                                 i++;
@@ -478,6 +482,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteMOSA = config.getDirFixedRouteMOSA() + config.getFileFixedRouteMOSA();
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readGeo(fileMOSA);
                                 repaint();
                                 break;
@@ -501,6 +506,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteIFA = config.getDirReplanner() + "route.txt";
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
+                                Thread.sleep(100);
                                 routeIFA.read(fileIFA);
                                 repaint();
                                 break;
@@ -523,6 +529,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathRouteIFA = config.getDirReplanner() + "output.txt";
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
+                                Thread.sleep(100);
                                 routeIFA.read(fileIFA);
                                 repaint();
                                 break;
@@ -544,6 +551,7 @@ public class PanelPlotMission extends sPanelDraw {
                             String pathSimplifier = config.getDirRouteSimplifier() + "output-simplifier.txt";
                             File fileSimplifier = new File(pathSimplifier);
                             if (fileSimplifier.exists()) {
+                                Thread.sleep(100);
                                 routeMOSASimplifier.readGeo(fileSimplifier);
                                 repaint();
                                 break;
@@ -564,6 +572,7 @@ public class PanelPlotMission extends sPanelDraw {
                         String pathBehavior = config.getDirBehavior()+ "route-behavior.txt";
                         File file = new File(pathBehavior);
                         if (file.exists()) {
+                            Thread.sleep(100);
                             routeMOSABehavior.readGeo(file);
                             repaint();
                             break;

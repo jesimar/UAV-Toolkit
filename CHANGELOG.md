@@ -24,6 +24,7 @@
 
 ### Bug Fixes:
 
+* Fixed a bug in the UAV-GCS that sometimes did not plot the route.
 * Updated automatic route simplification.
 * Updated HGA4m to support map with long distance (the HGA4m did not find solution for large maps).
 

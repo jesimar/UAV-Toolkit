@@ -161,6 +161,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readHGA(fileMOSA);
                                 addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 i++;
@@ -183,6 +184,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.read(fileMOSA);
                                 addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 break;
@@ -205,6 +207,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D.txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.read(fileMOSA);
                                 addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                             }
@@ -227,6 +230,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readAStar(fileMOSA);
                                 addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 i++;
@@ -248,6 +252,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteMOSA = config.getDirFixedRouteMOSA() + config.getFileFixedRouteMOSA();
                             File fileMOSA = new File(pathRouteMOSA);
                             if (fileMOSA.exists()) {
+                                Thread.sleep(100);
                                 routeMOSA.readGeo(fileMOSA);
                                 addRouteInAPIxy(routeMOSA, "#00FF00", 0.8, 2);
                                 repaint();
@@ -272,6 +277,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteIFA = config.getDirReplanner() + "route.txt";
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
+                                Thread.sleep(100);
                                 routeIFA.read(fileIFA);
                                 addRouteInAPIxy(routeIFA, "#FF0000", 0.8, 3);
                                 break;
@@ -294,6 +300,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathRouteIFA = config.getDirReplanner() + "output.txt";
                             File fileIFA = new File(pathRouteIFA);
                             if (fileIFA.exists()) {
+                                Thread.sleep(100);
                                 routeIFA.read(fileIFA);
                                 addRouteInAPIxy(routeIFA, "#FF0000", 0.8, 3);
                                 break;
@@ -315,6 +322,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                             String pathSimplifier = config.getDirRouteSimplifier() + "output-simplifier.txt";
                             File fileSimplifier = new File(pathSimplifier);
                             if (fileSimplifier.exists()) {
+                                Thread.sleep(100);
                                 routeMOSASimplifier.read(fileSimplifier);
                                 addRouteInAPIlatlng(routeMOSASimplifier, "#000000", 0.8, 2);
                                 break;
@@ -335,6 +343,7 @@ public class PanelPlotGoogleMaps extends JPanel {
                         String pathSimplifier = config.getDirRouteSimplifier() + "route-behavior.txt";
                         File fileSimplifier = new File(pathSimplifier);
                         if (fileSimplifier.exists()) {
+                            Thread.sleep(100);
                             routeMOSABehavior.readGeo(fileSimplifier);
                             addRouteInAPIlatlng(routeMOSABehavior, "#000000", 0.8, 2);
                             break;
