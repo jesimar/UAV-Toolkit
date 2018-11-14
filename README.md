@@ -103,11 +103,11 @@ Os seguintes Pilotos Automáticos (APs) são suportados e foram testados.
 
 O presente projeto dá suporte a um conjunto de VANTs e estão listados abaixo.
 
-| Quadricóptero                            | Hexacóptero                              | Asa Fixa                                |
-|------------------------------------------|------------------------------------------|-----------------------------------------|
-| ![](./Figures/logo-drone-quadcopter.png) | ![](./Figures/logo-drone-hexacopter.png) | ![](./Figures/logo-drone-fixedwing.png) |
-| Modelo Testado: Quadricóptero em X       | Modelo Testado: N/A                      | Modelo Testado: N/A                     |
-| Nome: iDroneAlpha                        | Nome: N/A (Drone Simões)                 | Nome: N/A  (Ararinha)                   |
+| Quadricóptero                      | Hexacóptero                        | Octacóptero                        | Asa Fixa                                |
+|------------------------------------|------------------------------------|------------------------------------|-----------------------------------------|
+| ![](./Figures/logo-drone-quad.png) | ![](./Figures/logo-drone-hexa.png) | ![](./Figures/logo-drone-octa.png) | ![](./Figures/logo-drone-fixedwing.png) |
+| Modelo Testado: Quadricóptero em X | Modelo Testado: N/A                | Modelo Testado: N/A                | Modelo Testado: N/A                     |
+| Nome: iDroneAlpha                  | Nome: N/A (Drone Simões)           | Nome: N/A                          | Nome: N/A  (Ararinha)                   |
 
 ## Pré-Requisitos de Instalação (Software): 
 
@@ -158,6 +158,10 @@ OBS: A versão do CPLEX que avaliada foi: IBM(R) ILOG(R) CPLEX(R) Interactive Op
 * IDE Netbeans [[Link](https://netbeans.org/downloads/)] (Instalar somente no PC) (Licença dupla CDDL 1.0 e GPL 2.0)
 ou 
 * Qualquer outra IDE para Java do seu interesse (você terá que fazer a importação do projeto) (Instalar somente no PC)
+
+**Software necessário para obteer últimas atualizações do projeto:**
+
+* Git [[Link](https://git-scm.com/)] (Instalar no PC e no CC) (Licença Apache 2.0)
 
 ### Versões dos Programas Instalados:
 
@@ -348,7 +352,7 @@ A imagem abaixo mostra como deve ser feita as conexões entre o PC e o CC para f
 | HITL GCS e Raspberry Pi            | HITL GCS e BeagleBone Black        | HITL GCS e Intel Edison            |
 |------------------------------------|------------------------------------|------------------------------------|
 | ![](./Figures/hitl-gcs-rpi.png)    | ![](./Figures/hitl-gcs-bbb.png)    | ![](./Figures/hitl-gcs-edison.png) |
-| Aqui a transmissão de dados deve ser feita através de uma intranet ou internet | Aqui transmissão de dados poderá ser feita através de uma intranet ou internet, ou ainda, através do próprio cabo no IP 192.168.7.2 |                 |
+| Aqui a transmissão de dados deve ser feita através de uma intranet ou internet | Aqui transmissão de dados poderá ser feita através de uma intranet ou internet, ou ainda, através do próprio cabo no IP 192.168.7.2 | Aqui a transmissão de dados deve ser feita através de uma intranet ou internet |
 
 ## Como Terminar a Execução
 
