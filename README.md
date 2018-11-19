@@ -351,10 +351,20 @@ A imagem abaixo sintetiza as três formas possíveis de execução dos softwares
 
 A imagem abaixo mostra como deve ser feita as conexões entre o PC e o CC para fazer os experimentos HITL.
 
-| HITL GCS e Raspberry Pi            | HITL GCS e BeagleBone Black        | HITL GCS e Intel Edison            |
-|------------------------------------|------------------------------------|------------------------------------|
-| ![](./Figures/hitl-gcs-rpi.png)    | ![](./Figures/hitl-gcs-bbb.png)    | ![](./Figures/hitl-gcs-edison.png) |
+| HITL GCS e Raspberry Pi                        | HITL GCS e BeagleBone Black                     | HITL GCS e Intel Edison                           |
+|------------------------------------------------|-------------------------------------------------|---------------------------------------------------|
+| ![](./Figures/hitl-gcs-rpi.png)                | ![](./Figures/hitl-gcs-bbb.png)                 | ![](./Figures/hitl-gcs-edison.png)                |
 | Aqui a transmissão de dados deve ser feita através de uma intranet ou internet | Aqui transmissão de dados poderá ser feita através de uma intranet ou internet, ou ainda, através do próprio cabo no IP 192.168.7.2 | Aqui a transmissão de dados deve ser feita através de uma intranet ou internet |
+
+A imagem abaixo mostra como deve ser feita as conexões entre o PC, AP e o CC para fazer os experimentos Reais.
+
+| REAL_FLIGHT GCS, APM e Raspberry Pi            | REAL_FLIGHT GCS, APM e BeagleBone Black         | REAL_FLIGHT GCS, APM e Intel Edison               |
+|------------------------------------------------|-------------------------------------------------|---------------------------------------------------|
+| ![](./Figures/real-flight-gcs-apm-rpi.png)     | ![](./Figures/real-flight-gcs-apm-bbb.png)      | ![](./Figures/real-flight-gcs-apm-edison.png)     |
+
+| REAL_FLIGHT GCS, Pixhawk e Raspberry Pi        | REAL_FLIGHT GCS, Pixhawk e BeagleBone Black     | REAL_FLIGHT GCS, Pixhawk e Intel Edison           |
+|------------------------------------------------|-------------------------------------------------|---------------------------------------------------|
+| ![](./Figures/real-flight-gcs-pixhawk-rpi.png) | ![](./Figures/real-flight-gcs-pixhawk-bbb.png)  | ![](./Figures/real-flight-gcs-pixhawk-edison.png) |
 
 ## Como Terminar a Execução
 
