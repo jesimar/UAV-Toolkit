@@ -2,15 +2,15 @@
 
 A seguir serão apresentados um conjunto de tabelas contendo os resultados obtidos durante a minha tese de doutorado. A primeira tabela mostra algumas aeronaves avaliadas.
 
-| Tipo de Aeronave   | Aeronave                  | Construída por UAV-Team   | Avaliada em Voo Real     |
-|--------------------|---------------------------|---------------------------|--------------------------|
-| Quadricóptero      | iDroneAlpha               | Sim                       | Sim                      |
-| Quadricóptero      | iDroneBeta                | Sim                       | TODO                     |
-| Quadricóptero      | iDroneGamma               | Sim                       | TODO                     |
-| Quadricóptero      | iDroneDelta               | Sim                       | TODO                     |
-| Quadricóptero      | DroneOnofre               | Não                       | Não                      |
-| Hexacóptero        | DroneSimões               | Não                       | Não                      |
-| Asa Fixa           | Ararinha                  | Não                       | Não                      |
+| Tipo de Aeronave   | Aeronave                  | Construída por UAV-Team   | Avaliada em Voo Real     | Avaliada em Voo Inteligente |
+|--------------------|---------------------------|---------------------------|--------------------------|-----------------------------|
+| Quadricóptero      | iDroneAlpha               | Sim                       | Sim                      | Sim                         |
+| Quadricóptero      | iDroneBeta                | Sim                       | Sim                      | Não                         |
+| Quadricóptero      | iDroneGamma               | Sim                       | Sim                      | Não                         |
+| Quadricóptero      | iDroneDelta               | Sim                       | Não                      | Não                         |
+| Quadricóptero      | DroneOnofre               | Não                       | Não                      | Não                         |
+| Hexacóptero        | DroneSimões               | Não                       | Sim                      | Não                         |
+| Asa Fixa           | Ararinha                  | Não                       | Não                      | Não                         |
 
 A segunda tabela mostra alguns componentes de hardware avaliados.
 
@@ -122,7 +122,7 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Sim          | FEITO  |                 |
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Sim          | FEITO  |                 |
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Sim          | FEITO  |                 |
-| Cenário III | Intel Edison     | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | FEITO  |                 |
+| Cenário III | Intel Edison     | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-3      | Replanner | Não          | Fazer  |                 |
