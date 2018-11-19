@@ -122,10 +122,10 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Sim          | FEITO  |                 |
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Sim          | FEITO  |                 |
 | Cenário III | Raspberry Pi 3   | 20 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Sim          | FEITO  |                 |
-| Cenário III | Intel Edison     | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
-| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
-| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-3      | Replanner | Não          | Fazer  |                 |
+| Cenário III | Intel Edison     | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Não          | FEITO  |                 |
+| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-1      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
+| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-2      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
+| Cenário III | Intel Edison     | 20 m      | CCQSP4m      | MPGA4s         | LowBattery-3      | Replanner | Não          | FEITO  | Não pousou em bonificadora |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Não          | Fazer  |                 |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Não          | Fazer  |                 |
