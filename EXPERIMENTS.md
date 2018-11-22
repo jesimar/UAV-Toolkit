@@ -22,6 +22,8 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Companion Computer | Raspberry Pi 2            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 3            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | BeagleBone Black Wireless | N/A                       | Sim                      | TODO                     |
+| Companion Computer | BeagleBone Green          | N/A                       | Não                      | Não                      |
+| Companion Computer | BeagleBone Blue           | N/A                       | Não                      | Não                      |
 | Companion Computer | Odroid C1                 | N/A                       | Não                      | Não                      |
 | Companion Computer | Raspberry Pi Zero         | N/A                       | Não                      | Não                      |
 | Companion Computer | Intel Galileo             | N/A                       | Não                      | Não                      |
@@ -42,6 +44,7 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | Global/Geral       | Change Behavior - Route Circle       | Sim                       | TODO                     | Não                      |
 | Global/Geral       | Change Behavior - Route Triangle     | Sim                       | TODO                     | Não                      |
 | Global/Geral       | Change Behavior - Route Rectangle    | Sim                       | TODO                     | Não                      |
+| Global/Geral       | Integração com Mapa (Graphics2D)     | Sim                       | Sim                      | Sim                      |
 | Global/Geral       | Integração com Google Maps           | Sim                       | Sim                      | Sim                      |
 | Global/Geral       | Integração com Oracle Drone          | Sim                       | Não                      | Não                      |
 | Mapa               | Instâncias Reais                     | Sim                       | Sim                      | Sim                      |
@@ -152,8 +155,8 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
-| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
+| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
 | Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |

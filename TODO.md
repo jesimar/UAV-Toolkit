@@ -35,13 +35,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema UAV-S2DK:
 
-* Corrigir problema na função setHomeLocation(). Problema no cmds.download() e cmds.wait_ready().
 * Corrigir problema nas funções appendWaypoint() e appendMission(). Problema no cmds.download() e cmds.wait_ready().
 * OBS: Os problemas com cmds.download() e cmds.wait_ready() não ocorrem sempre.
 
 ## Geral
 
-* Criar no github o UAV-Embedded. Criar um github com somente os .jar que irá ficar no drone afim ter um ambiente executável apenas no drone.
 * Documentação: Fazer um diagrama do hardware completo e colocar no UAV-Toolkit e Github.
 * Documentação: Fazer diagrama do sistema IFA e MOSA colocando a frequência de operação de cada uma das threads.
 
@@ -52,45 +50,16 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 2. Não tem solução
 3. Drone pode cair
 
-* Falha no getHomeLocation (IFA) (S2DK)
-1. Falha em wait_ready
-2. Não tem solução
-3. Drone não cai
-
-* Falha em getHomeLocation (IFA) (S2DK)
-1. Falha em attribute lat
-2. Não tem solução (mas acredito que é só esperar mais 5 segundos entre a execução do S2DK e o IFA)
-3. Drone não cai
-4. Print do Erro:
-```
-127.0.0.1 - - [22/May/2018 10:49:32] "GET /get-home-location/ HTTP/1.1" 500 -
-Traceback (most recent call last):
-  File "/media/jesimar/Workspace/Work/UAV/UAV-S2DK/server.py", line 25, in do_GET
-    response = GET_URLS[self.path](request)
-  File "/media/jesimar/Workspace/Work/UAV/UAV-S2DK/views.py", line 161, in getHomeLocation
-    'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
-AttributeError: 'NoneType' object has no attribute 'lat'
-```
-
-* Falha na decolagem: o drone durante a decolagem enquanto ganha altitude, do nada troca o modo de voo para LAND, abortando assim a decolagem e o restante da missão que ainda não foi setado.
+* Falha na decolagem: o drone durante a decolagem enquanto ganha altitude, do nada troca o modo de voo para LAND, abortando assim a decolagem e o restante da missão que ainda não foi setado (essa falha ocorreu apenas na Intel Edison). Não sei porque ainda.
 
 ## Trabalho Alunos de IC:
 
 * Fazer simplificador de rotas baseado em derivadas (Feito)
 * Fazer planejador baseado em A* (Feito - Pequeno defeito - desistimos de procurar o erro)
 * Estudar FlytOS (Feito - problemas com instalação/configuração - desistimos de tentar instalar e usar)
-* Sistema de comunicação entre telemetria (air <-> ground) (Feito)
 * Instalar/Configurar SO Yocto na Intel Galileo (Feito)
 * Estudar ROS (Fazendo)
 * Instalar/Configurar SO na Raspberry Pi Zero e habilitar o SSH (Fazendo)
-* Instalar/Configurar SO na Odroid C1 e habilitar o SSH
-* Instalar/Configurar SO na Intel Galileo e habilitar o SSH
-* Instalar/Configurar SO de tempo real na Intel Galileo 
-* Fazer planejador baseado em Campos Potenciais
-* Fazer planejador baseado em AG Puro
-* Sistema de voz da Google
-* Sistema de comunicação entre rádio controle (rádio controle -> receptor de rádio controle)
-* UAV-Tests colocar ele para trabalhar e validar o sistema.
 
 ## Trabalho Doutorado Rafael:
 

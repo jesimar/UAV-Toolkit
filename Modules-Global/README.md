@@ -100,7 +100,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
 | Característica           | Parachute                | Observação             |
 |--------------------------|--------------------------|------------------------|
 | Tipo de Ação             | Abre o paraquedas        |                        |
-| Código para Edison       | open-parachute-edison.py | Não testado            |
+| Código para Edison       | open-parachute-edison.py |                        |
 | Código para Raspberry Pi | open-parachute-rpi.py    |                        |
 | Código para BBB          | open-parachute-bbb.py    |                        |
 
@@ -109,7 +109,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 | Característica           | Spraying                | Spraying                 | Observação             |
 |--------------------------|-------------------------|--------------------------|------------------------|
 | Tipo de Ação             | Abre o pulverizador     | Fecha o pulverizador     |                        |
-| Código para Edison       | open-spraying-edison.py | close-spraying-edison.py | Não testado            |
+| Código para Edison       | open-spraying-edison.py | close-spraying-edison.py |                        |
 | Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    |                        |
 | Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    |                        |
 
@@ -127,10 +127,10 @@ A tabela abaixo sintetiza algumas informações sobre os Companions Computers e 
 | Suporta Sensor Sonar            | Não             | Sim               | Não              | Não           |
 | Suporta Sensor Temperatura      | Não             | Sim               | Não              | Não           |
 | Suporta Câmera                  | Não             | Sim               | Não              | Não           |
-| Suporta Buzzer                  | Sim             | Não               | Sim              | Não           |
+| Suporta Buzzer                  | Sim             | Sim               | Sim              | Não           |
 | Suporta LED                     | Não             | Sim               | Sim              | Não           |
-| Suporta Parachute               | Não             | Não               | Não              | Não           |
-| Suporta Spraying                | Não             | Não               | Não              | Não           |
+| Suporta Parachute               | Sim             | Sim               | Sim              | Não           |
+| Suporta Spraying                | Sim             | Sim               | Sim              | Não           |
 
 :warning: **OBS:** Os códigos turn-on-led-bbb.py, blink-led-bbb.py, etc quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nesta placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando. Caso tem-se executar os códigos no sistema não dará nenhum problema apenas não serão executados como se deseja.
 

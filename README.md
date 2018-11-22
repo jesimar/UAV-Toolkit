@@ -341,6 +341,11 @@ Ordem  Software/Aplicação                                      (Local de Execu
 
 :warning: **OBS:** Você pode abrir/executar outras estações de controle de solo para acompanhar a execução da missão, com por exemplo, APM Planner 2.0 ou Mission Planner. Caso use o Mission Planner será necessário usar a conexão com UDP baudrate (57600) e porta (14550).
 
+:warning: **OBS:** Ao executar os scripts exec-mavproxy-hitl.sh e exec-mavproxy-real-?.sh podem aparecer as seguintes mensagens de erro no CC (Intel Edison). 
+Failed to load module: No module named terrain. Use 'set moddebug 3' in the MAVProxy console to enable traceback. 
+Failed to load module: No module named adsb. Use 'set moddebug 3' in the MAVProxy console to enable traceback. 
+Ambas as mensagens não comprometem os experimentos e/ou voo.
+
 :warning: **OBS:** O comando sudo pode ser necessário antes dos comandos exec-ifa.sh e exec-mosa.sh caso esteja-se executando em HITL e REAL_FLIGHT. A placa Raspberry Pi 3 reclama de permissões, em alguns casos específicos, como fazer o recálculo de rotas emergenciais.
 
 :warning: **OBS:** Antes de executar o UAV-IFA (exec-ifa.sh) é necessário aguardar até que o software UAV-S2DK esteja pronto (aguardando conexão).
