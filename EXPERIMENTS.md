@@ -134,13 +134,13 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
 | Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | MS4s           | MOSA-Failure-1    | Replanner | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | MS4s           | MOSA-Failure-2    | Replanner | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | MS4s           | MOSA-Failure-3    | Replanner | Sim          | Fazer  |                 |
-| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        | MS4s           | MOSA-Failure-1    | Replanner | Não          | Fazer  |                 |
-| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        | MS4s           | MOSA-Failure-2    | Replanner | Não          | Fazer  |                 |
-| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        | MS4s           | MOSA-Failure-3    | Replanner | Não          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | GA4s           | MOSA-Failure      | Replanner | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | BadWeather        | RTL       | Sim          | Fazer  |                 |
+| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | WithoutFailure    |           | Não          | FEITO  |                 |
+| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        | GA4s           | MOSA-Failure      | Replanner | Não          | FEITO  |                 |
+| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | FEITO  |                 |
+| Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | BadWeather        | RTL       | Não          | FEITO  |                 |
 
 
 A quinta tabela mostra os experimentos reais feitos para a tese.
@@ -153,5 +153,5 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | HGA4m        |                | BadWeather        | RTL       | Não          | Fazer  |                 |
