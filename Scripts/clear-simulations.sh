@@ -19,7 +19,7 @@ sudo rm ../UAV-IFA/*.csv 2>/dev/null
 sudo rm ../UAV-Monitoring/*.csv 2>/dev/null
 sudo rm ../UAV-Tests/*.csv 2>/dev/null
 
-echo "Clear files in HGA4m [*.log route3D* routeGeo* *.png]"
+echo "Clear files in /HGA4m/ [*.log route3D* routeGeo* *.png]"
 sudo rm ../Modules-MOSA/HGA4m/*.log 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/routeGeo* 2>/dev/null
@@ -27,7 +27,7 @@ sudo rm ../Modules-MOSA/HGA4m/*.png 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/log_error.txt 2>/dev/null
 sudo rm ../Modules-MOSA/HGA4m/instance.err 2>/dev/null
 
-echo "Clear files in CCQSP4m [*.log output.txt route3D* routeGeo* *.png ]"
+echo "Clear files in /CCQSP4m/ [*.log output.txt route3D* routeGeo* *.png ]"
 sudo rm ../Modules-MOSA/CCQSP4m/*.log 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/output.txt 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/route3D* 2>/dev/null
@@ -36,7 +36,7 @@ sudo rm ../Modules-MOSA/CCQSP4m/*.png 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/log_error.txt 2>/dev/null
 sudo rm ../Modules-MOSA/CCQSP4m/instance.err 2>/dev/null
 
-echo "Clear files in AStar4m [output-simulation.log output.txt output2.txt goals.txt  route3D* routeGeo*]"
+echo "Clear files in /AStar4m/ [output-simulation.log output.txt output2.txt goals.txt  route3D* routeGeo*]"
 sudo rm ../Modules-MOSA/A-Star4m/output-simulation.log 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/output.txt 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/output2.txt 2>/dev/null
@@ -44,14 +44,14 @@ sudo rm ../Modules-MOSA/A-Star4m/goals.txt 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/A-Star4m/routeGeo* 2>/dev/null
 
-echo "Clear files in G-Path-Planner4m [output-simulation.log output.txt route3D* routeGeo* *.png]"
+echo "Clear files in /G-Path-Planner4m/ [output-simulation.log output.txt route3D* routeGeo* *.png]"
 sudo rm ../Modules-MOSA/G-Path-Planner4m/output-simulation.log 2>/dev/null
 sudo rm ../Modules-MOSA/G-Path-Planner4m/output.txt 2>/dev/null
 sudo rm ../Modules-MOSA/G-Path-Planner4m/route3D* 2>/dev/null
 sudo rm ../Modules-MOSA/G-Path-Planner4m/routeGeo* 2>/dev/null
 sudo rm ../Modules-MOSA/G-Path-Planner4m/*.png 2>/dev/null
 
-echo "Clear files in MPGA4s, GA4s, DE4s, GH4s, MS4s, MILP4s [output-simulation.log route.txt routeGeo.txt *.png]"
+echo "Clear files in /MPGA4s/, /GA4s/, /DE4s/, /GH4s/, /MS4s/, /MILP4s/ [output-simulation.log route.txt routeGeo.txt *.png]"
 
 sudo rm ../Modules-IFA/MPGA4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/MPGA4s/route.txt 2>/dev/null
@@ -89,29 +89,32 @@ sudo rm ../Modules-IFA/MILP4s/routeGeo.txt 2>/dev/null
 sudo rm ../Modules-IFA/MILP4s/*.png 2>/dev/null
 sudo rm ../Modules-IFA/MILP4s/log_error.txt 2>/dev/null
 
-echo "Clear files in G-Path-Replanner4s [output-simulation.log route.txt routeGeo.txt output.txt *.png]"
+echo "Clear files in /G-Path-Replanner4s/ [output-simulation.log route.txt routeGeo.txt output.txt *.png]"
 sudo rm ../Modules-IFA/G-Path-Replanner4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/G-Path-Replanner4s/output.txt 2>/dev/null
 sudo rm ../Modules-IFA/G-Path-Replanner4s/route.txt 2>/dev/null
 sudo rm ../Modules-IFA/G-Path-Replanner4s/routeGeo.txt 2>/dev/null
 sudo rm ../Modules-IFA/G-Path-Replanner4s/*.png 2>/dev/null
 
-echo "Clear files in GA-GA-4s, GA-GH-4s [output-simulation.log]"
+echo "Clear files in /GA-GA-4s/, /GA-GH-4s/ [output-simulation.log]"
 sudo rm ../Modules-IFA/GA-GA-4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/GA-GH-4s/output-simulation.log 2>/dev/null
 
-echo "Clear files in Fixed-Route4s [output-simulation.log, route.txt, routeGeo.txt]"
+echo "Clear files in /Fixed-Route4s/ [output-simulation.log, route.txt, routeGeo.txt]"
 sudo rm ../Modules-IFA/Fixed-Route4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/Fixed-Route4s/route.txt 2>/dev/null
 sudo rm ../Modules-IFA/Fixed-Route4s/routeGeo.txt 2>/dev/null
 
-echo "Clear files in Route-Simplifier [output-simplifier.txt]"
+echo "Clear files in /Route-Simplifier/ [output-simplifier.txt]"
 sudo rm ../Modules-Global/Route-Simplifier/output-simplifier.txt 2>/dev/null
 
-echo "Clear files in Route-Standard4m [route-behavior.txt]"
+echo "Clear files in /Route-Standard4m/ [route-behavior.txt]"
 sudo rm ../Modules-MOSA/Route-Standard4m/route-behavior.txt 2>/dev/null
 
-echo "Clear files in /Fixed-Route4m/madaptive/ [mission-spraying.txt]"
-sudo rm ../Modules-MOSA/Fixed-Route4m/madaptive/mission-spraying.txt 2>/dev/null
+echo "Clear files in /M-Adaptive4m/ [mission-spraying.txt]"
+sudo rm ../Modules-MOSA/M-Adaptive4m/mission-spraying.txt 2>/dev/null
+sudo rm ../Modules-MOSA/M-Adaptive4m/routeGeo0.txt 2>/dev/null
+sudo rm ../Modules-MOSA/M-Adaptive4m/routeGeo3.txt 2>/dev/null
+sudo rm ../Modules-MOSA/M-Adaptive4m/route-behavior.txt 2>/dev/null
 
 echo "==============================Done================================"

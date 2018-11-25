@@ -5,7 +5,7 @@
 # Time Step (dt) 
 1
 # Initial State (px, py, vel, ang) 
-20.025927472112397 -7.454684610133127 1.5 5.358160803622591
+56.46863206889719 -24.85550043055929 1.5 4.66002910282486
 # Maximum Velocity (m/s) [Terminal] [Fixed Wing 30.55] [Multirotor 3.0]
 3.0
 # Minimum Velocity (m/s) [Lift] [Fixed Wing 11.11] [Multirotor 1.0]
@@ -17,7 +17,7 @@
 # Maximum Acceleration (m/(s*s))
 0.2
 # Time Horizon (Planning Horizon) (K) 
-30
+50
 # Dimension window plot (Width x Heigth)
 800	700
 # Coordinate system [false - Cartesian, true - Geographical]
