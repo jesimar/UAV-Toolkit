@@ -492,6 +492,9 @@ public class MissionManager {
                 }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
                     String path = config.getDirPlanner() + config.getFileMissionPlannerGPathPlanner4m();
                     ReaderFileMission.mission3D(new File(path), wptsMission3D);
+                }else if (config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)){
+                    String path = config.getDirPlanner() + config.getFileMissionPlannerHGA4m();
+                    ReaderFileMission.mission3D(new File(path), wptsMission3D);
                 }
             }
         } catch (FileNotFoundException ex) {

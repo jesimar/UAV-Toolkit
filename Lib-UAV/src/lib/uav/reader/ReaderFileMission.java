@@ -331,4 +331,51 @@ public class ReaderFileMission {
             
         }
     } 
+    
+    /**
+     * Read a file in this format (geographical coordinates [lat, lng]):.
+     * ---------------------------------------
+     * | ...                                 |
+     * | Map Scenic Region1                  |
+     * | 4                                   |
+     * | -22.00199266132;-47.93275487323;0.0 |
+     * | -22.00208221296;-47.93275260543;0.0 |
+     * | -22.00208221297;-47.93266135543;0.0 |
+     * | -22.00199266133;-47.93265919446;0.0 |
+     * | ...                                 |
+     * ---------------------------------------
+     * @param file File to read
+     * @param wptsScenicRegion object to put the waypoints of the scenic region
+     * @param commentary type of commentary
+     * @throws FileNotFoundException 
+     * @since version 3.0.0
+     */
+    public static void mapScenicRegion(File file, Mission wptsScenicRegion, String commentary) 
+            throws FileNotFoundException {
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()){
+                String lineCommentary = sc.nextLine();
+                String lineNumber = sc.nextLine();
+                if (lineCommentary.equals(commentary)){
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        String line = sc.nextLine();
+                        String v[] = line.split(";");
+                        double lat = Double.parseDouble(v[0]);
+                        double lng = Double.parseDouble(v[1]);
+                        double alt = Double.parseDouble(v[2]);
+                        Waypoint wpt = new Waypoint(lat, lng, alt);
+                        wptsScenicRegion.addWaypoint(wpt);
+                    }
+                }else{
+                    for (int i = 0; i < Integer.parseInt(lineNumber); i++){
+                        sc.nextLine();
+                    }
+                }
+            }
+            sc.close();
+        } catch (NoSuchElementException ex) {
+            
+        }
+    }
 }

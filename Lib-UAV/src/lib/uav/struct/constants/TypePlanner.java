@@ -11,5 +11,6 @@ public class TypePlanner {
     public static final String CCQSP4M          = "CCQSP4m";
     public static final String A_STAR4M         = "A_STAR4m";
     public static final String G_PATH_PLANNER4M = "G_PATH_PLANNER4m";
+    public static final String M_ADAPTIVE4M     = "M_ADAPTIVE4m";
     
 }

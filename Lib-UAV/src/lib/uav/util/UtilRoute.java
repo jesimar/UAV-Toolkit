@@ -21,10 +21,13 @@ public class UtilRoute {
      * Note: used by CCQSP4m and FixedRoute
      * @param mission object that stores mission waypoints
      * @param path path the file with route
+     * @param hasTakeoff has takeoff in begin of mission
+     * @param hasLand has land in final of mission
      * @return {@code true} if success {@code false} otherwise
-     * @since version 4.0.0
+     * @since version 5.0.0
      */
-    public static boolean readFileRouteMOSA(Mission mission, String path){
+    public static boolean readFileRouteMOSA(Mission mission, String path, 
+            boolean hasTakeoff, boolean hasLand){
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String sCurrentLine;
@@ -38,13 +41,13 @@ public class UtilRoute {
                 lat = Double.parseDouble(s[0]);
                 lng = Double.parseDouble(s[1]);
                 alt = Double.parseDouble(s[2]);
-                if (firstTime){
+                if (firstTime && hasTakeoff){
                     mission.addWaypoint(new Waypoint(TypeWaypoint.TAKEOFF, 0.0, 0.0, alt));
                     firstTime = false;
                 }
                 mission.addWaypoint(new Waypoint(TypeWaypoint.GOTO, lat, lng, alt));
             }
-            if (mission.getMission().size() > 0){
+            if (mission.getMission().size() > 0 && hasLand){
                 mission.addWaypoint(new Waypoint(TypeWaypoint.LAND, lat, lng, 0.0));
             }
             return true;
@@ -59,7 +62,7 @@ public class UtilRoute {
     
     /**
      * Read the file route and put in a object Mission.
-     * Note: used by HGa4m
+     * Note: used by HGA4m
      * @param mission object that stores mission waypoints
      * @param path path the file with route
      * @param nRoute the number of route

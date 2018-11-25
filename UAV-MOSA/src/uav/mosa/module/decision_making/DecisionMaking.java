@@ -19,6 +19,8 @@ import lib.uav.struct.constants.TypeSystemExecMOSA;
 import lib.uav.struct.mission.Mission;
 import lib.uav.struct.mission.Mission3D;
 import lib.uav.struct.states.StatePlanning;
+import lib.uav.util.UtilGeom;
+import lib.uav.util.UtilIO;
 import lib.uav.util.UtilRoute;
 import lib.uav.util.UtilRunThread;
 import uav.mosa.module.communication.CommunicationGCS;
@@ -92,6 +94,8 @@ public class DecisionMaking {
                 resp = sendMissionBasedPlannerAStar4mOnboard();
             } else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)) {
                 resp = sendMissionBasedPlannerGPathPlanner4mOnboard();
+            } else if (config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)) {
+                resp = sendMissionBasedPlannerMAdaptive4mOnboard();
             }
             if (resp) {
                 statePlanning = StatePlanning.READY;
@@ -195,11 +199,11 @@ public class DecisionMaking {
             UtilRunThread.runCmdSingleThreadWaitFor(cmd, new File(dir), isPrint);
             Mission mission = new Mission();
             String path = dir + "route-behavior.txt";
-            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
+            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path, false, false);
             if (!respFile) {
                 return;
             }
-//            mission.printMission();
+            mission.printMission();
             if (mission.getMission().size() > 0) {
                 dataAcquisition.setMission(mission);
             }
@@ -453,7 +457,7 @@ public class DecisionMaking {
                     config.getFactorRouteSimplifier(), ";");
             path = config.getDirRouteSimplifier() + "output-simplifier.txt";
         }
-        resp = UtilRoute.readFileRouteMOSA(mission, path);
+        resp = UtilRoute.readFileRouteMOSA(mission, path, true, true);
         if (!resp) {
             return false;
         }
@@ -482,7 +486,7 @@ public class DecisionMaking {
                 UtilRoute.execRouteSimplifier(pathSimplif, config.getDirRouteSimplifier(),
                         factor, ";");
                 pathSimplif = config.getDirRouteSimplifier() + "output-simplifier.txt";
-                resp = UtilRoute.readFileRouteMOSA(mission, pathSimplif);
+                resp = UtilRoute.readFileRouteMOSA(mission, pathSimplif, true, true);
                 if (!resp) {
                     return false;
                 }
@@ -506,7 +510,7 @@ public class DecisionMaking {
     }
 
     /**
-     * Send mission based planner (PathPlanner4m) to autopilot calculated
+     * Send mission based planner (GPathPlanner4m) to autopilot calculated
      * onboard.
      *
      * @return {@code true} if success, {@code false} otherwise
@@ -533,7 +537,7 @@ public class DecisionMaking {
                     config.getFactorRouteSimplifier(), ";");
             path = config.getDirRouteSimplifier() + "output-simplifier.txt";
         }
-        resp = UtilRoute.readFileRouteMOSA(mission, path);
+        resp = UtilRoute.readFileRouteMOSA(mission, path, true, true);
         if (!resp) {
             return false;
         }
@@ -541,6 +545,127 @@ public class DecisionMaking {
         if (mission.getMission().size() > 0) {
             resp = dataAcquisition.setMission(mission);
         }
+        long timeFinal = System.currentTimeMillis();
+        long time = timeFinal - timeInit;
+        StandardPrints.printMsgEmph("Time in Missions (ms): " + time);
+        return resp;
+    }
+    
+    /**
+     * Send mission based planner (MAdaptive4m) to autopilot calculated
+     * onboard.
+     *
+     * @return {@code true} if success, {@code false} otherwise
+     * @since version 5.0.0
+     */
+    private boolean sendMissionBasedPlannerMAdaptive4mOnboard() {
+        long timeInit = System.currentTimeMillis();
+        StandardPrints.printMsgEmph("send missions to drone calc M_Adaptive4m");        
+        //Primeira parte da rota
+        StandardPrints.printMsgEmph("first calc"); 
+        planner = new HGA4m(drone, wptsMission3D);
+        planner.clearLogs();
+        statePlanning = StatePlanning.WAITING;
+        statePlanning = StatePlanning.PLANNING;
+        boolean resp = ((HGA4m) (planner)).execMission(0);
+        if (!resp) {
+            return false;
+        }
+        statePlanning = StatePlanning.READY;
+        Mission mission = new Mission();
+        String path = config.getDirPlanner() + "routeGeo0.txt";
+        if (config.hasRouteSimplifier()) {
+            UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(),
+                    config.getFactorRouteSimplifier(), ";");
+            path = config.getDirRouteSimplifier() + "output-simplifier.txt";
+        }
+        resp = UtilRoute.readFileRouteMOSA(mission, path, true, false);
+        if (!resp) {
+            return false;
+        }
+        mission.printMission();
+        if (mission.getMission().size() > 0) {
+            resp = dataAcquisition.setMission(mission);
+        }        
+        //Segunda parte da rota
+        StandardPrints.printMsgEmph("second calc");
+        while(!waypointWasReached(-22.00205834400734, -47.93280601598055)){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                
+            }
+        }
+        actionChangeBehavior(TypeBehavior.CIRCLE);
+        
+        //Terceira parte da rota
+        StandardPrints.printMsgEmph("third calc");
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        while(!waypointWasReached(-22.00205834400734, -47.93280601598055)){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                
+            }
+        }
+        try {
+            UtilIO.copyFile(
+                    new File("../Missions/Thesis/Scenery04/mission-spraying.txt"), 
+                    new File(config.getDirMissionPlannerMAdaptive4m() + config.getFileMissionPlannerMAdaptive4m()));
+            Thread.sleep(200);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        path = config.getDirMissionPlannerMAdaptive4m()+ config.getFileMissionPlannerMAdaptive4m();
+        Mission missionSpraying = new Mission();
+        resp = UtilRoute.readFileRouteMOSA(missionSpraying, path, false, false);
+        if (!resp) {
+            return false;
+        }
+        missionSpraying.printMission();
+        if (missionSpraying.getMission().size() > 0) {
+            resp = dataAcquisition.setMission(missionSpraying);
+            if (!resp) {
+                return false;
+            }
+        }
+        //Quarta parte da rota    
+        StandardPrints.printMsgEmph("fourth calc");
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        
+        statePlanning = StatePlanning.WAITING;
+        statePlanning = StatePlanning.PLANNING;
+        resp = ((HGA4m) (planner)).execMission(3);
+        if (!resp) {
+            return false;
+        }
+        statePlanning = StatePlanning.READY;
+        mission = new Mission();
+        path = config.getDirPlanner() + "routeGeo3.txt";
+        if (config.hasRouteSimplifier()) {
+            UtilRoute.execRouteSimplifier(path, config.getDirRouteSimplifier(),
+                    config.getFactorRouteSimplifier(), ";");
+            path = config.getDirRouteSimplifier() + "output-simplifier.txt";
+        }
+        resp = UtilRoute.readFileRouteMOSA(mission, path, false, true);
+        if (!resp) {
+            return false;
+        }
+        mission.printMission();
+        if (mission.getMission().size() > 0) {
+            resp = dataAcquisition.appendMission(mission);
+        }
+        
         long timeFinal = System.currentTimeMillis();
         long time = timeFinal - timeInit;
         StandardPrints.printMsgEmph("Time in Missions (ms): " + time);
@@ -770,7 +895,7 @@ public class DecisionMaking {
         StandardPrints.printMsgEmph("send fixed route");
         String path = config.getDirFixedRouteMOSA() + config.getFileFixedRouteMOSA();
         Mission mission1 = new Mission();
-        boolean resp = UtilRoute.readFileRouteMOSA(mission1, path);
+        boolean resp = UtilRoute.readFileRouteMOSA(mission1, path, true, true);
         if (!resp) {
             return false;
         }
@@ -789,7 +914,7 @@ public class DecisionMaking {
             }
             String pathDyn = config.getDirFixedRouteMOSA() + config.getFileFixedRouteDynMOSA();
             Mission mission2 = new Mission();
-            resp = UtilRoute.readFileRouteMOSA(mission2, pathDyn);
+            resp = UtilRoute.readFileRouteMOSA(mission2, pathDyn, false, true);
             if (!resp) {
                 return false;
             }
@@ -803,5 +928,26 @@ public class DecisionMaking {
         }
         return true;
     }
-
+    
+    /**
+     * Checks if waypoint has been reached.
+     * @param latDest the latitude destine
+     * @param lngDest the longitude destine
+     * @param altDest the altitude destine
+     * @return {@code true} if waypoint was reached
+     *         {@code false} otherwise
+     * @since version 5.0.0
+     */
+    private boolean waypointWasReached(double latDest, double lngDest){   
+        double distH = UtilGeom.distanceEuclidian(
+                drone.getSensors().getGPS().lat, drone.getSensors().getGPS().lng, 
+                latDest, lngDest);
+        double distV = Math.abs(drone.getSensors().getBarometer().alt_rel - config.getAltRelMission());
+        if (distV < config.getVerticalErrorBarometer() && 
+                distH < config.getHorizontalErrorGPS() * Constants.ONE_METER){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

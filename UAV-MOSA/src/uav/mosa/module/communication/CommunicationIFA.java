@@ -48,7 +48,8 @@ public class CommunicationIFA extends Communication implements Client{
     public void connectServer(){        
         try{
             StandardPrints.printMsgEmph("MOSA connecting in the IFA ...");
-            socket = new Socket(config.getHostIFA(), config.getPortNetworkIFAandMOSA());
+            //colocar config.getHostIFA() ao inves de "localhost" se for usar duas placas diferentes.
+            socket = new Socket("localhost", config.getPortNetworkIFAandMOSA());
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             StandardPrints.printMsgEmph("MOSA connected in IFA");

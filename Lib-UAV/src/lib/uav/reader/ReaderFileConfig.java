@@ -158,8 +158,12 @@ public class ReaderFileConfig {
     //astar4m
     private String fileMissionPlannerAStar4m;
     
-    //pathplanner4m
+    //gpathplanner4m
     private String fileMissionPlannerGPathPlanner4m;
+    
+    //madaptive4m
+    private String dirMissionPlannerMAdaptive4m;
+    private String fileMissionPlannerMAdaptive4m;
     
     //fixed route    
     private String dirFixedRouteMOSA;
@@ -325,6 +329,8 @@ public class ReaderFileConfig {
             fileMissionPlannerAStar4m = prop.getProperty("prop.mosa.planner.astar4m.file_mission");         
             
             fileMissionPlannerGPathPlanner4m = prop.getProperty("prop.mosa.planner.gpathplanner4m.file_mission");         
+            dirMissionPlannerMAdaptive4m  = prop.getProperty("prop.mosa.planner.madaptive4m.dir");
+            fileMissionPlannerMAdaptive4m = prop.getProperty("prop.mosa.planner.madaptive4m.file_mission");
             
             dirFixedRouteMOSA         = prop.getProperty("prop.mosa.fixed_route.dir");
             fileFixedRouteMOSA        = prop.getProperty("prop.mosa.fixed_route.file_waypoints");
@@ -451,7 +457,8 @@ public class ReaderFileConfig {
                 (!methodPlanner.equals(TypePlanner.HGA4M) &&
                  !methodPlanner.equals(TypePlanner.CCQSP4M) && 
                  !methodPlanner.equals(TypePlanner.A_STAR4M) &&
-                 !methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M))){
+                 !methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M) &&
+                 !methodPlanner.equals(TypePlanner.M_ADAPTIVE4M))){
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of method not valid");
             return false;
         } 
@@ -506,6 +513,9 @@ public class ReaderFileConfig {
             }else if (methodPlanner.equals(TypePlanner.G_PATH_PLANNER4M)){
                 typePlanner = TypePlanner.G_PATH_PLANNER4M;
                 dirPlanner = "../Modules-MOSA/G-Path-Planner4m/";
+            }else if (methodPlanner.equals(TypePlanner.M_ADAPTIVE4M)){
+                typePlanner = TypePlanner.M_ADAPTIVE4M;
+                dirPlanner = "../Modules-MOSA/HGA4m/";//estou usando o HGA4m aqui
             }
             return true;
         } catch (NumberFormatException ex){
@@ -865,6 +875,14 @@ public class ReaderFileConfig {
     
     public String getFileMissionPlannerGPathPlanner4m() {
         return fileMissionPlannerGPathPlanner4m;
+    }
+    
+    public String getDirMissionPlannerMAdaptive4m() {
+        return dirMissionPlannerMAdaptive4m;
+    }
+    
+    public String getFileMissionPlannerMAdaptive4m() {
+        return fileMissionPlannerMAdaptive4m;
     }
     
     public String getTimeExecPlannerHGA4m(int i) {

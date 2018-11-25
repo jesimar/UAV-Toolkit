@@ -1,14 +1,17 @@
 package uav.gcs.plotmap;
 
+import java.awt.BasicStroke;
 import uav.gcs.struct.ReaderMap;
 import uav.gcs.struct.ReaderRoute;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 import jsc.distributions.Normal;
 import lib.uav.reader.ReaderFileConfig;
+import lib.uav.reader.ReaderFileMission;
 import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeReplanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
@@ -38,6 +41,7 @@ public class PanelPlotMission extends sPanelDraw {
     private static final Color COLOR_ROUTE_MOSA = Color.GREEN;
     private static final Color COLOR_ROUTE_MOSA_SIMP = Color.BLACK;
     private static final Color COLOR_ROUTE_MOSA_BEH = Color.MAGENTA;
+    private static final Color COLOR_ROUTE_MOSA_BEH_FILE = Color.CYAN;
     private static final Color COLOR_ROUTE_DRONE = Color.GRAY;
     private static final Color COLOR_DRONE = Color.BLUE;
     private static final Color COLOR_MAX_DIST = new Color(0, 255, 0, 50);
@@ -55,8 +59,10 @@ public class PanelPlotMission extends sPanelDraw {
     private ReaderMap map;
     private final ReaderRoute routeIFA;
     private final ReaderRoute routeMOSA;
+    private final ReaderRoute routeMOSA2;
     private final ReaderRoute routeMOSASimplifier;
     private final ReaderRoute routeMOSABehavior;
+    private final ReaderRoute routeMOSABehaviorFile;
     private final Route3D routeDrone;
     private double pxDrone;
     private double pyDrone;
@@ -85,8 +91,10 @@ public class PanelPlotMission extends sPanelDraw {
         }
         routeIFA = new ReaderRoute();
         routeMOSA = new ReaderRoute();
+        routeMOSA2 = new ReaderRoute();
         routeMOSASimplifier = new ReaderRoute();
         routeMOSABehavior = new ReaderRoute();
+        routeMOSABehaviorFile = new ReaderRoute();
         routeDrone = new Route3D();
     }
 
@@ -143,18 +151,22 @@ public class PanelPlotMission extends sPanelDraw {
     protected void paintStaticLast(Graphics2D g2) {
         g2.drawRect(0, 0, width()-1, height()-2);
         g2.setColor(Color.LIGHT_GRAY);
-        g2.fillRect(510, 386, 134, 86);
+        g2.fillRect(10, 8, 140, 116);
         g2.setColor(Color.BLACK);
-        g2.drawRect(510, 386, 134, 86);
-        g2.drawString("Legend:", 518, 400);
+        g2.drawRect(10, 8, 140, 116);
+        g2.drawString("Legend:", 18, 20);
         g2.setColor(COLOR_ROUTE_MOSA);
-        g2.drawString("  Route Planner", 518, 416);
+        g2.drawString("  Route Planner", 18, 36);
         g2.setColor(COLOR_ROUTE_IFA);
-        g2.drawString("  Route RePlanner", 518, 432);
+        g2.drawString("  Route RePlanner", 18, 52);
         g2.setColor(COLOR_ROUTE_MOSA_SIMP);
-        g2.drawString("  Route Simplifier", 518, 448);
+        g2.drawString("  Route Simplifier", 18, 68);
         g2.setColor(COLOR_ROUTE_DRONE);
-        g2.drawString("  Route Drone", 518, 464);
+        g2.drawString("  Route Drone", 18, 84);
+        g2.setColor(COLOR_ROUTE_MOSA_BEH);
+        g2.drawString("  Route Behavior", 18, 100);
+        g2.setColor(COLOR_ROUTE_MOSA_BEH_FILE);
+        g2.drawString("  Route Behavior2", 18, 116);
     }                        
 
     /**
@@ -164,6 +176,7 @@ public class PanelPlotMission extends sPanelDraw {
      */
     @Override
     protected void paintDynamicScene(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(18));
         //Draw Map
         if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER) && 
                 enabledResources.showMap){
@@ -188,6 +201,32 @@ public class PanelPlotMission extends sPanelDraw {
                         Arrays.stream(map.getVetY_Bonus(i)).mapToInt((v) -> toUnit(v)).toArray(),
                         map.getVetX_Bonus(i).length);
             }
+            
+            if (config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)) {
+                g2.setColor(new Color(255, 255, 150));
+                for (int i = 0; i < 2; i++) {
+                    Mission wptsScenicRegion = new Mission();
+                    try {
+                        ReaderFileMission.mapScenicRegion(
+                                new File("../Missions/Thesis/Scenery04/map-scenic-region.txt"),
+                                wptsScenicRegion,
+                                "Map Scenic Region" + (i+1));
+                    } catch (FileNotFoundException ex) {
+                        
+                    }
+                    double[] vetX = new double[4];
+                    double[] vetY = new double[4];
+                    for (int j = 0; j < vetX.length; j++) {
+                        vetX[j] = UtilGeo.convertGeoToX(GCS.pointGeo, wptsScenicRegion.getWaypoint(j).getLng());
+                        vetY[j] = UtilGeo.convertGeoToY(GCS.pointGeo, wptsScenicRegion.getWaypoint(j).getLat());
+                    }
+                    g2.fillPolygon(
+                        Arrays.stream(vetX).mapToInt((v) -> toUnit(v)).toArray(),
+                        Arrays.stream(vetY).mapToInt((v) -> toUnit(v)).toArray(),
+                        vetX.length);
+                }
+            }
+            
         }
 
         //Draw Routes
@@ -242,7 +281,38 @@ public class PanelPlotMission extends sPanelDraw {
                     );
                 }
             }
-            
+        }
+        if (routeMOSA2.isReady() && enabledResources.showRoutePlanner) {
+            for (int i = 0; i < routeMOSA2.getRoute3D().size(); i++) {
+                g2.setColor(COLOR_ROUTE_MOSA);
+                g2.fillOval(
+                        toUnit(routeMOSA2.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeMOSA2.getRoute3D().getPosition(i).getY()) - 15,
+                        30,
+                        30
+                );
+                if (i < routeMOSA2.getRoute3D().size() - 1) {
+                    g2.drawLine(
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i + 1).getY())
+                    );
+                }
+                if (config.getTypePlanner().equals(TypePlanner.CCQSP4M)){
+                    g2.setColor(COLOR_ROUTE_MOSA.brighter());
+                    double uncertainty = Double.parseDouble(config.getStdPositionPlannerCCQSP4m());
+                    Normal normal = new Normal(0.0, uncertainty);
+                    double delta = Double.parseDouble(config.getDeltaPlannerCCQSP4m());
+                    int radius = toUnit(normal.inverseCdf(1.0 - delta/2));
+                    g2.drawOval(
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i).getX()) - radius,
+                            toUnit(routeMOSA2.getRoute3D().getPosition(i).getY()) - radius,
+                            2*radius,
+                            2*radius
+                    );
+                }
+            }
         }
         if (routeMOSASimplifier.isReady() && enabledResources.showRouteSimplifier) {
             g2.setColor(COLOR_ROUTE_MOSA_SIMP);
@@ -278,6 +348,32 @@ public class PanelPlotMission extends sPanelDraw {
                             toUnit(routeMOSABehavior.getRoute3D().getPosition(i).getY()),
                             toUnit(routeMOSABehavior.getRoute3D().getPosition(i + 1).getX()),
                             toUnit(routeMOSABehavior.getRoute3D().getPosition(i + 1).getY())
+                    );
+                }
+            }
+        }
+        if (routeMOSABehaviorFile.isReady()) {
+            g2.setColor(COLOR_ROUTE_MOSA);
+            g2.drawLine(
+                    toUnit(UtilGeo.convertGeoToX(GCS.pointGeo, -47.9328060159805)),
+                    toUnit(UtilGeo.convertGeoToY(GCS.pointGeo, -22.0020583440073)),
+                    toUnit(UtilGeo.convertGeoToX(GCS.pointGeo, -47.9325215091913)),
+                    toUnit(UtilGeo.convertGeoToY(GCS.pointGeo, -22.0020337728612))
+            );
+            g2.setColor(COLOR_ROUTE_MOSA_BEH_FILE);
+            for (int i = 0; i < routeMOSABehaviorFile.getRoute3D().size(); i++) {
+                g2.fillOval(
+                        toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i).getX()) - 15,
+                        toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i).getY()) - 15,
+                        30,
+                        30
+                );
+                if (i < routeMOSABehaviorFile.getRoute3D().size() - 1) {
+                    g2.drawLine(
+                            toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i).getX()),
+                            toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i).getY()),
+                            toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i + 1).getX()),
+                            toUnit(routeMOSABehaviorFile.getRoute3D().getPosition(i + 1).getY())
                     );
                 }
             }
@@ -563,6 +659,31 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             });
         }
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER) && 
+                config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirMissionPlannerMAdaptive4m()+ 
+                                    config.getFileMissionPlannerMAdaptive4m();
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                Thread.sleep(100);
+                                routeMOSABehaviorFile.readGeo(fileMOSA);
+                                repaint();
+                                break;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+
+            });
+        }
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {
@@ -583,6 +704,35 @@ public class PanelPlotMission extends sPanelDraw {
                 }
             }
         });
+        if (config.getSystemExecMOSA().equals(TypeSystemExecMOSA.PLANNER)
+                && config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)) {
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    int i = 0;
+                    while (true) {
+                        try {
+                            Thread.sleep(500);
+                            String pathRouteMOSA = config.getDirPlanner() + "route3D" + i + ".txt";
+                            File fileMOSA = new File(pathRouteMOSA);
+                            if (fileMOSA.exists()) {
+                                Thread.sleep(100);
+                                if (i == 0){
+                                    routeMOSA.readHGA(fileMOSA);
+                                    repaint();                                    
+                                }else if (i == 3){
+                                    routeMOSA2.readHGA(fileMOSA);
+                                    repaint();
+                                }
+                                i = i + 3;
+                            }
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
+            });
+        }
     }
 
     /**

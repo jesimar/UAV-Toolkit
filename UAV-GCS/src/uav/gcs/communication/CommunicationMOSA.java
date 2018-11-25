@@ -243,7 +243,7 @@ public class CommunicationMOSA extends Communication implements Client{
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             
-            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
+            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path, true, true);
             if (!respFile) {
                 sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
                 isRunningPlanner = false;
@@ -311,7 +311,7 @@ public class CommunicationMOSA extends Communication implements Client{
                 path = config.getDirRouteSimplifier() + "output-simplifier.txt";               
             }
             
-            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path);
+            boolean respFile = UtilRoute.readFileRouteMOSA(mission, path, true, true);
             if (!respFile) {
                 sendData(TypeMsgCommunication.UAV_ROUTE_FAILURE);
                 isRunningPlanner = false;

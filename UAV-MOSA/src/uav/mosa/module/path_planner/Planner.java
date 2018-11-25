@@ -107,6 +107,16 @@ public abstract class Planner {
                 }
             }else if (config.getTypePlanner().equals(TypePlanner.G_PATH_PLANNER4M)){
                 cmd = config.getCmdExecPlanner();
+            }else if (config.getTypePlanner().equals(TypePlanner.M_ADAPTIVE4M)){
+                cmd = config.getCmdExecPlanner();
+                if (config.getOperationMode().equals(TypeOperationMode.SITL)){
+                    cmd = config.getCmdExecPlanner() + " local";
+                } else if (config.getOperationMode().equals(TypeOperationMode.HITL) ||
+                        config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+                    if (config.getTypeCC().equals(TypeCC.INTEL_EDISON)){
+                        cmd = config.getCmdExecPlanner() + " edison";
+                    }
+                }
             }
             UtilRunThread.dualSingleThreadWaitFor(cmd, new File(dir), isPrint, isPrintError);
             return true;
