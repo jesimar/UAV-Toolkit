@@ -111,4 +111,7 @@ sudo rm ../Modules-Global/Route-Simplifier/output-simplifier.txt 2>/dev/null
 echo "Clear files in Route-Standard4m [route-behavior.txt]"
 sudo rm ../Modules-MOSA/Route-Standard4m/route-behavior.txt 2>/dev/null
 
+echo "Clear files in /Fixed-Route4m/madaptive/ [mission-spraying.txt]"
+sudo rm ../Modules-MOSA/Fixed-Route4m/madaptive/mission-spraying.txt 2>/dev/null
+
 echo "==============================Done================================"
