@@ -133,10 +133,10 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-1      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-2      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
 | Cenário III | Intel Edison     | 20 m      | HGA4m        | MPGA4s         | LowBattery-3      | Replanner | Não          | FEITO  | Pousou em bonificadora     |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | GA4s           | MOSA-Failure      | Replanner | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Sim          | Fazer  |                 |
-| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | BadWeather        | RTL       | Sim          | Fazer  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        | GA4s           | MOSA-Failure      | Replanner | Sim          | FEITO  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Sim          | FEITO  |                 |
+| Cenário IV  | Raspberry Pi 3   | 12 m      | HGA4m        |                | BadWeather        | RTL       | Sim          | FEITO  |                 |
 | Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | WithoutFailure    |           | Não          | FEITO  |                 |
 | Cenário IV  | BeagleBone Black | 12 m      | HGA4m        | GA4s           | MOSA-Failure      | Replanner | Não          | FEITO  |                 |
 | Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | FEITO  |                 |
