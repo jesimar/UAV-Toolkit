@@ -670,10 +670,14 @@ public final class GCS extends JFrame {
         panelUAVStatus.add(labelBlank);
         
         //type AP
-        if (config.getTypeAP().equals(TypeAP.APM)){
-            imgAP = new ImageIcon("resources/ap-apm.png"); 
-        }else if (config.getTypeAP().equals(TypeAP.PIXHAWK)){
-            imgAP = new ImageIcon("resources/ap-pixhawk.png");
+        if (config.getOperationMode().equals(TypeOperationMode.REAL_FLIGHT)){
+            if (config.getTypeAP().equals(TypeAP.APM)){
+                imgAP = new ImageIcon("resources/ap-apm.png"); 
+            }else if (config.getTypeAP().equals(TypeAP.PIXHAWK)){
+                imgAP = new ImageIcon("resources/ap-pixhawk.png");
+            }
+        }else{
+            imgAP = new ImageIcon("resources/ap-firmware.png");
         }
         image = imgAP.getImage();
         newimg = image.getScaledInstance(dimImg, dimImg,  java.awt.Image.SCALE_SMOOTH);

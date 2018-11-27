@@ -4,11 +4,11 @@ A seguir serão apresentados um conjunto de tabelas contendo os resultados obtid
 
 | Tipo de Aeronave   | Aeronave                  | Construída por UAV-Team   | Avaliada em Voo Real     | Avaliada em Voo Inteligente |
 |--------------------|---------------------------|---------------------------|--------------------------|-----------------------------|
-| Quadricóptero      | iDroneAlpha               | Sim                       | Sim                      | Sim                         |
-| Quadricóptero      | iDroneBeta                | Sim                       | Sim                      | Não                         |
-| Quadricóptero      | iDroneGamma               | Sim                       | Sim                      | Não                         |
-| Quadricóptero      | iDroneDelta               | Sim                       | Não                      | Não                         |
-| Quadricóptero      | DroneOnofre               | Não                       | Não                      | Não                         |
+| Quadricóptero X4   | iDroneAlpha               | Sim                       | Sim                      | Sim                         |
+| Quadricóptero X4   | iDroneBeta                | Sim                       | Sim                      | Sim                         |
+| Quadricóptero X4   | iDroneGamma               | Sim                       | Sim                      | Não                         |
+| Quadricóptero X4   | iDroneDelta               | Sim                       | Não                      | Não                         |
+| Octocóptero X8+    | DroneOnofre               | Não                       | Não                      | Não                         |
 | Hexacóptero        | DroneSimões               | Não                       | Sim                      | Não                         |
 | Asa Fixa           | Ararinha                  | Não                       | Não                      | Não                         |
 
@@ -17,7 +17,7 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Tipo de Componente | Componentes de Hardware   | Avaliado em SITL          | Avaliado em HITL         | Avaliado em Voo Real     |
 |--------------------|---------------------------|---------------------------|--------------------------|--------------------------|
 | AutoPilot          | APM                       | N/A                       | N/A                      | Sim                      |
-| AutoPilot          | Pixhawk                   | N/A                       | N/A                      | TODO                     |
+| AutoPilot          | Pixhawk                   | N/A                       | N/A                      | Sim                      |
 | Companion Computer | Intel Edison              | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 2            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 3            | N/A                       | Sim                      | Sim                      |
@@ -32,23 +32,23 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Sensor             | Temperatura               | Sim (Simulado)            | Sim                      | Não                      |
 | Sensor             | Power Module              | Sim (Simulado)            | Sim                      | Sim                      |
 | Atuador            | Buzzer                    | Sim (Simulado)            | Sim                      | Sim                      |
-| Atuador            | LED                       | Não                       | Sim                      | Não                      |
-| Atuador            | parachute                 | Não                       | Não                      | Não                      |
-| Atuador            | Spraying                  | Não                       | Não                      | Não                      |
+| Atuador            | LED                       | N/A                       | Sim                      | Não                      |
+| Atuador            | parachute                 | N/A                       | Não                      | Não                      |
+| Atuador            | Spraying                  | N/A                       | Não                      | Não                      |
 
 A terceira tabela mostra alguns componentes de software avaliados.
 
 | Tipo de Componente | Componentes de Software              | Avaliado em SITL          | Avaliado em HITL         | Avaliado em Voo Real     |
 |--------------------|--------------------------------------|---------------------------|--------------------------|--------------------------|
 | Global/Geral       | Route Simplifier                     | Sim                       | Sim                      | Sim                      |
-| Global/Geral       | Change Behavior - Route Circle       | Sim                       | TODO                     | Não                      |
-| Global/Geral       | Change Behavior - Route Triangle     | Sim                       | TODO                     | Não                      |
-| Global/Geral       | Change Behavior - Route Rectangle    | Sim                       | TODO                     | Não                      |
-| Global/Geral       | Integração com Mapa (Graphics2D)     | Sim                       | Sim                      | Sim                      |
-| Global/Geral       | Integração com Google Maps           | Sim                       | Sim                      | Sim                      |
+| Global/Geral       | Change Behavior - Route Circle       | Sim                       | Sim                      | Sim                      |
+| Global/Geral       | Change Behavior - Route Triangle     | Sim                       | Sim                      | Não                      |
+| Global/Geral       | Change Behavior - Route Rectangle    | Sim                       | Sim                      | Não                      |
 | Global/Geral       | Integração com Oracle Drone          | Sim                       | Não                      | Não                      |
 | Mapa               | Instâncias Reais                     | Sim                       | Sim                      | Sim                      |
 | Mapa               | Instâncias Artificiais               | Sim                       | Não                      | Não                      |
+| UAV-GCS            | Integração com Mapa (Graphics2D)     | Sim                       | Sim                      | Sim                      |
+| UAV-GCS            | Integração com Google Maps           | Sim                       | Sim                      | Sim                      |
 | IFA                | Fixed Route                          | Sim                       | Sim                      | Sim                      |
 | IFA                | Controller - Baseado no Teclado      | Sim                       | Sim                      | Sim                      |
 | IFA                | Controller - Baseado em Voz          | Sim                       | Sim                      | Não                      |
@@ -61,10 +61,10 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | IFA                | Replanner - GA4s - Offboard          | Sim                       | Sim                      | Não                      |
 | IFA                | Replanner - GH4s - Onboard           | Sim                       | Sim                      | Não                      |
 | IFA                | Replanner - GH4s - Offboard          | Sim                       | Sim                      | Não                      |
-| IFA                | Replanner - DE4s - Onboard           | Sim                       | Não                      | Não                      |
-| IFA                | Replanner - DE4s - Offboard          | Sim                       | Não                      | Não                      |
-| IFA                | Replanner - MS4s - Onboard           | Sim                       | Não                      | Não                      |
-| IFA                | Replanner - MS4s - Offboard          | Sim                       | Não                      | Não                      |
+| IFA                | Replanner - DE4s - Onboard           | Sim                       | Sim                      | Não                      |
+| IFA                | Replanner - DE4s - Offboard          | Sim                       | Sim                      | Não                      |
+| IFA                | Replanner - MS4s - Onboard           | Sim                       | Sim                      | Não                      |
+| IFA                | Replanner - MS4s - Offboard          | Sim                       | Sim                      | Não                      |
 | IFA                | Replanner - GA-GA-4s - Onboard       | Sim                       | Sim                      | Não                      |
 | IFA                | Replanner - GA-GA-4s - Offboard      | Não                       | Não                      | Não                      |
 | IFA                | Replanner - GA-GH-4s - Onboard       | Sim                       | Sim                      | Não                      |
@@ -82,6 +82,8 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | MOSA               | Planner - HGA4m - Offboard           | Sim                       | Sim                      | Sim                      |
 | MOSA               | Planner - CCQSP4m - Onboard          | Sim                       | Sim                      | Sim                      |
 | MOSA               | Planner - CCQSP4m - Offboard         | Sim                       | Sim                      | Sim                      |
+| MOSA               | Planner - M-Adaptive4m - Onboard     | Sim                       | Não                      | Não                      |
+| MOSA               | Planner - M-Adaptive4m - Offboard    | Sim                       | Sim                      | Sim                      |
 | MOSA               | Planner - A_STAR4m - Onboard         | Sim                       | Não                      | Não                      |
 | MOSA               | Planner - A_STAR4m - Offboard        | Sim                       | Não                      | Não                      |
 | MOSA               | Planner - PATH_PLANNER4m - Onboard   | Sim                       | Não                      | Não                      |
@@ -142,16 +144,15 @@ A quarta tabela mostra as simulações de HITL feitos para a tese.
 | Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | FEITO  |                 |
 | Cenário IV  | BeagleBone Black | 12 m      | HGA4m        |                | BadWeather        | RTL       | Não          | FEITO  |                 |
 
-
 A quinta tabela mostra os experimentos reais feitos para a tese.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
-| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 | ok
+| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
-| Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 | ok
-| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 | ok
-| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 | ok
-| Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 | ok
-| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  |                 | ok
-| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | HGA4m        |                | BadWeather        | RTL       | Não          | Fazer  |                 | ok
+| Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 |
+| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone apresentou um comportamento não esperado |
+| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |

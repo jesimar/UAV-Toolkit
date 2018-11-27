@@ -402,19 +402,16 @@ O link para o youtube pode ser acessado aqui: https://youtu.be/G4YxFfW4OI0
 
 [![](https://img.youtube.com/vi/G4YxFfW4OI0/0.jpg)](https://youtu.be/G4YxFfW4OI0 "Instalando/Configurando/Executando o UAV-Toolkit")
 
-<!--
 ## Drones Construídos:
 
 Abaixo encontram-se alguns dos drones construídos e utilizados durante esse trabalho.
 
 | iDroneAlpha                    | iDroneBeta                     | iDroneGamma                    | iDroneDelta                    |
 |--------------------------------|--------------------------------|--------------------------------|--------------------------------|
-| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.png)  | ![](./Figures/iDroneGamma.png) | ![](./Figures/iDroneDelta.png) |
+| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.jpg)  | ![](./Figures/iDroneGamma.jpg) | ![](./Figures/iDroneDelta.jpg) |
 | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          |
 | AP: APM v2.8                   | AP: Pixhawk v1                 | AP: APM v2.8                   | AP: APM v2.8                   |
-| GPS: Neo M6N                   | GPS: Neo M8N                   | GPS: Neo M8N                   | GPS: Neo M6N                   |
-| CC: Intel Edison               | CC: Raspberry Pi 3             | CC: Beagle Bone Black          | CC: Odroid                     |
--->
+| GPS: ublox NEO-6M              | GPS: ublox Neo-M8N             | GPS: ublox Neo-M8N             | GPS: ublox NEO-6M              |
 
 ## Citação
 
@@ -451,6 +448,19 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
   acmid = {3071302},
   publisher = {ACM}
 } 
+```
+
+O artigo abaixo contém mais alguns detalhes do sistema IFA e MOSA implementados [[Link em Breve]()].
+
+```
+@article{Vannini2018ICAS,
+  author={Vannini, Veronica and Arantes, Jesimar da Silva and Mattei, Andr{\'e} Pierre and Figueira, Nina and Arantes, Marcio da Silva and Toledo, Claudio Fabiano Motta and Trindade Junior, Onofre and Saqui-Sannes, Pierre de},
+  title={Service-Oriented Architecture to Integrate Flight Safety and Mission Management Subsystems into UAVs}, 
+  booktitle = {International Council of Aeronautical Sciences - ICAS},
+  year={2018},
+  location = {Belo Horizonte, Brazil},
+  numpages = {8}
+}
 ```
 
 ## Contribuidores

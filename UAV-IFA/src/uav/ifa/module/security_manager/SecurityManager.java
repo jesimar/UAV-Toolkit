@@ -288,6 +288,8 @@ public class SecurityManager {
                         printLogAircraft.flush();
                         Thread.sleep(time);
                         
+                        //Condicoes que indicando que o drone terminou a missao. 
+                        //Pois, saiu do estado desarmado, foi para armado e voltou para desarmado.
                         if (killSystem == 0){
                             if (!drone.getSensors().getStatusUAV().armed){
                                 killSystem++;
@@ -301,17 +303,29 @@ public class SecurityManager {
                                 killSystem++;
                             }
                         }else if (killSystem == 3){
-                            Thread.sleep(1000);
-                            StandardPrints.printMsgEmph("Fineshed Mission");
+                            Thread.sleep(500);
+                            StandardPrints.printMsgEmph("Fineshed Mission -> Disarmed - Armed Disarmed");
                             StandardPrints.printMsgEmph("Stop MOSA");
                             communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                             communicationMOSA.close();
                             communicationGCS.close();
-                            StandardPrints.printMsgEmph("Terminating IFA system execution");
+                            StandardPrints.printMsgEmph("Stop IFA and Exit");
+                            System.exit(0);
+                        }  
+                        //Condicao dizendo para o meu sistema finalizar, pois o rádio controle 
+                        //mudou para o estado de RTL.
+                        if (drone.getSensors().getStatusUAV().mode.equals("RTL")){
+                            Thread.sleep(200);
+                            StandardPrints.printMsgEmph("Aborted Mission - Mode changed to RTL");
+                            StandardPrints.printMsgEmph("Stop MOSA");
+                            communicationMOSA.sendData(TypeMsgCommunication.IFA_MOSA_STOP);
+                            Thread.sleep(200);
+                            communicationMOSA.close();
+                            communicationGCS.close();
+                            StandardPrints.printMsgEmph("Stop IFA and Exit");
                             System.exit(0);
                         }
-                        
                     }
                 } catch (InterruptedException ex) {
                     StandardPrints.printMsgError2("Error [InterruptedException] monitoringAircraft()");
@@ -363,7 +377,9 @@ public class SecurityManager {
             drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_BATTERY_OVERHEATING));
             StandardPrints.printMsgError("FAIL BATTERY OVERHEATING -> Time: " + drone.getInfo().getTime());
         }
-        if (drone.getSensors().getGPSInfo().fixType != 3
+        //APM (GPS ublox NEO-6N) geralmente o valor de fixType = 3
+        //Pixhawk (GPS ublox NEO-M8N) geralmente o valor de fixType = 4 e 3.
+        if (drone.getSensors().getGPSInfo().fixType <= 2
                 && !hasFailure(TypeFailure.FAIL_GPS)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_GPS));
             drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_GPS));

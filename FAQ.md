@@ -15,3 +15,7 @@ Perg3: O drone não está armando na etapa inicial apresentando a mensagem low b
 Resp3: Tente fazer o arm manual do drone. 
 
 OBS: É sempre bom criar o hábito de ir ao campo e fazer o arm manual, para testar se o piloto automático está tudo ok.
+
+Perg4: O que devo fazer caso o drone decole, mas não mude do modo GUIDED para o modo AUTO?
+
+Resp4: Primeiro você precisa aguardar um tempo, caso nada acontença faça o seguinte. Você poderá fazer isso via estação de base, chaveando o modo que estará em GUIDED para AUTO. E então o drone passa a seguir a rota especificada. No entanto, é provavel que o mesmo não faça o pouso final, dessa forma, basta você trocar na estação de base para o modo LAND.

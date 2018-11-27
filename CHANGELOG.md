@@ -4,9 +4,13 @@
 
 ### Features:
 
+* Updated scripts (exec-mavproxy-real-?.sh, clear-simulations.sh, exec-ifa.sh, exec-mosa.sh).
+* Added feature where MOSA and IFA are terminated if flight mode is changed to RTL using the Radio Controller or GCS.
+* Added plot scenic region in UAV-GCS.
+* Added features MOSA Adaptive for mission (onboard and offboard). 
 * Added file param of drones (iDroneAlpha, iDroneBeta) on ./UAV-Toolkit/Configs/
 * Added file instances (kml) on ./UAV-Toolkit/Missions-Google-Earth/.
-* Added EXPERIMENTS.md on github.
+* Added file EXPERIMENTS.md and SPECIFICATIONS.md on github.
 * Updated documentation on github.
 * Added code to control sensors and actuators (LED, Buzzer, parachute, spraying).
 * Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
@@ -24,6 +28,7 @@
 
 ### Bug Fixes:
 
+* Fixed a bug in FAIL_GPS with pixhawk with for fixType 4 
 * Fixed a bug in the UAV-GCS that sometimes did not plot the route.
 * Updated automatic route simplification.
 * Updated HGA4m to support map with long distance (the HGA4m did not find solution for large maps).
