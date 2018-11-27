@@ -289,6 +289,10 @@ Existem dois arquivos que devem ser sempre conferidos antes de executar o ambine
 
 :warning: **OBS:** Cuidado, pois os nomes dos parâmetros do arquivo "config-param.properties" podem mudar dependendo da versão do firmware do AP que você está usando. Os valores que modifiquei lá são totalmente compatíveis com os firwares que venho usando na APM e Pixhawk, mas sempre confira isso.
 
+:warning: **OBS:** Estamos assumindo que os ESCs, bússola, acelerômetros e rádio estão todos calibrados e funcionando perfeitamente no drone. 
+
+:warning: **OBS:** É importante desabilitar o FailSafe nos parâmetros do Piloto Automático. Altere também de forma manual a capacidade de bateria que você está usando (em geral 2200 mAh), caso não faça isso a porcentagem da bateria indicada no painel da estação de controle de solo e do IFA poderá não fazer sentido.
+
 ## Como Executar
 
 Existem basicamente três formas de executar o ambiente UAV-Toolkit que são: 
@@ -406,12 +410,14 @@ O link para o youtube pode ser acessado aqui: https://youtu.be/G4YxFfW4OI0
 
 Abaixo encontram-se alguns dos drones construídos e utilizados durante esse trabalho.
 
-| iDroneAlpha                    | iDroneBeta                     | iDroneGamma                    | iDroneDelta                    |
-|--------------------------------|--------------------------------|--------------------------------|--------------------------------|
-| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.jpg)  | ![](./Figures/iDroneGamma.jpg) | ![](./Figures/iDroneDelta.jpg) |
-| Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          | Modelo: Quadricóptero          |
-| AP: APM v2.8                   | AP: Pixhawk v1                 | AP: APM v2.8                   | AP: APM v2.8                   |
-| GPS: ublox NEO-6M              | GPS: ublox Neo-M8N             | GPS: ublox Neo-M8N             | GPS: ublox NEO-6M              |
+| iDroneAlpha                    | iDroneBeta                      | iDroneGamma                       | iDroneDelta                       |
+|--------------------------------|---------------------------------|-----------------------------------|-----------------------------------|
+| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.jpg)   | ![](./Figures/iDroneGamma.jpg)    | ![](./Figures/iDroneDelta.jpg)    |
+| Modelo: Quadricóptero X4       | Modelo: Quadricóptero X4        | Modelo: Quadricóptero X4          | Modelo: Quadricóptero X4          |
+| AP: APM v2.8                   | AP: Pixhawk v1                  | AP: APM v2.8                      | AP: APM v2.8                      |
+| Firmware: APM:Copter V3.2.1    | Firmware: APM:Copter V3.5.7     | Firmware: APM:Copter V3.2.1       | Firmware: APM:Copter V3.2.1       |
+| GPS: ublox NEO-6M              | GPS: ublox Neo-M8N              | GPS: ublox Neo-M8N                | GPS: ublox NEO-6M                 |
+| Rádio: FlySky FS-i6            | Rádio: FlySky FS-i6 (Name: PIX) | Rádio: FlySky FS-i6 (Name: GAMMA) | Rádio: FlySky FS-i6 (Name: DELTA) |
 
 ## Citação
 
@@ -474,6 +480,10 @@ As principais modificações do sistema podem ser acessadas [aqui](https://githu
 ## Licença
 
 UAV-Toolkit está disponível sobre código aberto com permissões [GNU General Public License v3.0](https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE). 
+
+## Responsabilidade
+
+Este projeto de software não se responsabiliza por eventuais quedas a VANTs de terceiros. Dessa forma, faça uma quantidade de testes suficientes em SITL e HITL antes de fazer o voo real de forma a minimizar as falhas.
 
 <!--
 ## Características do Sistema

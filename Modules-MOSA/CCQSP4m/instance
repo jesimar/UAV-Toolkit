@@ -153,7 +153,7 @@ ProOF.apl.UAV.UAVfull
 <parameters number>
 11
 1
-10.0
+15.0
 0
 1000000000
 1.0E-4
@@ -231,7 +231,7 @@ State Perfect Unc.
 ProOF.apl.UAV.gen.linear.uncertainty.LinearPerfectStateUncertainty
 <parameters number>
 2
-0.50
+0.30
 0.0
 <node id>
 564
@@ -296,7 +296,7 @@ ProOF.apl.UAV.gen.linear.vehicle.parts.fLinearDynamic$AirDt
 <parameters number>
 4
 30
-100
+90
 5.0
 3.0
 <node id>
