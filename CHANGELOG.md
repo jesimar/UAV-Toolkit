@@ -1,12 +1,15 @@
 # Changelog
 
-## Version v5.0.0 (14/11/2018)
+## Version v5.0.0 (27/11/2018)
 
 ### Features:
 
+* Updated frequency of some threads. 
+* Added support for file-based behavior change (mission-spraying.txt).
 * Updated scripts (exec-mavproxy-real-?.sh, clear-simulations.sh, exec-ifa.sh, exec-mosa.sh).
 * Added feature where MOSA and IFA are terminated if flight mode is changed to RTL using the Radio Controller or GCS.
 * Added plot scenic region in UAV-GCS.
+* Added plot behavior in UAV-GCS.
 * Added features MOSA Adaptive for mission (onboard and offboard). 
 * Added file param of drones (iDroneAlpha, iDroneBeta) on ./UAV-Toolkit/Configs/
 * Added file instances (kml) on ./UAV-Toolkit/Missions-Google-Earth/.

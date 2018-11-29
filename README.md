@@ -406,18 +406,21 @@ O link para o youtube pode ser acessado aqui: https://youtu.be/G4YxFfW4OI0
 
 [![](https://img.youtube.com/vi/G4YxFfW4OI0/0.jpg)](https://youtu.be/G4YxFfW4OI0 "Instalando/Configurando/Executando o UAV-Toolkit")
 
-## Drones Construídos:
+## VANTs Montados
 
-Abaixo encontram-se alguns dos drones construídos e utilizados durante esse trabalho.
+Abaixo encontram-se alguns dos drones montados e utilizados durante esse trabalho.
 
-| iDroneAlpha                    | iDroneBeta                      | iDroneGamma                       | iDroneDelta                       |
-|--------------------------------|---------------------------------|-----------------------------------|-----------------------------------|
-| ![](./Figures/iDroneAlpha.png) | ![](./Figures/iDroneBeta.jpg)   | ![](./Figures/iDroneGamma.jpg)    | ![](./Figures/iDroneDelta.jpg)    |
-| Modelo: Quadricóptero X4       | Modelo: Quadricóptero X4        | Modelo: Quadricóptero X4          | Modelo: Quadricóptero X4          |
-| AP: APM v2.8                   | AP: Pixhawk v1                  | AP: APM v2.8                      | AP: APM v2.8                      |
-| Firmware: APM:Copter V3.2.1    | Firmware: APM:Copter V3.5.7     | Firmware: APM:Copter V3.2.1       | Firmware: APM:Copter V3.2.1       |
-| GPS: ublox NEO-6M              | GPS: ublox Neo-M8N              | GPS: ublox Neo-M8N                | GPS: ublox NEO-6M                 |
-| Rádio: FlySky FS-i6            | Rádio: FlySky FS-i6 (Name: PIX) | Rádio: FlySky FS-i6 (Name: GAMMA) | Rádio: FlySky FS-i6 (Name: DELTA) |
+| Atributo | iDroneAlpha                     | iDroneBeta                     | iDroneGamma                     | iDroneDelta                     |
+|----------|---------------------------------|--------------------------------|---------------------------------|---------------------------------|
+| Figura   | ![](./Figures/iDroneAlpha.png)  | ![](./Figures/iDroneBeta.jpg)  | ![](./Figures/iDroneGamma.jpg)  | ![](./Figures/iDroneDelta.jpg)  |
+| Modelo   | Quadricóptero X4                | Quadricóptero X4               | Quadricóptero X4                | Quadricóptero X4                |
+| Frame    | F450                            | S500                           | F450                            | F450                            |
+| AP       | APM v2.8                        | Pixhawk v1                     | APM v2.8                        | APM v2.8                        |
+| Firmware | ArduCopter V3.2.1               | APM:Copter V3.5.7              | ArduCopter V3.2.1               | ArduCopter V3.2.1               |
+| GPS      | ublox NEO-6M                    | ublox Neo-M8N                  | ublox Neo-M8N                   | ublox NEO-6M                    |
+| Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: GAMMA)      | FlySky FS-i6 (Name: DELTA)      |
+| Peso     | 1,09Kg (com bateria e sem CC)   | 1,14Kg (com bateria e sem CC)  | 1,09Kg (com bateria e sem CC)   | 1,09Kg (com bateria e sem CC)   |
+ 
 
 ## Citação
 
@@ -459,7 +462,7 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
 O artigo abaixo contém mais alguns detalhes do sistema IFA e MOSA implementados [[Link em Breve]()].
 
 ```
-@article{Vannini2018ICAS,
+@article{VanniniV2018ICAS,
   author={Vannini, Veronica and Arantes, Jesimar da Silva and Mattei, Andr{\'e} Pierre and Figueira, Nina and Arantes, Marcio da Silva and Toledo, Claudio Fabiano Motta and Trindade Junior, Onofre and Saqui-Sannes, Pierre de},
   title={Service-Oriented Architecture to Integrate Flight Safety and Mission Management Subsystems into UAVs}, 
   booktitle = {International Council of Aeronautical Sciences - ICAS},
@@ -483,7 +486,7 @@ UAV-Toolkit está disponível sobre código aberto com permissões [GNU General 
 
 ## Responsabilidade
 
-Este projeto de software não se responsabiliza por eventuais quedas a VANTs de terceiros. Dessa forma, faça uma quantidade de testes suficientes em SITL e HITL antes de fazer o voo real de forma a minimizar as falhas.
+Este projeto de software não se responsabiliza por eventuais quedas a VANTs de terceiros. Dessa forma, faça uma quantidade de testes suficientes em SITL e HITL antes de fazer o voo real de forma a minimizar possíveis falhas.
 
 <!--
 ## Características do Sistema
@@ -492,6 +495,7 @@ Este projeto de software não se responsabiliza por eventuais quedas a VANTs de 
 * O sistema IFA suporta apenas um cliente MOSA. 
 * Não é possível ao projetista da missão mandar gravar um vídeo e em seguida mandar retirar uma fotografia, pois o recurso estará em uso. Isso não é verificado pelo sistema.
 * O sistema IFA suporta apenas um recalculo de rota para pouso emergencial. Ele não aceita chamar duas vezes o MPGA4s, por exemplo.
+* O meu sistema é desativa caso no rádio controle o piloto em solo troque para RTL. Isso faz com que o IFA encerre o MOSA e a si mesmo.
 
 ## Arquitetura de Hardware
 

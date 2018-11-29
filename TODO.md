@@ -2,17 +2,6 @@
 
 A seguir encontra-se diversas atividades para serem feitas no projeto.
 
-## Drone - iDroneAlpha:
-
-* Desabilitar o failsafe do iDroneBeta, iDroneGamma, iDroneDelta
-
-* Compilar todos os códigos em C para as suas respectivas arquiteturas.
-1. RouteStandard4m-PC -> Sim
-2. RouteStandard4m-Edison -> Não
-3. RouteStandard4m-RPi -> Não
-4. RouteStandard4m-BBB -> Não
-5. RouteStandard4m-Odroid -> Não
-
 ## Sistema IFA:
 
 * Trocar velocidade de subida e decida se a bateria estiver acabando (automaticamente no IFA).
@@ -20,14 +9,9 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema MOSA:
 
-* MOSA Adaptativo.
-* Colocar missão no Route-Standard de zig zag para pulverização.
-* Incluir tempo-maximo para processamento no arquivo de config-global.properties e alterar no arquivo instance-base do modulo CCQSP4m.
-
 ## Sistema UAV-GCS
 
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
-* Plotar na GCS as rotas do Behavior
 * Plotar na GCS as rotas calculadas nas placas do MOSA.
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
 		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 

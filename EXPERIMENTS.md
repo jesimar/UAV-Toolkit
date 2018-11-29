@@ -157,11 +157,26 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 | Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone apresentou um comportamento não esperado |
 | Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
 
+Voos mínimos para a tese.
+
+| Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
+|-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
+| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
+
+OBS: Evitar outros voos com Intel Edison (Problema LAND nas Simulações HITL).
 
 ## Peças Trocadas
 
 A seguir serão listados todos os equipamentos que foram trocados durante o doutorado, por terem sido queimados, estragados, quebrados, etc.
  
+**Siglas**
+
+* **RC** -> Rádio Controlado (Manual)
+* **TeS** -> Teste em Solo
+* **N/A** -> Não se Aplica ou Não disponível
+
 | Data       | Nome do Drone | Tipo de Voo   | Local   | Equipamento               | Status        | Análise                                                                | Ação                                                                | Custo Financeiro |
 |------------|---------------|---------------|---------|---------------------------|---------------|------------------------------------------------------------------------|---------------------------------------------------------------------|------------------|
 | 2017       | iDroneAlpha   | RC            | Campus2 | Hélices 9443              | Quebrada      | Quebrou uma das hélices em colisão com parede                          | Trocamos as quatro hélices do drone                                 | R$48,00          |
@@ -171,22 +186,18 @@ A seguir serão listados todos os equipamentos que foram trocados durante o dout
 | 2018       | iDroneAlpha   | Autônomo      | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (2 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
 | 2018       | iDroneAlpha   | RC            | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (3 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
 | ??/09/2018 | iDroneGamma   | RC            | Campus2 | Hélices 9443              | Quebrada      | Quebrou uma das hélices em colisão com parede                          | Trocamos as quatro hélices do drone                                 | R$45,00          | 
-| ??/09/2018 | iDroneGamma   | TeS           | Campus2 | ESC 30A Simonk            | Queimado      | ESC pegou fogo provavelmente produto comprado com defeito              | Trocamos o ESC por um novo                                          | R$42,00          |
+| ??/09/2018 | iDroneGamma   | RC            | Campus2 | Pés - Suporte             | Quebrado      | Quebrou um dos suportes dos pés em colisão com o solo (3 metros)       | Colocamos fita isolante remendando o estrago ocorrido               | R$0,00           | 
+| ??/09/2018 | iDroneGamma   | TeS           | Campus2 | ESC 30A Simonk            | Queimado      | ESC pegou fogo, provavelmente produto comprado com defeito             | Trocamos o ESC por um novo                                          | R$42,00          |
 | ??/09/2018 | iDroneBeta    | TeS           | Campus2 | Bússola do GPS Neo-M8N    | Queimada      | Queimou após conectar na porta errada devido a uma maior voltagem      | Trocamos o GPS por outro - Tentar remover a bússola e colocar outra | R$75,00          |
 | ??/09/2018 | iDroneAlpha   | RC e Autônomo | Campus2 | Suporte de GPS            | Quebrado      | Quebrou a base do suporte de GPS                                       | Tiramos a base e parafusamos o suporte diretamente no frame         | R$0,00           |
 | ??/10/2018 | iDroneDelta   | N/A           | N/A     | Bússola do GPS Neo-M6N    | Não Funciona  | Não está funcionando                                                   | Nada feito - Analisar se está de fato com problemas                 | Talvés R$75,00   |
+| ??/11/2018 | iDroneGamma   | RC            | Campus2 | Pés - Suporte             | Quebrado      | Quebrou um dos suportes dos pés em colisão com o solo (3 metros)       | Colocamos fita isolante remendando o estrago ocorrido               | R$0,00           | 
 | 19/11/2018 | N/A           | N/A           | N/A     | Conversor USB-to-TTL      | Não funciona  | Não está funcionando                                                   | Nada feito - Analisar se está de fato com problemas                 | Talvés R$24,00   |
 | 26/11/2018 | iDroneBeta    | Autônomo      | Campus2 | Pés - Apenas o Encaixe    | Quebrado      | Quebrou devido a colisão com o solo (7 metros de altura)               | Trocamos o encaixe do pé do drone                                   | R$0,00           | 
 | 27/11/2018 | iDroneAlpha   | RC            | Campus2 | Pés - Caneta              | Quebrado      | Quebrou devido a colisão com o solo (3 metros de altura)               | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
-| 27/11/2018 | iDroneAlpha   | N/A           | N/A     | Bateria 2200 mAh          | Estragada     | Desgaste da bateria, devido ao uso e mau gerenciamente da mesma        | Trocamos a bateria e estamos analisando se é possível reciclar      | Talvés R$150,00  |
+| 27/11/2018 | iDroneAlpha   | N/A           | N/A     | Bateria 2200 mAh          | Estragada     | Desgaste da bateria, devido ao uso e mau gerenciamente da mesma        | Trocamos a bateria e estamos analisando se é possível reciclar      | Talvés R$175,00  |
 
 **Prejuízos**
 
 * R$290,00 prejuízo confirmado, apesar de alguns casos gerar material sobressalente como é o caso das hélices.
-* R$249,00 prejuízo em potencial, caso não se consiga resgatar o itens destacados.
-
-**Siglas**
-
-* **RC** -> Rádio Controlado (Manual)
-* **TeS** -> Teste em Solo
-* **N/A** -> Não se Aplica ou Não disponível
+* R$274,00 prejuízo em potencial, caso não se consiga resgatar o itens destacados.

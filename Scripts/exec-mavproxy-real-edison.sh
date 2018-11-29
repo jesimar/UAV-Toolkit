@@ -26,3 +26,5 @@ PORT_OUT_1=14550
 PORT_OUT_2=14551
 
 mavproxy.py --master=/dev/ttyUSB0 --baudrate 57600 --aircraft MyCopter --out udp:$IP_GCS:$PORT_OUT_1 --out $IP_CC:$PORT_OUT_2
+
+#mavproxy.py --master=/dev/ttyUSB0 --baudrate 57600 --aircraft MyCopter --out udp:192.168.43.9:14550 --out 127.0.0.1:14551

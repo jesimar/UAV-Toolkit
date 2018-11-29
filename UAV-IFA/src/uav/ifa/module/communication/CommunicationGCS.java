@@ -199,7 +199,7 @@ public class CommunicationGCS extends Communication implements Server{
                         if (output != null){
                             output.println(TypeMsgCommunication.IFA_GCS_INFO + drone.toString());
                         }
-                        Thread.sleep(Constants.TIME_TO_SLEEP_BETWEEN_MSG);
+                        Thread.sleep((int)(1000.0/config.getFreqUpdateDataAP()));
                     }
                 } catch (InterruptedException ex) {
                     StandardPrints.printMsgWarning("Warning [InterruptedException] sendDataDrone()");

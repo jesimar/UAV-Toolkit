@@ -21,7 +21,7 @@ public class Constants {
     
     public static final double ONE_METER = 0.000009;//one meter in degrees (lat, lng)
     
-    public static final int TIME_TO_SLEEP_BETWEEN_MSG = 100;//in milliseconds    
+    public static final int TIME_TO_SLEEP_BETWEEN_MSG = 200;//in milliseconds    
     public static final int TIME_TO_SLEEP_WAITING_SERVER = 1000;//in milliseconds
     public static final int TIME_TO_SLEEP_WAITING_FOR_AN_ACTION = 100;//in milliseconds
     public static final int TIME_TO_SLEEP_MONITORING_STATE_MACHINE = 100;//in milliseconds

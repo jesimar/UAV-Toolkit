@@ -76,3 +76,19 @@ DataSheet BeagleBone Black
 |-----------------------|---------------------------|------------------------|------|-------------------------------------------|
 | IFA                   | Monitoramento da Aeronave | 2Hz                    | GET  | Módulo IFA faz requisição ao módulo S2DK  |
 | MOSA                  | Monitoramento da Aeronave | 2Hz                    | GET  | Módulo MOSA faz requisição ao módulo S2DK |
+
+## Características das Implementações
+
+Abaixo encontram-se algumas características das implementações versão UAV-Toolkit release 5.0.0.
+
+| Software           | Número de Threads | Threads Paralelas | Números de Arquivos de Entrada | Números de Arquivos de Saída |
+|--------------------|-------------------|-------------------|--------------------------------|------------------------------|
+| UAV-IFA            | 12                | 8                 | 5                              | 4                            |
+| UAV-MOSA           | 11                | 8                 | 12                             | 7                            |
+| UAV-GCS            | 37                | 30                | 30                             | 6                            |
+| UAV-S2DK           | 1                 | 1                 | 1                              | 0                            |
+| Lib-UAV            | N/A               | N/A               | N/A                            | N/A                          |
+| UAV-MissionCreator | 1                 | 1                 | 2                              | 12                           |
+| UAV-Manager        | 7                 | ?                 | ?                              | ?                            |
+
+OBS: A tabela acima não foi feita com muito rigor, dessa forma, pode haver algum equívoco.
