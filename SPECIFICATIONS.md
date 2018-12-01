@@ -1,6 +1,5 @@
 # SPECIFICATIONS
 
-
 ## Hardware 
 
 GPS
@@ -92,3 +91,16 @@ Abaixo encontram-se algumas características das implementações versão UAV-To
 | UAV-Manager        | 7                 | ?                 | ?                              | ?                            |
 
 OBS: A tabela acima não foi feita com muito rigor, dessa forma, pode haver algum equívoco.
+
+## Rádio Controle 
+
+Rádio Jesimar e USP
+
+| SWC | SWD | Modo    |
+|-----|-----|---------|
+| 1   | 1   | LOITER  |
+| 2   | 1   | RTL     |
+| 3   | 1   | AUTO    |
+| 1   | 2   | LOITER  |
+| 2   | 2   | RTL     |
+| 3   | 2   | AUTO    |

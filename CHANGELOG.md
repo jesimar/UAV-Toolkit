@@ -1,9 +1,11 @@
 # Changelog
 
-## Version v5.0.0 (27/11/2018)
+## Version v5.0.0 (01/12/2018)
 
 ### Features:
 
+* Added script exec-copy-uav-embedded.sh.
+* Created a new repository in the github (UAV-Embedded) with only codes to be embedded. 
 * Updated frequency of some threads. 
 * Added support for file-based behavior change (mission-spraying.txt).
 * Updated scripts (exec-mavproxy-real-?.sh, clear-simulations.sh, exec-ifa.sh, exec-mosa.sh).
@@ -15,6 +17,7 @@
 * Added file instances (kml) on ./UAV-Toolkit/Missions-Google-Earth/.
 * Added file EXPERIMENTS.md and SPECIFICATIONS.md on github.
 * Updated documentation on github.
+* Added label in photo Raspberry Pi with coordinates geographical, latitude, longitude and relative altitude.
 * Added code to control sensors and actuators (LED, Buzzer, parachute, spraying).
 * Updated code HGA4m (in UAV-MOSA and UAV-GCS) to decrease the number of waypoints.
 * Added auto finished execution in UAV-IFA (change status disarmed, armed, disarmed).
@@ -23,6 +26,7 @@
 * Added automatic route simplification feature based on route size used by CCQSP4m (only onboard) algorithm.
 * Updated file overhead MOSA and IFA.
 * Added Script to support BeagleBone Black.
+* UAV-IFA has features of UAV-Monitoring and UAV-PosAnalyser, mainly in the plot of UAV-GCS.
 * Removed code UAV-PosAnalyser and UAV-Monitoring
 * Added support to artificial maps (instances Path-Planner and Path-Replanner). You need to set the start and goal points
 * Added a script to compile all the C/C++ system codes.

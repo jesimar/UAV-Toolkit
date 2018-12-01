@@ -4,6 +4,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema IFA:
 
+* Tomar cuidado com os dados de tempo (time) (0.5 segundos usando no sleep) obtidos pelo sistema. Pelo que entendi ele não representa de fato o tempo, pois tem delay, overhead etc.
 * Trocar velocidade de subida e decida se a bateria estiver acabando (automaticamente no IFA).
 * Trocar velocidade de navegação se bateria estiver acabando (automaticamente no IFA).
 
@@ -11,6 +12,7 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema UAV-GCS
 
+* Usar o protocolo UDP ao invés de TCP (este está errado) para se comunicar com o MOSA e IFA.
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
 * Plotar na GCS as rotas calculadas nas placas do MOSA.
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 

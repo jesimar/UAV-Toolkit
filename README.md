@@ -193,6 +193,8 @@ Existem basicamente duas formas de instalar o ambiente UAV-Toolkit:
 
 Uma vez terminado, o projeto já está pronto para o uso. Navegue até o diretório RAIZ. Neste caso você estará em ./UAV-Toolkit/
 
+:warning: **OBS:** O projeto UAV-Toolkit ocupa o tamanho de 233 MB em disco. Caso esteja embarcando a sua solução em um Companion Computer, considere utilizar no CC a versão UAV-Embedded: `https://github.com/jesimar/UAV-Embedded`. Esta versão ocupa o tamanho de 57 MB em disco. Lembrando que no computador PC deverá se utilizar o UAV-Toolkit e no CC deverá se utilizar o UAV-Embedded. A única vantagem dessa utilização é o ganho de espaço em disco no CC (176 MB) os recursos são equivalentes.
+
 * **Verificando a Instalação**
 
 Opcional: Caso deseje-se verifica se tudo está instalado corretamente execute o script "tests-sw-installed.sh" localizado em /UAV-Toolkit/Scripts/tests-sw-installed.sh. O mesmo faz a verificação de um conjunto de programas informando a sua versão e irá ocorrer um erro caso algum deles não esteja corretamente instalado.
@@ -418,9 +420,8 @@ Abaixo encontram-se alguns dos drones montados e utilizados durante esse trabalh
 | AP       | APM v2.8                        | Pixhawk v1                     | APM v2.8                        | APM v2.8                        |
 | Firmware | ArduCopter V3.2.1               | APM:Copter V3.5.7              | ArduCopter V3.2.1               | ArduCopter V3.2.1               |
 | GPS      | ublox NEO-6M                    | ublox Neo-M8N                  | ublox Neo-M8N                   | ublox NEO-6M                    |
-| Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: GAMMA)      | FlySky FS-i6 (Name: DELTA)      |
+| Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: Gama)       | FlySky FS-i6 (Name: Delta)      |
 | Peso     | 1,09Kg (com bateria e sem CC)   | 1,14Kg (com bateria e sem CC)  | 1,09Kg (com bateria e sem CC)   | 1,09Kg (com bateria e sem CC)   |
- 
 
 ## Citação
 

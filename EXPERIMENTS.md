@@ -149,12 +149,12 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
 | Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
-| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
+| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
 | Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone apresentou um comportamento não esperado |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 | Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
 
 Voos mínimos para a tese.
@@ -164,8 +164,17 @@ Voos mínimos para a tese.
 | Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
 | Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
+| Cenário IV  | iDroneBeta  | Pixhawk | Intel Edison     | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
+| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
 
 OBS: Evitar outros voos com Intel Edison (Problema LAND nas Simulações HITL).
+
+Experimentos que deram errado.
+
+| Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
+| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
+| Cenário II  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone seguiu apenas as duas primeiras partes da rota |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone apresentou um comportamento não esperado |
 
 ## Peças Trocadas
 
@@ -179,12 +188,12 @@ A seguir serão listados todos os equipamentos que foram trocados durante o dout
 
 | Data       | Nome do Drone | Tipo de Voo   | Local   | Equipamento               | Status        | Análise                                                                | Ação                                                                | Custo Financeiro |
 |------------|---------------|---------------|---------|---------------------------|---------------|------------------------------------------------------------------------|---------------------------------------------------------------------|------------------|
-| 2017       | iDroneAlpha   | RC            | Campus2 | Hélices 9443              | Quebrada      | Quebrou uma das hélices em colisão com parede                          | Trocamos as quatro hélices do drone                                 | R$48,00          |
-| 2017       | iDroneAlpha   | RC            | Campus2 | Pés - Canetas             | Quebrado      | Quebrou duas canetas devido a colisão com o solo (8 metros de altura)  | Trocamos as canetas quebradas por novas canetas                     | R$0,00           | 
-| 2017       | iDroneAlpha   | N/A           | N/A     | Bateria 2200 mAh          | Estragada     | Desgaste da bateria, devido ao uso e carregador ser de baixa qualidade | Paramos de usar o carregador e trocamos a bateria                   | R$80,00          |
-| 2017       | iDroneAlpha   | Autônomo      | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (3 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
-| 2018       | iDroneAlpha   | Autônomo      | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (2 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
-| 2018       | iDroneAlpha   | RC            | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (3 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
+| ??/??/2017 | iDroneAlpha   | RC            | Campus2 | Hélices 9443              | Quebrada      | Quebrou uma das hélices em colisão com parede                          | Trocamos as quatro hélices do drone                                 | R$48,00          |
+| ??/??/2017 | iDroneAlpha   | RC            | Campus2 | Pés - Canetas             | Quebrado      | Quebrou duas canetas devido a colisão com o solo (8 metros de altura)  | Trocamos as canetas quebradas por novas canetas                     | R$0,00           | 
+| ??/??/2017 | iDroneAlpha   | N/A           | N/A     | Bateria 2200 mAh          | Estragada     | Desgaste da bateria, devido ao uso e carregador ser de baixa qualidade | Paramos de usar o carregador e trocamos a bateria                   | R$80,00          |
+| ??/??/2017 | iDroneAlpha   | Autônomo      | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (3 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
+| ??/??/2018 | iDroneAlpha   | Autônomo      | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (2 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
+| ??/??/2018 | iDroneAlpha   | RC            | Campus1 | Pés - Canetas             | Quebrado      | Quebrou uma caneta devido a colisão com o solo (3 metros de altura)    | Trocamos as canetas quebradas por novas canetas                     | R$0,00           |
 | ??/09/2018 | iDroneGamma   | RC            | Campus2 | Hélices 9443              | Quebrada      | Quebrou uma das hélices em colisão com parede                          | Trocamos as quatro hélices do drone                                 | R$45,00          | 
 | ??/09/2018 | iDroneGamma   | RC            | Campus2 | Pés - Suporte             | Quebrado      | Quebrou um dos suportes dos pés em colisão com o solo (3 metros)       | Colocamos fita isolante remendando o estrago ocorrido               | R$0,00           | 
 | ??/09/2018 | iDroneGamma   | TeS           | Campus2 | ESC 30A Simonk            | Queimado      | ESC pegou fogo, provavelmente produto comprado com defeito             | Trocamos o ESC por um novo                                          | R$42,00          |
