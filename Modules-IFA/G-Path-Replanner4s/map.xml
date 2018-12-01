@@ -5,20 +5,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.mission__creator.converter.map.Point2D>
-          <x>21.180140874002106</x>
-          <y>-14.110425869805992</y>
+          <x>-0.7829597570772753</x>
+          <y>-5.973870967096619</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>30.642048546232793</x>
-          <y>-34.21111928341683</y>
+          <x>6.550385518961275</x>
+          <y>-18.913422490574952</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>1.999129958345743</x>
-          <y>-41.89482888989475</y>
+          <x>-14.426448580074887</x>
+          <y>-25.38316586316309</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>-7.394925640101031</x>
-          <y>-21.101068243399173</y>
+          <x>-20.22489806499293</x>
+          <y>-11.08154443885759</y>
         </uav.mission__creator.converter.map.Point2D>
       </coordenates>
     </uav.mission__creator.converter.map.Poly2D>
@@ -27,86 +27,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.mission__creator.converter.map.Point2D>
-          <x>55.781467821375756</x>
-          <y>14.10485708524864</y>
+          <x>54.82698374790325</x>
+          <y>7.251500108795916</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>62.26752907868721</x>
-          <y>5.795373616874091</y>
+          <x>58.973750111798836</x>
+          <y>-5.2335017864746005</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>34.05216855983559</x>
-          <y>-1.0397120012322705</y>
+          <x>37.93030967933367</x>
+          <y>-12.103127952981572</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>31.13702275166669</x>
-          <y>8.026999659954956</y>
-        </uav.mission__creator.converter.map.Point2D>
-      </coordenates>
-    </uav.mission__creator.converter.map.Poly2D>
-    <uav.mission__creator.converter.map.Poly2D>
-      <nameRegion>2</nameRegion>
-      <typeRegion>NFZ_REGION</typeRegion>
-      <coordenates>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>22.83855070476351</x>
-          <y>49.67723298039576</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>31.98568647418063</x>
-          <y>35.48333702037718</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-42.45458932231303</x>
-          <y>17.869398379129226</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-31.58302810880364</x>
-          <y>45.16175897860794</y>
-        </uav.mission__creator.converter.map.Point2D>
-      </coordenates>
-    </uav.mission__creator.converter.map.Poly2D>
-    <uav.mission__creator.converter.map.Poly2D>
-      <nameRegion>3</nameRegion>
-      <typeRegion>NFZ_REGION</typeRegion>
-      <coordenates>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-41.884160475560165</x>
-          <y>-9.327237437845287</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-46.670550087414654</x>
-          <y>-17.269299627374664</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-65.07585896142234</x>
-          <y>-11.45968887885392</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-60.06375896647189</x>
-          <y>-2.3502645352071916</y>
-        </uav.mission__creator.converter.map.Point2D>
-      </coordenates>
-    </uav.mission__creator.converter.map.Poly2D>
-    <uav.mission__creator.converter.map.Poly2D>
-      <nameRegion>4</nameRegion>
-      <typeRegion>NFZ_REGION</typeRegion>
-      <coordenates>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>8.829184412132834</x>
-          <y>23.782560555855596</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>17.03839951069006</x>
-          <y>-4.454087176228367E-4</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-15.040209892148209</x>
-          <y>-8.179836500214801</y>
-        </uav.mission__creator.converter.map.Point2D>
-        <uav.mission__creator.converter.map.Point2D>
-          <x>-20.94207765632485</x>
-          <y>17.323752829757364</y>
+          <x>32.814007573077475</x>
+          <y>0.4958979892667402</y>
         </uav.mission__creator.converter.map.Point2D>
       </coordenates>
     </uav.mission__creator.converter.map.Poly2D>
@@ -115,20 +49,20 @@
       <typeRegion>BONUS_REGION</typeRegion>
       <coordenates>
         <uav.mission__creator.converter.map.Point2D>
-          <x>-30.889939385247953</x>
-          <y>10.317165738010795</y>
+          <x>-31.750931888410165</x>
+          <y>12.817254806946428</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>-27.64246405830862</x>
-          <y>4.6374263283613235</y>
+          <x>-27.42869509242626</x>
+          <y>2.666131397354706</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>-39.45523624938319</x>
-          <y>1.1369381886569652</y>
+          <x>-40.286925684867455</x>
+          <y>-0.5115151172030085</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>-41.37911698937694</x>
-          <y>7.559251432074073</y>
+          <x>-44.25481821361508</x>
+          <y>8.937812827555476</y>
         </uav.mission__creator.converter.map.Point2D>
       </coordenates>
     </uav.mission__creator.converter.map.Poly2D>
@@ -137,20 +71,20 @@
       <typeRegion>BONUS_REGION</typeRegion>
       <coordenates>
         <uav.mission__creator.converter.map.Point2D>
-          <x>33.71261728364571</x>
-          <y>29.22901840469541</y>
+          <x>34.25870585127142</x>
+          <y>31.00847139862104</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>38.590452175714965</x>
-          <y>22.651561163787484</y>
+          <x>39.151228414766486</x>
+          <y>20.56023108715494</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>25.90735754177753</x>
-          <y>19.14927947501774</y>
+          <x>25.93064197280732</x>
+          <y>16.63313635694968</y>
         </uav.mission__creator.converter.map.Point2D>
         <uav.mission__creator.converter.map.Point2D>
-          <x>24.595657906724828</x>
-          <y>25.44638322840981</y>
+          <x>21.576473647651397</x>
+          <y>27.01504250737959</y>
         </uav.mission__creator.converter.map.Point2D>
       </coordenates>
     </uav.mission__creator.converter.map.Poly2D>
