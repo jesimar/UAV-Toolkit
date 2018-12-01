@@ -161,11 +161,9 @@ Voos mínimos para a tese.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
-| Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
 | Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
-| Cenário IV  | iDroneBeta  | Pixhawk | Intel Edison     | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
-| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
 
 OBS: Evitar outros voos com Intel Edison (Problema LAND nas Simulações HITL).
 
