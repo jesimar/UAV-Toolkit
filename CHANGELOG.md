@@ -4,6 +4,7 @@
 
 ### Features:
 
+* Added failure insert based in waypoint, time and position.
 * Added script exec-copy-uav-embedded.sh.
 * Created a new repository in the github (UAV-Embedded) with only codes to be embedded. 
 * Updated frequency of some threads. 

@@ -5,7 +5,7 @@
 --------------- Time Step (dt) ---------------
 1
 --------------- Initial State [Xinit (px, py, vel, ang)] ---------------
-12.047843907451895 -8.443767815402499 1.5 0.5061454830783556
+48.51095867492143 -38.7804583695093 1.5 1.5184364492350666
 ------- Maximum Velocity (metro/s) [Terminal] [Asa Fixa 30.5555] [Asa Rotativa 3.0]-------
 3.0
 ------- Minimum Velocity (metro/s) [Sustentacao] [Asa Fixa 11.1111] [Asa Rotativa 1.0] -------
@@ -17,7 +17,7 @@
 ------- Maximum Acceleration (m/(s2)) -------
 0.2
 ----------- Horizonte de Tempo (Horizonte de Planejamento) (K) ---------
-30
+40
 ----------- Dimension Window Plot (Width x Heigth) -----------
 800	700
 ----------- Sistema de Coordenadas [false - Cartesian, true - Geographical] ---------------

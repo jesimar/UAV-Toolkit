@@ -8,7 +8,8 @@ A seguir serão apresentados um conjunto de tabelas contendo os resultados obtid
 | Quadricóptero X4   | iDroneBeta                | Sim                       | Sim                      | Sim                         |
 | Quadricóptero X4   | iDroneGamma               | Sim                       | Sim                      | Não                         |
 | Quadricóptero X4   | iDroneDelta               | Sim                       | Não                      | Não                         |
-| Octocóptero X8+    | DroneOnofre               | Não                       | Não                      | Não                         |
+| Octocóptero X8+    | DroneOnofre 40% Carro     | Não                       | Sim                      | Não                         |
+| Octocóptero X8+    | DroneOnofre 15% Carro     | Não                       | Sim                      | Não                         |
 | Hexacóptero        | DroneSimões               | Não                       | Sim                      | Não                         |
 | Asa Fixa           | Ararinha                  | Não                       | Não                      | Não                         |
 
@@ -21,7 +22,7 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Companion Computer | Intel Edison              | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 2            | N/A                       | Sim                      | Sim                      |
 | Companion Computer | Raspberry Pi 3            | N/A                       | Sim                      | Sim                      |
-| Companion Computer | BeagleBone Black Wireless | N/A                       | Sim                      | TODO                     |
+| Companion Computer | BeagleBone Black Wireless | N/A                       | Sim                      | Não                      |
 | Companion Computer | BeagleBone Green          | N/A                       | Não                      | Não                      |
 | Companion Computer | BeagleBone Blue           | N/A                       | Não                      | Não                      |
 | Companion Computer | Odroid C1                 | N/A                       | Não                      | Não                      |
@@ -149,30 +150,28 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
 | Cenário I   | iDroneAlpha | APM     | Raspberry Pi 3   | 5 m       | FixedRoute4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
-| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
-| Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | AP-Failure        | VertLand  | Não          | Fazer  |                 |
-| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | Fazer  |                 |
+| Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | FEITO  | Somente não subiu a 15 metros, fez o RTL sem sair dos 5 metros (estranho) |
+| Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário II  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure        | VertLand  | Não          | FEITO  |                 |
+| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | FEITO  | Troquei a velocidade de 300cm/s para 200cm/s |
 | Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
+| Cenário IV  | iDroneBeta  | Pixhawk | Intel Edison     | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | FEITO  |                 |
 
-Voos mínimos para a tese.
+Voos da tese para fazer.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 |-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
-| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
-| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  |                 | 
-| Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | Fazer  |                 |
-
-OBS: Evitar outros voos com Intel Edison (Problema LAND nas Simulações HITL).
+| CenárioIII-v4| iDroneBeta | Pixhawk | Raspberry Pi 3   | 20 m      | HGA4m        |                | Low-Battery       | MPGA4s    | Sim          | Fazer  |                 |
 
 Experimentos que deram errado.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
 | Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
 | Cenário II  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone seguiu apenas as duas primeiras partes da rota |
+| Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  | Não funciona BBB com APM |
 | Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone apresentou um comportamento não esperado |
+| Cenário IV  | iDroneBeta  | Pixhawk | BeagleBone Black | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Não          | Fazer  | Não funciona BBB com Pixhawk | 
 
 ## Peças Trocadas
 

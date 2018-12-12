@@ -22,6 +22,7 @@ import lib.uav.struct.constants.LocalExecPlanner;
 import lib.uav.struct.constants.TypeAircraft;
 import lib.uav.struct.constants.TypeDataAcquisitionUAV;
 import lib.uav.struct.constants.TypeFailure;
+import lib.uav.struct.constants.TypeFailureInsert;
 import lib.uav.struct.constants.TypeMsgCommunication;
 import lib.uav.struct.constants.TypeOperationMode;
 import lib.uav.struct.constants.TypeSystemExecIFA;
@@ -280,10 +281,10 @@ public class SecurityManager {
                                         .equals(TypeOperationMode.REAL_FLIGHT)) {
                             dataAcquisition.getBattery();
                             checkPossibilityOfRTL();
-                        }                        
-
+                        }
+                        
                         checkSystemStatus();
-
+                                               
                         printLogAircraft.println(drone.toString());
                         printLogAircraft.flush();
                         Thread.sleep(time);
@@ -378,7 +379,7 @@ public class SecurityManager {
             StandardPrints.printMsgError("FAIL BATTERY OVERHEATING -> Time: " + drone.getInfo().getTime());
         }
         //APM (GPS ublox NEO-6N) geralmente o valor de fixType = 3
-        //Pixhawk (GPS ublox NEO-M8N) geralmente o valor de fixType = 4 e 3.
+        //Pixhawk (GPS ublox NEO-M8N) geralmente o valor de fixType = 4 e as vezes 3.
         if (drone.getSensors().getGPSInfo().fixType <= 2
                 && !hasFailure(TypeFailure.FAIL_GPS)) {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_GPS));
@@ -428,6 +429,28 @@ public class SecurityManager {
             listOfFailure.add(new Failure(drone, TypeFailure.FAIL_AP_POWEROFF));
             drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_AP_POWEROFF));
             StandardPrints.printMsgError("FAIL AP POWEROFF -> Time: " + drone.getInfo().getTime());
+        }
+        if (config.getTypeFailureInsert().equals(TypeFailureInsert.WAYPOINT) &&
+                drone.getInfo().getNextWaypoint() == config.getWaypointToFailure() &&
+                !hasFailure(TypeFailure.FAIL_LOW_BATTERY)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_LOW_BATTERY));
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
+            StandardPrints.printMsgError("TypeFailureInsert.WAYPOINT -> FAIL LOW BATTERY -> Time: " + drone.getInfo().getTime());
+        }
+        if (config.getTypeFailureInsert().equals(TypeFailureInsert.TIME) &&
+                Math.abs(drone.getInfo().getTime() - config.getTimeToFailure()) < 1.0 && 
+                !hasFailure(TypeFailure.FAIL_LOW_BATTERY)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_LOW_BATTERY));
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
+            StandardPrints.printMsgError("TypeFailureInsert.TIME -> FAIL LOW BATTERY -> Time: " + drone.getInfo().getTime());                            
+        }
+        if (config.getTypeFailureInsert().equals(TypeFailureInsert.POSITION) &&
+                Math.abs(drone.getSensors().getGPS().lat - config.getLatToFailure()) < Constants.ONE_METER &
+                Math.abs(drone.getSensors().getGPS().lng - config.getLngToFailure()) < Constants.ONE_METER & 
+                !hasFailure(TypeFailure.FAIL_LOW_BATTERY)){
+            listOfFailure.add(new Failure(drone, TypeFailure.FAIL_LOW_BATTERY));
+            drone.getInfo().setTypeFailure(TypeFailure.getTypeFailure(TypeFailure.FAIL_LOW_BATTERY));
+            StandardPrints.printMsgError("TypeFailureInsert.POSITION FAIL LOW BATTERY -> Time: " + drone.getInfo().getTime());                            
         }
     }
 

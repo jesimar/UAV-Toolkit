@@ -12,7 +12,8 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema UAV-GCS
 
-* Usar o protocolo UDP ao invés de TCP (este está errado) para se comunicar com o MOSA e IFA.
+* Usar o protocolo UDP ao invés de TCP (este está errado) para fazer a comunicação entre a IFA e a GCS (dados drone). (nessa parte não preciso dos dados atrasados).
+* Manter o protocolo TCP na comunicação entre a GCS e IFA e entre MOSA e GCS. (nessa parte preciso de garantia de resposta)
 * Calcular overhead de enviar a rota do MOSA para a GCS e do IFA para a GCS e vice-versa.
 * Plotar na GCS as rotas calculadas nas placas do MOSA.
 * Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 

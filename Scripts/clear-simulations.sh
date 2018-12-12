@@ -1,7 +1,7 @@
 #!/bin/bash
 #Author: Jesimar da Silva Arantes
 #Date: 22/02/2018
-#Last Update: 06/10/2018
+#Last Update: 11/12/2018
 #Description: Script that removes (deletes) a set of files from old missions.
 #Descrição: Script que remove (apaga) um conjunto de arquivos de missões antigas.
 
@@ -99,11 +99,6 @@ sudo rm ../Modules-IFA/G-Path-Replanner4s/*.png 2>/dev/null
 echo "Clear files in /GA-GA-4s/, /GA-GH-4s/ [output-simulation.log]"
 sudo rm ../Modules-IFA/GA-GA-4s/output-simulation.log 2>/dev/null
 sudo rm ../Modules-IFA/GA-GH-4s/output-simulation.log 2>/dev/null
-
-echo "Clear files in /Fixed-Route4s/ [output-simulation.log, route.txt, routeGeo.txt]"
-sudo rm ../Modules-IFA/Fixed-Route4s/output-simulation.log 2>/dev/null
-sudo rm ../Modules-IFA/Fixed-Route4s/route.txt 2>/dev/null
-sudo rm ../Modules-IFA/Fixed-Route4s/routeGeo.txt 2>/dev/null
 
 echo "Clear files in /Route-Simplifier/ [output-simplifier.txt]"
 sudo rm ../Modules-Global/Route-Simplifier/output-simplifier.txt 2>/dev/null

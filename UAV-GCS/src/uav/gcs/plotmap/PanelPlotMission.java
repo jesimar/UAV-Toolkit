@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import jsc.distributions.Normal;
 import lib.uav.reader.ReaderFileConfig;
 import lib.uav.reader.ReaderFileMission;
+import lib.uav.struct.constants.TypeFailureInsert;
 import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeReplanner;
 import lib.uav.struct.constants.TypeSystemExecIFA;
@@ -464,6 +465,16 @@ public class PanelPlotMission extends sPanelDraw {
             g2.fillOval(toUnit(pxDrone) - 30, toUnit(pyDrone) - 30, 60, 60);
             g2.setColor(Color.BLACK);
             g2.drawString("UAV", toUnit(pxDrone)-10, toUnit(pyDrone)+5);
+        }
+        
+        if (config.getTypeFailureInsert().equals(TypeFailureInsert.POSITION)){
+            g2.setColor(Color.BLACK);
+            g2.fillOval(
+                    toUnit(UtilGeo.convertGeoToX(GCS.pointGeo, config.getLngToFailure())) - 30,
+                    toUnit(UtilGeo.convertGeoToY(GCS.pointGeo, config.getLatToFailure())) - 30,
+                    60,
+                    60
+            );
         }
     }
 

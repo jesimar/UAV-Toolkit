@@ -11,6 +11,7 @@ import lib.uav.struct.constants.TypeAltitudeDecay;
 import lib.uav.struct.constants.TypeCC;
 import lib.uav.struct.constants.LocalExecPlanner;
 import lib.uav.struct.constants.TypeDataAcquisitionUAV;
+import lib.uav.struct.constants.TypeFailureInsert;
 import lib.uav.struct.constants.TypeOperationMode;
 import lib.uav.struct.constants.TypePlanner;
 import lib.uav.struct.constants.TypeReplanner;
@@ -112,6 +113,11 @@ public class ReaderFileConfig {
     //ifa
     //global
     private String systemExecIFA;
+    private String typeFailureInsert;
+    private int waypointToFailure;
+    private int timeToFailure;
+    private double latToFailure;
+    private double lngToFailure;
     
     //replanner
     private String localExecReplanner;
@@ -295,7 +301,13 @@ public class ReaderFileConfig {
             userEmail             = prop.getProperty("prop.gcs.od.user_email");
             
             //ifa
-            systemExecIFA              = prop.getProperty("prop.ifa.global.system_exec");
+            systemExecIFA         = prop.getProperty("prop.ifa.global.system_exec");
+            typeFailureInsert     = prop.getProperty("prop.ifa.failure_insert.type");
+            waypointToFailure     = Integer.parseInt(prop.getProperty("prop.ifa.failure_insert.waypoint"));
+            timeToFailure         = Integer.parseInt(prop.getProperty("prop.ifa.failure_insert.time"));
+            latToFailure          = Double.parseDouble(prop.getProperty("prop.ifa.failure_insert.position_lat"));
+            lngToFailure          = Double.parseDouble(prop.getProperty("prop.ifa.failure_insert.position_lng"));
+            
             localExecReplanner         = prop.getProperty("prop.ifa.replanner.local_exec");
             methodReplanner            = prop.getProperty("prop.ifa.replanner.method");
             cmdExecReplanner           = prop.getProperty("prop.ifa.replanner.cmd_exec");
@@ -416,6 +428,16 @@ public class ReaderFileConfig {
             StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of system exec not valid");
             return false;
         }
+        
+        if (typeFailureInsert == null || 
+                (!typeFailureInsert.equals(TypeFailureInsert.NONE) &&
+                 !typeFailureInsert.equals(TypeFailureInsert.WAYPOINT) && 
+                 !typeFailureInsert.equals(TypeFailureInsert.TIME) && 
+                 !typeFailureInsert.equals(TypeFailureInsert.POSITION))){
+            StandardPrints.printMsgError2("Error [[file ./config-global.properties]] type of failure insert not valid");
+            return false;
+        }
+        
         if (localExecReplanner == null || 
                 (!localExecReplanner.equals(LocalExecPlanner.ONBOARD) &&
                  !localExecReplanner.equals(LocalExecPlanner.OFFBOARD))){
@@ -798,6 +820,26 @@ public class ReaderFileConfig {
     //ifa
     public String getSystemExecIFA() {
         return systemExecIFA;
+    }
+    
+    public String getTypeFailureInsert() {
+        return typeFailureInsert;
+    }
+    
+    public int getWaypointToFailure() {
+        return waypointToFailure;
+    }
+    
+    public int getTimeToFailure() {
+        return timeToFailure;
+    }
+    
+    public double getLatToFailure(){
+        return latToFailure;
+    }
+    
+    public double getLngToFailure(){
+        return lngToFailure;
     }
     
     public String getLocalExecReplanner() {
