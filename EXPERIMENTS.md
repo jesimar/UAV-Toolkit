@@ -154,15 +154,9 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 | Cenário II  | iDroneAlpha | APM     | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário II  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 15 m      | CCQSP4m      |                | AP-Failure        | VertLand  | Não          | FEITO  |                 |
 | Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | CCQSP4m      |                | WithoutFailure    |           | Sim          | FEITO  | Troquei a velocidade de 300cm/s para 200cm/s |
-| Cenário III | iDroneBeta  | Pixhawk | Intel Edison     | 20 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  |                 |
+| Cenário III | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 20 m      | HGA4m        |                | Low-Battery       | MPGA4s    | Sim          | FEITO  | Troquei a velocidade de 300cm/s para 200cm/s |
 | Cenário IV  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 12 m      | M-Adaptive4m |                | WithoutFailure    |           | Sim          | FEITO  |                 |
 | Cenário IV  | iDroneBeta  | Pixhawk | Intel Edison     | 12 m      | M-Adaptive4m |                | BadWeather        | RTL       | Não          | FEITO  |                 |
-
-Voos da tese para fazer.
-
-| Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
-|-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
-| CenárioIII-v4| iDroneBeta | Pixhawk | Raspberry Pi 3   | 20 m      | HGA4m        |                | Low-Battery       | MPGA4s    | Sim          | Fazer  |                 |
 
 Experimentos que deram errado.
 

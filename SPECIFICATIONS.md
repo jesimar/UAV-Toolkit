@@ -104,3 +104,22 @@ Rádio Jesimar e USP
 | 1   | 2   | LOITER  |
 | 2   | 2   | RTL     |
 | 3   | 2   | AUTO    |
+
+
+## O que fazer download após um voo real
+
+* .bin -> arquivo com o log do voo. Conectar a Pixhawk no notebook via USB. Copiar usando APM Planner o arquivo .bin. Para isso vá em Aba Graphs -> Download Log -> Refresh -> Selecione -> Download Log(s). O arquivo irá em geral para a pasta ~/apmplanner2/dataflashLogs/.
+* .tlog -> arquivo com o log do voo. Encontrado na pasta /UAV-Toolkit/Scripts/MyCopter/logs/DATA/
+* .tlog.raw -> arquivo com o log do voo. Encontrado na pasta /UAV-Toolkit/Scripts/MyCopter/logs/DATA/
+* .parm -> arquivo com os parâmetros do drone. Encontrado na pasta /UAV-Toolkit/Scripts/MyCopter/logs/DATA/
+* routeGeo.txt -> Caso tenha usado CCQSP4m. Encontrado na pasta /UAV-Toolkit/Modules-MOSA/CCQSP4m/
+* routeGeo*.txt -> Caso tenha usado HGA4m. Encontrado na pasta /UAV-Toolkit/Modules-MOSA/HGA4m/. Onde * significa todos os números.
+* routeGeo.txt -> Caso tenha usado HGA4m. Encontrado na pasta /UAV-Toolkit/Modules-IFA/MPGA4s/
+* log-aircraft?.csv -> arquivo de log do sistema UAV-Tookit. Onde ? significa o último número.
+* log-overhead-ifa?.csv - > arquivo de log de overhead do sistema IFA. Onde ? significa o último número.
+* log-overhead-mosa?.csv -> arquivo de log de overhead do sistema MOSA. Onde ? significa o último número.
+* .h264 -> se fez vídeo. Encontrado na pasta /UAV-Toolkit/Modules-Global/Camera/videos/
+* .jpg -> se retirou foto. Encontrado na pasta /UAV-Toolkit/Modules-Global/Camera/pictures/
+* .jpg -> se retirou fotos em sequência. Encontrado na pasta /UAV-Toolkit/Modules-Global/Camera/photos-in-sequence/
+* config-global.properties -> arquivo de properties com dados de configuração usados no voo real. Encontrado na pasta /UAV-Toolkit/Modules-Global/
+* config-param.properties -> arquivo de properties com dados dos parâmetros usados no voo real. Encontrado na pasta /UAV-Toolkit/Modules-Global/
