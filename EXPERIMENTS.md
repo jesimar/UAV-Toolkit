@@ -8,8 +8,8 @@ A seguir serão apresentados um conjunto de tabelas contendo os resultados obtid
 | Quadricóptero X4   | iDroneBeta                | Sim                       | Sim                      | Sim                         |
 | Quadricóptero X4   | iDroneGamma               | Sim                       | Sim                      | Não                         |
 | Quadricóptero X4   | iDroneDelta               | Sim                       | Não                      | Não                         |
-| Octocóptero X8+    | DroneOnofre 40% Carro     | Não                       | Sim                      | Não                         |
-| Octocóptero X8+    | DroneOnofre 15% Carro     | Não                       | Sim                      | Não                         |
+| Octocóptero X8+    | ARTI-15                   | Não                       | Sim                      | Não                         |
+| Octocóptero X8+    | ARTI-40                   | Não                       | Sim                      | Não                         |
 | Hexacóptero        | DroneSimões               | Não                       | Sim                      | Não                         |
 | Asa Fixa           | Ararinha                  | Não                       | Não                      | Não                         |
 
@@ -34,7 +34,7 @@ A segunda tabela mostra alguns componentes de hardware avaliados.
 | Sensor             | Power Module              | Sim (Simulado)            | Sim                      | Sim                      |
 | Atuador            | Buzzer                    | Sim (Simulado)            | Sim                      | Sim                      |
 | Atuador            | LED                       | N/A                       | Sim                      | Não                      |
-| Atuador            | parachute                 | N/A                       | Não                      | Não                      |
+| Atuador            | Parachute                 | N/A                       | Não                      | Não                      |
 | Atuador            | Spraying                  | N/A                       | Não                      | Não                      |
 
 A terceira tabela mostra alguns componentes de software avaliados.
@@ -50,6 +50,7 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | Mapa               | Instâncias Artificiais               | Sim                       | Não                      | Não                      |
 | UAV-GCS            | Integração com Mapa (Graphics2D)     | Sim                       | Sim                      | Sim                      |
 | UAV-GCS            | Integração com Google Maps           | Sim                       | Sim                      | Sim                      |
+| UAV-GCS            | Tipo de Inserção de Falha - GCS      | Sim                       | Sim                      | Sim                      |
 | IFA                | Fixed Route                          | Sim                       | Sim                      | Sim                      |
 | IFA                | Controller - Baseado no Teclado      | Sim                       | Sim                      | Sim                      |
 | IFA                | Controller - Baseado em Voz          | Sim                       | Sim                      | Não                      |
@@ -74,6 +75,10 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | IFA                | Replanner - Pre-Planned4s - Offboard | Não                       | Não                      | Não                      |
 | IFA                | Replanner - G_PATH_REP.4s - Onboard  | Sim                       | Não                      | Não                      |
 | IFA                | Replanner - G_PATH_REP.4s - Offboard | Sim                       | Não                      | Não                      |
+| IFA                | Tipo de Inserção de Falha - NONE     | Sim                       | Sim                      | Sim                      |
+| IFA                | Tipo de Inserção de Falha - WAYPOINT | Sim                       | Sim                      | Sim                      |
+| IFA                | Tipo de Inserção de Falha - TIME     | Sim                       | Não                      | Não                      |
+| IFA                | Tipo de Inserção de Falha - POSITION | Sim                       | Não                      | Não                      |
 | MOSA               | Fixed Route                          | Sim                       | Sim                      | Sim                      |
 | MOSA               | Fixed Route - Dinâmico               | Sim                       | Sim                      | Sim                      |
 | MOSA               | Planner                              | Sim                       | Sim                      | Sim                      |
@@ -87,8 +92,8 @@ A terceira tabela mostra alguns componentes de software avaliados.
 | MOSA               | Planner - M-Adaptive4m - Offboard    | Sim                       | Sim                      | Sim                      |
 | MOSA               | Planner - A_STAR4m - Onboard         | Sim                       | Não                      | Não                      |
 | MOSA               | Planner - A_STAR4m - Offboard        | Sim                       | Não                      | Não                      |
-| MOSA               | Planner - PATH_PLANNER4m - Onboard   | Sim                       | Não                      | Não                      |
-| MOSA               | Planner - PATH_PLANNER4m - Offboard  | Sim                       | Não                      | Não                      |
+| MOSA               | Planner - G_PATH_PLANNER4m - Onboard | Sim                       | Não                      | Não                      |
+| MOSA               | Planner - G_PATH_PLANNER4m - Offboard| Sim                       | Não                      | Não                      |
 
 A quarta tabela mostra as simulações de HITL feitos para a tese.
 

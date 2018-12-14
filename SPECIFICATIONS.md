@@ -105,8 +105,9 @@ Rádio Jesimar e USP
 | 2   | 2   | RTL     |
 | 3   | 2   | AUTO    |
 
+## Arquivos para Download
 
-## O que fazer download após um voo real
+Abaixo estão listados alguns arquivos que podem ser interessantes fazer o download para posterior análise dos dados e escrita de artigos científicos.
 
 * .bin -> arquivo com o log do voo. Conectar a Pixhawk no notebook via USB. Copiar usando APM Planner o arquivo .bin. Para isso vá em Aba Graphs -> Download Log -> Refresh -> Selecione -> Download Log(s). O arquivo irá em geral para a pasta ~/apmplanner2/dataflashLogs/.
 * .tlog -> arquivo com o log do voo. Encontrado na pasta /UAV-Toolkit/Scripts/MyCopter/logs/DATA/
@@ -123,3 +124,31 @@ Rádio Jesimar e USP
 * .jpg -> se retirou fotos em sequência. Encontrado na pasta /UAV-Toolkit/Modules-Global/Camera/photos-in-sequence/
 * config-global.properties -> arquivo de properties com dados de configuração usados no voo real. Encontrado na pasta /UAV-Toolkit/Modules-Global/
 * config-param.properties -> arquivo de properties com dados dos parâmetros usados no voo real. Encontrado na pasta /UAV-Toolkit/Modules-Global/
+
+
+## Como limpar os Logs da Pixhawk
+
+Abaixo estão os seguintes passos para você limpar uma missão no piloto automático Pixhawk. Estes passos foram necessários, pois de alguma forma a Pixhawk estava fazendo um merge das missões (logs).
+Os passos abaixo foram usando os softwares APM Planner 2 e QGroundControl. Estes passos podem ser feitos usando apenas o QGroundControl também.
+
+As duas próximas figuras mostram como apagar o arquivo .bin.
+
+![](./Figures/Clear-Logs/clear-logs-pix1.png)
+
+![](./Figures/Clear-Logs/clear-logs-pix2.png)
+
+As três próximas figuras mostram como apagar a missão do piloto automático.
+
+![](./Figures/Clear-Logs/clear-logs-pix3.png)
+
+![](./Figures/Clear-Logs/clear-logs-pix4.png)
+
+![](./Figures/Clear-Logs/clear-logs-pix5.png)
+
+![](./Figures/Clear-Logs/clear-logs-pix6.png)
+
+## Bug de altitude
+
+Caso o Drone estaja fazendo uma missão e o mesmo não atinja a altura correta no momento da decolagem faça o seguinte: 
+Pela estação de controle, QGroundControl por exemplo, mude para Loiter dê throttle pelo controle e então volte pela estação de controle para o modo
+AUTO.
