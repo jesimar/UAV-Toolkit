@@ -1,6 +1,6 @@
 # Changelog
 
-## Version v5.0.0 (01/12/2018)
+## Version v5.0.0 (14/12/2018)
 
 ### Features:
 
