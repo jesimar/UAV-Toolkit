@@ -166,6 +166,7 @@ A quinta tabela mostra os experimentos reais feitos para a tese.
 Experimentos que deram errado.
 
 | Cenário     | Drone       | AP      | CC               | Altura    | Path Planner | Path Replanner | Tipo de Falha     | Tipo Ação | Filmou o Voo | Status | OBS             |
+|-------------|-------------|---------|------------------|-----------|--------------|----------------|-------------------|-----------|--------------|--------|-----------------|
 | Cenário I   | iDroneAlpha | APM     | Intel Edison     | 5 m       | FixedRoute4m |                | BadWeather        | RTL       | Não          | Fazer  | Feito, mas o drone pousou antes da hora, pois cliquei no botão sem querer |
 | Cenário II  | iDroneBeta  | Pixhawk | Raspberry Pi 3   | 15 m      | HGA4m        |                | WithoutFailure    |           | Sim          | Fazer  | Feito, mas o drone seguiu apenas as duas primeiras partes da rota |
 | Cenário II  | iDroneAlpha | APM     | BeagleBone Black | 15 m      | HGA4m        |                | WithoutFailure    |           | Não          | Fazer  | Não funciona BBB com APM |
