@@ -27,6 +27,11 @@ public class KeyWords {
      */
     
     /**
+     * Define um ponto onde devera ocorrer um apito do buzzer 
+     */
+    public static String CMD_BUZZER = "cmd_buzzer";
+    
+    /**
      * Define um ponto onde devera ocorrer a retirada de uma fotografia 
      */
     public static String CMD_PICTURE = "cmd_picture";        
@@ -56,14 +61,14 @@ public class KeyWords {
      */
     
     /**
-     * Define uma regiao que representa um obstaculo
+     * Define uma regiao que representa uma região nao navegavel
      */
-    public static String MAP_OBSTACLE = "map_obstacle";
+    public static String MAP_NFZ = "map_nfz";
     
     /**
      * Define uma regiao que representa um obstaculo, mais especificamente um objeto
      */
-    public static String MAP_OBSTACLE_OBJ = "map_obstacle_obj";
+    public static String MAP_OBSTACLE = "map_obstacle";
     
     /**
      * Define uma regiao que representa uma area penalizadora
@@ -74,6 +79,11 @@ public class KeyWords {
      * Define uma regiao que representa uma area bonificadora
      */
     public static String MAP_BONUS = "map_bonus";
+    
+    /**
+     * Define uma regiao que representa uma area cenica (de interesse)
+     */
+    public static String MAP_SCENIC = "map_scenic";
     
     /**
      * Define a fronteira da missao

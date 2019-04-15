@@ -1012,7 +1012,7 @@ public class DecisionMaking {
      * @since version 5.0.0
      */
     private boolean waypointWasReached(double latDest, double lngDest){   
-        double distH = UtilGeom.distanceEuclidian(
+        double distH = UtilGeom.distanceGeodesic(
                 drone.getSensors().getGPS().lat, drone.getSensors().getGPS().lng, 
                 latDest, lngDest);
         double distV = Math.abs(drone.getSensors().getBarometer().alt_rel - config.getAltRelMission());

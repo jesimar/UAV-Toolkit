@@ -82,6 +82,20 @@ public class UtilGeom {
       
     /**
      * Calc the euclidian distance amoung two points
+     * @param lat coordinate x of first point.
+     * @param lng coordinate y of first point.
+     * @param latHome coordinate x of second point.
+     * @param lngHome coordinate y of second point.
+     * @return the euclidian distance.
+     * @since version 1.0.0
+     */
+    public static double distanceGeodesic(double lat, double lng, double latHome, double lngHome){
+        return Math.sqrt(Math.pow(lat - latHome, 2) + 
+                Math.pow((lng - lngHome)*Math.cos(latHome*Math.PI/180), 2));
+    }
+    
+    /**
+     * Calc the euclidian distance amoung two points
      * @param x1 coordinate x of first point.
      * @param y1 coordinate y of first point.
      * @param x2 coordinate x of second point.
@@ -90,7 +104,7 @@ public class UtilGeom {
      * @since version 1.0.0
      */
     public static double distanceEuclidian(double x1, double y1, double x2, double y2){
-        return Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2) * (y1 - y2));
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
     
 }

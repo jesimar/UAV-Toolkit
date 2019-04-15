@@ -109,7 +109,7 @@ O presente projeto dá suporte a um conjunto de VANTs e estão listados abaixo.
 |------------------------------------|------------------------------------|------------------------------------|-----------------------------------------|
 | ![](./Figures/logo-drone-quad.png) | ![](./Figures/logo-drone-hexa.png) | ![](./Figures/logo-drone-octa.png) | ![](./Figures/logo-drone-fixedwing.png) |
 | Modelo Testado: Quadricóptero em X | Modelo Testado: N/A                | Modelo Testado: N/A                | Modelo Testado: N/A                     |
-| Nome: iDroneAlpha                  | Nome: N/A (Drone Simões)           | Nome: N/A                          | Nome: N/A  (Ararinha)                   |
+| Nome: iDroneAlpha e iDroneBeta     | Nome: N/A                          | Nome: N/A                          | Nome: N/A  (Ararinha)                   |
 
 ## Pré-Requisitos de Instalação (Software): 
 
@@ -400,6 +400,8 @@ Ordem  Software/Aplicação                                      Comando para En
 
 :warning: **OBS:** Caso não se deseje analisar os logs gerados na simulação/voo é uma boa prática limpar os logs gerados pelo sistema. Dessa forma, execute o seguinte comando: `UAV-Toolkit/Scripts$ ./clear-simulations.sh`
 
+:warning: **OBS:** Caso o piloto em solo deseje tomar o controle do drone e encerrar os sistemas MOSA e IFA (sistema autônomo), basta dar um comando de RTL no controle de rádio ou pela GCS. Esse comando faz com que as execuções dos sistemas MOSA e IFA abortem.
+
 ## Vídeo da Instalação e Execução
 
 Abaixo encontra-se um vídeo de como instalar o ambiente UAV-Toolkit e todas as suas dependências, além também de como configurar alguns arquivos para execução e por fim como executar o ambiente. 
@@ -422,6 +424,27 @@ Abaixo encontram-se alguns dos drones montados e utilizados durante esse trabalh
 | GPS      | ublox NEO-6M                    | ublox Neo-M8N                  | ublox Neo-M8N                   | ublox NEO-6M                    |
 | Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: Gama)       | FlySky FS-i6 (Name: Delta)      |
 | Peso     | 1,09Kg (com bateria e sem CC)   | 1,14Kg (com bateria e sem CC)  | 1,09Kg (com bateria e sem CC)   | 1,09Kg (com bateria e sem CC)   |
+
+## Características do Sistema
+
+* O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
+* O sistema IFA suporta apenas um cliente MOSA. 
+* Não é possível ao projetista da missão mandar gravar um vídeo e em seguida mandar retirar uma fotografia, pois o recurso estará em uso. Isso não é verificado pelo sistema.
+* O sistema IFA suporta apenas um recalculo de rota para pouso emergencial. Ele não aceita chamar duas vezes o MPGA4s, por exemplo.
+* O sistema IFA e MOSA é desativado caso o piloto em solo pelo controle de rádio ou GCS coloco no modo de voo RTL.
+
+### Características do Sistema Autônomo
+
+- [x] Arma os motores sozinho
+- [x] Decola o VANT sozinho
+- [x] Troca o modo de voo sozinho
+- [x] Executa toda a missão sozinho
+- [x] Monitora os sensores da aeronave buscando eventuais falhas sozinho
+- [x] Retirar fotos sozinho
+- [x] Grava vídeos sozinho
+- [x] Faz a pulverização sozinho
+- [x] Pousa o VANT sozinho
+- [x] Disarma os motores sozinho
 
 ## Citação
 
@@ -460,7 +483,7 @@ O artigo abaixo contém um pouco dos detalhes do sistema IFA e MOSA implementado
 } 
 ```
 
-O artigo abaixo contém mais alguns detalhes do sistema IFA e MOSA implementados [[Link em Breve]()].
+O artigo abaixo contém mais alguns detalhes do sistema IFA e MOSA implementados [[Link](https://www.icas.org/ICAS_ARCHIVE/ICAS2018/data/papers/ICAS2018_0374_paper.pdf)].
 
 ```
 @article{VanniniV2018ICAS,
@@ -473,9 +496,42 @@ O artigo abaixo contém mais alguns detalhes do sistema IFA e MOSA implementados
 }
 ```
 
+Se você quiser citar esta página deste trabalho, use o seguinte:
+
+```
+@misc{ArantesJ2019,
+	author={Arantes, Jesimar da Silva},
+	title={UAV-Dronekit}, 
+	year={2019},
+	publisher = {GitHub},
+	journal = {GitHub repository},
+	howpublished = {\url{https://github.com/jesimar/UAV-Toolkit}}
+}
+```
+
 ## Contribuidores
 
-Os principais contribuidores desse projeto podem ser encontrados [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/AUTHORS)
+Os principais contribuidores/autores desse projeto podem ser encontrados [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/AUTHORS)
+
+## Como Contribuir
+
+Se você tem interesse em fazer uma contribuição ao projeto acesse [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/CONTRIBUTING.md)
+
+## FAQ
+
+Se você tem alguma pergunta sua resposta pode estar [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/FAQ.md)
+
+## TO DO
+
+As principais atividades a serem feitas no projeto podem ser acessadas [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/TODO.md)
+
+## Especificações
+
+Algumas das principais especificações de hardware e software podem ser encontradas [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/SPECIFICATIONS.md)
+
+## Experimentações
+
+Alguns dos principais experimentos conduzidos podem ser encontradas [aqui](https://github.com/jesimar/UAV-Toolkit/blob/master/EXPERIMENTS.md)
 
 ## Changelog
 
@@ -485,18 +541,17 @@ As principais modificações do sistema podem ser acessadas [aqui](https://githu
 
 UAV-Toolkit está disponível sobre código aberto com permissões [GNU General Public License v3.0](https://github.com/jesimar/UAV-Toolkit/blob/master/LICENSE). 
 
+## Agradecimentos
+
+Os autores desse projeto agradecem a Fundação de Amparo à Pesquisa do Estado de São Paulo (FAPESP), número do projeto 2015/23182-2, e a Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) pelo apoio financeiro. 
+
 ## Responsabilidade
 
 Este projeto de software não se responsabiliza por eventuais quedas a VANTs de terceiros. Dessa forma, faça uma quantidade de testes suficientes em SITL e HITL antes de fazer o voo real de forma a minimizar possíveis falhas.
 
-<!--
-## Características do Sistema
+"As opiniões, hipóteses e conclusões ou recomendações expressas neste material são de responsabilidade do(s) autor(es) e não necessariamente refletem a visão da FAPESP"
 
-* O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
-* O sistema IFA suporta apenas um cliente MOSA. 
-* Não é possível ao projetista da missão mandar gravar um vídeo e em seguida mandar retirar uma fotografia, pois o recurso estará em uso. Isso não é verificado pelo sistema.
-* O sistema IFA suporta apenas um recalculo de rota para pouso emergencial. Ele não aceita chamar duas vezes o MPGA4s, por exemplo.
-* O meu sistema é desativa caso no rádio controle o piloto em solo troque para RTL. Isso faz com que o IFA encerre o MOSA e a si mesmo.
+<!--
 
 ## Arquitetura de Hardware
 

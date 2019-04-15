@@ -46,7 +46,7 @@ Abaixo encontra-se uma tabela sintetizando os principais módulos do MOSA e suas
 |----------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|--------------------------|
 | Estratégia                 | Metaheurística + Grafo Visibilidade + Programação Matemática | Programação Matemática  | Heurística               | Determinística           | Não tem                  | Qualquer Estratégia      |
 | Módelo PLIM                | Sim                      | Sim                      | Não                      | Não                      | Não                      | N/A                      |
-| Tempo de Processamento     | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.001 seg)| N/A                      |
+| Tempo de Processamento     | Lento (~10 a 50 seg)     | Médio (~2 a 10 seg)      | Rápido (~0.1 a 2 seg)    | Muito Rápido (<0.1 seg)  | Super Rápido (<0.01 seg) | N/A                      |
 | Dependência de Bibliotecas | CPLEX                    | CPLEX                    | Não tem                  | Não tem                  | Não tem                  | N/A                      |
 | Dependência de Arquitetura | Apenas x86 e x64         | Apenas x86 e x64         | Todas que rodam C        | Todas que rodam C        | Todas                    | N/A                      |
 | Faz o desvio de obstáculos | Sim                      | Sim                      | Sim                      | Não                      | Não                      | N/A                      |

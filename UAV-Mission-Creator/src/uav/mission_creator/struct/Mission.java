@@ -121,7 +121,7 @@ public class Mission {
     public int getSizeObstacle() {
         int size = 0;
         for (PolyGeo p : listPolyGeo){
-            if (p.getName().contains(KeyWords.MAP_OBSTACLE)){
+            if (p.getName().contains(KeyWords.MAP_NFZ)){
                 size++;
             }
         }
@@ -131,7 +131,7 @@ public class Mission {
     public int getSizeObstacleObject() {
         int size = 0;
         for (PolyGeo p : listPolyGeo){
-            if (p.getName().contains(KeyWords.MAP_OBSTACLE_OBJ)){
+            if (p.getName().contains(KeyWords.MAP_OBSTACLE)){
                 size++;
             }
         }
@@ -264,7 +264,7 @@ public class Mission {
     public Point3D getPointObstacleObject3D(int i){
         int j = 0;
         for (Point3D point : listPoint3D){
-            if (point.getName().contains(KeyWords.MAP_OBSTACLE_OBJ)){
+            if (point.getName().contains(KeyWords.MAP_OBSTACLE)){
                 if (j == i){
                     return point;
                 }

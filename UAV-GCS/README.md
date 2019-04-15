@@ -15,7 +15,7 @@ Existem três formas diferentes de executar o sistema que são:
 
 * **SITL** - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulado.
 * **HITL** - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone é simulado, mas os sensores são reais.
-* **REAL_FLIGH** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
+* **REAL_FLIGHT** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
 
 Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts/):
 
@@ -51,7 +51,7 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
 
 ## Interface do Sistema
 
-Abaixo encontra-se três telas com a GUI do sistema em execução.
+Abaixo encontra-se quatro telas com a GUI do sistema em execução.
 
 | Tela com status de HW do UAV         | Tela com diversos dados do UAV       | Tela com plot da missão na Graphics2D | Tela com plot da missão no Google Maps |
 |--------------------------------------|--------------------------------------|---------------------------------------|----------------------------------------|
@@ -91,10 +91,10 @@ As seguintes ações são possíveis de serem chamadas a qualquer instante desde
 * LAND -> Simula que a aeronave sofreu uma falha e deve pousar na vertical.
 * RTL -> Simula que a aeronave sofreu uma falha e deve fazer um Return To Launch (RTL).
 * CHANGE BEHAVIOR -> Troca o comportamento da aeronave durante o voo.
-* CHANGE BEHAVIOR CIRCLE -> Troca o comportamento da aeronave durante o voo para voar em circulos.
+* CHANGE BEHAVIOR CIRCLE -> Troca o comportamento da aeronave durante o voo para voar em formato de círculo.
 * CHANGE BEHAVIOR TRIANGLE -> Troca o comportamento da aeronave durante o voo para voar em formato de triângulo.
 * CHANGE BEHAVIOR RECTANGLE -> Troca o comportamento da aeronave durante o voo para voar em formato de quadrado.
-* BUZZER-TURN-ON -> Aciona o mecanismo de ligar o buzzer.
+* BUZZER-TURN-ON -> Aciona o mecanismo de apito do buzzer.
 * BUZZER-ALARM -> Aciona o mecanismo de alarme do buzzer.
 * CAMERA-PICTURE -> Aciona o mecanismo de tirar foto com a câmera.
 * CAMERA-VIDEO -> Aciona o mecanismo de ligar o vídeo da câmera.
@@ -104,7 +104,7 @@ As seguintes ações são possíveis de serem chamadas a qualquer instante desde
 * SPRAYING-START -> Aciona o mecanismo de pulverização.
 * PARACHUTE-OPEN -> Aciona o mecanismo de paraquedas.
 
-Os seguites métodos podem ser utilizados para controlar o drone:
+Os seguintes métodos podem ser utilizados para controlar o drone:
 
 * **Keyboard-Commands** -> Utiliza comandos do teclado para controlar a aeronave. Veja imagem abaixo.
 * **Voice-Commands** -> Utiliza comandos de voz para controlar a aeronave. Veja imagem abaixo.

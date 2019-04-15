@@ -11,7 +11,7 @@ Os seguintes artigos utilizaram os arquivos disponíveis neste diretório para f
 ICTAI 2017: [[Link](https://ieeexplore.ieee.org/document/8372047/)]
 * Arquivos (ICTAI-2017*.kml)
 
-ICAS 2018: [[Link Wait]()]
+ICAS 2018: [[Link](https://www.icas.org/ICAS_ARCHIVE/ICAS2018/data/papers/ICAS2018_0374_paper.pdf)]
 * Arquivos (ICAS-2018*.kml)
 
 IROS 2018: [[Link Wait]()]

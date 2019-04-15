@@ -357,7 +357,7 @@ public class MissionManager {
             double latDestiny = wptsBuzzer.getWaypoint(i).getLat();
             double lngDestiny = wptsBuzzer.getWaypoint(i).getLng();
             double altDestiny = config.getAltRelMission();            
-            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distHActual = UtilGeom.distanceGeodesic(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
@@ -390,7 +390,7 @@ public class MissionManager {
             double latDestiny = wptsCameraPicture.getWaypoint(i).getLat();
             double lngDestiny = wptsCameraPicture.getWaypoint(i).getLng();
             double altDestiny = config.getAltRelMission();            
-            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distHActual = UtilGeom.distanceGeodesic(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
@@ -426,7 +426,7 @@ public class MissionManager {
             double latDestiny = wptsCameraVideo.getWaypoint(i).getLat();
             double lngDestiny = wptsCameraVideo.getWaypoint(i).getLng();
             double altDestiny = config.getAltRelMission();            
-            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distHActual = UtilGeom.distanceGeodesic(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
@@ -458,7 +458,7 @@ public class MissionManager {
             double latDestiny = wptsCameraPhotoInSeq.getWaypoint(i).getLat();
             double lngDestiny = wptsCameraPhotoInSeq.getWaypoint(i).getLng();
             double altDestiny = config.getAltRelMission();            
-            double distHActual = UtilGeom.distanceEuclidian(lat, lng, latDestiny, lngDestiny);
+            double distHActual = UtilGeom.distanceGeodesic(lat, lng, latDestiny, lngDestiny);
             double distVActual = Math.abs(alt - altDestiny); 
             if (distHActual < distH && distVActual < verticalErrorBarometer){
                 distH = distHActual;
@@ -589,7 +589,7 @@ public class MissionManager {
      * @since version 2.0.0
      */
     private boolean waypointWasReached(double latDest, double lngDest, double altDest){   
-        double distH = UtilGeom.distanceEuclidian(
+        double distH = UtilGeom.distanceGeodesic(
                 drone.getSensors().getGPS().lat, drone.getSensors().getGPS().lng, 
                 latDest, lngDest);
         double distV = Math.abs(drone.getSensors().getBarometer().alt_rel - altDest);

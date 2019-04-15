@@ -5,20 +5,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>3.94</x>
-          <y>-6.36</y>
+          <x>5.93</x>
+          <y>-6.54</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>2.87</x>
-          <y>-5.65</y>
+          <x>5.45</x>
+          <y>-8.17</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>3.58</x>
-          <y>-4.58</y>
+          <x>3.81</x>
+          <y>-7.69</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>4.65</x>
-          <y>-5.29</y>
+          <x>4.3</x>
+          <y>-6.05</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -27,20 +27,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-1.07</x>
-          <y>-4.23</y>
+          <x>-1.34</x>
+          <y>-6.56</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.59</x>
-          <y>-4.97</y>
+          <x>-2.24</x>
+          <y>-5.18</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.33</x>
-          <y>-4.45</y>
+          <x>-0.85</x>
+          <y>-4.28</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.82</x>
-          <y>-3.71</y>
+          <x>0.03</x>
+          <y>-5.67</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -49,20 +49,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.28</x>
-          <y>-4.47</y>
+          <x>3.59</x>
+          <y>-9.41</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.87</x>
-          <y>-5.27</y>
+          <x>2.75</x>
+          <y>-9.04</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.67</x>
-          <y>-4.68</y>
+          <x>3.11</x>
+          <y>-8.2</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.08</x>
-          <y>-3.87</y>
+          <x>3.96</x>
+          <y>-8.57</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -71,20 +71,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>4.54</x>
-          <y>-7.32</y>
+          <x>3.84</x>
+          <y>-9.31</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>3.47</x>
-          <y>-7.89</y>
+          <x>3.84</x>
+          <y>-10.22</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>2.89</x>
-          <y>-6.82</y>
+          <x>2.93</x>
+          <y>-10.21</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>3.96</x>
-          <y>-6.24</y>
+          <x>2.93</x>
+          <y>-9.3</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -93,20 +93,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-3.95</x>
-          <y>-3.59</y>
-        </uav.map.converter.map.Point2D>
-        <uav.map.converter.map.Point2D>
-          <x>-5.49</x>
-          <y>-3.45</y>
-        </uav.map.converter.map.Point2D>
-        <uav.map.converter.map.Point2D>
-          <x>-5.35</x>
-          <y>-1.91</y>
-        </uav.map.converter.map.Point2D>
-        <uav.map.converter.map.Point2D>
           <x>-3.8</x>
-          <y>-2.05</y>
+          <y>-1.18</y>
+        </uav.map.converter.map.Point2D>
+        <uav.map.converter.map.Point2D>
+          <x>-3.9</x>
+          <y>-2.25</y>
+        </uav.map.converter.map.Point2D>
+        <uav.map.converter.map.Point2D>
+          <x>-4.97</x>
+          <y>-2.15</y>
+        </uav.map.converter.map.Point2D>
+        <uav.map.converter.map.Point2D>
+          <x>-4.87</x>
+          <y>-1.08</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -115,20 +115,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>0.36</x>
-          <y>-3.53</y>
+          <x>3.78</x>
+          <y>-6.74</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-0.66</x>
-          <y>-3.95</y>
+          <x>3.04</x>
+          <y>-6.77</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.08</x>
-          <y>-2.92</y>
+          <x>3.01</x>
+          <y>-6.03</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-0.05</x>
-          <y>-2.5</y>
+          <x>3.75</x>
+          <y>-6.0</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -137,20 +137,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-3.25</x>
-          <y>-9.6</y>
+          <x>-3.85</x>
+          <y>-0.15</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.65</x>
-          <y>-8.23</y>
+          <x>-4.35</x>
+          <y>-1.38</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.28</x>
-          <y>-7.83</y>
+          <x>-5.58</x>
+          <y>-0.88</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.88</x>
-          <y>-9.19</y>
+          <x>-5.08</x>
+          <y>0.34</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -159,20 +159,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-3.75</x>
-          <y>-5.81</y>
+          <x>-3.56</x>
+          <y>-5.37</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.23</x>
-          <y>-5.01</y>
+          <x>-4.54</x>
+          <y>-4.49</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.43</x>
-          <y>-4.52</y>
+          <x>-3.66</x>
+          <y>-3.52</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.95</x>
-          <y>-5.32</y>
+          <x>-2.68</x>
+          <y>-4.4</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -181,20 +181,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>2.56</x>
-          <y>-4.36</y>
+          <x>1.53</x>
+          <y>-7.11</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>2.43</x>
-          <y>-5.21</y>
+          <x>1.11</x>
+          <y>-7.86</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>1.58</x>
-          <y>-5.08</y>
+          <x>0.36</x>
+          <y>-7.44</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>1.71</x>
-          <y>-4.23</y>
+          <x>0.78</x>
+          <y>-6.69</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -203,20 +203,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>2.8</x>
-          <y>-5.48</y>
+          <x>3.23</x>
+          <y>-3.65</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>1.26</x>
-          <y>-6.14</y>
+          <x>2.89</x>
+          <y>-4.88</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>0.6</x>
-          <y>-4.6</y>
+          <x>1.66</x>
+          <y>-4.54</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>2.14</x>
-          <y>-3.94</y>
+          <x>2.0</x>
+          <y>-3.31</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -225,20 +225,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.77</x>
-          <y>-4.28</y>
+          <x>-2.74</x>
+          <y>-6.49</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.32</x>
-          <y>-4.1</y>
+          <x>-3.78</x>
+          <y>-6.61</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.13</x>
-          <y>-2.55</y>
+          <x>-3.9</x>
+          <y>-5.57</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.58</x>
-          <y>-2.74</y>
+          <x>-2.86</x>
+          <y>-5.45</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -247,20 +247,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>1.76</x>
-          <y>-4.51</y>
+          <x>-4.08</x>
+          <y>-5.21</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>0.68</x>
-          <y>-4.03</y>
+          <x>-4.81</x>
+          <y>-4.78</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>1.16</x>
-          <y>-2.95</y>
+          <x>-4.38</x>
+          <y>-4.05</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>2.23</x>
-          <y>-3.43</y>
+          <x>-3.65</x>
+          <y>-4.48</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -269,20 +269,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.19</x>
-          <y>-1.39</y>
+          <x>3.62</x>
+          <y>-1.1</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-2.45</x>
-          <y>-3.05</y>
+          <x>2.71</x>
+          <y>-0.08</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.1</x>
-          <y>-2.79</y>
+          <x>3.74</x>
+          <y>0.82</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.85</x>
-          <y>-1.13</y>
+          <x>4.65</x>
+          <y>-0.19</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -291,20 +291,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-0.75</x>
-          <y>-4.11</y>
+          <x>4.63</x>
+          <y>-4.66</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.99</x>
-          <y>-4.05</y>
+          <x>3.77</x>
+          <y>-5.13</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-1.93</x>
-          <y>-2.81</y>
+          <x>3.3</x>
+          <y>-4.27</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-0.69</x>
-          <y>-2.87</y>
+          <x>4.16</x>
+          <y>-3.81</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -313,20 +313,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>3.96</x>
-          <y>-2.88</y>
+          <x>-1.96</x>
+          <y>-6.97</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>3.05</x>
-          <y>-2.07</y>
+          <x>-2.07</x>
+          <y>-8.7</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>3.86</x>
-          <y>-1.16</y>
+          <x>-3.8</x>
+          <y>-8.58</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>4.77</x>
-          <y>-1.97</y>
+          <x>-3.68</x>
+          <y>-6.85</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -335,20 +335,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-4.05</x>
-          <y>-7.64</y>
+          <x>4.67</x>
+          <y>-2.35</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.36</x>
-          <y>-8.71</y>
+          <x>3.13</x>
+          <y>-1.91</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-5.42</x>
-          <y>-8.4</y>
+          <x>3.56</x>
+          <y>-0.37</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-5.11</x>
-          <y>-7.34</y>
+          <x>5.1</x>
+          <y>-0.8</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -357,20 +357,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.88</x>
-          <y>-5.89</y>
+          <x>5.17</x>
+          <y>-6.49</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.39</x>
-          <y>-6.8</y>
+          <x>3.69</x>
+          <y>-7.03</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.3</x>
-          <y>-6.3</y>
+          <x>3.16</x>
+          <y>-5.54</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.8</x>
-          <y>-5.38</y>
+          <x>4.64</x>
+          <y>-5.01</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -379,20 +379,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-4.2</x>
-          <y>-3.77</y>
+          <x>4.97</x>
+          <y>-8.44</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.74</x>
-          <y>-3.11</y>
+          <x>4.44</x>
+          <y>-8.08</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.08</x>
-          <y>-2.57</y>
+          <x>4.8</x>
+          <y>-7.55</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.54</x>
-          <y>-3.23</y>
+          <x>5.33</x>
+          <y>-7.91</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -401,20 +401,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.77</x>
-          <y>-0.95</y>
+          <x>-0.65</x>
+          <y>-4.56</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.06</x>
-          <y>-2.32</y>
+          <x>-0.86</x>
+          <y>-3.88</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.43</x>
-          <y>-2.04</y>
+          <x>-0.18</x>
+          <y>-3.67</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-4.15</x>
-          <y>-0.67</y>
+          <x>0.02</x>
+          <y>-4.35</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>
@@ -423,20 +423,20 @@
       <typeRegion>NFZ_REGION</typeRegion>
       <coordenates>
         <uav.map.converter.map.Point2D>
-          <x>-2.78</x>
-          <y>-6.54</y>
+          <x>1.01</x>
+          <y>-5.82</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.12</x>
-          <y>-6.97</y>
+          <x>0.35</x>
+          <y>-6.87</y>
         </uav.map.converter.map.Point2D>
         <uav.map.converter.map.Point2D>
-          <x>-3.54</x>
-          <y>-6.63</y>
-        </uav.map.converter.map.Point2D>
-        <uav.map.converter.map.Point2D>
-          <x>-3.2</x>
+          <x>-0.69</x>
           <y>-6.21</y>
+        </uav.map.converter.map.Point2D>
+        <uav.map.converter.map.Point2D>
+          <x>-0.03</x>
+          <y>-5.16</y>
         </uav.map.converter.map.Point2D>
       </coordenates>
     </uav.map.converter.map.Poly2D>

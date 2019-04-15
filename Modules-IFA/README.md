@@ -71,7 +71,7 @@ Abaixo encontram-se duas tabela sintetizando os principais módulos do IFA e sua
 | Núcleos da CPU usados      | Um                        | Um                       | Um                       | Um                       | Um                       |
 | Tempo de Processamento     | Rápido (~0.5 a 2 seg)     | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    | Rápido (~0.5 a 2 seg)    |
 | Dependência de Bibliotecas | Não tem                   | Não tem                  | Não tem                  | Não tem                  | Não tem                  |
-| Dependência de Arquitetura | Todas que rodam Java      | Todas que rodam Java     | Todas que rodam Java     | Todas que rodam Java     | Todas                    |
+| Dependência de Arquitetura | Todas que rodam Java      | Todas que rodam Java     | Todas que rodam Java     | Todas que rodam Java     | Todas que rodam Java     |
 | Faz o desvio de obstáculos | Sim                       | Sim                      | Sim                      | Sim                      | Sim                      |
 | Alocação do Risco          | Sim                       | Sim                      | Sim                      | Não                      | Não                      |
 | Linguagem                  | Java                      | Java                     | Java                     | Java                     | Java                     |
@@ -82,9 +82,9 @@ Abaixo encontram-se duas tabela sintetizando os principais módulos do IFA e sua
 | Estratégia                 | Metaheurística             | Metaheurística           | Determinística           | Determinística           | Programação Matemática   | Qualquer Estratégia      |
 | Módelo PLIM                | Não                        | Não                      | Não                      | Não                      | Sim                      | N/A                      |
 | Núcleos da CPU usados      | Dois                       | Dois                     | Um                       | Um                       | Um                       | N/A                      |
-| Tempo de Processamento     | Rápido (~0.5 a 2 seg)      | Rápido (~0.5 a 2 seg)    | (~0.5 a 2 seg)           | Super Rápido (<0.001 seg)| Super Lento (>30 seg até 10 minutos) | N/A                      |
+| Tempo de Processamento     | Rápido (~0.5 a 2 seg)      | Rápido (~0.5 a 2 seg)    | Muito Rápido (~0.1 a 0.5 seg) | Super Rápido (<0.01 seg)| Super Lento (>30 seg até 10 minutos) | N/A                      |
 | Dependência de Bibliotecas | Não tem                    | Não tem                  | Não tem                  | Não tem                  | CPLEX                    | N/A                      |
-| Dependência de Arquitetura | Todas que rodam Java       | Todas que rodam Java     | Todas                    | Todas                    | Apenas x86 e x64         | N/A                      |
+| Dependência de Arquitetura | Todas que rodam Java       | Todas que rodam Java     | Todas que rodam Java     | Todas                    | Apenas x86 e x64         | N/A                      |
 | Faz o desvio de obstáculos | Sim                        | Sim                      | Sim                      | Não                      | Sim                      | N/A                      |
 | Alocação do Risco          | Sim                        | Sim                      | Sim                      | Não                      | Sim                      | N/A                      |
 | Linguagem                  | Java                       | Java                     | Java                     | N/A                      | Java                     | Qualquer Linguagem (Tem Exemplos em C, C++, Java e Python) |

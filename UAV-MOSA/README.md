@@ -50,7 +50,7 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
 
 Esta aplicação não possui interface gráfica. Abaixo encontra-se um print da saída na linha de comando dessa aplicação contendo alguns logs importantes.
 
-![](./Figures/exec-mosa.png)
+![](../Figures/exec-mosa.png)
 
 ## Arquivos de Entrada
 

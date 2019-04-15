@@ -577,7 +577,7 @@ public class SecurityManager {
         double alt = drone.getSensors().getBarometer().alt_rel;      
         
         double distVerticalUP = Math.abs(alt - altRTL);
-        double distHorizontal = UtilGeom.distanceEuclidian(lat, lng, latHome, lngHome)/Constants.ONE_METER;
+        double distHorizontal = UtilGeom.distanceGeodesic(lat, lng, latHome, lngHome)/Constants.ONE_METER;
         double distVerticalDN = Math.abs(altRTL - altHome);
         
         double estimatedTimeForRTLverticalUp = distVerticalUP/speedUP;
@@ -587,11 +587,11 @@ public class SecurityManager {
         double estimatedTimeForRTL = estimatedTimeForRTLverticalUp + estimatedTimeForRTLhorizontal +
                 estimatedTimeForRTLverticalDn;
         
-        //5: representa (5 segundos) que em meus testes o tempo que leva para o drone 
+        //5: representa (5 segundos) que nos experimentos foi o tempo que leva para o drone 
         //   desarmar completamente.
-        //3: representa (3 segundos) que em meus testes o tempo que leva para o drone 
+        //3: representa (3 segundos) que nos experimentos foi o tempo que leva para o drone 
         //   trocar de waypoint.
-        //1.18: representa (18% a mais de tempo) que em meus testes foi a margem que tive 
+        //1.18: representa (18% a mais de tempo) que nos experimentos foi a margem que tive 
         //   que adicionar a estimativa de tempo, pois as mesmas foram baseadas na 
         //   velocidade máxima e o drone, as vezes, voa em uma velocidade inferior a esta.
         //OBS: Estes dados foram obtidos em experimentos SITL

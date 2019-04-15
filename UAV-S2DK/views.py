@@ -168,20 +168,11 @@ Comando que obtem a localizacao do home (home-location).
 Nota: O download do home-location eh necessario porque o ArduPilot 
 implementa/armazena o home-location como um waypoint em vez de envia-lo como mensagens.
 '''
-#Nota: as vezes da alguns problemas devido ao uso do download() e wait_ready()
-#Em geral esses problemas nao levam a queda do drone (problema nao critico)
 def getHomeLocation(request):
     vehicle = request['vehicle']
     cmds = vehicle.commands
     cmds.download()
     cmds.wait_ready()
-    #lat = 0.0
-    #lon = 0.0
-    #alt = 0.0
-    #if vehicle.home_location is not None:
-    #    lat = 0.0
-    #    lon = 0.0
-    #    alt = 0.0
     return {
         'home-location': [vehicle.home_location.lat, vehicle.home_location.lon, vehicle.home_location.alt]
     }
@@ -308,21 +299,8 @@ def setWaypoint(request):
         'status-set-waypoint': 'ok'
     }
 
-#Nao funciona sempre: so consegui ver isso com software de Voice-Commands.
-#Acredito que exista algum problema nos comandos cmds.download() e cmds.wait_ready().
-#Adiciona um waypoint objetivo ao final da missao corrente (append) na aeronave
-#aqui existe um problema com o cmds.next. este problema ocorre quando a aeronave 
-#ja havia cumprido todos os waypoints, por exemplo, next waypoint=16
-#e count waypoint=16 e entao a rota eh atualizada. dessa forma o count waypoint=31 
-#e entao o next waypoint passa a valer 0. Mesmo atualizando o next para o waypoint 
-#correto a aeronave nao segue a rota. Acredito que tenha que dar mais algum comando
-#para que ela siga de fato o waypoint do next.
-
 '''
-Conclusoes: Esta funcao apresenta dois problemas: 
-Problema 1: As vezes da erro no metodo cmds.download() e cmds.wait_ready()
-Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
-todo o plano de voo (mesmo que ela estaja no ar) nao se pode chamar essa funcao.
+Comando que adiciona no final da missao atual um waypoint objetivo
 '''
 def appendWaypoint(request):
     waypoint = request['body']['waypoint']
@@ -342,12 +320,6 @@ def appendWaypoint(request):
         commands.rtl(cmds)
     cmds.upload()
     commands.startmission(vehicle) #comando necessario caso o veiculo esteja no solo
-    #if cmds.next == 0: #estes comandos estao sendo testados para tratar o problema 2.
-    #    print 'next = 0'
-    #    cmds.next = cmds.count
-    #if cmds.next == cmds.count - 1:
-    #    print 'next = count -1'
-    #    cmds.next = cmds.count
     return {
         'status-append-waypoint': 'ok'
     }
@@ -380,11 +352,6 @@ def setMission(request):
 
 '''
 #Adiciona uma missao ao final da missao corrente (append) na aeronave
-Conclusoes: Esta funcao apresenta dois problemas: 
-Problema 1: As vezes da erro no metodo cmds.download() e cmds.wait_ready()
-Problema 2: Caso esta funcao seja chamada quando a aeronave ja tiver cumprido
-todo o plano de voo (mesmo que ela estaja no ar) nao se pode chamar essa funcao.
-Este problema  eh o mesmo do appendWaypoint().
 '''
 def appendMission(request):
     mission = request['body']['mission']
@@ -429,35 +396,3 @@ def setHeading(request):
     return {
         'status-set-heading': 'ok'
     }
-
-
-#====================== Comando ainda nao usados =======================
-
-"""
-Este comando limpa a missao corrente.
-"""
-def clearMission(vehicle):
-    cmds = vehicle.commands
-    vehicle.commands.clear()
-    vehicle.flush()
-    # After clearing the mission you MUST re-download the mission from the vehicle
-    # before vehicle.commands can be used again
-    # (see https://github.com/dronekit/dronekit-python/issues/230)
-    cmds = vehicle.commands
-    cmds.download()
-    cmds.wait_ready()
-
-"""
-Downloads the mission and returns the wp list and number of WP.
-"""
-def getCurrentMission(vehicle):
-    print "Downloading mission"
-    cmds = vehicle.commands
-    cmds.download()
-    cmds.wait_ready()
-    missionList = []
-    n_WP = 0
-    for wp in vehicle.commands:
-        missionList.append(wp)
-        n_WP += 1
-    return n_WP, missionList

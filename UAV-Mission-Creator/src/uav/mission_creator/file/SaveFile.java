@@ -35,7 +35,7 @@ public class SaveFile {
             printMap.println("<number of polygons>");
             printMap.println(mission.getSizeObstacle());
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_NFZ)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = n>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));
@@ -58,7 +58,7 @@ public class SaveFile {
             PrintStream printMap = new PrintStream(fileMap);
             int j = 0;
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_NFZ)) {
                     printMap.println("#obstaculo " + (j+1));
                     int size = mission.getListPolyGeo().get(i).getNpoints();
                     printMap.println(size);
@@ -121,7 +121,7 @@ public class SaveFile {
             }
             int w=0;
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE_OBJ)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
                     printMission.println(
                             "[NFZ-" + (w+1) + "] \t\t remain-in \t 0 \t 0 \t " + 
                             (wpt-1) + " \t 0 \t 1 \t 1 \t" + index);
@@ -161,7 +161,7 @@ public class SaveFile {
             
             index = 1;
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE_OBJ)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
                     printMission.println("<region(" + "NFZ-" + (index) +")>");
                     int n = mission.getListPoly3D().get(i).getNpoints();
                     printMission.println(n);
@@ -200,7 +200,7 @@ public class SaveFile {
             printMap.println(mission.getSizeBonus());
 
             for (int i = 0; i < mission.getSizeListPolyGeo(); i++) {
-                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_OBSTACLE)) {
+                if (mission.getListPolyGeo().get(i).getName().contains(KeyWords.MAP_NFZ)) {
                     printMap.println("<x..., y..., n = 4, id = 0, type = n>");
                     printMap.println(mission.getPoly3DVetX(i));
                     printMap.println(mission.getPoly3DVetY(i));
