@@ -2,12 +2,11 @@
 
 O UAV-Manager é um programa para facilitar a instalação/execução do ambiente UAV-Toolkit.
 
-O projeto foi escrito em Java usando a IDE Netbeans.
+O projeto foi escrito em Java utilizando a IDE Netbeans.
 
 ## Instalação
 
-Não necessita de instalação, basta baixar o projeto em seu computador e usar. 
-Necessita apenas ter o Java JRE instalado uma vez que é uma aplicação Java.
+Não necessita de instalação, basta baixar o projeto em seu computador e usar. Necessita apenas ter o Java JRE instalado uma vez que é uma aplicação Java.
 
 ## Como Executar
 
@@ -17,7 +16,7 @@ Para executar este código deve-se executar o seguinte script (localizados na pa
 
 ## Interface do Sistema
 
-Abaixo encontra-se três telas com a GUI do sistema em execução.
+Abaixo encontra-se três telas com a interface do sistema em execução.
 
 | Tela de Instalação do Sistema    | Tela de Execução do Sistema      | Tela com Sistema em Execução     |
 |----------------------------------|----------------------------------|----------------------------------|
@@ -25,7 +24,7 @@ Abaixo encontra-se três telas com a GUI do sistema em execução.
 
 ## Arquivos de Entrada
 
-No diretório /UAV-Toolkit/UAV-Manager/ existe um arquivo de propriedades (manager.properties), em que é definido alguns parâmetros de execução de forma automática.
+No diretório /UAV-Toolkit/UAV-Manager/ existe um arquivo de propriedades (manager.properties), em que são definidos alguns parâmetros de execução de forma automática.
 
 :warning: **OBS:** Não alterar esse arquivo.
 

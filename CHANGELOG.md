@@ -1,5 +1,12 @@
 # Changelog
 
+## Version v5.0.1 (15/04/2019)
+
+### Features:
+
+* Updated Github documentation.
+* Added file .tlog in directory /UAV-Toolkit/Experiments/.
+
 ## Version v5.0.0 (14/12/2018)
 
 ### Features:

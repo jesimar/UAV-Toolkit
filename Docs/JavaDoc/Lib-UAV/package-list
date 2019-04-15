@@ -1,0 +1,12 @@
+lib.uav.hardware.aircraft
+lib.uav.hardware.sensors
+lib.uav.module.actuators
+lib.uav.module.comm
+lib.uav.module.sensors
+lib.uav.reader
+lib.uav.struct
+lib.uav.struct.constants
+lib.uav.struct.geom
+lib.uav.struct.mission
+lib.uav.struct.states
+lib.uav.util

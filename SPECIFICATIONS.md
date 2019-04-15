@@ -1,4 +1,4 @@
-# SPECIFICATIONS
+# Specifications/Especificações
 
 ## Hardware 
 
@@ -9,7 +9,7 @@ GPS
 | GPS                 | u-blox NEO-6M   | 5Hz                    | 2.5m                | 0.10m/s             | 0.5 graus              | 500m/s            | WGS-84                 | US-Based GPS                  | -40°C a 85°C             |
 | GPS                 | u-blox NEO-M8N  | 10Hz                   | 2.5m                | 0.05m/s             | 0.3 graus              | 500m/s            | WGS-84                 | GPS, Galileo, GLONASS, BeiDou | -40°C a 85°C             |
 
-OBS: O GPS u-blox NEO-M8N segundo vários sites possui uma precisão de 0.9 metros, mas o datasheet garante um erro menor que 2.5 metros.
+:warning: **OBS:** O GPS u-blox NEO-M8N, segundo vários sites, possui uma precisão de 0.9 metros, porém o datasheet garante um erro menor que 2.5 metros.
 
 Bússola
 
@@ -17,7 +17,7 @@ Bússola
 |---------------------|-----------------|------------------------|------------------------|-------------------------------|
 | Bússola             | HMC5883L        | 160Hz                  | 1 a 2 graus            | -30°C a 85°C                  |
 
-OBS: A bússola HMC5883L é a mesma encontrada dentro dos módulos u-blox NEO-6M e u-blox NEO-M8N. 
+:warning: **OBS:** A bússola HMC5883L é a mesma encontrada dentro dos módulos u-blox NEO-6M e u-blox NEO-M8N. 
 
 MPU-6000 (Giroscópio e Acelerômetro)
 
@@ -26,7 +26,7 @@ MPU-6000 (Giroscópio e Acelerômetro)
 | MPU-6000            | Giroscópio      | 3 Eixos | 4Hz a 8000Hz           | -40°C a 85°C             |
 | MPU-6000            | Acelerômetro    | 3 Eixos | 4Hz a 1000Hz           | -40°C a 85°C             |
 
-OBS: O MPU-6000 é encontrado dentro da APM v2.8 e dentro da Pixhawk v1.0. O Giroscópio L3GD20H é usado dentro da Pixhawk. O Acelerômetro LSM303D é usado dentro da Pixhawk.
+:warning: **OBS:** O MPU-6000 é encontrado dentro da APM v2.8 e dentro da Pixhawk v1.0. O Giroscópio L3GD20H é utilizado dentro da Pixhawk. O Acelerômetro LSM303D é utilizado dentro da Pixhawk.
 
 MS5611 MEAS (Barômetro)
 
@@ -34,8 +34,9 @@ MS5611 MEAS (Barômetro)
 |---------------------|-----------|------------------------|-------------------------|----------------------|----------------------|------------------------|
 | MS5611 MEAS         | Barômetro |                        | -40°C a 85°C            | 450 mbar a 1100 mbar | -1.5 mbar a 1.5 mbar | -900m a 6000m          |
 
-OBS^1: A pressão ao nível do mar é de 1 atm, ou ainda, 1013,25 mbar. O valor de 450 mbar corresponde a altitude de 6000 metros. O valor de 1100 mbar corresponde a uma altitude de próxima a 900 metros abaixo do nível do mar.
-OBS: O Barômetro (MS5611 MEAS) é utilizado na Pixhawk.
+:warning: **OBS:** O Barômetro (MS5611 MEAS) é utilizado na Pixhawk.
+
+:warning: **OBS^1:** A pressão ao nível do mar é de 1 atm, ou ainda, 1013,25 mbar. O valor de 450 mbar corresponde a altitude de 6000 metros. O valor de 1100 mbar corresponde a uma altitude de próxima a 900 metros abaixo do nível do mar.
 
 ### Links
 
@@ -68,39 +69,3 @@ DataSheet MS5611 MEAS (Barômetro)
 DataSheet BeagleBone Black
 
 * **BeagleBone Black** -> https://cdn.sparkfun.com/datasheets/Dev/Beagle/e14%20BBB_SRM_rev%200.9.pdf
-
-## Software 
-
-| Aplicação de Software | Função/Funcionalidade     | Frequência de Operação | Tipo | Observação                                |
-|-----------------------|---------------------------|------------------------|------|-------------------------------------------|
-| IFA                   | Monitoramento da Aeronave | 2Hz                    | GET  | Módulo IFA faz requisição ao módulo S2DK  |
-| MOSA                  | Monitoramento da Aeronave | 2Hz                    | GET  | Módulo MOSA faz requisição ao módulo S2DK |
-
-## Características das Implementações
-
-Abaixo encontram-se algumas características das implementações versão UAV-Toolkit release 5.0.0.
-
-| Software           | Número de Threads | Threads Paralelas | Números de Arquivos de Entrada | Números de Arquivos de Saída |
-|--------------------|-------------------|-------------------|--------------------------------|------------------------------|
-| UAV-IFA            | 12                | 8                 | 5                              | 4                            |
-| UAV-MOSA           | 11                | 8                 | 12                             | 7                            |
-| UAV-GCS            | 37                | 30                | 30                             | 6                            |
-| UAV-S2DK           | 1                 | 1                 | 1                              | 0                            |
-| Lib-UAV            | N/A               | N/A               | N/A                            | N/A                          |
-| UAV-MissionCreator | 1                 | 1                 | 2                              | 12                           |
-| UAV-Manager        | 7                 | ?                 | ?                              | ?                            |
-
-OBS: A tabela acima não foi feita com muito rigor, dessa forma, pode haver algum equívoco.
-
-## Rádio Controle 
-
-Rádio Jesimar e USP
-
-| SWC | SWD | Modo    |
-|-----|-----|---------|
-| 1   | 1   | LOITER  |
-| 2   | 1   | RTL     |
-| 3   | 1   | AUTO    |
-| 1   | 2   | LOITER  |
-| 2   | 2   | RTL     |
-| 3   | 2   | AUTO    |

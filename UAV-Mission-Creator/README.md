@@ -1,6 +1,6 @@
 # UAV-Mission-Creator
 
-O projeto UAV-Mission-Creator foi desenvolvido para auxiliar a projetar missões e mapas usando o [Google Earth](https://www.google.com/earth/index.html). Este projeto foi desenvolvido em Java usando o IDE [Netbeans](https://netbeans.org/).
+O projeto UAV-Mission-Creator foi desenvolvido para auxiliar a projetar missões e mapas utilizando o [Google Earth](https://www.google.com/earth/index.html). Este projeto foi desenvolvido em Java utilizando a IDE [Netbeans](https://netbeans.org/).
 
 ## Visão Geral
  
@@ -16,7 +16,7 @@ Os arquivos de entrada/saída desse sistema ficam dentro do diretório: /UAV-Too
 
 ## Criando o arquivo KML
 
-Para a criação do arquivo KML basta abrir o Google Earth. E criar um mapa, na criação desse mapa as seguinte tags devem ser utilizadas.
+Para a criação do arquivo KML basta abrir o Google Earth. E criar uma missão/mapa, na criação dessa missão as seguinte tags devem ser utilizadas.
 
 As seguintes notações foram definidas afim de mapear as regiões em que ocorrerá a missão:
 
@@ -42,41 +42,28 @@ As seguintes notações foram definidas afim de registrar as atividades relacion
 
 * **config-mission.properties**: um arquivo de configuração para definição de um conjunto de propriedades importantes internas do UAV-Mission-Creator.
 
-* **mission.kml**: um arquivo com o mapa e plano da missão planejada feito usando o Google Earth. Este arquivo pode ter qualquer nome, mas deve possuir a extensão kml. Extensões kmz ainda não são suportadas.
+* **mission.kml**: um arquivo com o mapa e plano da missão planejada feito utilizando o Google Earth. Este arquivo pode ter qualquer nome, mas deve possuir a extensão kml. Extensões kmz ainda não são suportadas.
 
 ## Arquivos de Saída
 
-* **map-nfz.sgl** -> especificação do mapa contendo as regiões de obstáculos em formato .SGL. Usado pelo algoritmo HGA4m.
-* **map-nfz.json** -> especificação do mapa contendo as regiões de obstáculos em formato .JSON. Usado pelo algoritmo G-Path-Planner4m.
-* **map-nfz.xml** -> especificação do mapa contendo as regiões de obstáculos em formato .XML. Usado pelo algoritmo G-Path-Planner4m.
-* **map-nfz-astar.sgl** -> especificação do mapa contendo as regiões de obstáculos em formato .SGL. Usado pelo algoritmo A-Star4m.
-* **map-full.sgl** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .SGL. Usado pelos algoritmos GA4s, DE4s, MPGA4s, GH4s, MS4s, GA-GA-4s e GA-GH-4s.
-* **map-full.json** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .JSON. Usado pelo algoritmo G-Path-Replanner4s.
-* **map-full.xml** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .XML. Usado pelo algoritmo G-Path-Replanner4s.
-* **waypointsMission.txt** -> especificação do plano da missão, ou seja, conjunto de waypoints onde deseja-se sobrevoar com o VANT. Usado pelo algoritmo HGA4m.
-* **mission-ccqsp.sgl** -> especificação do mapa e da missão em formato .SGL. Usado pelo algoritmo CCQSP4m.
-* **geoBase.txt** -> especificação de um ponto base em coordenadas geográficas usado para conversão entre os sistemas de coordenadas cartesianas e geográficas e vice-versa. Usado pelos sistemas IFA e MOSA.
-* **featureMission.txt** -> especificações de ações a serem executadas durante a realização da missão como: retirada de fotografias, filmagem, pulverização, acionamento do buzzer, etc. Usado pelo sistema MOSA.
+* **map-nfz.sgl** -> especificação do mapa contendo as regiões de obstáculos em formato .SGL. Utilizado pelo algoritmo HGA4m.
+* **map-nfz.json** -> especificação do mapa contendo as regiões de obstáculos em formato .JSON. Utilizado pelo algoritmo G-Path-Planner4m.
+* **map-nfz.xml** -> especificação do mapa contendo as regiões de obstáculos em formato .XML. Utilizado pelo algoritmo G-Path-Planner4m.
+* **map-nfz-astar.sgl** -> especificação do mapa contendo as regiões de obstáculos em formato .SGL. Utilizado pelo algoritmo A-Star4m.
+* **map-full.sgl** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .SGL. Utilizado pelos algoritmos GA4s, DE4s, MPGA4s, GH4s, MS4s, GA-GA-4s e GA-GH-4s.
+* **map-full.json** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .JSON. Utilizado pelo algoritmo G-Path-Replanner4s.
+* **map-full.xml** -> especificação do mapa contendo as regiões de obstáculos, bonificadores e penalizadores em formato .XML. Utilizado pelo algoritmo G-Path-Replanner4s.
+* **waypointsMission.txt** -> especificação do plano da missão, ou seja, conjunto de waypoints onde deseja-se sobrevoar com o VANT. Utilizado pelo algoritmo HGA4m.
+* **mission-ccqsp.sgl** -> especificação do mapa e da missão em formato .SGL. Utilizado pelo algoritmo CCQSP4m.
+* **geoBase.txt** -> especificação de um ponto base em coordenadas geográficas utilizado para conversão entre os sistemas de coordenadas cartesianas e geográficas e vice-versa. Utilizado pelos sistemas IFA e MOSA.
+* **featureMission.txt** -> especificações de ações a serem executadas durante a realização da missão como: retirada de fotografias, filmagem, pulverização, acionamento do buzzer, etc. Utilizado pelo sistema MOSA.
 
 ## Como Usar
 
-Abaixo encontra-se alguns vídeos mostrando um pouco como projetar os mapas usando o Google Earth.
+Abaixo encontra-se alguns vídeos mostrando um pouco como projetar os mapas utilizando o Google Earth.
 
 [![](https://img.youtube.com/vi/UpTqucMuJt8/0.jpg)](https://www.youtube.com/watch?v=UpTqucMuJt8 "Criando Missões com Google Earth")
 
 [![](https://img.youtube.com/vi/JgspSf9rvio/0.jpg)](https://www.youtube.com/watch?v=JgspSf9rvio "Criando Missões com Google Earth")
 
 [![](https://img.youtube.com/vi/u5QslNeOEYs/0.jpg)](https://www.youtube.com/watch?v=u5QslNeOEYs "Criando Missões com Google Earth")
-
-## Problemas
-
-:warning: **OBS:** De acordo com algumas medidas minhas a imagem do Google Earth (Google Satélites) e a imagem de fundo do QGroundControl (Bing Satélites) possuem um deslocamento de entre 5,0 metros a 7,0 metros. 
-Isso pode impactar e muito durante o planejamento da missão e fazer o drone colidir com algum obstáculo. Pois, o meu planejamento é feito baseado em waypoints e obstáculos e eles são definidos
-baseados na imagem obtida. Eu costumo colocar uma margem de erro nos obstáculos, mas de acordo com tais medidas obtidas preciso aumentar ainda mais essa margem para pelo menos 7 metros, afim de garantir uma segurança mínima.
-Nessa figura abaixo pode-se considerar as rotas na cor vermelha e verde como iguais, observando assim o erro de medida das imagens.
-
-![](../Figures/error-image-satellites.png)
-
-A Figura abaixo mostra a mesma rota obtida no software QGroundControl apenas mudando o tipo de mapa de Bing Satélities para Google Satélities. Nessa imagem foi ressaltado o deslocamento dos obstáculos em relação as duas rotas.
-
-![](../Figures/error-image-satellites2.png)

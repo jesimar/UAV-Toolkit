@@ -1,6 +1,6 @@
-# Modules-Global
+# Modules-Global/Módulos Globais
 
-Este diretório é responsável por agrupar um conjunto de algoritmos e módulos de hardware usados pelo sistema IFA e MOSA. 
+Este diretório agrupa um conjunto de algoritmos e módulos de hardware/software utilizados pelo sistemas IFA e MOSA. 
 
 Os diretórios a seguir contém códigos utilizados pelo sistema IFA.
 
@@ -18,19 +18,19 @@ Os diretórios a seguir contém códigos utilizados pelo sistema MOSA.
 * **Spraying** -> Código responsável por abrir ou fechar o sistema de pulverização do drone.
 * **Route-Simplifier** -> Código responsável por fazer a simplificação de waypoints de forma a tornar mais leve para o piloto automático a execução da rota.
 
-O diretório Files contém arquivos utilizados pelo sistema MOSA e IFA.
+O diretório Files contém arquivos utilizados pelo sistemas MOSA e IFA.
 
-* **geoBase.txt** -> Arquivo com as coordenadas de longitude, latitude e altitude usado na transformação para coordenadas cartesianas.
+* **geoBase.txt** -> Arquivo com as coordenadas de longitude, latitude e altitude utilizado na transformação de coordenadas geográficas para coordenadas cartesianas.
 * **featureMission.txt** -> Arquivo que contém as coordenadas de latitude, longitude e altitude, em que deve-se acionar o buzzer, câmera foto, câmera vídeo e spraying.
-* **map-full.sgl** -> Arquivo de mapa completo (contendo obstáculos, região penalizadora e região bonificadora) usado pelo sistema.
-* **map-nfz.sgl** -> Arquivo de mapa com apenas os obstáculos usado pelo sistema.
+* **map-full.sgl** -> Arquivo de mapa completo (contendo obstáculos, região penalizadora e região bonificadora) utilizado pelo sistema.
+* **map-nfz.sgl** -> Arquivo de mapa com apenas os obstáculos utilizado pelo sistema.
 
 ## Arquivos de configuração
 
 Este diretório também possui dois arquivos de configuração que são:
 
-* **config-global.properties** -> Arquivo usado pelos sistemas MOSA, IFA, GCS, S2DK para descrever os aspectos gerais da missão/segurança.
-* **config-param.properties** -> Arquivo usado pelo sistema IFA para calibrar os parâmetros de voo do Piloto Automático.
+* **config-global.properties** -> Arquivo utilizado pelos sistemas MOSA, IFA, GCS, S2DK para descrever os aspectos gerais da missão/segurança.
+* **config-param.properties** -> Arquivo utilizado pelo sistema IFA para calibrar os parâmetros de voo do Piloto Automático.
 
 ## Síntese: 
 
@@ -55,7 +55,7 @@ A tabela abaixo sintetiza algumas informações sobre o sensor câmera.
 | Código para Raspberry Pi | picture-rpi.py          | photo-in-sequence-rpi.py     | video-rpi.py           |                                          |
 | Código para PC           | picture-pc.jar          | photo-in-sequence-pc.jar     | video-pc.jar           | Print screen, print screens e grava tela |
 
-A tabela abaixo sintetiza algumas informações sobre o sensor sonar.
+A tabela abaixo sintetiza algumas informações sobre o sensor de ultrassom (sonar).
 
 | Característica           | Sonar                 | Observação             |
 |--------------------------|-----------------------|------------------------|
@@ -95,7 +95,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador LED.
 | Código para Raspberry Pi | turn-on-led-rpi.py      | blink-led-rpi.py             |                        |
 | Código para BBB          | turn-on-led-bbb.py      | blink-led-bbb.py             |                        |
 
-A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
+A tabela abaixo sintetiza algumas informações sobre o atuador paraquedas (parachute).
 
 | Característica           | Parachute                | Observação             |
 |--------------------------|--------------------------|------------------------|
@@ -104,7 +104,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Parachute.
 | Código para Raspberry Pi | open-parachute-rpi.py    |                        |
 | Código para BBB          | open-parachute-bbb.py    |                        |
 
-A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
+A tabela abaixo sintetiza algumas informações sobre o atuador pulverizador (spraying).
 
 | Característica           | Spraying                | Spraying                 | Observação             |
 |--------------------------|-------------------------|--------------------------|------------------------|
@@ -113,7 +113,7 @@ A tabela abaixo sintetiza algumas informações sobre o atuador Spraying.
 | Código para Raspberry Pi | open-spraying-rpi.py    | close-spraying-rpi.py    |                        |
 | Código para BBB          | open-spraying-bbb.py    | close-spraying-bbb.py    |                        |
 
-A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (por enquanto, esse recurso será adicionado em breve), execuntando onboard ou offboard. Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
+A tabela abaixo sintetiza alguns detalhes sobre a implementação do simplificador de rotas. Pode-se perceber nessa tabela que os métodos do MOSA (HGA4m e CCQSP4m) suportam a simplificação de rotas, sejam executando de forma onboard ou offboard. Nota-se também que todos os métodos do IFA (como, MPGA4s, GA4s, DE4s, etc) não suportam esse recurso (esse recurso será adicionado em breve). Por fim, pode-se perceber que apenas o método CCQSP4m (executando onboard) suporta o simplificador de rotas de forma automática. Isso significa que mesmo que eu não ative explicitamente o simplificador, o mesmo será executado caso o tamanho da rota ultrapasse o tamanho máximo suportado pelo piloto. Vale lembrar que o número máximo de waypoints suportados pela APM v2.8 é 166 e a Pixhawk v1.0 é 718. Vamos supor então que o planejador CCQSP4m (executando onboard) gerou uma rota com 200 waypoints e estamos usando a APM, se tentarmos passar tal rota para o piloto automático irá dar um erro, mas foi adicionado um recurso, onde o simplificador de rotas automaticamente será chamado para previnir tais erros de lógica.
 
 | Característica                                 | HGA4m Onboard   | HGA4m Offboard  | CCQSP4m Onboard | CCQSP4m Offboard | Métodos-IFA Onboard | Métodos-IFA Offboard |
 |------------------------------------------------|-----------------|-----------------|-----------------|------------------|---------------------|----------------------|
@@ -132,7 +132,7 @@ A tabela abaixo sintetiza algumas informações sobre os Companions Computers e 
 | Suporta Parachute               | Sim             | Sim               | Sim              | Não           |
 | Suporta Spraying                | Sim             | Sim               | Sim              | Não           |
 
-:warning: **OBS:** Os códigos turn-on-led-bbb.py, blink-led-bbb.py, etc quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nesta placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando. Caso tem-se executar os códigos no sistema não dará nenhum problema apenas não serão executados como se deseja.
+:warning: **OBS:** Os códigos turn-on-led-bbb.py, blink-led-bbb.py, etc quando executados sobre a BBB necessitam de sudo para rodar. Para solucionar isso necessita fazer uma série de configurações nessa placa. Dessa forma, recomenda-se não executar tais códigos sem antes verificar se estão funcionando.
 
 :warning: **OBS:** Os códigos picture-rpi.py, photo-in-sequence-rpi.py e video-rpi.py necessitam de permissão para gravar os dados na pasta na Raspberry Pi, dessa forma, certifique-se que você deu permissão total para a pasta através dos comandos: 
 ```
@@ -143,4 +143,4 @@ chmod 777 Camera/videos/
 
 :warning: **OBS:** A câmera da Raspberry Pi 3 possui como orientação principal nas fotografias/filmagens a direção do cabo flat da câmera. Dessa forma, o cabo deve ficar orientado para baixo, assim a foto/filmagem ficará orientada de forma correta.
 
-:warning: **OBS:** A câmera da Raspberry Pi 3 fica gravando o tempo todo a qualquer momento que a gravação for interrompiada não se perde o conteúdo anterior gravado. Por exemplo, supanhamos que estejamos gravando e o drone cai o conteúdo anteriormente gravado não é perdido mesmo que desligamos a RPi repentinamente, o que foi salvo fica perfeito.
+:warning: **OBS:** A câmera da Raspberry Pi 3 fica gravando o tempo todo. A qualquer momento que a gravação for interrompida conteúdo anterior gravado não será perdido. Por exemplo, supanhamos que estejamos gravando e o drone cai o conteúdo anteriormente gravado não é perdido mesmo que desligamos a RPi repentinamente.

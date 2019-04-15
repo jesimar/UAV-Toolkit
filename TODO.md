@@ -14,13 +14,11 @@ A seguir encontra-se diversas atividades para serem feitas no projeto.
 
 ## Sistema MOSA:
 
-* Integrar o módulo do HCCQSP (Márcio).
-* Integrar o módulo do HISA4m (Márcio).
-* Integrar o módulo do CSA4m  (Márcio).
+* Integrar o módulo do HCCQSP (Tese do Márcio).
+* Integrar o módulo do HISA4m (Tese do Márcio).
+* Integrar o módulo do CSA4m  (Tese do Márcio).
 
 ## Sistema UAV-GCS
 
-* Plotar na GCS as rotas calculadas nas placas do MOSA.
-* Definir no google maps pontos para trocar velocidade atualizar isso também no protocolo. 
-		Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, 
-		por exemplo, para etapa de pulverização. (behavior diferente).
+* Plotar na GCS as rotas calculadas pelo computador de bordo que foram executadas pelo sistema MOSA.
+* Definir no google maps pontos para trocar velocidade. Atualizar isso também no protocolo. Isso será util para fazer missões que necessitam ser realizadas com duas velocidades uma velocidade mais lenta, por exemplo, para etapa de pulverização. (behavior diferente).

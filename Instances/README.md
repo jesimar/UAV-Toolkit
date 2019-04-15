@@ -1,26 +1,24 @@
-# Instances
+# Instances/Instâncias
 
 Este diretório agrupa um conjunto de arquivos de instâncias Artificiais e Reais utilizadas nos planejadores e replanejadores.
 
-* **Instancias Artificiais:** Foram geradas de forma automática por algum algoritmo (programa localizado [aqui](https://github.com/jesimar/UAV-Tools/tree/master/CreateMapArtificial)).
+* **Instancias Artificiais:** Foram geradas de forma automática pelo algoritmo/programa [CreateMapArtificial](https://github.com/jesimar/UAV-Tools/tree/master/CreateMapArtificial).
 
-* **Instancias Reais:** Foram geradas de forma manual, em geral, usando o Google Earth e usando o software [UAV-Mission-Creator](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Mission-Creator).
+* **Instancias Reais:** Foram geradas de forma manual, em geral, utilizando o Google Earth e o software [UAV-Mission-Creator](https://github.com/jesimar/UAV-Toolkit/tree/master/UAV-Mission-Creator).
 
-A Figura abaixo dá uma visão geral dos arquivos de instâncias disponibilizados nesse diretório.
+A Figura abaixo dá uma visão geral da organização dos arquivos de instâncias disponibilizados neste diretório.
 
 ![](../Figures/instances.png)
 
 ## Formato de Entrada: 
 
-* **SGL** -> formato de entrada próprio do mapa, utilizado pelo Framework ProOF. Este padrão é mais leve, porém também mais difícil de entender e de ler.
-* **JSON** -> formato de entrada do mapa é, em geral, fácil de entender e ler. Este padrão é mais pesado que o SGL, ocupa em média o quádruplo do SGL em disco (HD).
-* **XML** -> formato de entrada do mapa é, em geral, fácil de ler. Este padrão é mais pesado que o SGL e JSON, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
+* **SGL** -> formato de entrada utilizado pelo Framework ProOF. Esse é o padrão de mapa mais leve e compacto, todavia também é o mais difícil de entender.
+* **JSON** -> formato de entrada do mapa é, em geral, fácil de entender e ler. Esse padrão é mais pesado que o SGL, ocupa em média o quádruplo do SGL em disco (HD).
+* **XML** -> formato de entrada do mapa é, em geral, fácil de ler. Esse padrão é mais pesado que o SGL e JSON, em geral, ocupa o dobro do tamanho do JSON em disco (HD).
 
 ## Arquivo de Instância do Path Planner:
 
-Abaixo encontra-se um exemplo do arquivo em formato .SGL.
-Os valores das coordenadas utilizadas são cartesianas.
-Utilizado no planejador de rotas: HGA4m.
+Abaixo encontra-se um exemplo do arquivo em formato .SGL. Os valores das coordenadas utilizadas são cartesianas. Arquivo utilizado no planejador de rotas: HGA4m.
 
 ```
 <number of polygons>
@@ -47,9 +45,7 @@ Utilizado no planejador de rotas: HGA4m.
 
 ## Arquivo de Instância do Path Replanner:
 
-Abaixo encontra-se um exemplo do arquivo em formato .SGL.
-Os valores das coordenadas utilizadas são cartesianas.
-Utilizado no replanejador de rotas: MPGA4s, GA4s, GH4s, DE4s, etc.
+Abaixo encontra-se um exemplo do arquivo em formato .SGL. Os valores das coordenadas utilizadas são cartesianas. Arquivo utilizado no replanejador de rotas: MPGA4s, GA4s, GH4s, DE4s, etc.
 
 ```
 <number of polygons>

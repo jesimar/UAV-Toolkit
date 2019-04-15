@@ -13,13 +13,13 @@ Necessita apenas ter o Java JRE instalado uma vez que é uma aplicação Java.
 
 Existem três formas diferentes de executar o sistema que são: 
 
-* **SITL** - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulado.
-* **HITL** - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone é simulado, mas os sensores são reais.
-* **REAL_FLIGH** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone é real e todos os sensores.
+* **SITL** - Software-In-The-Loop - Tem que ter o sistema apenas no seu computador. O drone e os sensores são apenas simulados.
+* **HITL** - Hardware-In-The-Loop - Tem que ter o sistema no seu computador e em algum Companion Computer (CC). O drone e o AP são simulados, mas o CC e os sensores são reais.
+* **REAL_FLIGH** - Voo Real - Tem que ter o sistema no seu computador, no Companion Computer (CC) e ter um drone real. O drone e todos os sensores são dispositivos reais.
 
-Para executar este código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts/):
+Para executar esse código, primeiramente, deve-se executar os seguintes scripts (localizados na pasta /UAV-Toolkit/Scripts/):
 
-* **Forma 1** -> Execução em SITL (Executado no PC - Personal Computer):
+* **Forma 1** -> Execução SITL (Executado no PC - Personal Computer):
 
    1. ./exec-sitl.sh                  (PC)
    2. ./exec-mavproxy-sitl.sh         (PC)
@@ -27,7 +27,7 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
    4. ./exec-ifa.sh                   (PC)
    5. ./exec-mosa.sh                  (PC)
 
-* **Forma 2** -> Execução em HITL (Executado no PC e CC - Companion Computer):
+* **Forma 2** -> Execução HITL (Executado no PC e CC - Companion Computer):
 
    1. ./exec-sitl.sh                  (PC)
    2. ./exec-mavproxy-hitl.sh         (CC)
@@ -44,7 +44,7 @@ Para executar este código, primeiramente, deve-se executar os seguintes scripts
 
 :warning: **OBS:** Deve-se executar cada um desses scripts em um terminal diferente.
 
-:warning: **OBS:** Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, com por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
+:warning: **OBS:** Você pode abrir/executar também uma estação de controle de solo para acompanhar a execução da missão, como por exemplo, o QGroundControl, APM Planner 2.0 ou Mission Planner.
 
 ## Interface do Sistema
 
@@ -54,7 +54,7 @@ Esta aplicação não possui interface gráfica. Abaixo encontra-se um print da 
 
 ## Arquivos de Entrada
 
-No diretório /UAV-Toolkit/Modules-Global/ tem-se um arquivo de entrada (config-global.properties), em que se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar entre outras configurações do sistema MOSA.
+No diretório /UAV-Toolkit/Modules-Global/ tem-se um arquivo de entrada (config-global.properties), em que se define que tipo de missão deverá ser seguida, quais métodos iremos utilizar, entre outras configurações do sistema MOSA.
 
 Abaixo estão os principais parâmetros do sistema MOSA (existem outros parâmetros usados). 
 
@@ -78,6 +78,8 @@ prop.mosa.fixed_route.file_waypoints=missao-teste.txt
 ```
 
 ## Arquivos de Saída
+
+Como saída desse sistema temos um arquivo que fica armazenado na pasta: /UAV-Toolkit/UAV-MOSA/
 
 O seguinte arquivo de saída (log-overhead-mosa*.csv) em formato CSV é gerado: 
 

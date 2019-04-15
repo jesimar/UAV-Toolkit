@@ -425,6 +425,19 @@ Abaixo encontram-se alguns dos drones montados e utilizados durante esse trabalh
 | Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: Gama)       | FlySky FS-i6 (Name: Delta)      |
 | Peso     | 1,09Kg (com bateria e sem CC)   | 1,14Kg (com bateria e sem CC)  | 1,09Kg (com bateria e sem CC)   | 1,09Kg (com bateria e sem CC)   |
 
+## Rádio Controle 
+
+Abaixo encontram-se alguns modos de voos configurados nos rádios do Jesimar e da USP.
+
+| SWC | SWD | Modo    |
+|-----|-----|---------|
+| 1   | 1   | LOITER  |
+| 2   | 1   | RTL     |
+| 3   | 1   | AUTO    |
+| 1   | 2   | LOITER  |
+| 2   | 2   | RTL     |
+| 3   | 2   | AUTO    |
+
 ## Características do Sistema
 
 * O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
