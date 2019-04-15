@@ -45,22 +45,22 @@ Abaixo encontram-se alguns modos de voos configurados nos rádios controles.
 
 ## Diagrama de Classes
 
-Diagrama de Classes IFA
+Diagrama de Classes do IFA
 
 ![](./Figures/diagrama-IFA.png)
 
-Diagrama de Classes MOSA
+Diagrama de Classes do MOSA
 
 ![](./Figures/diagrama-MOSA.png)
 
-Diagrama de Classes Lib-UAV Completo
+Diagrama de Classes do Lib-UAV Completo
 
 ![](./Figures/diagrama-Lib-UAV.png)
 
-Diagrama de Classes IFA Completo
+Diagrama de Classes do IFA Completo
 
 ![](./Figures/diagrama-IFA-Full.png)
 
-Diagrama de Classes MOSA Completo
+Diagrama de Classes do MOSA Completo
 
 ![](./Figures/diagrama-MOSA-Full.png)

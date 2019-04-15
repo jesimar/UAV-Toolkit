@@ -1,4 +1,4 @@
-# Contribuindo para o UAV-Toolkit
+# Contribuindo com o UAV-Toolkit
 
 Existem diversas formas de contribuir com o projeto UAV-Toolkit:
 

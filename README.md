@@ -427,12 +427,6 @@ Abaixo encontram-se alguns dos drones montados e utilizados durante este trabalh
 | Rádio    | FlySky FS-i6 (Name: ALPHA)      | FlySky FS-i6 (Name: PIX)       | FlySky FS-i6 (Name: Gama)       | FlySky FS-i6 (Name: Delta)      |
 | Peso     | 1,09Kg (com bateria e sem CC)   | 1,14Kg (com bateria e sem CC)  | 1,09Kg (com bateria e sem CC)   | 1,09Kg (com bateria e sem CC)   |
 
-## Características do Sistema
-
-* O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
-* O sistema IFA suporta apenas um cliente MOSA. 
-* O sistema IFA e MOSA é desativado caso o piloto em solo, pelo controle de rádio ou GCS, coloque no modo de voo RTL.
-
 ### Características da Plataforma Autônoma
 
 - [x] Arma os motores autonomamente
@@ -447,6 +441,13 @@ Abaixo encontram-se alguns dos drones montados e utilizados durante este trabalh
 - [x] Sistema Plug and Play (P&P)
 - [x] Sistema com Separação de Interesses (SdI)
 - [x] Sistema Modular
+
+## Características do Sistema
+
+* O sistema IFA é o servidor (mestre, host) tem que ser executado antes do MOSA.
+* O sistema MOSA é o cliente (escravo) tem que ser executado depois do IFA.
+* O sistema IFA suporta apenas um cliente MOSA. 
+* O sistema IFA e MOSA é desativado caso o piloto em solo, pelo controle de rádio ou GCS, coloque no modo de voo RTL.
 
 ### Limitações do Sistema
 
