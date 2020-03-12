@@ -5,7 +5,7 @@ future==0.15.2
 MAVProxy==1.6.1
 monotonic==1.2
 packaging==16.8
-psutil==5.3.1
+psutil==5.6.6
 pymavlink==2.2.5
 pyparsing==2.1.10
 pyserial==3.4
